@@ -1,0 +1,164 @@
+@use 'sass:map';
+@use 'sass:color';
+
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+$button-colors: (
+    'blue': $color-blue,
+    'orange': $color-orange,
+);
+
+$button-sizes: (
+    'lg': (
+        'height': px-to-rem(54),
+        'padding': 0 px-to-rem(28),
+        'border-radius': px-to-rem(12),
+        'font-size': px-to-rem(18),
+    ),
+    'md': (
+        'height': px-to-rem(44),
+        'padding': 0 px-to-rem(24),
+        'border-radius': px-to-rem(10),
+        'font-size': px-to-rem(18),
+    ),
+    'sm': (
+        'height': px-to-rem(34),
+        'padding': 0 px-to-rem(16),
+        'border-radius': px-to-rem(8),
+        'font-size': px-to-rem(16),
+    ),
+);
+
+$button-aligns: (
+    'center': center,
+    'sides': space-between,
+    'left': flex-start,
+    'right': flex-end,
+);
+
+.polus-ui {
+    $root: #{&}__button;
+
+    &__button {
+        display: flex;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: map.get($button-aligns, 'center');
+        height: map.get($button-sizes, 'md', 'height');
+        padding: map.get($button-sizes, 'md', 'padding');
+        color: $color-white;
+        fill: $color-white;
+        stroke: $color-white;
+        font-size: map.get($button-sizes, 'md', 'font-size');
+        font-weight: 500;
+        line-height: 1;
+        border: 1px solid transparent;
+        border-radius: map.get($button-sizes, 'md', 'border-radius');
+        cursor: pointer;
+        transition: 0.15s ease-in-out;
+        transition-property: color, background-color, border-color;
+        user-select: none;
+
+        @each $name, $size in $button-sizes {
+            &--#{$name} {
+                height: map.get($size, 'height');
+                padding: map.get($size, 'padding');
+                border-radius: map.get($size, 'border-radius');
+                font-size: map.get($size, 'font-size');
+            }
+        }
+
+        @each $name, $color in $button-colors {
+            &--#{$name} {
+                background-color: $color;
+                border-color: $color;
+
+                &:hover:not(:disabled) {
+                    background-color: color.adjust($color, $lightness: 10%);
+                    border-color: color.adjust($color, $lightness: 10%);
+                }
+
+                &:active:not(:disabled) {
+                    background-color: color.adjust($color, $lightness: -10%);
+                    border-color: color.adjust($color, $lightness: -10%);
+                }
+            }
+        }
+
+        @each $name, $align in $button-aligns {
+            &--#{$name} {
+                justify-content: $align;
+            }
+        }
+
+        &--wide {
+            width: 100%;
+        }
+
+        &--outline {
+            background-color: transparent !important;
+            border-color: $color-white;
+
+            &:hover:not(:disabled) {
+                border-color: $color-blue;
+            }
+
+            &:active:not(:disabled) {
+                background-color: $color-blue-dark !important;
+                border-color: $color-blue-dark;
+            }
+        }
+
+        &--basic {
+            color: $color-orange;
+            fill: $color-orange;
+            stroke: $color-orange;
+            background-color: transparent !important;
+            border-color: transparent !important;
+
+            &:hover:not(:disabled) {
+                color: color.adjust($color-orange, $lightness: 10%);
+                fill: color.adjust($color-orange, $lightness: 10%);
+                stroke: color.adjust($color-orange, $lightness: 10%);
+            }
+
+            &:active:not(:disabled) {
+                color: color.adjust($color-orange, $lightness: -10%);
+                fill: color.adjust($color-orange, $lightness: -10%);
+                stroke: color.adjust($color-orange, $lightness: -10%);
+            }
+        }
+
+        &--disabled {
+            background-color: color.mix($color-black, $color-blue, 70%);
+            border-color: color.mix($color-black, $color-blue, 70%);
+            color: color.mix($color-black, $color-white, 70%);
+            fill: color.mix($color-black, $color-white, 70%);
+            stroke: color.mix($color-black, $color-white, 70%);
+            pointer-events: none;
+            cursor: default;
+        }
+
+        &--disabled#{&}--outline {
+            background-color: transparent;
+            border-color: color.mix($color-black, $color-white, 70%);
+        }
+    }
+
+    &__button-loader {
+        height: 80%;
+        width: auto;
+        stroke: none;
+    }
+}

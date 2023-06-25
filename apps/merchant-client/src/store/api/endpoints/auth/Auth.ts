@@ -1,39 +1,45 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {IResponseError} from "../../types";
-import {IAuthRequestLogin, IAuthRequestRefresh, IAuthRequestSendCode, IAuthResponseLogin} from "./Auth.interface";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { IResponseError } from '../../types';
+import {
+    IAuthRequestLogin,
+    IAuthRequestRefresh,
+    IAuthRequestSendCode,
+    IAuthResponseLogin,
+} from './Auth.interface';
 
-
-type  IResponseOkOrError = IResponseError
-
+type IResponseOkOrError = IResponseError;
 
 export const authApi = createApi({
     reducerPath: 'authApi' as const,
-    baseQuery: fetchBaseQuery({baseUrl: import.meta.env.VITE_REACT_APP_BASE_URL + "/auth"}),
+    baseQuery: fetchBaseQuery({
+        baseUrl: import.meta.env.VITE_REACT_APP_BASE_URL + '/auth',
+    }),
     endpoints: (builder) => ({
         sendCode: builder.mutation<IResponseOkOrError, IAuthRequestSendCode>({
-            query: body => ({
+            query: (body) => ({
                 url: `.send_code`,
                 method: 'POST',
-                body
-
-            })
+                body,
+            }),
         }),
-        login: builder.mutation<IAuthResponseLogin | IResponseError, IAuthRequestLogin>({
-            query: body => ({
+        login: builder.mutation<
+            IAuthResponseLogin | IResponseError,
+            IAuthRequestLogin
+        >({
+            query: (body) => ({
                 url: `.login`,
                 method: 'POST',
-                body
-            })
+                body,
+            }),
         }),
         refresh: builder.mutation<IAuthResponseLogin, IAuthRequestRefresh>({
-            query: body => ({
+            query: (body) => ({
                 url: `.refresh_token`,
                 method: 'POST',
-                body
-            })
-        })
+                body,
+            }),
+        }),
     }),
-})
+});
 
-
-export const {  } = authApi
+export const {} = authApi;

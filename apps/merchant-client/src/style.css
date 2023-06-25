@@ -11,7 +11,7 @@
     --button_outline_foreground: #151515;
     --vkui--font_headline1--font_size--compact: 17px!important; */
 
-    --accent: #246CE2;
+    --accent: #246ce2;
 
     --text_primary: #fff;
     --header_text: #fff;
@@ -34,47 +34,43 @@
 
     --panelheader_height_ios: 90px;
 
-
     --background_content: var(--polus_grey_1);
 
-    --polus_grey_1:  #131315;
-    --polus_black_1: #09080C;
+    --polus_grey_1: #131315;
+    --polus_black_1: #09080c;
 
-    --polus_grey_2: #2D2D37;
+    --polus_grey_2: #2d2d37;
 
-    --polus_grey_hover: #18181E;
+    --polus_grey_hover: #18181e;
 
-    --polus_blue_1: #1850AC;
+    --polus_blue_1: #1850ac;
 
-    --polus_blue_text: #246CE2;
+    --polus_blue_text: #246ce2;
 
     --polus_text_white: #fff;
 
-    --polus_orange: #F16B16;
+    --polus_orange: #f16b16;
 
-    --polus_red: #C85B5B;
-
-    
-
+    --polus_red: #c85b5b;
 }
 
 html,
 body {
-    margin: 0!important;
-    padding: 0!important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
-.vkuiPanel .vkuiPanel__in, .vkuiPanel:after, .vkuiGroup__inner {
+.vkuiPanel .vkuiPanel__in,
+.vkuiPanel:after,
+.vkuiGroup__inner {
     /* background-color: var(--tg-theme-secondary-bg-color)!important; */
 }
-
 
 body {
     z-index: 1;
 
-    background-color: #09080C!important;
+    background-color: #09080c !important;
     /* background-size: 400% 400%!important; */
-
 }
 
 body * {
@@ -82,22 +78,25 @@ body * {
     /* font-family: 'Inter Tight', sans-serif!important; */
     font-family: 'Poppins';
 }
-::placeholder { /* Most modern browsers support this now. */
-    color:    var(--tg-theme-text-color)!important;
- }
- input::-webkit-outer-spin-button,
+::placeholder {
+    /* Most modern browsers support this now. */
+    color: var(--tg-theme-text-color) !important;
+}
+input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     /* display: none; <- Crashes Chrome on hover */
     -webkit-appearance: none;
     margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
-::placeholder { /* Most modern browsers support this now. */
-    opacity: 0.5!important;
- }
+::placeholder {
+    /* Most modern browsers support this now. */
+    opacity: 0.5 !important;
+}
 
-
-*:not(input, textarea){ user-select:none; }
+*:not(input, textarea) {
+    user-select: none;
+}
 
 .polus-select,
 .polus-select * {
@@ -105,12 +104,10 @@ input::-webkit-inner-spin-button {
 }
 
 a,
-a *
-a div,
+a * a div,
 a:hover,
-a:hover *
-a:hover div {
-    text-decoration: none!important;
+a:hover * a:hover div {
+    text-decoration: none !important;
 }
 
 .polus {
@@ -119,14 +116,11 @@ a:hover div {
     box-sizing: border-box;
 }
 
-
-
 .polus-login {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-
 }
 
 .polus-login-block {
@@ -181,7 +175,7 @@ a:hover div {
     /* background-color: var(--polus_blue_1); */
 }
 .polus .Button--sz-l .Button__in {
-    color: var(--polus_text_white)
+    color: var(--polus_text_white);
 }
 
 .polus .Button--sz-m {
@@ -189,7 +183,7 @@ a:hover div {
 }
 
 .polus .Button--sz-m .Button__in {
-    color: var(--polus_text_white)
+    color: var(--polus_text_white);
 }
 
 .polus .Button--lvl-primary {
@@ -197,7 +191,6 @@ a:hover div {
 }
 
 .polus .Button--lvl-outline {
-
 }
 
 .polus .Button--lvl-secondary {
@@ -212,14 +205,14 @@ a:hover div {
 }
 
 .login-img {
-    width: 113px!important;
+    width: 113px !important;
     margin-right: 16px;
 }
 .login-svg span {
     font-weight: 500;
     font-size: 18px;
     line-height: 150%;
-    color: var(--polus_text_white)
+    color: var(--polus_text_white);
 }
 
 .login-text-block {
@@ -282,8 +275,9 @@ a:hover div {
     margin-right: 32px; */
 }
 
-.ModalPage .vkuiPanelHeader:before, .ModalPage .vkuiPanelHeader__in {
-    height: 55px!important;
+.ModalPage .vkuiPanelHeader:before,
+.ModalPage .vkuiPanelHeader__in {
+    height: 55px !important;
 }
 
 .ModalPage .vkuiPanelHeader--ios .vkuiPanelHeader__before {
@@ -295,10 +289,10 @@ a:hover div {
     max-width: 600px;
 }
 
-.vkuiButton--lvl-outline.vkuiButton--clr-negative .Button__in, 
-.vkuiButton--lvl-secondary.vkuiButton--clr-negative .Button__in, 
+.vkuiButton--lvl-outline.vkuiButton--clr-negative .Button__in,
+.vkuiButton--lvl-secondary.vkuiButton--clr-negative .Button__in,
 .vkuiButton--lvl-tertiary.vkuiButton--clr-negative .Button__in {
-    color: var(--polus_red)!important;
+    color: var(--polus_red) !important;
 }
 
 .polus-table {
@@ -330,7 +324,6 @@ a:hover div {
     box-sizing: border-box;
     height: 65px;
     cursor: pointer;
-    
 }
 .polus-table-big thead tr {
     background-color: transparent;
@@ -382,22 +375,22 @@ a:hover div {
 }
 
 .polus .vkuiSubnavigationBar__scrollIn {
-    padding: 0!important;
+    padding: 0 !important;
 }
 
 .polus .vkuiSubnavigationBar .in_progress {
-    background-color: #FED85A;
-    color: #000!important;
+    background-color: #fed85a;
+    color: #000 !important;
 }
 
 .polus .vkuiSubnavigationBar .completed {
-    background-color: #20A466;
-    color: #fff!important;
+    background-color: #20a466;
+    color: #fff !important;
 }
 
 .polus .vkuiSubnavigationBar .expired {
-    background-color: #C85B5B;
-    color: #fff!important;
+    background-color: #c85b5b;
+    color: #fff !important;
 }
 
 .wallet1 iframe {
@@ -405,7 +398,7 @@ a:hover div {
     padding: 0;
     border: 0;
 
-    border: 2px solid #2D2D37;
+    border: 2px solid #2d2d37;
     border-radius: 0 0 12px 12px;
 }
 
@@ -426,9 +419,9 @@ a:hover div {
 .wallet1 > div {
     padding: 10px;
     box-sizing: border-box;
-    border-top: 2px solid #2D2D37;
-    border-left: 2px solid #2D2D37;
-    border-right: 2px solid #2D2D37;
+    border-top: 2px solid #2d2d37;
+    border-left: 2px solid #2d2d37;
+    border-right: 2px solid #2d2d37;
 
     border-radius: 12px 12px 0 0;
 
@@ -445,7 +438,7 @@ a:hover div {
 }
 .wallet1 .closed {
     border-radius: 12px;
-    border: 2px solid #2D2D37;
+    border: 2px solid #2d2d37;
 }
 
 .polus-h6 span {
@@ -470,7 +463,7 @@ a:hover div {
 }
 
 .header-full2 .PanelHeader__fixed {
-    width: 100%!important;
+    width: 100% !important;
 }
 
 .pending {
@@ -491,7 +484,7 @@ a:hover div {
 
 @media (max-width: 1000px) {
     .vkuiModalPage--s .vkuiModalPage__in-wrap {
-        width: auto!important;
+        width: auto !important;
     }
     .mobile-table {
         width: 100%;
@@ -504,7 +497,8 @@ a:hover div {
     .polus-h5 {
         font-size: 20px;
     }
-    .vkuiPanel .vkuiPanel__in, .vkuiPanel:after {
+    .vkuiPanel .vkuiPanel__in,
+    .vkuiPanel:after {
         background-color: var(--polus_black_1);
     }
     .mobile-table-2 {
@@ -517,7 +511,7 @@ a:hover div {
         width: 100%;
     }
     * {
-        font-size: .9rem;
+        font-size: 0.9rem;
     }
     td {
         word-wrap: normal;
@@ -538,7 +532,7 @@ a:hover div {
 
     .div-header {
         flex-direction: column;
-        align-items: flex-start!important;
+        align-items: flex-start !important;
     }
 
     .vkuiPanelHeader--ios .vkuiPanelHeader__before img {
@@ -549,82 +543,79 @@ a:hover div {
         padding-right: 0;
         padding-left: 0;
     }
-
 }
 
+/* scroll bar */
 
+/* --black-light: #131315 */
+/* --blue: #1850AC; */
+/**/
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #1850ac #131315;
+}
+*::-webkit-scrollbar {
+    width: 0.5rem;
+}
+*::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: #131315;
+    border: 0.25rem solid #131315;
+}
+*::-webkit-scrollbar-track:hover,
+*::-webkit-scrollbar-track:active {
+    background-color: #131315;
+}
+*::-webkit-scrollbar-thumb {
+    border-radius: 0.5rem;
+    background-color: #1850ac;
+    border: 0.25rem solid #1850ac;
+}
+*::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:active {
+    background-color: #1850ac;
+}
 
- /* scroll bar */
-
- /* --black-light: #131315 */
- /* --blue: #1850AC; */
- /**/
- * {
- 	 scrollbar-width: thin;
- 	 scrollbar-color: #1850ac #131315;
- }
-  *::-webkit-scrollbar {
- 	 width: 0.5rem;
- }
-  *::-webkit-scrollbar-track {
- 	 border-radius: 0;
- 	 background-color: #131315;
- 	 border: 0.25rem solid #131315;
- }
-  *::-webkit-scrollbar-track:hover, *::-webkit-scrollbar-track:active {
- 	 background-color: #131315;
- }
-  *::-webkit-scrollbar-thumb {
- 	 border-radius: 0.5rem;
- 	 background-color: #1850ac;
- 	 border: 0.25rem solid #1850ac;
- }
-  *::-webkit-scrollbar-thumb:hover, *::-webkit-scrollbar-thumb:active {
- 	 background-color: #1850ac;
- }
-
- /* back button */
+/* back button */
 
 .appBack {
-display: none;
-position: fixed;
-top: 30%;
-left: 0;
-align-items: center;
-/* padding: 0 0 0 px-to-rem(46); */
-/* height: px-to-rem(46); */
-color:  transparent;
-font-family: 'Poppins', sans-serif;
-font-size: 0;
-font-weight: 600;
-/* background-color: $color-black-light; */
-/* line-height: px-to-rem(46); */
-/* border-radius: 0 px-to-rem(6) px-to-rem(6) 0; */
-cursor: pointer;
-transition: color .2s, font-size .2s, padding .2s;
-z-index: 1;
-
+    display: none;
+    position: fixed;
+    top: 30%;
+    left: 0;
+    align-items: center;
+    /* padding: 0 0 0 px-to-rem(46); */
+    /* height: px-to-rem(46); */
+    color: transparent;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0;
+    font-weight: 600;
+    /* background-color: $color-black-light; */
+    /* line-height: px-to-rem(46); */
+    /* border-radius: 0 px-to-rem(6) px-to-rem(6) 0; */
+    cursor: pointer;
+    transition: color 0.2s, font-size 0.2s, padding 0.2s;
+    z-index: 1;
 }
 
-
 .appBack:hover {
-padding: 0 px-to-rem(16) 0 px-to-rem(40);
-/* color: $color-white; */
-/* font-size: px-to-rem(16); */
-transition: color .2s, font-size .2s, padding .2s;
+    padding: 0 px-to-rem(16) 0 px-to-rem(40);
+    /* color: $color-white; */
+    /* font-size: px-to-rem(16); */
+    transition: color 0.2s, font-size 0.2s, padding 0.2s;
 }
 
 .appBack::after {
-  content: '';
-  position: absolute;
-  /* top: px-to-rem(11); */
-  /* left: px-to-rem(11); */
-  /* width: px-to-rem(24); */
-  /* height: px-to-rem(24); */
-  /* background-image: url('/images/arrow.png'); */
-  background-repeat: no-repeat;
+    content: '';
+    position: absolute;
+    /* top: px-to-rem(11); */
+    /* left: px-to-rem(11); */
+    /* width: px-to-rem(24); */
+    /* height: px-to-rem(24); */
+    /* background-image: url('/images/arrow.png'); */
+    background-repeat: no-repeat;
 }
 
 .appBack--visible {
-  display: inline;
+    display: inline;
 }

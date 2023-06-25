@@ -1,34 +1,18 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-import { Asset_t, Blockchain_t } from "../../types";
-import { IAssetsResponse } from "./Asset.interface";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { IAssetsResponse } from './Asset.interface';
 
 export const assetApi = createApi({
-  reducerPath: "assetApi" as const,
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_REACT_APP_BASE_URL + "public",
-  }),
-  endpoints: (builder) => ({
-    getAssets: builder.query<IAssetsResponse, void>({
-      query: () => ({
-        url: `payment.assets.get`,
-        method: "POST",
-      }),
-      // @ts-ignore
-      transformResponse(response: IAssetsResponse) {
-        const assetsNames = Object.keys(response) as Asset_t[];
-        const assets = assetsNames.filter(
-          (asset) =>
-            response[asset][Object.keys(response[asset])[0] as Blockchain_t]
-              .available_for_accept
-        );
-        for (const asset in response) {
-          if (!assets.includes(asset as Asset_t)) {
-            delete response[asset as Asset_t];
-          }
-        }
-        return response;
-      },
+    reducerPath: 'assetApi' as const,
+    baseQuery: fetchBaseQuery({
+        baseUrl: import.meta.env.VITE_REACT_APP_BASE_URL + 'public',
     }),
-  }),
+    endpoints: (builder) => ({
+        getAssets: builder.query<IAssetsResponse, void>({
+            query: () => ({
+                url: `payment.assets.get`,
+                method: 'POST',
+            }),
+        }),
+    }),
 });
 export const { useGetAssetsQuery } = assetApi;

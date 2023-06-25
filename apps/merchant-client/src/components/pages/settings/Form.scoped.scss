@@ -1,0 +1,124 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+.form {
+    width: 100%;
+    padding: px-to-rem(16);
+    background-color: $color-black-light;
+    border-radius: px-to-rem(12);
+
+    @include breakpoint($screen-sm) {
+        padding: px-to-rem(20) px-to-rem(16);
+    }
+
+    @include breakpoint($screen-md) {
+        padding: px-to-rem(24);
+    }
+
+    &__title {
+        margin-bottom: px-to-rem(20);
+        font-size: px-to-rem(18);
+        font-weight: 500;
+        line-height: 150%;
+
+        @include breakpoint($screen-md) {
+            margin-bottom: px-to-rem(24);
+            font-size: px-to-rem(24);
+            font-weight: 600;
+        }
+    }
+
+    &__inner {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__inner-item {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(8);
+
+        @include breakpoint($screen-md) {
+            gap: px-to-rem(10);
+        }
+
+        &:not(:last-child) {
+            margin-bottom: px-to-rem(16);
+
+            @include breakpoint($screen-md) {
+                margin-bottom: px-to-rem(24);
+            }
+        }
+    }
+
+    &__inner-item-data {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__inner-item-data-label {
+        font-size: px-to-rem(14);
+        font-weight: 300;
+        line-height: 130%;
+
+        &--dark {
+            color: $color-white-dark;
+        }
+
+        &--error {
+            color: $color-red;
+        }
+
+        &--action {
+            color: $color-blue-light;
+            transition: color .15s ease-in-out;
+            cursor: pointer;
+
+            &:hover {
+                color: $color-blue;
+            }
+        }
+    }
+
+    &__inner-action {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(6);
+        color: $color-blue-light;
+        stroke: $color-blue-light;
+        cursor: pointer;
+
+        &:hover {
+            color: $color-blue;
+            stroke: $color-blue;
+        }
+    }
+
+    &__inner-action-icon {
+        width: px-to-rem(20);
+        height: auto;
+        stroke: inherit;
+        transition: stroke .15s ease-in-out;
+    }
+
+    &__inner-action-text {
+        color: inherit;
+        font-size: px-to-rem(18);
+        font-weight: 500;
+        line-height: 130%;
+        transition: color .15s ease-in-out;
+    }
+
+    &__inner-buttons {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(8);
+        width: 100%;
+    }
+
+    &__inner-buttons-item {
+        width: 100%;
+        max-width: calc((100% - px-to-rem(8)) / 2);
+    }
+}

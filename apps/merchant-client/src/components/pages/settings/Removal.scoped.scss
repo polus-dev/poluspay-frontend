@@ -1,0 +1,40 @@
+@use 'sass:color';
+
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+.removal {
+    width: 100%;
+    padding: px-to-rem(16);
+    background-color: $color-black-light;
+    border-radius: px-to-rem(12);
+
+    @include breakpoint($screen-sm) {
+        padding: px-to-rem(20) px-to-rem(16);
+    }
+
+    @include breakpoint($screen-md) {
+        padding: px-to-rem(24);
+    }
+
+    &__title {
+        margin-bottom: px-to-rem(12);
+        font-size: px-to-rem(18);
+        font-weight: 500;
+        line-height: 150%;
+    }
+
+    &__action {
+        display: inline-flex;
+        color: $color-red-light;
+        font-size: px-to-rem(18);
+        font-weight: 500;
+        line-height: 130%;
+        transition: color .15s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            color: color.adjust($color-red, $lightness: 5%);
+        }
+    }
+}

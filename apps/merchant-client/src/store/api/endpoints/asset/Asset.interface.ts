@@ -1,4 +1,17 @@
-import { Asset_t, Blockchain_t } from "../../types";
+export type Blockchain_t = 'arbitrum' | 'bsc' | 'ethereum' | 'polygon' | 'tron';
+export type Asset_t =
+    | 'usdt'
+    | 'usdc'
+    | 'dai'
+    | 'busd'
+    | 'matic'
+    | 'eth'
+    | 'bnb'
+    | 'trx'
+    | 'wbtc'
+    | 'weth'
+    | 'wmatic'
+    | 'btc';
 
 export type IAssetsResponse = {
     [key in Asset_t]: {
@@ -7,7 +20,6 @@ export type IAssetsResponse = {
             contract: string;
             decimals: number;
             is_seeded_amount: boolean;
-            available_for_accept: boolean;
         };
     };
 };

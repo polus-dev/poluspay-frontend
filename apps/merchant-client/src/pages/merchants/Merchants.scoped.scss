@@ -1,0 +1,177 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/utils';
+
+.merchants {
+    position: relative;
+    width: 100%;
+
+    &__inner {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__header {
+        margin-bottom: px-to-rem(20);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__header-title {
+        font-size: px-to-rem(18);
+        font-weight: 500;
+        line-height: 150%;
+    }
+
+    &__header-button {
+        max-width: px-to-rem(180);
+
+        @include breakpoint($screen-md) {
+            max-width: px-to-rem(200);
+        }
+    }
+
+    &__table {
+        width: 100%;
+    }
+
+    &__table-headline {
+        margin-bottom: px-to-rem(12);
+        display: flex;
+        width: calc(100% - px-to-rem(90));
+        padding: 0 px-to-rem(8);
+        color: $color-grey-light;
+        font-size: px-to-rem(14);
+        font-weight: 300;
+        line-height: 130%;
+
+        @include breakpoint($screen-sm) {
+            width: calc(100% - px-to-rem(110));
+            padding: 0 px-to-rem(10);
+        }
+
+        @include breakpoint($screen-md) {
+            margin-bottom: px-to-rem(16);
+            width: calc(100% - px-to-rem(120));
+            padding: 0 px-to-rem(16);
+            font-size: px-to-rem(16);
+            line-height: 150%;
+        }
+
+        @include breakpoint($screen-xl) {
+            padding: 0 px-to-rem(24);
+        }
+    }
+
+    &__table-headline-name {
+        display: flex;
+        flex-basis: 45%;
+
+        @include breakpoint($screen-sm) {
+            flex-basis: 40%;
+        }
+
+        @include breakpoint($screen-md) {
+            display: none;
+        }
+
+        @include breakpoint($screen-xl) {
+            display: flex;
+            flex-basis: 25%;
+        }
+    }
+
+    &__table-headline-nameweb {
+        display: none;
+
+        @include breakpoint($screen-md) {
+            display: flex;
+            flex-basis: 45%;
+        }
+
+        @include breakpoint($screen-xl) {
+            display: none;
+        }
+    }
+
+    &__table-headline-website {
+        display: none;
+
+        @include breakpoint($screen-xl) {
+            display: flex;
+            flex-basis: 40%;
+        }
+    }
+
+    &__table-headline-id {
+        display: flex;
+        flex-basis: 55%;
+
+        @include breakpoint($screen-sm) {
+            flex-basis: 60%;
+        }
+
+        @include breakpoint($screen-md) {
+            flex-basis: 55%;
+        }
+
+        @include breakpoint($screen-xl) {
+            flex-basis: 35%;
+        }
+    }
+
+    &__table-container {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(8);
+    }
+
+    &__pagination {
+        margin-top: px-to-rem(40);
+    }
+
+    &__error {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: px-to-rem(380);
+        background-color: $color-black-light;
+        border-radius: px-to-rem(12);
+
+        @include breakpoint($screen-md) {
+            height: px-to-rem(520);
+        }
+    }
+
+    &__error-title {
+        margin-bottom: px-to-rem(24);
+        text-align: center;
+        font-size: px-to-rem(18);
+        font-weight: 500;
+        line-height: 150%;
+
+        @include breakpoint($screen-md) {
+            font-size: px-to-rem(24);
+            font-weight: 600;
+        }
+    }
+
+    &__error-button {
+        max-width: px-to-rem(210);
+
+        @include breakpoint($screen-md) {
+            display: none;
+        }
+
+        &--desktop {
+            display: none;
+
+            @include breakpoint($screen-md) {
+                display: flex;
+            }
+        }
+    }
+}

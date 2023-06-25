@@ -1,0 +1,296 @@
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:color';
+
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+@keyframes fade-in {
+    from {
+        background-color: transparent;
+    }
+    to {
+        background-color: $color-blue-light;
+    }
+}
+
+@keyframes fade-out {
+    from {
+        background-color: $color-blue-light;
+    }
+    to {
+        background-color: transparent;
+    }
+}
+
+$select-sizes: (
+    'lg': (
+        'height': px-to-rem(54),
+        'border-radius': px-to-rem(12),
+        'font-size': px-to-rem(18),
+    ),
+    'md': (
+        'height': px-to-rem(44),
+        'border-radius': px-to-rem(10),
+        'font-size': px-to-rem(18),
+    ),
+    'sm': (
+        'height': px-to-rem(34),
+        'border-radius': px-to-rem(8),
+        'font-size': px-to-rem(16),
+    ),
+);
+
+.polus-ui {
+    $root: #{&}__select;
+
+    &__select {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: map.get($select-sizes, 'md', 'height');
+        background-color: $color-black;
+        border: 1px solid $color-grey;
+        font-size: map.get($select-sizes, 'md', 'font-size');
+        border-radius: map.get($select-sizes, 'md', 'border-radius');
+        transition: 0.15s ease-in-out;
+        transition-property: border, border-radius, opacity;
+        position: relative;
+
+        &--errors {
+            border: 1px solid $color-red;
+        }
+
+        &--disabled {
+            cursor: default;
+        }
+
+        &:hover:not(#{&}--errors):not(#{&}--disabled):not(#{&}--readonly):not(
+                :focus-within
+            ) {
+            border: 1px solid color.adjust($color-grey, $lightness: 5%);
+        }
+
+        &:focus-within:not(:focus):not(#{&}--errors) {
+            border: 1px solid $color-blue-light;
+            border-bottom-color: transparent;
+
+            &#{$root}--top {
+                border: 1px solid $color-blue-light;
+                border-top-color: transparent;
+            }
+        }
+
+        @each $name, $size in $select-sizes {
+            &--#{$name} {
+                $radius: map.get($size, 'border-radius');
+
+                height: map.get($size, 'height');
+                border-radius: $radius;
+                font-size: map.get($size, 'font-size');
+
+                &:focus-within:not(:focus):not(#{&}--errors) {
+                    border-radius: $radius $radius 0 0;
+
+                    &#{$root}--top {
+                        border-radius: 0 0 $radius $radius;
+                    }
+                }
+            }
+        }
+    }
+
+    &__select-element {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__select-handler {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        color: $color-white;
+        font-size: inherit;
+        font-weight: 400;
+        padding: 0 px-to-rem(12);
+        user-select: none;
+        cursor: pointer;
+    }
+
+    &__select-choosen,
+    &__select-placeholder {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__select-placeholder {
+        color: $color-white-dark;
+    }
+
+    &__select-choosen-multi {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    &__select-choosen-multi-item {
+        border: 1px solid $color-blue-light;
+        border-radius: px-to-rem(6);
+        padding: px-to-rem(6) px-to-rem(8);
+    }
+
+    &__select-options-wrapper {
+        display: flex;
+        height: 0;
+        position: relative;
+        width: 100%;
+
+        #{$root}--top & {
+            order: -1;
+        }
+
+        #{$root}--bottom & {
+            order: 1;
+        }
+    }
+
+    &__select-options {
+        background-color: $color-black;
+        border: 1px solid transparent;
+        border-color: $color-blue-light;
+        overflow: auto;
+        position: absolute;
+        left: -1px;
+        right: -1px;
+        z-index: 2;
+        max-height: 600px;
+
+        &:focus {
+            outline: none;
+        }
+
+        @each $name, $size in $select-sizes {
+            $radius: map.get($size, 'border-radius');
+            $radius-half: math.div($radius, 2);
+
+            #{$root}--#{$name}#{$root}--top & {
+                border-radius: $radius $radius 0 0;
+                padding-bottom: $radius-half;
+                border-bottom: none;
+                bottom: -$radius-half;
+            }
+
+            #{$root}--#{$name}#{$root}--bottom & {
+                border-radius: 0 0 $radius $radius;
+                padding-top: $radius-half;
+                border-top: none;
+                top: -$radius-half;
+            }
+        }
+    }
+
+    &__select-options-inner {
+        opacity: 1;
+    }
+
+    &__select-options-item {
+        padding: px-to-rem(12) px-to-rem(12);
+        background-color: $color-grey-dark;
+        color: $color-white-dark;
+        font-size: px-to-rem(16);
+        transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+        user-select: none;
+        cursor: pointer;
+
+        &--selected {
+            background-color: $color-grey;
+            color: $color-white;
+            cursor: default;
+        }
+
+        &:hover:not(#{&}--selected) {
+            background-color: $color-grey;
+        }
+    }
+
+    &__select-prefix,
+    &__select-appendix,
+    &__select-chevron {
+        align-items: center;
+        display: flex;
+        height: 100%;
+    }
+
+    &__select-prefix {
+        padding-left: px-to-rem(12);
+    }
+
+    &__select-appendix {
+        padding-right: px-to-rem(12);
+    }
+
+    &__select-chevron {
+        padding-right: px-to-rem(12);
+        cursor: pointer;
+    }
+
+    &__select-chevron-icon {
+        stroke: $color-white;
+        width: px-to-rem(18);
+        height: auto;
+        transition: stroke 0.2s ease-in-out, transform 0.2s ease-in-out;
+
+        &--active {
+            stroke: $color-orange;
+            transform: rotate(-180deg);
+        }
+    }
+
+    &__select-overlay {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #000000;
+        border-radius: px-to-rem(12);
+        transition: opacity 0.15s ease-in-out;
+        opacity: 0.7;
+        z-index: 2;
+
+        &--readonly {
+            opacity: 0;
+        }
+    }
+
+    &__select-options-enter {
+        background-color: transparent;
+        border: 1px solid transparent;
+        transition: background-color, border, border-color 0.15s ease-in-out;
+    }
+
+    &__select-options-enter-active {
+        background-color: $color-black;
+        border: 1px solid transparent;
+        border-color: $color-blue-light;
+        transition: background-color, border, border-color 0.15s ease-in-out;
+    }
+
+    &__select-options-exit {
+        background-color: $color-black;
+        border: 1px solid transparent;
+        border-color: $color-blue-light;
+    }
+
+    &__select-options-exit-active {
+        background-color: transparent;
+        border: 1px solid transparent;
+        transition: background-color, border, border-color 0.15s ease-in-out;
+    }
+}

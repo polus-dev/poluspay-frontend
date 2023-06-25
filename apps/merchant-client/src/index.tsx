@@ -1,34 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import {
-    WebviewType,
-    AdaptivityProvider,
-    ConfigProvider,
-    IOS,
-} from '@vkontakte/vkui/old';
-import { App } from './App';
-import { store } from './store/store';
+import { createRoot } from 'react-dom/client';
 
-const ConfigProviderFix: any = ConfigProvider;
-const AdaptivityProviderFix: any = AdaptivityProvider;
+import './assets/scss/main.scss';
+import App from './App';
 
-ReactDOM.render(
-    <BrowserRouter basename="/">
+const domNode = document.getElementById('root');
+
+if (domNode) {
+    const root = createRoot(domNode);
+
+    root.render(
         <React.StrictMode>
-            <ConfigProviderFix
-                appearance={'dark'}
-                webviewType={WebviewType.INTERNAL}
-                platform={IOS}
-            >
-                <AdaptivityProviderFix>
-                    <Provider store={store}>
-                        <App />
-                    </Provider>
-                </AdaptivityProviderFix>
-            </ConfigProviderFix>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
         </React.StrictMode>
-    </BrowserRouter>,
-    document.querySelector('#root')
-);
+    );
+}

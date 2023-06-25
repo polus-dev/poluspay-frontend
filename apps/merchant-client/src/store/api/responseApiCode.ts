@@ -29,7 +29,7 @@ export const enum ResponseApiCode {
     BadMerchantNameLength = 3001,
     BadMerchantDescriptionLength = 3002,
     BadMerchantNameAlreadyExists = 3003,
-    BadMerchantDoesntExists =3004,
+    BadMerchantDoesntExists = 3004,
     BadMerchantDomainAlreadyVerified = 3005,
     BadMerchantDomainCheckNotAvailable = 3006,
     BadMerchantDomainVerificationTxtNotFound = 3007,

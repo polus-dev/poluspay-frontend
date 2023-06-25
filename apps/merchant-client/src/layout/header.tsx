@@ -1,4 +1,4 @@
-import { PanelHeader } from '@vkontakte/vkui/old';
+import { PanelHeader } from '@vkontakte/vkui';
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 

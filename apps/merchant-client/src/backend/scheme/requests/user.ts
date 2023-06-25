@@ -1,14 +1,14 @@
 export interface UserLogin {
-    email: string
+    email: string;
 }
 
 export interface UserToken {
-    code: string
+    code: string;
 }
 
 export interface UserMerchantList {
-    page?: number,
-    limit?: number
+    page?: number;
+    limit?: number;
 }
 
-export interface UserInfo { }
+export interface UserInfo {}

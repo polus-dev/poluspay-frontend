@@ -1,0 +1,108 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+.account {
+    display: flex;
+    width: auto;
+    align-items: center;
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(16);
+    }
+
+    &__wallet-handler {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: px-to-rem(48);
+        height: px-to-rem(48);
+        border: px-to-rem(2) solid $color-grey;
+        background-color: $color-grey-dark;
+        border-radius: px-to-rem(12);
+        cursor: pointer;
+    }
+
+    &__wallet-handler-icon {
+        width: px-to-rem(24);
+        height: auto;
+        fill: $color-white;
+        stroke: $color-white;
+    }
+
+    &__wallet-content {
+        min-width: px-to-rem(300);
+        height: px-to-rem(500);
+    }
+
+    &__user-handler {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(6);
+        padding: 0 px-to-rem(10);
+        border: px-to-rem(2) solid $color-grey;
+        background-color: $color-grey-dark;
+        border-radius: px-to-rem(12);
+        cursor: pointer;
+
+        @include breakpoint($screen-md) {
+            gap: px-to-rem(8);
+            padding: 0 px-to-rem(12);
+        }
+    }
+
+    &__user-handler-text {
+        line-height: px-to-rem(44);
+    }
+
+    &__user-handler-icon {
+        width: px-to-rem(12);
+        height: auto;
+        stroke: $color-white;
+
+        @include breakpoint($screen-md) {
+            width: px-to-rem(16);
+        }
+    }
+
+    &__user-content-text {
+        font-size: px-to-rem(16);
+        font-weight: 400;
+        line-height: 150%;
+    }
+
+    &__user-content-divider {
+        margin: px-to-rem(16) 0;
+        width: 100%;
+        height: 1px;
+        background-color: $color-grey;
+    }
+
+    &__user-content-button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        min-width: px-to-rem(180);
+        color: $color-white-dark;
+        stroke: $color-white-dark;
+        font-size: px-to-rem(18);
+        font-weight: 400;
+        line-height: 150%;
+        transition: color .15s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            color: $color-white;
+            stroke: $color-white;
+        }
+    }
+
+    &__user-content-button-icon {
+        width: px-to-rem(20);
+        height: auto;
+        stroke: inherit;
+        transition: stroke .15s ease-in-out;
+    }
+}

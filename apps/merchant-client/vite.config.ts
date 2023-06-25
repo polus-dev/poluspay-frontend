@@ -2,6 +2,8 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import viteTsConfigPaths from 'vite-tsconfig-paths';
+import svgr from 'vite-plugin-svgr';
+import { reactScopedCssPlugin } from 'rollup-plugin-react-scoped-css';
 
 export default defineConfig({
   cacheDir: '../../node_modules/.vite/merchant-client',
@@ -21,7 +23,29 @@ export default defineConfig({
     viteTsConfigPaths({
       root: '../../',
     }),
+    // @ts-ignore
+    reactScopedCssPlugin(),
+    svgr({
+      svgrOptions: {
+          svgo: true,
+          svgoConfig: {
+              plugins: [
+                  {
+                      name: 'preset-default',
+                      params: {
+                          overrides: {
+                              inlineStyles: {
+                                  onlyMatchedOnce: false,
+                              },
+                          },
+                      },
+                  },
+              ],
+          },
+      },
+  }),
   ],
+
 
   // Uncomment this if you are using workers.
   // worker: {
