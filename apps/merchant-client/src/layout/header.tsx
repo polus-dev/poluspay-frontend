@@ -1,33 +1,35 @@
-import { PanelHeader } from '@vkontakte/vkui'
-import React, { useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { PanelHeader } from '@vkontakte/vkui/old';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export const HeaderBlock: React.FC = () => {
-    const [ firstRender, setFirstRender ] = React.useState<boolean>(false)
+    const [firstRender, setFirstRender] = React.useState<boolean>(false);
 
-    const location = useLocation()
+    const location = useLocation();
 
     useEffect(() => {
         if (!firstRender) {
-            setFirstRender(true)
+            setFirstRender(true);
         }
-    }, [])
+    }, []);
 
-    useEffect(() => {
-    }, [ ])
+    useEffect(() => {}, []);
 
     return (
         <PanelHeader
             separator={false}
             className="delab-header-full delab-header header-full"
-            after={
-                <div>
-                </div>
-            }
+            after={<div></div>}
         >
-            <div className="delab-header-btn"
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', marginLeft: '10px' }}>
-            </div>
+            <div
+                className="delab-header-btn"
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'flex-start',
+                    marginLeft: '10px',
+                }}
+            ></div>
         </PanelHeader>
-    )
-}
+    );
+};
