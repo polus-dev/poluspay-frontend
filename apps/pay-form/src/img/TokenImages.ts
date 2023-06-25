@@ -45,6 +45,7 @@ import usdd from './usdd.svg';
 import shib from './shib.svg';
 import zec from './zec.svg';
 import snx from './snx.svg';
+import usdp from './usdp.svg';
 import { Asset_t } from '../store/api/endpoints/types';
 
 export type TokenImagesType = {
@@ -102,4 +103,5 @@ export const TokenImages: Readonly<TokenImagesType> = {
   shib,
   zec,
   snx,
+  usdp,
 };

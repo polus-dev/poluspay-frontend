@@ -62,6 +62,7 @@ export type Asset_t =
   | 'wbtc'
   | 'weth'
   | 'wmatic'
+  | 'usdp'
   | 'zec';
 
 type ChainIdEnumUnion = 1 | 56 | 137 | 42161 | -1 | -2 | 10;

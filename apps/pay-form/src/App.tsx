@@ -232,125 +232,159 @@ export const App: React.FC = () => {
         }
       >
         <Div>
-          <h3>Stable Coin</h3>
-          <CardGrid size="m">
-            {availableTokens
-              .filter((token) => token.type === 'Stable')
-              .map((token, key) => (
-                <Card key={key}>
-                  <SimpleCell
-                    onClick={() => {
-                      setUserToken(token);
-                      setActiveModal(null);
-                    }}
-                    after={
-                      userToken?.name === token.name ? (
-                        <Icon28DoneOutline />
-                      ) : null
-                    }
-                    before={
-                      <img
-                        src={token.image}
-                        style={{ marginRight: '12px' }}
-                        className="logo-cur"
-                      />
-                    }
-                  >
-                    {token.name.toUpperCase()}
-                  </SimpleCell>
-                </Card>
-              ))}
-          </CardGrid>
+          {availableTokens.filter((token) => token.type === 'Stable')
+            .length ? (
+            <>
+              <h3>Stable Coin</h3>
+              <CardGrid size="m">
+                {availableTokens
+                  .filter((token) => token.type === 'Stable')
+                  .map((token, key) => (
+                    <Card key={key}>
+                      <SimpleCell
+                        onClick={() => {
+                          setUserToken(token);
+                          setActiveModal(null);
+                        }}
+                        after={
+                          userToken?.name ===
+                            token.name ? (
+                            <Icon28DoneOutline />
+                          ) : null
+                        }
+                        before={
+                          <img
+                            src={token.image}
+                            style={{
+                              marginRight: '12px',
+                            }}
+                            className="logo-cur"
+                          />
+                        }
+                      >
+                        {token.name.toUpperCase()}
+                      </SimpleCell>
+                    </Card>
+                  ))}
+              </CardGrid>
+            </>
+          ) : null}
 
-          <h3>Native Coin</h3>
-          <CardGrid size="m">
-            {availableTokens
-              .filter((token) => token.type === 'Native')
-              .map((token, key) => (
-                <Card key={key}>
-                  <SimpleCell
-                    onClick={() => {
-                      setUserToken(token);
-                      setActiveModal(null);
-                    }}
-                    after={
-                      userToken?.name === token.name ? (
-                        <Icon28DoneOutline />
-                      ) : null
-                    }
-                    before={
-                      <img
-                        src={token.image}
-                        style={{ marginRight: '12px' }}
-                        className="logo-cur"
-                      />
-                    }
-                  >
-                    {token.name.toUpperCase()}
-                  </SimpleCell>
-                </Card>
-              ))}
-          </CardGrid>
+          {availableTokens.filter((token) => token.type === 'Native')
+            .length ? (
+            <>
+              {' '}
+              <h3>Native Coin</h3>
+              <CardGrid size="m">
+                {availableTokens
+                  .filter((token) => token.type === 'Native')
+                  .map((token, key) => (
+                    <Card key={key}>
+                      <SimpleCell
+                        onClick={() => {
+                          setUserToken(token);
+                          setActiveModal(null);
+                        }}
+                        after={
+                          userToken?.name ===
+                            token.name ? (
+                            <Icon28DoneOutline />
+                          ) : null
+                        }
+                        before={
+                          <img
+                            src={token.image}
+                            style={{
+                              marginRight: '12px',
+                            }}
+                            className="logo-cur"
+                          />
+                        }
+                      >
+                        {token.name.toUpperCase()}
+                      </SimpleCell>
+                    </Card>
+                  ))}
+              </CardGrid>
+            </>
+          ) : null}
 
-          <h3>Wrapped Coin</h3>
-          <CardGrid size="m">
-            {availableTokens
-              .filter((token) => token.type === 'Wrapped')
-              .map((token, key) => (
-                <Card key={key}>
-                  <SimpleCell
-                    onClick={() => {
-                      setUserToken(token);
-                      setActiveModal(null);
-                    }}
-                    after={
-                      userToken?.name === token.name ? (
-                        <Icon28DoneOutline />
-                      ) : null
-                    }
-                    before={
-                      <img
-                        src={token.image}
-                        style={{ marginRight: '12px' }}
-                        className="logo-cur"
-                      />
-                    }
-                  >
-                    {token.name.toUpperCase()}
-                  </SimpleCell>
-                </Card>
-              ))}
-          </CardGrid>
+          {availableTokens.filter((token) => token.type === 'Wrapped')
+            .length ? (
+            <>
+              <h3>Wrapped Coin</h3>
+              <CardGrid size="m">
+                {availableTokens
+                  .filter((token) => token.type === 'Wrapped')
+                  .map((token, key) => (
+                    <Card key={key}>
+                      <SimpleCell
+                        onClick={() => {
+                          setUserToken(token);
+                          setActiveModal(null);
+                        }}
+                        after={
+                          userToken?.name ===
+                            token.name ? (
+                            <Icon28DoneOutline />
+                          ) : null
+                        }
+                        before={
+                          <img
+                            src={token.image}
+                            style={{
+                              marginRight: '12px',
+                            }}
+                            className="logo-cur"
+                          />
+                        }
+                      >
+                        {token.name.toUpperCase()}
+                      </SimpleCell>
+                    </Card>
+                  ))}
+              </CardGrid>
+            </>
+          ) : null}
 
-          <h3>Other Coin</h3>
-          <CardGrid size="m">
-            {availableTokens
-              .filter((token) => token.type === 'Other')
-              .map((token, key) => (
-                <Card key={key}>
-                  <SimpleCell
-                    onClick={() => {
-                      setUserToken(token);
-                      setActiveModal(null);
-                    }}
-                    after={
-                      userToken?.name === token.name ? (
-                        <Icon28DoneOutline />
-                      ) : null
-                    }
-                    before={
-                      <img
-                        src={token.image}
-                        style={{ marginRight: '12px' }}
-                        className="logo-cur"
-                      />
-                    }
-                  >
-                    {token.name.toUpperCase()}
-                  </SimpleCell>
-                </Card>
-              ))}
-          </CardGrid>
+          {availableTokens.filter(
+            (token) => token.type === 'Other'
+          ) ? (
+            <>
+              <h3>Other Coin</h3>
+              <CardGrid size="m">
+                {availableTokens
+                  .filter((token) => token.type === 'Other')
+                  .map((token, key) => (
+                    <Card key={key}>
+                      <SimpleCell
+                        onClick={() => {
+                          setUserToken(token);
+                          setActiveModal(null);
+                        }}
+                        after={
+                          userToken?.name ===
+                            token.name ? (
+                            <Icon28DoneOutline />
+                          ) : null
+                        }
+                        before={
+                          <img
+                            src={token.image}
+                            style={{
+                              marginRight: '12px',
+                            }}
+                            className="logo-cur"
+                          />
+                        }
+                      >
+                        {token.name.toUpperCase()}
+                      </SimpleCell>
+                    </Card>
+                  ))}
+              </CardGrid>
+            </>
+          ) : null}
         </Div>
       </ModalPage>
     </ModalRoot>

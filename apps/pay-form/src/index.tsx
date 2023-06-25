@@ -1,29 +1,29 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { TourProvider } from "@reactour/tour";
-import { BrowserRouter } from "react-router-dom";
-import * as Sentry from "@sentry/react";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { TourProvider } from '@reactour/tour';
+import { BrowserRouter } from 'react-router-dom';
+import * as Sentry from '@sentry/react';
 import {
   WebviewType,
   AdaptivityProvider,
   ConfigProvider,
-} from "@vkontakte/vkui";
+} from '@vkontakte/vkui';
 
 import {
   EthereumClient,
   modalConnectors,
   walletConnectProvider,
-} from "@web3modal/ethereum";
+} from '@web3modal/ethereum';
 
-import { Web3Modal } from "@web3modal/react";
+import { Web3Modal } from '@web3modal/react';
 
-import { configureChains, createClient, WagmiConfig } from "wagmi";
-import { mainnet, polygon, arbitrum, bsc, optimism } from "wagmi/chains";
+import { configureChains, createClient, WagmiConfig } from 'wagmi';
+import { mainnet, polygon, arbitrum, bsc, optimism } from 'wagmi/chains';
 
-import { App } from "./App";
-import { Provider } from "react-redux";
-import { store } from "./store/store";
-import { steps } from "./guid/steps";
+import { App } from './App';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
+import { steps } from './guid/steps';
 
 const chains = [polygon, mainnet, arbitrum, bsc, optimism];
 const projectId = import.meta.env.VITE_REACT_APP_PROJECT_ID;
@@ -35,8 +35,8 @@ const wagmiClient = createClient({
   autoConnect: true,
   connectors: modalConnectors({
     projectId,
-    version: "1", // or "2"
-    appName: "Polus Pay",
+    version: '1', // or "2"
+    appName: 'Polus Pay',
     chains,
   }),
   provider,
@@ -51,9 +51,17 @@ if (import.meta.env.PROD) {
       }),
       new Sentry.Replay({ maskAllText: false, blockAllMedia: false }),
     ],
-    tracesSampleRate: parseFloat(import.meta.env.VITE_REACT_SENTRY_TRACES_SAMPLE_RATE) || 0.1,
-    replaysSessionSampleRate: parseFloat(import.meta.env.VITE_REACT_SENTRY_REPLAYS_SESSION_SAMPLE_RATE) || 0.1,
-    replaysOnErrorSampleRate: parseFloat(import.meta.env.VITE_REACT_SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE) || 1.0,
+    tracesSampleRate:
+      parseFloat(import.meta.env.VITE_REACT_SENTRY_TRACES_SAMPLE_RATE) ||
+      0.1,
+    replaysSessionSampleRate:
+      parseFloat(
+        import.meta.env.VITE_REACT_SENTRY_REPLAYS_SESSION_SAMPLE_RATE
+      ) || 0.1,
+    replaysOnErrorSampleRate:
+      parseFloat(
+        import.meta.env.VITE_REACT_SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE
+      ) || 1.0,
   });
 }
 
@@ -69,7 +77,7 @@ ReactDOM.render(
       <WagmiConfig client={wagmiClient}>
         <React.StrictMode>
           <ConfigProviderFix
-            appearance={"dark"}
+            appearance={'dark'}
             webviewType={WebviewType.INTERNAL}
             platform="ios"
           >
@@ -79,13 +87,12 @@ ReactDOM.render(
                 styles={{
                   popover: (base) => ({
                     ...base,
-                    backgroundColor: "#18181e",
+                    backgroundColor: '#18181e',
                     borderRadius: 8,
-                    boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)",
-                    color: "#fff",
-                    justifyContent: "center",
-
-
+                    boxShadow:
+                      '0 0 20px rgba(0, 0, 0, 0.2)',
+                    color: '#fff',
+                    justifyContent: 'center',
                   }),
                   button: (base) => ({
                     ...base,
@@ -93,16 +100,17 @@ ReactDOM.render(
                     borderRadius: 8,
                     fontSize: 16,
                     fontWeight: 600,
-                    padding: "8px 16px",
-                    textTransform: "uppercase",
-                    border: "none",
-                    boxShadow: "0 0 20px rgba(0, 0, 0, 0.2)",
-                    color: "#fff",
+                    padding: '8px 16px',
+                    textTransform: 'uppercase',
+                    border: 'none',
+                    boxShadow:
+                      '0 0 20px rgba(0, 0, 0, 0.2)',
+                    color: '#fff',
                   }),
                   close: (base) => ({
                     ...base,
                     // color: "#fff",
-                    display: "none",
+                    display: 'none',
                   }),
                   dot: (base) => ({
                     ...base,
@@ -110,7 +118,6 @@ ReactDOM.render(
                   arrow: (base) => ({
                     ...base,
                   }),
-
                 }}
               >
                 <App />
@@ -122,5 +129,5 @@ ReactDOM.render(
       <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
     </BrowserRouter>
   </Provider>,
-  document.querySelector("#root")
+  document.querySelector('#root')
 );

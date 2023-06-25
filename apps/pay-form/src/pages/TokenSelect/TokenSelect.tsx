@@ -1,52 +1,52 @@
-import { Button, Panel, PanelHeader, Spinner, Text } from "@vkontakte/vkui";
+import { Button, Panel, PanelHeader, Spinner, Text } from '@vkontakte/vkui';
 
-import React, { memo, useEffect, useMemo, useRef, useState } from "react";
+import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 
-import { Web3NetworkSwitch, useWeb3Modal } from "@web3modal/react";
+import { Web3NetworkSwitch, useWeb3Modal } from '@web3modal/react';
 
-import { useAccount, useNetwork, useSwitchNetwork } from "wagmi";
-import { Icon28ChevronDownOutline } from "@vkontakte/icons";
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
+import { Icon28ChevronDownOutline } from '@vkontakte/icons';
 
-import logo from "../../img/logo.svg";
-import maticLogo from "../../img/matic.svg";
-import otherLogo from "../../img/other.svg";
-import etherLogo from "../../img/weth.svg";
-import bnbLogo from "../../img/bnb.svg";
-import arbitrumLogo from "../../img/arbitrum.svg";
-import optimismLogo from "../../img/optimism.svg";
+import logo from '../../img/logo.svg';
+import maticLogo from '../../img/matic.svg';
+import otherLogo from '../../img/other.svg';
+import etherLogo from '../../img/weth.svg';
+import bnbLogo from '../../img/bnb.svg';
+import arbitrumLogo from '../../img/arbitrum.svg';
+import optimismLogo from '../../img/optimism.svg';
 
-import btn from "../../img/btn.jpg";
-import wc from "../../img/wc.svg";
+import btn from '../../img/btn.jpg';
+import wc from '../../img/wc.svg';
 
-import { getParameterByName, roundCryptoAmount } from "../../logic/utils";
-import { CheatCodeListener } from "../../components/CheatCodeListener";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { ProgressBar } from "../../components/ui/ProgressBar";
+import { getParameterByName, roundCryptoAmount } from '../../logic/utils';
+import { CheatCodeListener } from '../../components/CheatCodeListener';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { ProgressBar } from '../../components/ui/ProgressBar';
 import {
   setSmartLineStatus,
   SmartLineStatus,
-} from "../../store/features/smartLine/smartLineSlice";
+} from '../../store/features/smartLine/smartLineSlice';
 import {
   activateConnection,
   deactivateConnection,
   setCurrentBlockchain,
-} from "../../store/features/connection/connectionSlice";
-import { useTour } from "@reactour/tour";
-import { setVisibleGuideButton } from "../../store/features/guide/guideSlice";
-import { ViewVariant, setView } from "../../store/features/view/viewSlice";
-import { useGetAssetsQuery } from "../../store/api/endpoints/asset/Asset";
-import { usePaymentInfo } from "./hooks/usePaymentInfo";
-import { useAvailableTokens } from "./hooks/useAvailableTokens";
-import { Token } from "../../store/api/types";
-import { QRCodePayment } from "../../components/QRCodePayment";
-import { ProcessBlock } from "../../components/ProcessBlock";
-import { ethers } from "ethers";
-import { PaymentStatus } from "../../store/api/endpoints/payment/Payment.interface";
-import { StatusComponent } from "../../components/StatusComponent";
-import { useGetPaymentByPaymentIdQuery } from "../../store/api/endpoints/payment/Payment";
-import { ChainId } from "../../store/api/endpoints/types";
-import { userTokenPairPriceSlice } from "../../store/features/tokenPairPrice/tokenPairPriceSlice";
-import { useTokenPairPrice } from "./hooks/useTokenPairPrice";
+} from '../../store/features/connection/connectionSlice';
+import { useTour } from '@reactour/tour';
+import { setVisibleGuideButton } from '../../store/features/guide/guideSlice';
+import { ViewVariant, setView } from '../../store/features/view/viewSlice';
+import { useGetAssetsQuery } from '../../store/api/endpoints/asset/Asset';
+import { usePaymentInfo } from './hooks/usePaymentInfo';
+import { useAvailableTokens } from './hooks/useAvailableTokens';
+import { Token } from '../../store/api/types';
+import { QRCodePayment } from '../../components/QRCodePayment';
+import { ProcessBlock } from '../../components/ProcessBlock';
+import { ethers } from 'ethers';
+import { PaymentStatus } from '../../store/api/endpoints/payment/Payment.interface';
+import { StatusComponent } from '../../components/StatusComponent';
+import { useGetPaymentByPaymentIdQuery } from '../../store/api/endpoints/payment/Payment';
+import { ChainId } from '../../store/api/endpoints/types';
+import { userTokenPairPriceSlice } from '../../store/features/tokenPairPrice/tokenPairPriceSlice';
+import { useTokenPairPrice } from './hooks/useTokenPairPrice';
 
 interface MainProps {
   id: string;
@@ -73,24 +73,30 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
     merchantAmount,
     merchantAddress,
     expireAt,
-  } = usePaymentInfo(getParameterByName("uuid"));
+  } = usePaymentInfo(getParameterByName('uuid'));
   const {
     amount,
     isLoading: isTokenPairPriceLoading,
     assetName,
-  } = useTokenPairPrice(props.userToken, merchantToken, amountInMerchantToken);
+  } = useTokenPairPrice(
+    props.userToken,
+    merchantToken,
+    amountInMerchantToken
+  );
   const { availableTokens, isAvailalbeTokensLoading } = useAvailableTokens();
 
   const { data: paymentInfo } = useGetPaymentByPaymentIdQuery(
     {
-      payment_id: getParameterByName("uuid")!,
+      payment_id: getParameterByName('uuid')!,
     },
     { pollingInterval: isExpired ? 0 : 1000 }
   );
 
   /// NEW CODE END
 
-  const isVisibleGuideButton = useAppSelector((state) => state.guide.isVisible);
+  const isVisibleGuideButton = useAppSelector(
+    (state) => state.guide.isVisible
+  );
   const currentView = useAppSelector((state) => state.view.currentView);
   const currentBlockchain = useAppSelector(
     (state) => state.connection.currentBlockchain
@@ -108,7 +114,7 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
     (state) => state.smartLine.smartLineStatus
   );
 
-  const abortRef = useRef(() => {});
+  const abortRef = useRef(() => { });
 
   const { open, close } = useWeb3Modal();
   const { address, isConnected } = useAccount();
@@ -136,17 +142,17 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
 
   async function startPay() {
     if (!info?.payment) {
-      throw new Error("not paymentInfo");
+      throw new Error('not paymentInfo');
     }
     if (!currentBlockchain) {
-      throw new Error("not currentBlockchain");
+      throw new Error('not currentBlockchain');
     }
     if (!switchNetworkAsync) {
-      throw new Error("not switchNetworkAsync");
+      throw new Error('not switchNetworkAsync');
     }
 
     if (!chain) {
-      throw new Error("not chain");
+      throw new Error('not chain');
     }
 
     if (chain.id !== ChainId[currentBlockchain]) {
@@ -159,7 +165,7 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
   useEffect(() => {
     if (!isSwitchNetworkLoading) {
       if (switchNetworkError) {
-        props.consoleLog("Error network change", false);
+        props.consoleLog('Error network change', false);
         props.closePop(false);
       } else {
         props.closePop(true);
@@ -183,10 +189,14 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
     }
   }, [isConnected]);
 
-  if (!getParameterByName("uuid")) {
-    return <StatusComponent status="error" message="payment uuid not found" />;
+  if (!getParameterByName('uuid')) {
+    return (
+      <StatusComponent status="error" message="payment uuid not found" />
+    );
   } else if (paymentInfo?.status === PaymentStatus.success) {
-    return <StatusComponent status="succsess" message="payment successful" />;
+    return (
+      <StatusComponent status="succsess" message="payment successful" />
+    );
   } else if (paymentInfo?.status === PaymentStatus.failed) {
     return <StatusComponent status="error" message="error" />;
   } else if (paymentInfo?.status === PaymentStatus.inProgress) {
@@ -205,27 +215,32 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
           <div className="slide-in-bck-center">
             <div className="domain-block">
               <div className="domain-amount-block">
-                <span>{info.merchant?.domain.replace("https://", "")}</span>
+                <span>
+                  {info.merchant?.domain.replace(
+                    'https://',
+                    ''
+                  )}
+                </span>
                 <div className="amount-block">
-                  <span>{`${
-                    merchantToken
+                  <span>{`${merchantToken
                       ? roundCryptoAmount(
-                          ethers.utils
-                            .formatUnits(
-                              amountInMerchantToken,
-                              merchantToken.decimals
-                            )
-                            .toString()
-                        )
-                      : ""
-                  } ${
-                    merchantToken ? merchantToken.name.toUpperCase() : ""
-                  }`}</span>
+                        ethers.utils
+                          .formatUnits(
+                            amountInMerchantToken,
+                            merchantToken.decimals
+                          )
+                          .toString()
+                      )
+                      : ''
+                    } ${merchantToken
+                      ? merchantToken.name.toUpperCase()
+                      : ''
+                    }`}</span>
                 </div>
               </div>
               <span
                 className="opacity-block"
-                style={{ marginTop: "10px", display: "block" }}
+                style={{ marginTop: '10px', display: 'block' }}
               >
                 {info.payment.description}
               </span>
@@ -240,28 +255,37 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
                 <div
                   className="selector guid__step--2"
                   onClick={() => {
-                    props.setActiveModal("network");
+                    props.setActiveModal('network');
                   }}
                 >
                   {currentBlockchain ? (
                     <div className="selector-right">
                       {isSwitchNetworkLoading ? (
                         <Spinner size="small" />
-                      ) : currentBlockchain === "ethereum" ? (
+                      ) : currentBlockchain ===
+                        'ethereum' ? (
                         <img src={etherLogo} />
-                      ) : currentBlockchain === "polygon" ? (
+                      ) : currentBlockchain ===
+                        'polygon' ? (
                         <img src={maticLogo} />
-                      ) : currentBlockchain === "bsc" ? (
+                      ) : currentBlockchain === 'bsc' ? (
                         <img src={bnbLogo} />
-                      ) : currentBlockchain === "arbitrum" ? (
+                      ) : currentBlockchain ===
+                        'arbitrum' ? (
                         <img src={arbitrumLogo} />
-                      ) : currentBlockchain === "optimism" ? (
+                      ) : currentBlockchain ===
+                        'optimism' ? (
                         <img src={optimismLogo} />
                       ) : (
-                        <img src={otherLogo} width={24} />
+                        <img
+                          src={otherLogo}
+                          width={24}
+                        />
                       )}
                       <span>
-                        {isSwitchNetworkLoading ? "Loading" : currentBlockchain}
+                        {isSwitchNetworkLoading
+                          ? 'Loading'
+                          : currentBlockchain}
                       </span>
                     </div>
                   ) : (
@@ -274,58 +298,95 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
                   <Icon28ChevronDownOutline />
                 </div>
                 <>
-                  <div className="text-one">Choose currency</div>
+                  <div className="text-one">
+                    Choose currency
+                  </div>
                   <span className="guid__step--3">
                     <div className="btn-block">
-                      {availableTokens.slice(0, 3).map((token, key) => (
-                        <Button
-                          key={key}
-                          size="l"
-                          stretched
-                          className="fix-forpadding"
-                          onClick={() => props.setUserToken(token)}
-                          mode={
-                            props.userToken?.name === token.name
-                              ? "primary"
-                              : "outline"
-                          }
-                          before={
-                            <img src={token.image} className="logo-cur" />
-                          }
-                        >
-                          {token.name.toUpperCase()}
-                        </Button>
-                      ))}
+                      {availableTokens
+                        .slice(0, 3)
+                        .map((token, key) => (
+                          <Button
+                            key={key}
+                            size="l"
+                            stretched
+                            className="fix-forpadding"
+                            onClick={() =>
+                              props.setUserToken(
+                                token
+                              )
+                            }
+                            mode={
+                              props.userToken
+                                ?.name ===
+                                token.name
+                                ? 'primary'
+                                : 'outline'
+                            }
+                            before={
+                              <img
+                                src={
+                                  token.image
+                                }
+                                className="logo-cur"
+                              />
+                            }
+                          >
+                            {token.name.toUpperCase()}
+                          </Button>
+                        ))}
                     </div>
 
                     <div className="btn-block">
-                      {availableTokens.slice(3, 5).map((token, key) => (
-                        <Button
-                          key={key}
-                          size="l"
-                          stretched
-                          className="fix-forpadding"
-                          onClick={() => props.setUserToken(token)}
-                          mode={
-                            props.userToken?.name === token.name
-                              ? "primary"
-                              : "outline"
-                          }
-                          before={
-                            <img src={token.image} className="logo-cur" />
-                          }
-                        >
-                          {token.name.toUpperCase()}
-                        </Button>
-                      ))}
+                      {availableTokens
+                        .slice(3, 5)
+                        .map((token, key) => (
+                          <Button
+                            key={key}
+                            size="l"
+                            stretched
+                            className="fix-forpadding"
+                            onClick={() =>
+                              props.setUserToken(
+                                token
+                              )
+                            }
+                            mode={
+                              props.userToken
+                                ?.name ===
+                                token.name
+                                ? 'primary'
+                                : 'outline'
+                            }
+                            before={
+                              <img
+                                src={
+                                  token.image
+                                }
+                                className="logo-cur"
+                              />
+                            }
+                          >
+                            {token.name.toUpperCase()}
+                          </Button>
+                        ))}
                       {availableTokens.length ? (
                         <Button
                           size="l"
                           className="guid__step--4"
                           stretched
-                          onClick={() => props.setActiveModal("coins")}
-                          mode={"outline"}
-                          before={<img src={otherLogo} width={24} />}
+                          onClick={() =>
+                            props.setActiveModal(
+                              'coins'
+                            )
+                          }
+                          mode={'outline'}
+                          before={
+                            <img
+                              src={otherLogo}
+                              width={24}
+                            />
+                          }
                         >
                           Other
                         </Button>
@@ -347,17 +408,20 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
                     disabled={
                       isTokenPairPriceLoading ||
                       !props.userToken ||
-                      amount === "Unknown"
+                      amount === 'Unknown'
                     }
-                    style={{ backgroundImage: `url(${btn})` }}
+                    style={{
+                      backgroundImage: `url(${btn})`,
+                    }}
                     onClick={() => startPay()}
                   >
                     {isTokenPairPriceLoading ? (
                       <Spinner size="regular" />
                     ) : isSwitchNetworkLoading ? (
-                      "switching network..."
+                      'switching network...'
                     ) : (
-                      `Pay ${amount ?? ""} ${assetName ?? ""}`
+                      `Pay ${amount ?? ''} ${assetName ?? ''
+                      }`
                     )}
                   </Button>
                 ) : (
@@ -365,7 +429,9 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
                     stretched
                     size="l"
                     className="btn-connect guid__step--1"
-                    style={{ backgroundImage: `url(${btn})` }}
+                    style={{
+                      backgroundImage: `url(${btn})`,
+                    }}
                     before={<img src={wc} />}
                     onClick={() => open()}
                   >
@@ -376,19 +442,21 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
             ) : (
               <div className="proccess-block">
                 {address &&
-                chain &&
-                merchantToken &&
-                props.userToken &&
-                currentView === ViewVariant.PROCESS_BLOCK &&
-                currentBlockchain ? (
+                  chain &&
+                  merchantToken &&
+                  props.userToken &&
+                  currentView === ViewVariant.PROCESS_BLOCK &&
+                  currentBlockchain ? (
                   <div>
                     <ProcessBlock
-                      id={"all1"}
+                      id={'all1'}
                       consoleLog={props.consoleLog}
                       fee={fee}
-                      amount={+fee + +merchantAmount + ""}
+                      amount={+fee + +merchantAmount + ''}
                       merchantAmount={merchantAmount}
-                      feeAddress={info.payment.evm_fee_address}
+                      feeAddress={
+                        info.payment.evm_fee_address
+                      }
                       merchantAddress={merchantAddress}
                       merchantToken={merchantToken}
                       userToken={props.userToken}
@@ -413,13 +481,18 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
                   />
                 )}
 
-                {info.payment.status === PaymentStatus.success ? (
+                {info.payment.status ===
+                  PaymentStatus.success ? (
                   <Button
                     stretched
                     size="l"
                     className="btn-connect fix-padding"
-                    style={{ backgroundImage: `url(${btn})` }}
-                    href={info.merchant.success_redirect_url}
+                    style={{
+                      backgroundImage: `url(${btn})`,
+                    }}
+                    href={
+                      info.merchant.success_redirect_url
+                    }
                   >
                     Back to store
                   </Button>
@@ -428,12 +501,22 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
                     stretched
                     size="l"
                     className="btn-connect"
-                    style={{ backgroundImage: `url(${btn})` }}
+                    style={{
+                      backgroundImage: `url(${btn})`,
+                    }}
                     onClick={() => {
                       abortRef.current();
-                      dispatch(setSmartLineStatus(SmartLineStatus.DEFAULT));
+                      dispatch(
+                        setSmartLineStatus(
+                          SmartLineStatus.DEFAULT
+                        )
+                      );
                       dispatch(setView(ViewVariant.EVM));
-                      dispatch(setCurrentBlockchain(prevBlockchain));
+                      dispatch(
+                        setCurrentBlockchain(
+                          prevBlockchain
+                        )
+                      );
                     }}
                   >
                     Cancel
@@ -443,11 +526,15 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
             )}
 
             <small className="small-block">
-              By making a payment, you agree to the{" "}
-              <a href="https://poluspay.com/terms-of-use">Terms of Use</a>
+              By making a payment, you agree to the{' '}
+              <a href="https://poluspay.com/terms-of-use">
+                Terms of Use
+              </a>
               <br />
-              and{" "}
-              <a href="https://poluspay.com/privacy-policy">Privacy Policy</a>
+              and{' '}
+              <a href="https://poluspay.com/privacy-policy">
+                Privacy Policy
+              </a>
             </small>
 
             <div className="logo-block">
@@ -464,12 +551,12 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
           <div
             className="slide-in-bck-center"
             style={{
-              display: "flex",
-              alignItems: "center",
-              flexDirection: "column",
+              display: 'flex',
+              alignItems: 'center',
+              flexDirection: 'column',
             }}
           >
-            <Spinner size="large" style={{ margin: "20px 0" }} />
+            <Spinner size="large" style={{ margin: '20px 0' }} />
           </div>
         </div>
       )}
@@ -478,7 +565,7 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
         onCheatCodeEntered={() => {
           setCheatCode(true);
           dispatch(activateConnection());
-          props.consoleLog("Cheat code entered", true);
+          props.consoleLog('Cheat code entered', true);
         }}
       />
     </Panel>
