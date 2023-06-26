@@ -48,7 +48,7 @@ export class CustomProvider {
       to: QUOTER_ADDRESS[this.blockchain],
       data,
     });
-    return BigNumber.from(result);
+    return coder.decode(['uint256'], result)[0];
   }
 
   get RouterAddress() {
