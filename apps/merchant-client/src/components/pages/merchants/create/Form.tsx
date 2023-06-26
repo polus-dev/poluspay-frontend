@@ -1,29 +1,27 @@
-import React, { useState } from "react"
+import React, { useState } from 'react';
 
-import PButton from "../../../ui/PButton/PButton"
-import PInput from "../../../ui/PInput/PInput"
+import PButton from '../../../ui/PButton/PButton';
+import PInput from '../../../ui/PInput/PInput';
 
-import './Form.scoped.scss'
+import './Form.scoped.scss';
 
 interface FormProps {
-    changeStage: () => void
+    changeStage: () => void;
 }
 
-const MerchantForm: React.FC<FormProps> = ({
-    changeStage
-}) => {
-    const [name, setName] = useState('')
-    const [website, setWebsite] = useState('')
-    const [description, setDescription] = useState('')
+const MerchantForm: React.FC<FormProps> = ({ changeStage }) => {
+    const [name, setName] = useState('');
+    const [website, setWebsite] = useState('');
+    const [description, setDescription] = useState('');
 
     const handleTextareaInput = (event: React.FormEvent): void => {
-        if (!event.target) return undefined
+        if (!event.target) return undefined;
 
-        const target = event.target as HTMLInputElement
-        const value = target.value.trim()
+        const target = event.target as HTMLInputElement;
+        const value = target.value.trim();
 
-        setDescription(value)
-    }
+        setDescription(value);
+    };
 
     return (
         <div className="form">
@@ -42,9 +40,7 @@ const MerchantForm: React.FC<FormProps> = ({
                     />
                 </div>
                 <div className="form__item">
-                    <p className="form__item-label">
-                        Merchant's website
-                    </p>
+                    <p className="form__item-label">Merchant's website</p>
                     <PInput
                         placeholder="https://example.com"
                         value={website}
@@ -52,9 +48,7 @@ const MerchantForm: React.FC<FormProps> = ({
                     />
                 </div>
                 <div className="form__item">
-                    <p className="form__item-label">
-                        Description
-                    </p>
+                    <p className="form__item-label">Description</p>
                     <textarea
                         className="form__item-textarea"
                         placeholder="Few words about merchant"
@@ -68,9 +62,7 @@ const MerchantForm: React.FC<FormProps> = ({
                     wide
                     classname="form__button"
                     disabled={name.length === 0}
-                    children={
-                        <p>Continue</p>
-                    }
+                    children={<p>Continue</p>}
                     onClick={() => changeStage()}
                 />
             </div>
@@ -80,14 +72,12 @@ const MerchantForm: React.FC<FormProps> = ({
                     size="lg"
                     classname="form__button form__button--desktop"
                     disabled={name.length === 0}
-                    children={
-                        <p>Continue</p>
-                    }
+                    children={<p>Continue</p>}
                     onClick={() => changeStage()}
                 />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default MerchantForm
+export default MerchantForm;

@@ -1,27 +1,18 @@
-import { useNavigate } from 'react-router-dom'
+import './Removal.scoped.scss';
 
-import './Removal.scoped.scss'
+interface RemovalProps {
+    onDelete: () => void;
+}
 
-const SettingsRemoval: React.FC = () => {
-    const navigator = useNavigate()
-
-    const navigate = () => {
-        navigator('/settings/delete')
-    }
-
+const SettingsRemoval: React.FC<RemovalProps> = ({ onDelete }) => {
     return (
         <div className="removal">
-            <h6 className="removal__title">
-                Account removal
-            </h6>
-            <div
-                className="removal__action"
-                onClick={navigate}
-            >
+            <h6 className="removal__title">Account removal</h6>
+            <div className="removal__action" onClick={onDelete}>
                 Delete account
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default SettingsRemoval
+export default SettingsRemoval;

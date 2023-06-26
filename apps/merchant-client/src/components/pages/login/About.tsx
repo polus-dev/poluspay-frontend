@@ -59,9 +59,7 @@ const LoginAbout: React.FC = () => {
         <div className="about">
             <div className="about__inner">
                 <LogoPolus className="about__inner-logo" />
-                <div className="about__inner-container">
-                    {items}
-                </div>
+                <div className="about__inner-container">{items}</div>
             </div>
         </div>
     );

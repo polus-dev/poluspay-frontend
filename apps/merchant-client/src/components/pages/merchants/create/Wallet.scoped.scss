@@ -183,7 +183,7 @@
             height: auto;
             stroke: $color-white;
             cursor: pointer;
-            transition: stroke .15s ease-in-out;
+            transition: stroke 0.15s ease-in-out;
 
             &:hover {
                 stroke: $color-white-dark;

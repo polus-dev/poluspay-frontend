@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import classNames from 'classnames';
@@ -20,6 +21,18 @@ interface LabelProps {
 }
 
 const PLabel: React.FC<LabelProps> = ({ status = 'success', ...props }) => {
+    const [top, setTop] = useState(0);
+    const elHeader = useRef<HTMLElement | null>(null);
+
+    const calulateTopOffset = (): void => {
+        if (!elHeader.current) return undefined;
+
+        const height = elHeader.current.offsetHeight;
+        const gap = height - window.scrollY;
+
+        gap > 0 ? setTop(gap + 24) : setTop(0);
+    };
+
     const iconClassnames = classNames('polus-ui__notification-label-icon', {
         [`polus-ui__notification-label-icon--${status}`]: true,
     });
@@ -37,6 +50,13 @@ const PLabel: React.FC<LabelProps> = ({ status = 'success', ...props }) => {
     const hasDescription =
         props.description !== undefined && props.description.length !== 0;
 
+    useEffect(() => {
+        elHeader.current = document.querySelector('header');
+        window.addEventListener('scroll', calulateTopOffset);
+
+        calulateTopOffset();
+    }, []);
+
     return (
         <>
             <CSSTransition
@@ -48,7 +68,10 @@ const PLabel: React.FC<LabelProps> = ({ status = 'success', ...props }) => {
             >
                 <div className="polus-ui polus-ui__notification">
                     <div className="polus-ui__notification-container">
-                        <div className="polus-ui__notification-label">
+                        <div
+                            className="polus-ui__notification-label"
+                            style={{ marginTop: top ? `${top}px` : undefined }}
+                        >
                             <div className="polus-ui__notification-label-left">
                                 <div
                                     className={classNames(

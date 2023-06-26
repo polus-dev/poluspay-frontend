@@ -41,16 +41,17 @@ const PDropdown: React.FC<DropdownProps> = ({
     const [visible, setVisible] = useState(false);
     const [vertical, setVertical] = useState(position);
     const [horizontal, setHorizontal] = useState(align);
-    const [visibilityStyles, setVisibilityStyles] = useState<React.CSSProperties>({
-        opacity: 0,
-        pointerEvents: 'none'
-    })
+    const [visibilityStyles, setVisibilityStyles] =
+        useState<React.CSSProperties>({
+            opacity: 0,
+            pointerEvents: 'none',
+        });
 
     const style: React.CSSProperties = {
         margin: `${gap}px 0`,
         maxWidth: props.maxWidth ? `${props.maxWidth}px` : undefined,
         minWidth: props.minWidth ? `${props.minWidth}px` : undefined,
-        padding: `${padding[0]}px ${padding[1]}px`
+        padding: `${padding[0]}px ${padding[1]}px`,
     };
 
     const isEnoughSpaceOnPosition = (position: DropdownPosition) => {
@@ -140,15 +141,15 @@ const PDropdown: React.FC<DropdownProps> = ({
         if (visible) {
             setVisibilityStyles({
                 opacity: 1,
-                pointerEvents: 'all'
-            })
+                pointerEvents: 'all',
+            });
         } else {
             setVisibilityStyles({
                 opacity: 0,
-                pointerEvents: 'none'
-            })
+                pointerEvents: 'none',
+            });
         }
-    }, [visible])
+    }, [visible]);
 
     useLayoutEffect(() => {
         if (!visible) {
@@ -200,10 +201,10 @@ const PDropdown: React.FC<DropdownProps> = ({
                     <div
                         ref={elContent}
                         tabIndex={1}
-                        style={{...style, ...visibilityStyles}}
+                        style={{ ...style, ...visibilityStyles }}
                         className={classNames({
                             'polus-ui__dropdown-content': true,
-                            'polus-ui__dropdown-content--border': props.border
+                            'polus-ui__dropdown-content--border': props.border,
                         })}
                         onBlur={onHide}
                     >

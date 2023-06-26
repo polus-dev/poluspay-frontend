@@ -1,23 +1,21 @@
-import { ReactComponent as IconArrow } from '../../../../assets/icons/arrow.svg'
-import { ReactComponent as LogoShopify } from '../../../../assets/logos/plugins/shopify.svg'
-import { ReactComponent as LogoWooCommerce } from '../../../../assets/logos/plugins/woo-commerce.svg'
-import { ReactComponent as LogoTilda } from '../../../../assets/logos/plugins/tilda.svg'
+import { ReactComponent as IconArrow } from '../../../../assets/icons/arrow.svg';
+import { ReactComponent as LogoShopify } from '../../../../assets/logos/plugins/shopify.svg';
+import { ReactComponent as LogoWooCommerce } from '../../../../assets/logos/plugins/woo-commerce.svg';
+import { ReactComponent as LogoTilda } from '../../../../assets/logos/plugins/tilda.svg';
 
-import './Setup.scoped.scss'
-import React from 'react'
+import './Setup.scoped.scss';
+import React from 'react';
 
 interface SetupProps {
-    changeStage: (type: string) => void
+    changeStage: (type: string) => void;
 }
 
-const MerchantSetup: React.FC<SetupProps> = ({
-    changeStage
-}) => {
+const MerchantSetup: React.FC<SetupProps> = ({ changeStage }) => {
     const handleLinkClick = (event: React.MouseEvent) => {
-        event.stopPropagation()
+        event.stopPropagation();
 
-        window.open('https://t.me/poluspay_bot', '_blank')
-    }
+        window.open('https://t.me/poluspay_bot', '_blank');
+    };
 
     return (
         <div className="setup">
@@ -36,14 +34,11 @@ const MerchantSetup: React.FC<SetupProps> = ({
                         <IconArrow className="setup__inner-block-headline-icon" />
                     </div>
                     <p className="setup__inner-block-description">
-                        Create invoices via web panel or use our API
-                        to integrate Polus Payments into your website
+                        Create invoices via web panel or use our API to
+                        integrate Polus Payments into your website
                     </p>
                 </div>
-                <div
-                    className="setup__inner-block"
-                    onClick={handleLinkClick}
-                >
+                <div className="setup__inner-block" onClick={handleLinkClick}>
                     <div className="setup__inner-block-headline">
                         <h6 className="setup__inner-block-headline-title">
                             Telegram bot
@@ -90,7 +85,7 @@ const MerchantSetup: React.FC<SetupProps> = ({
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default MerchantSetup
+export default MerchantSetup;

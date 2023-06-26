@@ -48,7 +48,7 @@
         background-color: $color-black;
         border-radius: px-to-rem(10);
         outline: none;
-        transition: border, opacity .15s ease-in-out;
+        transition: border, opacity 0.15s ease-in-out;
 
         &:hover {
             border: 1px solid color.adjust($color-grey, $lightness: 5%);

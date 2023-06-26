@@ -1,22 +1,20 @@
-import PDropdown from '../../ui/PDropdown/PDropdown'
-import { ReactComponent as IconChevron } from '../../../assets/icons/chevron.svg'
-import { ReactComponent as IconWallet } from '../../../assets/icons/wallet.svg'
-import { ReactComponent as IconLogout } from '../../../assets/icons/logout.svg'
+import PDropdown from '../../ui/PDropdown/PDropdown';
+import { ReactComponent as IconChevron } from '../../../assets/icons/chevron.svg';
+import { ReactComponent as IconWallet } from '../../../assets/icons/wallet.svg';
+import { ReactComponent as IconLogout } from '../../../assets/icons/logout.svg';
 
-import './Account.scoped.scss'
+import './Account.scoped.scss';
 
 const Account: React.FC = () => {
-    const email = 'polus.info@gmail.com'
+    const email = 'polus.info@gmail.com';
 
     const getShortEmail = () => {
-        return window.innerWidth < 480
-            ? `${email.slice(0, 6)}...`
-            : email
-    }
+        return window.innerWidth < 480 ? `${email.slice(0, 6)}...` : email;
+    };
 
     const logout = () => {
-        console.log('qwe')
-    }
+        console.log('qwe');
+    };
 
     return (
         <div className="account">
@@ -78,7 +76,7 @@ const Account: React.FC = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Account
+export default Account;

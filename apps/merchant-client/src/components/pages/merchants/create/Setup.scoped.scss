@@ -28,7 +28,7 @@
         // cursor: pointer;
 
         &:hover {
-            stroke: $color-blue-light
+            stroke: $color-blue-light;
         }
 
         &:not(:last-child) {
@@ -55,7 +55,7 @@
         width: px-to-rem(20);
         height: auto;
         stroke: inherit;
-        transition: stroke .15s ease-in-out;
+        transition: stroke 0.15s ease-in-out;
     }
 
     &__inner-block-headline-label {
@@ -79,7 +79,7 @@
 
         &--link {
             color: $color-blue-light;
-            transition: color .15s ease-in-out;
+            transition: color 0.15s ease-in-out;
 
             &:hover {
                 color: $color-blue;

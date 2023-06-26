@@ -1,20 +1,20 @@
-import classNames from "classnames"
+import classNames from 'classnames';
 
-import './ProgressBar.scoped.scss'
+import './ProgressBar.scoped.scss';
 
 interface ProgressBarItem {
-    id: number
-    title: string
+    id: number;
+    title: string;
 }
 
 interface ProgressBarProps {
-    current: number
-    options: ProgressBarItem[]
+    current: number;
+    options: ProgressBarItem[];
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = (props) => {
-    const firstId = props.options[0].id
-    const lastOption = props.options.slice(-1)
+    const firstId = props.options[0].id;
+    const lastOption = props.options.slice(-1);
 
     return (
         <div className="progress-bar">
@@ -22,16 +22,18 @@ const ProgressBar: React.FC<ProgressBarProps> = (props) => {
                 <div
                     className="progress-bar__item"
                     style={{
-                        width: el.id !== lastOption[0].id
-                            ? `calc(100% / ${props.options.length - 1})`
-                            : '24px'
+                        width:
+                            el.id !== lastOption[0].id
+                                ? `calc(100% / ${props.options.length - 1})`
+                                : '24px',
                     }}
                     key={el.id}
                 >
                     <div
                         className={classNames({
                             'progress-bar__item-pointer': true,
-                            'progress-bar__item-pointer--active': props.current >= el.id,
+                            'progress-bar__item-pointer--active':
+                                props.current >= el.id,
                         })}
                     >
                         <div className="progress-bar__item-label">
@@ -42,7 +44,8 @@ const ProgressBar: React.FC<ProgressBarProps> = (props) => {
                         <div
                             className={classNames({
                                 'progress-bar__item-pointer__inner': true,
-                                'progress-bar__item-pointer__inner--active': el.id === firstId || props.current > el.id
+                                'progress-bar__item-pointer__inner--active':
+                                    el.id === firstId || props.current > el.id,
                             })}
                         />
                     </div>
@@ -50,14 +53,15 @@ const ProgressBar: React.FC<ProgressBarProps> = (props) => {
                         <div
                             className={classNames({
                                 'progress-bar__item-line': true,
-                                'progress-bar__item-line--active': props.current > el.id
+                                'progress-bar__item-line--active':
+                                    props.current > el.id,
                             })}
                         />
                     )}
                 </div>
             ))}
         </div>
-    )
-}
+    );
+};
 
-export default ProgressBar
+export default ProgressBar;

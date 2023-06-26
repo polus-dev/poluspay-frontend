@@ -90,7 +90,7 @@
         font-size: px-to-rem(18);
         font-weight: 400;
         line-height: 150%;
-        transition: color .15s ease-in-out;
+        transition: color 0.15s ease-in-out;
         cursor: pointer;
 
         &:hover {
@@ -103,6 +103,6 @@
         width: px-to-rem(20);
         height: auto;
         stroke: inherit;
-        transition: stroke .15s ease-in-out;
+        transition: stroke 0.15s ease-in-out;
     }
 }

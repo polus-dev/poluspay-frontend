@@ -48,7 +48,7 @@
         height: px-to-rem(24);
         border: px-to-rem(2) solid $color-grey-light;
         border-radius: 50%;
-        transition: border-color .25s ease-in-out;
+        transition: border-color 0.25s ease-in-out;
 
         &--active {
             border-color: $color-blue-light;
@@ -59,7 +59,7 @@
             height: px-to-rem(16);
             border-radius: 50%;
             background-color: transparent;
-            transition: background-color .25s ease-in-out;
+            transition: background-color 0.25s ease-in-out;
 
             &--active {
                 background-color: $color-blue-light;
@@ -71,7 +71,7 @@
         width: 100%;
         height: 1px;
         background-color: $color-grey-light;
-        transition: background-color .25s ease-in-out;
+        transition: background-color 0.25s ease-in-out;
 
         &--active {
             background-color: $color-blue-light;

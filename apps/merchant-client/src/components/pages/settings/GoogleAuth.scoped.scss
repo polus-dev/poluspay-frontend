@@ -52,7 +52,7 @@
         border: px-to-rem(2) solid $color-grey;
         background-color: $color-grey;
         border-radius: px-to-rem(12);
-        transition: border-color .15s ease-in-out;
+        transition: border-color 0.15s ease-in-out;
         cursor: pointer;
 
         &:hover {
