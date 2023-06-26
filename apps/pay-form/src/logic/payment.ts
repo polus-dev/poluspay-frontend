@@ -1,13 +1,19 @@
-import { BigNumber, ethers } from "ethers";
-import { AllowanceTransfer, PermitSingle } from "@uniswap/permit2-sdk";
-import { erc20ABI } from '@wagmi/core'
+import { BigNumber, ethers } from 'ethers';
+import { AllowanceTransfer, PermitSingle } from '@uniswap/permit2-sdk';
+import { erc20ABI } from '@wagmi/core';
 
-import permit2 from "../permit_abi.json";
-import { CustomRouter } from "./router";
-import { Blockchain_t, ChainId } from "../store/api/endpoints/types";
-import { Token as ERC20, WETH9 } from "@uniswap/sdk-core";
-import { Token } from "../store/api/types";
-import { ADDRESS_POLUS, PERMIT2_ADDRESS, RPCprovider, UNIVERSAL_ROUTER, QUOTER_ADDRESS } from "./config";
+import permit2 from '../permit_abi.json';
+import { CustomRouter } from './router';
+import { Blockchain_t, ChainId } from '../store/api/endpoints/types';
+import { Token as ERC20, WETH9 } from '@uniswap/sdk-core';
+import { Token } from '../store/api/types';
+import {
+  ADDRESS_POLUS,
+  PERMIT2_ADDRESS,
+  RPCprovider,
+  UNIVERSAL_ROUTER,
+  QUOTER_ADDRESS,
+} from './config';
 
 export type Permit2AllowanceType = {
   amount: bigint;
@@ -21,13 +27,14 @@ interface DataSign {
   value: any;
 }
 
-
 export class CustomProvider {
   protected provider: ethers.providers.JsonRpcProvider;
 
   constructor(protected blockchain: Blockchain_t) {
-    let networkRpcUrl = RPCprovider.find(el => el.name === blockchain)?.url;
-    if (!networkRpcUrl) throw new Error("networkRpcUrl is undefined");
+    let networkRpcUrl = RPCprovider.find(
+      (el) => el.name === blockchain
+    )?.url;
+    if (!networkRpcUrl) throw new Error('networkRpcUrl is undefined');
     this.provider = new ethers.providers.JsonRpcProvider(networkRpcUrl);
   }
 
@@ -41,27 +48,30 @@ export class CustomProvider {
   ): Promise<BigNumber> {
     const coder = new ethers.utils.AbiCoder();
     const data =
-      "0x2f80bb1d" +
-      coder.encode(["bytes", "uint256"], [path, amountOut]).replace("0x", "");
+      '0x2f80bb1d' +
+      coder
+        .encode(['bytes', 'uint256'], [path, amountOut])
+        .replace('0x', '');
+
     const result = await this.provider.call({
       // @ts-ignore
       to: QUOTER_ADDRESS[this.blockchain],
       data,
     });
-    return BigNumber.from(result);
+    return coder.decode(['uint256'], result)[0];
   }
 
   get RouterAddress() {
     // @ts-ignore
     const address = UNIVERSAL_ROUTER[this.blockchain];
-    if (!address) throw new Error("RouterAddress:address is undefined");
+    if (!address) throw new Error('RouterAddress:address is undefined');
     return address;
   }
 
   get PolusAddress() {
     // @ts-ignore
     const address = ADDRESS_POLUS[this.blockchain];
-    if (!address) throw new Error("PolusAddress:address is undefined");
+    if (!address) throw new Error('PolusAddress:address is undefined');
     return address;
   }
 
@@ -101,30 +111,30 @@ export class PaymentHelper extends CustomProvider {
   }
 
   public async checkAllowanceToUserToken(
-    type: "permit" | "polus" | "router"
+    type: 'permit' | 'polus' | 'router'
   ): Promise<BigNumber> {
     if (!this.userToken.contract)
-      throw new Error("checkAllowance:contract is undefined");
+      throw new Error('checkAllowance:contract is undefined');
 
     const to: string =
-      type === "permit"
+      type === 'permit'
         ? this.PermitAddress
-        : type === "polus"
+        : type === 'polus'
           ? this.PolusAddress
           : this.RouterAddress;
 
-    if (!to) throw new Error("checkAllowance:to address is undefined");
+    if (!to) throw new Error('checkAllowance:to address is undefined');
 
     try {
       return await this.userTokenContract.allowance(this.userAddress, to);
     } catch (error) {
-      throw new Error("checkAllowance:error");
+      throw new Error('checkAllowance:error');
     }
   }
 
   public dataForSign(nonce: number): DataSign {
     if (!this.userToken.contract)
-      throw new Error("dataForSign:contract is undefined");
+      throw new Error('dataForSign:contract is undefined');
 
     const dataForSign = CustomRouter.packToWagmi(
       this.userToken.contract,
@@ -150,16 +160,16 @@ export class PaymentHelper extends CustomProvider {
   }
 
   public async checkPermit(
-    type: "router" | "polus"
+    type: 'router' | 'polus'
   ): Promise<Permit2AllowanceType> {
     try {
       return await this.permitContract.allowance(
         this.userAddress,
         this.userToken.contract,
-        type === "router" ? this.RouterAddress : this.PolusAddress
+        type === 'router' ? this.RouterAddress : this.PolusAddress
       );
     } catch (error) {
-      throw new Error("checkPermit:error");
+      throw new Error('checkPermit:error');
     }
   }
 
@@ -187,15 +197,15 @@ export class PaymentHelper extends CustomProvider {
 
       return await this.userTokenContract.balanceOf(this.userAddress);
     } catch (error) {
-      throw new Error("getBalance:error");
+      throw new Error('getBalance:error');
     }
   }
 
-  get Context(): "universal router" | "polus contract" {
+  get Context(): 'universal router' | 'polus contract' {
     return (this.userToken.is_native && this.merchantToken.is_native) ||
       this.userToken.contract === this.merchantToken.contract
-      ? "polus contract"
-      : "universal router";
+      ? 'polus contract'
+      : 'universal router';
   }
 }
 
@@ -204,7 +214,7 @@ export class WrapAltToken {
     if (chainId === 137)
       return new ERC20(
         chainId,
-        "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
+        '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
         18
       );
     else return WETH9[chainId];
