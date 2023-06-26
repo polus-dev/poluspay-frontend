@@ -14,7 +14,11 @@
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
-        "paths": {}
+        "paths": {
+            "@poluspay-frontend/hooks": ["libs/hooks/src/index.ts"],
+            "@poluspay-frontend/redux": ["libs/redux/src/index.ts"],
+            "@poluspay-frontend/ui": ["libs/ui/src/index.ts"]
+        }
     },
     "exclude": ["node_modules", "tmp"]
 }
