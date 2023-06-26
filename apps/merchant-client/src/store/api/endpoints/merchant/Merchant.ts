@@ -14,13 +14,14 @@ import {
 } from './Merchant.interface';
 import { IPagination, IResponseApiDefault, IResponseError } from '../../types';
 import { RootState } from '../../../store';
+import { AuthHelper } from 'apps/merchant-client/src/logic/api';
 
 export const merchantApi = createApi({
     reducerPath: 'merchantApi' as const,
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_REACT_APP_BASE_URL + 'private',
-        prepareHeaders: (headers, { getState }) => {
-            const token = (getState() as RootState).auth.token;
+        prepareHeaders: (headers) => {
+            const token = new AuthHelper().checkAuth()?.token;
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             }

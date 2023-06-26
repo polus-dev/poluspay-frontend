@@ -9,9 +9,18 @@ import { ReactComponent as LogoPolus } from '../../assets/logos/poluspay.svg';
 import { ReactComponent as LogoPolusPlanet } from '../../assets/logos/polus-planet.svg';
 
 import './Header.scoped.scss';
+import { useGetMeQuery } from '../../store/api/endpoints/user/User';
+import { useAppDispatch } from '../../store/hooks';
+import { logout } from '../../store/features/auth/authSlice';
+import { useAccount } from 'wagmi';
+import { formatAddress } from 'tools';
 
 const Header: React.FC = () => {
     const elHeader = useRef<HTMLElement | null>(null);
+
+    const { data, isLoading } = useGetMeQuery();
+    const { address } = useAccount();
+    const dispatch = useAppDispatch();
 
     const [menuOpened, setMenuOpened] = useState(false);
     const isMenuScrolled = useRef(false);
@@ -46,7 +55,14 @@ const Header: React.FC = () => {
                     {/* either get data for account here and pass it as
                     a props or get it inside the Account component */}
                     <div className="header__menu-account">
-                        <Account />
+                        <Account
+                            username={
+                                data?.email ||
+                                (address && formatAddress(address)) ||
+                                ''
+                            }
+                            logout={() => dispatch(logout())}
+                        />
                     </div>
                     <Menu
                         onToggleMenu={() => setMenuOpened(!menuOpened)}
@@ -55,7 +71,14 @@ const Header: React.FC = () => {
                 </div>
                 {/* duplicate of Account (needed for ui) */}
                 <div className="header__account">
-                    <Account />
+                    <Account
+                        username={
+                            data?.email ||
+                            (address && formatAddress(address)) ||
+                            ''
+                        }
+                        logout={() => dispatch(logout())}
+                    />
                 </div>
             </div>
         </header>

@@ -5,15 +5,16 @@ import { ReactComponent as IconLogout } from '../../../assets/icons/logout.svg';
 
 import './Account.scoped.scss';
 
-const Account: React.FC = () => {
-    const email = 'polus.info@gmail.com';
+interface IAccountProps {
+    username: string;
+    logout: () => void;
+}
+
+const Account: React.FC<IAccountProps> = (props) => {
+    const email = props.username;
 
     const getShortEmail = () => {
         return window.innerWidth < 480 ? `${email.slice(0, 6)}...` : email;
-    };
-
-    const logout = () => {
-        console.log('qwe');
     };
 
     return (
@@ -65,7 +66,7 @@ const Account: React.FC = () => {
                                 <div className="account__user-content-divider" />
                                 <div
                                     className="account__user-content-button"
-                                    onClick={logout}
+                                    onClick={props.logout}
                                 >
                                     Log out
                                     <IconLogout className="account__user-content-button-icon" />

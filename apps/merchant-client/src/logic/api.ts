@@ -112,57 +112,33 @@ export type RespApi =
     | WebhookResp[]
     | AssetsResp;
 
-export class NewApi {
-    private _url = import.meta.env.VITE_REACT_APP_BASE_URL;
+export class AuthHelper {
+    private _storage = new StoragePolus();
+    private _token?: string;
 
-    private _token: string | undefined;
-
-    private _tokenRefresh: string | undefined;
-
-    private _user_id: string | undefined;
-
-    private _storage: StoragePolus;
-
-    private _au: boolean = false;
-
-    public get au(): boolean {
-        return this._au;
-    }
-
-    constructor(token?: string) {
+    public checkAuth() {
+        const token = this._storage.get('token');
+        const refresh = this._storage.get('refresh');
+        if (!refresh || !token) {
+            return;
+        }
         this._token = token;
-        this._storage = new StoragePolus();
-
-        // TODO: ???
-        this.checkAuth();
+        return { token, refresh };
     }
 
-    get token(): string | undefined {
+    public get token() {
+        this.checkAuth();
         return this._token;
     }
 
-    public checkAuth(): boolean {
-        const t = this._storage.get('token');
-        const t2 = this._storage.get('refresh');
-        const t3 = this._storage.get('user');
-        if (!t || !t2 || !t3) {
-            this._au = false;
-            return false;
-        }
-
-        this._token = t;
-        this._tokenRefresh = t2;
-        this._user_id = t3;
-
-        this._au = true;
-        return true;
+    public setTokens(token: string, refresh: string) {
+        this._storage.save('token', token);
+        this._storage.save('refresh', refresh);
     }
 
-    public logOut(): boolean {
+    public logOut() {
         this._storage.del('token');
         this._storage.del('refresh');
-        this._storage.del('user');
-        return true;
     }
 
     public async send(
@@ -250,37 +226,6 @@ export class NewApi {
         return <OtherApiResp>(<AllApiResp>res).data;
     }
 
-    public async getTokens(
-        email: string,
-        code: string
-    ): Promise<LoginApiResp | ErrorApiResp | undefined> {
-        const res = await this.send('public', 'auth.login', { email, code });
-
-        if (!res) {
-            return undefined;
-        }
-
-        if (res.code !== 200) {
-            return <ErrorApiResp>(<AllApiResp>res).data;
-        }
-
-        const resType = <LoginApiResp>(<AllApiResp>res).data;
-
-        resType.code = 200;
-
-        this._token = resType.access_token;
-        this._tokenRefresh = resType.refresh_token;
-
-        this._storage.save('token', resType.access_token);
-        this._storage.save('refresh', resType.refresh_token);
-
-        this._storage.save('user', '1');
-
-        this._au = true;
-
-        return resType;
-    }
-
     public async refreshToken(
         user_id: string,
         refresh_token: string
@@ -299,264 +244,5 @@ export class NewApi {
         }
 
         return <LoginApiResp>(<AllApiResp>res).data;
-    }
-
-    public async getAllMerchants(
-        page: number = 0
-    ): Promise<MerchantApiResp[] | ErrorApiResp | undefined> {
-        const limit = 50;
-        const offset = page * limit;
-        const res = await this.send('private', 'merchant.get', {
-            offset,
-            limit,
-        });
-
-        if (!res) {
-            return undefined;
-        }
-
-        if (res.code !== 200) {
-            return <ErrorApiResp>(<AllApiResp>res).data;
-        }
-
-        return <MerchantApiResp[]>(<AllApiResp>res).data;
-    }
-
-    public async getMerchantById(
-        id: string
-    ): Promise<MerchantApiResp[] | ErrorApiResp | undefined> {
-        const res = await this.send('private', 'merchant.get', {
-            merchant_id: id,
-        });
-
-        if (!res) {
-            return undefined;
-        }
-
-        if (res.code !== 200) {
-            return <ErrorApiResp>(<AllApiResp>res).data;
-        }
-
-        return <MerchantApiResp[]>(<AllApiResp>res).data;
-    }
-
-    public async verifyDomain(
-        merchant_id: string
-    ): Promise<OtherApiResp | ErrorApiResp | undefined> {
-        const res = await this.send('private', 'merchant.verifyDomain', {
-            merchant_id,
-        });
-
-        if (!res) {
-            return undefined;
-        }
-
-        if (res.code !== 200) {
-            return <ErrorApiResp>(<AllApiResp>res).data;
-        }
-
-        return <OtherApiResp>(<AllApiResp>res).data;
-    }
-
-    public async createMerchant(
-        name: string,
-        description: string,
-        domain: string,
-        evm_withdraw_address: string,
-        tron_withdraw_address: string | undefined
-    ): Promise<MerchantApiResp | ErrorApiResp | undefined> {
-        const res = await this.send('private', 'merchant.create', {
-            name,
-            description,
-            domain,
-            evm_withdraw_address,
-            tron_withdraw_address,
-        });
-
-        if (!res) {
-            return undefined;
-        }
-
-        if (res.code !== 200) {
-            return <ErrorApiResp>(<AllApiResp>res).data;
-        }
-
-        return <MerchantApiResp>(<AllApiResp>res).data;
-    }
-
-    public async updateMerchant(
-        name: string,
-        description: string | undefined,
-        evm_withdraw_address: string | undefined,
-        tron_withdraw_address: string | undefined,
-        merchant_id: string,
-        success_redirect_url: string | undefined,
-        fail_redirect_url: string | undefined
-    ): Promise<MerchantApiResp | ErrorApiResp | undefined> {
-        const res = await this.send('private', 'merchant.update', {
-            name,
-            description,
-            evm_withdraw_address,
-            tron_withdraw_address,
-            merchant_id,
-            success_redirect_url,
-            fail_redirect_url,
-        });
-
-        if (!res) {
-            return undefined;
-        }
-
-        if (res.code !== 200) {
-            return <ErrorApiResp>(<AllApiResp>res).data;
-        }
-
-        return <MerchantApiResp>(<AllApiResp>res).data;
-    }
-
-    public async getMe(): Promise<UserApiResp | ErrorApiResp | undefined> {
-        const res = await this.send('private', 'user.me', {});
-
-        if (!res) {
-            return undefined;
-        }
-
-        if (res.code !== 200) {
-            return <ErrorApiResp>(<AllApiResp>res).data;
-        }
-
-        return <UserApiResp>(<AllApiResp>res).data;
-    }
-
-    public async genKey(
-        merchant_id: string
-    ): Promise<GenKeyApiResp | ErrorApiResp | undefined> {
-        const res = await this.send('private', 'merchant.generateSigningKey', {
-            merchant_id,
-        });
-
-        if (!res) {
-            return undefined;
-        }
-
-        if (res.code !== 200) {
-            return <ErrorApiResp>(<AllApiResp>res).data;
-        }
-
-        return <GenKeyApiResp>(<AllApiResp>res).data;
-    }
-
-    public async setWebhook(
-        merchant_id: string,
-        webhook_url: string
-    ): Promise<OtherApiResp | ErrorApiResp | undefined> {
-        const res = await this.send('private', 'merchant.setWebhook', {
-            merchant_id,
-            webhook_url,
-        });
-
-        if (!res) {
-            return undefined;
-        }
-
-        if (res.code !== 200) {
-            return <ErrorApiResp>(<AllApiResp>res).data;
-        }
-
-        return <OtherApiResp>(<AllApiResp>res).data;
-    }
-
-    public async merchantDel(
-        merchant_id: string
-    ): Promise<OtherApiResp | ErrorApiResp | undefined> {
-        const res = await this.send('private', 'merchant.delete', {
-            merchant_id,
-        });
-
-        if (!res) {
-            return undefined;
-        }
-
-        if (res.code !== 200) {
-            return <ErrorApiResp>(<AllApiResp>res).data;
-        }
-
-        return <OtherApiResp>(<AllApiResp>res).data;
-    }
-
-    public async createPayment(
-        merchant_id: string,
-        description: string,
-        asset: string,
-        asset_amount: string,
-        evm_withdraw_address: string | undefined,
-        tron_withdraw_address: string | undefined
-    ): Promise<PaymentApiREsp | ErrorApiResp | undefined> {
-        const res = await this.send('private', 'payment.create', {
-            merchant_id,
-            description,
-            asset,
-            asset_amount,
-            evm_withdraw_address,
-            tron_withdraw_address,
-        });
-
-        if (!res) {
-            return undefined;
-        }
-
-        if (res.code !== 200) {
-            return <ErrorApiResp>(<AllApiResp>res).data;
-        }
-
-        return <PaymentApiREsp>(<AllApiResp>res).data;
-    }
-
-    public async getPaymentsFromMerchant(
-        merchant_id: string
-    ): Promise<PaymentApiREsp[] | ErrorApiResp | undefined> {
-        const res = await this.send('private', 'payment.get', { merchant_id });
-
-        if (!res) {
-            return undefined;
-        }
-
-        if (res.code !== 200) {
-            return <ErrorApiResp>(<AllApiResp>res).data;
-        }
-
-        return <PaymentApiREsp[]>(<AllApiResp>res).data;
-    }
-
-    public async getWebhook(
-        merchant_id: string
-    ): Promise<WebhookResp[] | ErrorApiResp | undefined> {
-        const res = await this.send('private', 'merchant.webhook.get', {
-            merchant_id,
-        });
-
-        if (!res) {
-            return undefined;
-        }
-
-        if (res.code !== 200) {
-            return <ErrorApiResp>(<AllApiResp>res).data;
-        }
-
-        return <WebhookResp[]>(<AllApiResp>res).data;
-    }
-
-    public async getAssets(): Promise<AssetsResp | ErrorApiResp | undefined> {
-        const res = await this.send('public', 'payment.assets.get', {});
-
-        if (!res) {
-            return undefined;
-        }
-
-        if (res.code !== 200) {
-            return <ErrorApiResp>(<AllApiResp>res).data;
-        }
-
-        return <AssetsResp>(<AllApiResp>res).data;
     }
 }

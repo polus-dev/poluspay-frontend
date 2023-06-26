@@ -1,17 +1,30 @@
 export interface IAuthRequestSendCode {
-    email: string;
+  email: string;
 }
 
 export interface IAuthRequestLogin extends IAuthRequestSendCode {
-    code: number;
+  code: number;
 }
 
 export interface IAuthResponseLogin {
-    access_token: string;
-    refresh_token: string;
+  access_token: string;
+  refresh_token: string;
 }
 
 export interface IAuthRequestRefresh {
-    user_id: string;
-    refresh_token: string;
+  user_id: string;
+  refresh_token: string;
+}
+
+export interface IAuthRequestNonce {
+  address: string;
+}
+
+export interface IAuthResponseNonce {
+  message: string;
+}
+
+export interface IAuthWalletLogin {
+  address: string;
+  signature: string;
 }

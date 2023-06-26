@@ -1,5 +1,5 @@
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import { emailRegex, CODE_LENGTH } from 'tools/index';
 import PButton from '../../ui/PButton/PButton';
 import PInput from '../../ui/PInput/PInput';
 import ConnectButton from '../../ConnectButton/ConnectButton';
@@ -9,29 +9,46 @@ import { ReactComponent as LogoGoogle } from '../../../assets/logos/google.svg';
 import classNames from 'classnames';
 
 import './Form.scoped.scss';
+import { useWalletAuth } from './hooks/useWalletAuth';
+import { useEmailAuth } from './hooks/useEmailAuth';
 
 const LoginForm: React.FC = () => {
+    const { open, text } = useWalletAuth();
+    const { sendCode, timer, isExpired, inProgress } = useEmailAuth();
     const [stage, setStage] = useState<1 | 2 | 3>(1);
 
     const [email, setEmail] = useState('');
     const [emailErrors, setEmailErrors] = useState<string[]>([]);
+    useEffect(() => {
+        if (!emailRegex.test(email) && email.length > 0) {
+            setEmailErrors(['Invalid email']);
+        } else {
+            setEmailErrors([]);
+        }
+    }, [email]);
 
     const [code, setCode] = useState('');
     const [codeErrors, setCodeErrors] = useState<string[]>([]);
+
+    useEffect(() => {
+        if (code.length > CODE_LENGTH && code.length > 0) {
+            setCodeErrors(['code is too long']);
+        } else {
+            setCodeErrors([]);
+        }
+    }, [code]);
 
     const disabled: boolean =
         (stage === 2 && (!email.length || emailErrors.length > 0)) ||
         (stage === 3 && (!code.length || codeErrors.length > 0));
 
-    const sendCode = () => {
-        console.log('send the request to resend  code on user`s email');
-    };
-
     const handleSubmit = () => {
         if (stage === 2) {
             console.log('handle email submitting');
+            sendCode({ email });
             setStage(3);
         } else if (stage === 3) {
+            sendCode({ email, code });
             console.log('handle verification code submitting');
         }
     };
@@ -42,7 +59,7 @@ const LoginForm: React.FC = () => {
                 <div className="form__inner">
                     <h1 className="form__inner-title">Login</h1>
                     <div className="form__inner-buttons">
-                        <ConnectButton />
+                        <ConnectButton onClick={open} text={text} />
                         <div className="form__inner-buttons-row">
                             <PButton
                                 wide
@@ -115,15 +132,16 @@ const LoginForm: React.FC = () => {
                             so put the disabled condition below instead of true */}
                             <div
                                 className={classNames('form__inner-item-data', {
-                                    'form__inner-item-data--disabled': true,
+                                    'form__inner-item-data--disabled':
+                                        isExpired,
                                 })}
                             >
                                 <p className="form__inner-item-label form__inner-item-label--timer">
-                                    timer
+                                    {timer}
                                 </p>
                                 <p
                                     className="form__inner-item-label form__inner-item-label--action"
-                                    onClick={sendCode}
+                                    onClick={() => sendCode({ email })}
                                 >
                                     Resend code
                                 </p>
