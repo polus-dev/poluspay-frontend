@@ -16,11 +16,10 @@ export const assetApi = createApi({
             transformResponse: (baseQueryReturnValue: IAssetsResponse) => {
                 // @ts-ignore
                 Object.keys(baseQueryReturnValue).forEach((assetKey) => {
-                    // @ts-ignore
                     baseQueryReturnValue[assetKey] =
                         baseQueryReturnValue[assetKey].networks;
-                    // @ts-ignore
-                    // baseQueryReturnValue[assetKey].image = TokenImages[assetKey];
+                    baseQueryReturnValue[assetKey].image =
+                        TokenImages[assetKey];
                 });
                 return baseQueryReturnValue;
             },
