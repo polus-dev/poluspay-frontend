@@ -1,0 +1,89 @@
+@use 'sass:color';
+
+@import '../../../../../assets/scss/variables';
+@import '../../../../../assets/scss/utils';
+
+.alerts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: px-to-rem(8);
+
+    @include breakpoint($screen-lg) {
+        gap: px-to-rem(18);
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(8);
+        width: auto;
+        height: px-to-rem(36);
+        padding: 0 px-to-rem(12);
+        color: $color-yellow;
+        stroke: $color-yellow;
+        fill: $color-yellow;
+        border: 1px solid $color-black-light;
+        background-color: $color-black-light;
+        border-radius: px-to-rem(8);
+        transition: border-color .15s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            border: 1px solid color.adjust($color-grey, $lightness: 5%);
+        }
+
+        @include breakpoint($screen-sm) {
+            height: px-to-rem(40);
+        }
+
+        @include breakpoint($screen-lg) {
+            height: px-to-rem(64);
+            padding: 0 px-to-rem(20);
+        }
+    }
+
+    &__item-inner {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(6);
+    }
+
+    &__item-icon {
+        width: px-to-rem(20);
+        height: auto;
+        stroke: inherit;
+        fill: inherit;
+
+        @include breakpoint($screen-md) {
+            width: px-to-rem(24);
+        }
+
+        @include breakpoint($screen-lg) {
+            width: px-to-rem(32);
+        }
+
+        &--arrow {
+            width: px-to-rem(20);
+            fill: none;
+        }
+    }
+
+    &__item-text {
+        color: inherit;
+        font-size: px-to-rem(14);
+        font-weight: 300;
+        line-height: 130%;
+        letter-spacing: px-to-rem(-.3);
+
+        @include breakpoint($screen-sm) {
+            font-size: px-to-rem(16);
+            font-weight: 400;
+            line-height: 150%;
+        }
+
+        @include breakpoint($screen-lg) {
+            font-size: px-to-rem(18);
+        }
+    }
+}
