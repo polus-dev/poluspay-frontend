@@ -30,13 +30,29 @@ export default function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/" element={<Layout />}>
                     <Route index element={<>app</>} />
+
+                    {/* main */}
+                    <Route path="/main" element={<>main page</>} />
+
+                    {/* settings */}
+                    <Route path="/dashboard" element={<>dashboard page</>} />
+
+                    {/* settings */}
+                    <Route path="/settings" element={<SettingsPage />} />
+
+                    {/* merchants */}
                     <Route path="/merchants" element={<MerchantsPage />} />
                     <Route
                         path="/merchants/create"
                         element={<MerchantsCreatePage />}
                     />
 
-                    <Route path="/settings" element={<SettingsPage />} />
+                    {/* merchant id */}
+                    <Route path="/merchants/:id/merchant" element={<div>merchant id page</div>} />
+                    <Route path="/merchants/:id/invoices" element={<div>invoices page</div>} />
+                    <Route path="/merchants/:id/wallet" element={<div>wallet page</div>} />
+                    <Route path="/merchants/:id/api" element={<div>api page</div>} />
+                    <Route path="/merchants/:id/plugins" element={<div> plugins page</div>} />
                 </Route>
             </Routes>
         </>
