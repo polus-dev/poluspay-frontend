@@ -8,6 +8,14 @@
     transition: right .25s ease-in-out;
     z-index: 10;
 
+    @include breakpoint($screen-sm) {
+        top: px-to-rem(102);
+    }
+
+    @include breakpoint($screen-md) {
+        top: px-to-rem(116);
+    }
+
     @include breakpoint($screen-lg) {
         right: px-to-rem(-260);
     }
