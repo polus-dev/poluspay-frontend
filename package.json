@@ -12,6 +12,7 @@
         "@reduxjs/toolkit": "^1.9.5",
         "@sentry/react": "^7.55.2",
         "@swc/helpers": "~0.5.0",
+        "@types/lodash-es": "^4.17.7",
         "@types/react-copy-to-clipboard": "^5.0.4",
         "@types/react-transition-group": "^4.4.6",
         "@uniswap/permit2-sdk": "^1.2.0",

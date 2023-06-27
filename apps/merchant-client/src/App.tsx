@@ -9,38 +9,38 @@ import { useAppSelector } from './store/hooks';
 import { useEffect } from 'react';
 
 export default function App() {
-  const path = useAppSelector((state) => state.router.path);
-  const isAuth = useAppSelector((state) => state.auth.isAuth);
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (path) {
-      navigate(path);
-    }
-  }, [path]);
+    const path = useAppSelector((state) => state.router.path);
+    const isAuth = useAppSelector((state) => state.auth.isAuth);
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (path) {
+            navigate(path);
+        }
+    }, [path]);
 
-  useEffect(() => {
-    if (!isAuth) {
-      navigate('/login');
-    } else {
-      navigate('/');
-    }
-  }, [isAuth]);
+    useEffect(() => {
+        if (!isAuth) {
+            navigate('/login');
+        } else {
+            navigate('/');
+        }
+    }, [isAuth]);
 
-  return (
-    <>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/" element={<Layout />}>
-          <Route index element={<>app</>} />
-          <Route path="/merchants" element={<MerchantsPage />} />
-          <Route
-            path="/merchants/create"
-            element={<MerchantsCreatePage />}
-          />
+    return (
+        <>
+            <Routes>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/" element={<Layout />}>
+                    <Route index element={<>app</>} />
+                    <Route path="/merchants" element={<MerchantsPage />} />
+                    <Route
+                        path="/merchants/create"
+                        element={<MerchantsCreatePage />}
+                    />
 
-          <Route path="/settings" element={<SettingsPage />} />
-        </Route>
-      </Routes>
-    </>
-  );
+                    <Route path="/settings" element={<SettingsPage />} />
+                </Route>
+            </Routes>
+        </>
+    );
 }

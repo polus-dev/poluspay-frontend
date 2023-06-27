@@ -8,21 +8,21 @@ import { authSlice } from './features/auth/authSlice';
 import { routerSlice } from './features/router/routerSlice';
 
 export const store = configureStore({
-  reducer: {
-    [merchantApi.reducerPath]: merchantApi.reducer,
-    [userApi.reducerPath]: userApi.reducer,
-    [paymentApi.reducerPath]: paymentApi.reducer,
-    [assetApi.reducerPath]: assetApi.reducer,
-    auth: authSlice.reducer,
-    router: routerSlice.reducer,
-  },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }).concat(
-      merchantApi.middleware,
-      userApi.middleware,
-      paymentApi.middleware,
-      assetApi.middleware
-    ),
+    reducer: {
+        [merchantApi.reducerPath]: merchantApi.reducer,
+        [userApi.reducerPath]: userApi.reducer,
+        [paymentApi.reducerPath]: paymentApi.reducer,
+        [assetApi.reducerPath]: assetApi.reducer,
+        auth: authSlice.reducer,
+        router: routerSlice.reducer,
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({ serializableCheck: false }).concat(
+            merchantApi.middleware,
+            userApi.middleware,
+            paymentApi.middleware,
+            assetApi.middleware
+        ),
 });
 
 setupListeners(store.dispatch);

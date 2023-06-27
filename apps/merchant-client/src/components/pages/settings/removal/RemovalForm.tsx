@@ -26,9 +26,9 @@ const SettingsRemovalForm: React.FC<RemovalFormProps> = ({
 
     const disabled = (): boolean => {
         return isConnected2FA
-            ? (email.length == 0 || code.length == 0)
-            : email.length == 0
-    }
+            ? email.length == 0 || code.length == 0
+            : email.length == 0;
+    };
 
     return (
         <div className="form">
