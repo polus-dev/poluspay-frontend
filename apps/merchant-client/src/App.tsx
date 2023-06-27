@@ -21,8 +21,6 @@ export default function App() {
     useEffect(() => {
         if (!isAuth) {
             navigate('/login');
-        } else {
-            navigate('/');
         }
     }, [isAuth]);
 
