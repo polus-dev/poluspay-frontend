@@ -1,27 +1,25 @@
-import { Icon56DiamondOutline, Icon56LaptopOutline, Icon56LinkCircleOutline, Icon56WalletOutline } from '@vkontakte/icons'
-import { Button, Card, CardGrid, Div, Group, Header, Panel, PanelHeader, Title } from '@vkontakte/vkui'
-import React, { useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Div, Panel } from '@vkontakte/vkui/old';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface MainProps {
-    id: string,
-    setActiveModal: Function
+    id: string;
+    setActiveModal: Function;
 }
 
 export const Invoices: React.FC<MainProps> = (props: MainProps) => {
-    const [ firstRender, setFirstRender ] = React.useState<boolean>(false)
+    const [firstRender, setFirstRender] = React.useState<boolean>(false);
 
-    const history = useNavigate()
+    const history = useNavigate();
 
     useEffect(() => {
         if (!firstRender) {
-            setFirstRender(true)
+            setFirstRender(true);
         }
-    }, [])
+    }, []);
 
     return (
         <Panel id={props.id}>
-
             <Div style={{ paddingTop: 0 }}>
                 <div className="admin-header-block">
                     <h5 className="polus-h5">Invoices</h5>
@@ -71,5 +69,5 @@ export const Invoices: React.FC<MainProps> = (props: MainProps) => {
                 </table>
             </Div>
         </Panel>
-    )
-}
+    );
+};

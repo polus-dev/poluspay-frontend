@@ -6,20 +6,21 @@ import {
   FormItem,
   IconButton,
   Input,
-} from "@vkontakte/vkui";
-import { useEffect, useState } from "react";
-import { QRCode } from "react-qr-svg";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { Icon16CopyOutline } from "@vkontakte/icons";
-import usdtLogo from "../img/usdt.svg";
-import bitcoin from "../img/btc.svg";
-import dogecoin from "../img/Dogecoin.svg";
-import litecoin from "../img/litecoin.svg";
-import { useGetAssetsQuery } from "../store/api/endpoints/asset/Asset";
-import { ethers } from "ethers";
-import { Asset_t, Blockchain_t } from "../store/api/endpoints/types";
-import { useAppSelector } from "../store/hooks";
-import { Payment } from "../store/api/endpoints/payment/Payment.interface";
+} from '@vkontakte/vkui';
+import { useEffect, useState } from 'react';
+import { QRCode } from 'react-qr-svg';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { Icon16CopyOutline } from '@vkontakte/icons';
+import usdtLogo from '../img/usdt.svg';
+import bitcoin from '../img/btc.svg';
+import dogecoin from '../img/Dogecoin.svg';
+import litecoin from '../img/litecoin.svg';
+import bitcoinCash from '../img/bitcoin-cash.svg';
+import { useGetAssetsQuery } from '../store/api/endpoints/asset/Asset';
+import { ethers } from 'ethers';
+import { Asset_t, Blockchain_t } from '../store/api/endpoints/types';
+import { useAppSelector } from '../store/hooks';
+import { Payment } from '../store/api/endpoints/payment/Payment.interface';
 
 interface AllType {
   id: string;
@@ -45,17 +46,15 @@ export const QRCodePayment = (props: AllType) => {
     (state) => state.connection.currentBlockchain
   );
   const [paymentInfoState, setPaymentInfoState] = useState<PaymentState>({
-    address: "",
-    amount: "-",
-    assetName: "usdt",
+    address: '',
+    amount: '-',
+    assetName: 'usdt',
   });
 
   useEffect(() => {
-
     if (!currentBlockchain) {
-      throw new Error("currentBlockchain is not defined");
+      throw new Error('currentBlockchain is not defined');
     }
-
 
     if (availableAssets) {
       const {
@@ -73,17 +72,19 @@ export const QRCodePayment = (props: AllType) => {
 
   if (isLoading)
     return (
-      <div style={{ margin: "1rem" }}>
+      <div style={{ margin: '1rem' }}>
         <CardGrid size="l">
           <Card>
             <Div
               style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
-              <span style={{ width: "100%", textAlign: "center" }}>
+              <span
+                style={{ width: '100%', textAlign: 'center' }}
+              >
                 Loading...
               </span>
             </Div>
@@ -96,34 +97,36 @@ export const QRCodePayment = (props: AllType) => {
     <div>
       <h2
         style={{
-          textAlign: "center",
-          marginBottom: "16px",
-          marginTop: "12px",
+          textAlign: 'center',
+          marginBottom: '16px',
+          marginTop: '12px',
         }}
       >
-        Send ${paymentInfoState.assetName.toUpperCase()}{" "}
+        Send ${paymentInfoState.assetName.toUpperCase()}{' '}
         <img
-          style={{ height: "25px" }}
+          style={{ height: '25px' }}
           src={
-            paymentInfoState.assetName === "usdt"
+            paymentInfoState.assetName === 'usdt'
               ? usdtLogo
-              : paymentInfoState.assetName === "btc"
+              : paymentInfoState.assetName === 'btc'
                 ? bitcoin
-                : paymentInfoState.assetName === "ltc"
+                : paymentInfoState.assetName === 'ltc'
                   ? litecoin
-                  : paymentInfoState.assetName === "doge"
+                  : paymentInfoState.assetName === 'doge'
                     ? dogecoin
-                    : ""
+                    : paymentInfoState.assetName === 'bch'
+                      ? bitcoinCash
+                      : ''
           }
         />
       </h2>
       <div
         style={{
-          margin: "0 auto",
-          marginBottom: "10px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          margin: '0 auto',
+          marginBottom: '10px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
         }}
       >
         <QRCode
@@ -132,9 +135,9 @@ export const QRCodePayment = (props: AllType) => {
           level="Q"
           style={{
             width: 170,
-            padding: "10px",
-            borderRadius: "16px",
-            background: "#fff",
+            padding: '10px',
+            borderRadius: '16px',
+            background: '#fff',
           }}
           value={`${currentBlockchain}:${paymentInfoState.address}?value=${paymentInfoState.amount}`}
         />
@@ -145,16 +148,19 @@ export const QRCodePayment = (props: AllType) => {
               value={paymentInfoState.amount}
               onChange={() => null}
               style={{
-                marginBottom: "10px",
-                marginTop: "10px",
-                userSelect: "all",
+                marginBottom: '10px',
+                marginTop: '10px',
+                userSelect: 'all',
               }}
               after={
                 <CopyToClipboard
                   text={paymentInfoState.amount.toString()}
-                  onCopy={() => props.log("Copyed", true)}
+                  onCopy={() => props.log('Copyed', true)}
                 >
-                  <IconButton hoverMode="opacity" aria-label="Copy">
+                  <IconButton
+                    hoverMode="opacity"
+                    aria-label="Copy"
+                  >
                     <Icon16CopyOutline />
                   </IconButton>
                 </CopyToClipboard>
@@ -166,13 +172,16 @@ export const QRCodePayment = (props: AllType) => {
             <Input
               value={paymentInfoState.address}
               onChange={() => null}
-              style={{ marginBottom: "10px", userSelect: "all" }}
+              style={{ marginBottom: '10px', userSelect: 'all' }}
               after={
                 <CopyToClipboard
                   text={paymentInfoState.address}
-                  onCopy={() => props.log("Copyed", true)}
+                  onCopy={() => props.log('Copyed', true)}
                 >
-                  <IconButton hoverMode="opacity" aria-label="Copy">
+                  <IconButton
+                    hoverMode="opacity"
+                    aria-label="Copy"
+                  >
                     <Icon16CopyOutline />
                   </IconButton>
                 </CopyToClipboard>
@@ -185,14 +194,14 @@ export const QRCodePayment = (props: AllType) => {
         <Card>
           <Div
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               // flexDirection: 'column'
             }}
           >
-            <span style={{ width: "100%" }}>
-              {`Check the amount you send in ${paymentInfoState.assetName.toUpperCase()} ${currentBlockchain.toUpperCase()}, in case it will be
+            <span style={{ width: '100%' }}>
+              {`Check the amount you send in ${paymentInfoState.assetName.toUpperCase()} ${currentBlockchain?.toUpperCase()}, in case it will be
                 different from ${paymentInfoState.amount}, funds may be lost`}
             </span>
           </Div>
