@@ -3,7 +3,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import classNames from 'classnames';
 
-import { ReactComponent as IconChevron } from '../../../assets/icons/chevron.svg';
+import { ReactComponent as IconChevron } from '../../../../../../apps/merchant-client/src/assets/icons/chevron.svg';
 
 import './styles.scss';
 
@@ -44,7 +44,7 @@ interface SelectProps {
     onBlur?: (event: React.FocusEvent) => void;
 }
 
-const PSelect: React.FC<SelectProps> = ({
+export const PSelect: React.FC<SelectProps> = ({
     size = SelectSize.Medium,
     mode = SelectMode.Default,
     closeOnSelectSingle = true,
@@ -273,4 +273,3 @@ const PSelect: React.FC<SelectProps> = ({
     );
 };
 
-export default PSelect;

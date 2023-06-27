@@ -26,7 +26,7 @@ interface TabsProps {
     onChange: (item: TabsItem) => void;
 }
 
-const PTabs: React.FC<TabsProps> = ({
+export const PTabs: React.FC<TabsProps> = ({
     active,
     disabled,
     items,
@@ -81,4 +81,3 @@ const PTabs: React.FC<TabsProps> = ({
     );
 };
 
-export default PTabs;

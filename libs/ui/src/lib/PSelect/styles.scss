@@ -2,8 +2,8 @@
 @use 'sass:math';
 @use 'sass:color';
 
-@import '../../../assets/scss/variables';
-@import '../../../assets/scss/utils';
+@import '../../../../../../apps/merchant-client/src/assets/scss/variables';
+@import '../../../../../../apps/merchant-client/src/assets/scss/utils';
 
 @keyframes fade-in {
     from {

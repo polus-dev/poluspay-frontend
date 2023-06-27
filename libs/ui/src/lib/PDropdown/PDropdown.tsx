@@ -29,7 +29,7 @@ interface DropdownProps {
     onHide?: () => void;
 }
 
-const PDropdown: React.FC<DropdownProps> = ({
+export const PDropdown: React.FC<DropdownProps> = ({
     position = DropdownPosition.Bottom,
     align = DropdownAlign.Left,
     gap = 14,
@@ -215,5 +215,3 @@ const PDropdown: React.FC<DropdownProps> = ({
         </div>
     );
 };
-
-export default PDropdown;

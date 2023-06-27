@@ -1,17 +1,9 @@
-import type { SelectOption } from './components/ui/PSelect/PSelect';
 
 import { useState } from 'react';
+import {} from "libs/ui/src/index"
 
 import useModal from './hooks/useModal';
-import PButton from './components/ui/PButton/PButton';
-import PInput from './components/ui/PInput/PInput';
-import PPagination from './components/ui/PPagination/PPagination';
-import PTabs from './components/ui/PTabs/PTabs';
-import PSelect from './components/ui/PSelect/PSelect';
-import PDropdown from './components/ui/PDropdown/PDropdown';
-import PLabel from './components/ui/PLabel/PLabel';
-import PSwitch from './components/ui/PSwitch/PSwitch';
-import ModalHyeta from './components/ui/PModal/Test';
+
 
 import { ReactComponent as IconCross } from './assets/icons/cross.svg';
 import { ReactComponent as IconLoading } from './assets/icons/loading.svg';

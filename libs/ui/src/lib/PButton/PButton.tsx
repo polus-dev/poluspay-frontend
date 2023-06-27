@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import classNames from 'classnames';
 
-import { ReactComponent as IconLoading } from '../../../assets/icons/loading.svg';
+import { ReactComponent as IconLoading } from '../../../../../../apps/merchant-client/src/assets/icons/loading.svg';
 
 import './styles.scss';
 
@@ -41,7 +41,7 @@ interface ButtonProps {
     onClick?: React.MouseEventHandler;
 }
 
-const PButton: React.FC<ButtonProps> = ({
+export const PButton: React.FC<ButtonProps> = ({
     target = '_blank',
     size = ButtonSize.Medium,
     color = ButtonColor.Blue,
@@ -104,5 +104,3 @@ const PButton: React.FC<ButtonProps> = ({
         </>
     );
 };
-
-export default PButton;

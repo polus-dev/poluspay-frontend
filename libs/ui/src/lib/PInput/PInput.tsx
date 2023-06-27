@@ -38,7 +38,7 @@ interface InputProps {
     onBlur?: (event: React.FocusEvent) => void;
 }
 
-const PInput: React.FC<InputProps> = ({
+export const PInput: React.FC<InputProps> = ({
     type = InputType.Text,
     size = InputSize.Medium,
     align = InputAlign.Left,
@@ -121,5 +121,3 @@ const PInput: React.FC<InputProps> = ({
         </div>
     );
 };
-
-export default PInput;

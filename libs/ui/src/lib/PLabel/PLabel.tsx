@@ -3,10 +3,10 @@ import { CSSTransition } from 'react-transition-group';
 
 import classNames from 'classnames';
 
-import { ReactComponent as IconLoading } from '../../../assets/icons/loading.svg';
-import { ReactComponent as IconSuccess } from '../../../assets/icons/checkmark.svg';
-import { ReactComponent as IconError } from '../../../assets/icons/error.svg';
-import { ReactComponent as IconWarning } from '../../../assets/icons/warning.svg';
+import { ReactComponent as IconLoading } from '../../../../../../apps/merchant-client/src/assets/icons/loading.svg';
+import { ReactComponent as IconSuccess } from '../../../../../../apps/merchant-client/src/assets/icons/checkmark.svg';
+import { ReactComponent as IconError } from '../../../../../../apps/merchant-client/src/assets/icons/error.svg';
+import { ReactComponent as IconWarning } from '../../../../../../apps/merchant-client/src/assets/icons/warning.svg';
 
 import './styles.scss';
 
@@ -20,7 +20,7 @@ interface LabelProps {
     description?: string;
 }
 
-const PLabel: React.FC<LabelProps> = ({ status = 'success', ...props }) => {
+export const PLabel: React.FC<LabelProps> = ({ status = 'success', ...props }) => {
     const [top, setTop] = useState(0);
     const elHeader = useRef<HTMLElement | null>(null);
 
@@ -118,5 +118,3 @@ const PLabel: React.FC<LabelProps> = ({ status = 'success', ...props }) => {
         </>
     );
 };
-
-export default PLabel;

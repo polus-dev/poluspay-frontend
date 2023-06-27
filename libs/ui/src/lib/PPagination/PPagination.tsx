@@ -11,7 +11,7 @@ interface PaginationProps {
     onPageChange: (page: number) => void;
 }
 
-const PPagination: React.FC<PaginationProps> = ({
+export const PPagination: React.FC<PaginationProps> = ({
     current = 1,
     totalItems = 0,
     pageItems = 10,
@@ -88,4 +88,3 @@ const PPagination: React.FC<PaginationProps> = ({
     );
 };
 
-export default PPagination;

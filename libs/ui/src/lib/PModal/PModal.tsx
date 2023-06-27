@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
-import { ReactComponent as IconCross } from '../../../assets/icons/cross.svg';
+import { ReactComponent as IconCross } from '../../../../../../apps/merchant-client/src/assets/icons/cross.svg';
 
 import './styles.scss';
 
@@ -15,7 +15,7 @@ interface ModalProps {
     onClose: () => void;
 }
 
-const PModal: React.FC<ModalProps> = ({ closable = true, ...props }) => {
+export const PModal: React.FC<ModalProps> = ({ closable = true, ...props }) => {
     const handleScrollable = (show: boolean) => {
         const classname = 'polus-ui__scroll-lock';
 
@@ -69,5 +69,3 @@ const PModal: React.FC<ModalProps> = ({ closable = true, ...props }) => {
         </>
     );
 };
-
-export default PModal;
