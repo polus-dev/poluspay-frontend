@@ -19,6 +19,7 @@ export const LoginForm: React.FC = () => {
 
     const [email, setEmail] = useState('');
     const [emailErrors, setEmailErrors] = useState<string[]>([]);
+
     useEffect(() => {
         if (!emailRegex.test(email) && email.length > 0) {
             setEmailErrors(['Invalid email']);
@@ -32,7 +33,7 @@ export const LoginForm: React.FC = () => {
 
     useEffect(() => {
         if (code.length > CODE_LENGTH && code.length > 0) {
-            setCodeErrors(['code is too long']);
+            setCodeErrors(['Invalid code']);
         } else {
             setCodeErrors([]);
         }
@@ -106,8 +107,9 @@ export const LoginForm: React.FC = () => {
                         </div>
                         <PInput
                             placeholder="email@example.com"
-                            readonly={stage === 3}
                             value={email}
+                            errors={emailErrors}
+                            readonly={stage === 3}
                             onInput={(value) => setEmail(value.toString())}
                         />
                     </div>
@@ -126,6 +128,7 @@ export const LoginForm: React.FC = () => {
                             <PInput
                                 placeholder="XXXXXX"
                                 value={code}
+                                errors={codeErrors}
                                 onInput={(value) => setCode(value.toString())}
                             />
                             {/* disabled class needs to be added only when timer !== 00:00

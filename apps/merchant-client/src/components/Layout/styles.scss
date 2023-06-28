@@ -38,5 +38,13 @@
     &__inner {
         width: 100%;
         max-width: px-to-rem(1190);
+
+        @include breakpoint($screen-xl) {
+            max-width: px-to-rem(1080);
+        }
+
+        @include breakpoint($screen-xxl) {
+            max-width: px-to-rem(1190);
+        }
     }
 }

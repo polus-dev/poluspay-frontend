@@ -141,6 +141,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ onFinish }) => {
                                 <PInput
                                     placeholder="example@gmail.com"
                                     value={email}
+                                    errors={emailErrors}
                                     readonly={stage === 3}
                                     onInput={(value) =>
                                         setEmail(value.toString())
@@ -163,6 +164,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ onFinish }) => {
                                 <PInput
                                     placeholder="XXXXXX"
                                     value={code}
+                                    errors={codeErrors}
                                     onInput={(value) =>
                                         setCode(value.toString())
                                     }

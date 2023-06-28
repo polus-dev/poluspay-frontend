@@ -57,6 +57,10 @@
         &:focus-within {
             border: 1px solid $color-blue-light;
         }
+
+        &::placeholder {
+            color: $color-grey-light;
+        }
     }
 
     &__button {

@@ -1,5 +1,5 @@
 import { MerchantProfileAlerts } from '../../../../components/pages/merchants/id/merchant/Alerts';
-import { MerchantProfileForm } from '../../../../components/pages/merchants/id/merchant/Form';
+import { MerchantProfileForm } from '../../../../components/pages/merchants/id/merchant/Form/Form';
 
 import './Merchant.scoped.scss';
 

@@ -27,6 +27,7 @@ interface InputProps {
     readonly?: boolean;
     disabled?: boolean;
     autofocus?: boolean;
+    trim?: boolean;
     type?: InputType | `${InputType}`;
     size?: InputSize | `${InputSize}`;
     align?: InputAlign | `${InputAlign}`;
@@ -39,6 +40,7 @@ interface InputProps {
 }
 
 export const PInput: React.FC<InputProps> = ({
+    trim = true,
     type = InputType.Text,
     size = InputSize.Medium,
     align = InputAlign.Left,
@@ -77,7 +79,9 @@ export const PInput: React.FC<InputProps> = ({
         const value =
             type === 'number'
                 ? parseInt(target.value, 10) || target.value
-                : target.value.trim();
+                : trim
+                    ? target.value.trim()
+                    : target.value
 
         props.onInput(value);
     };

@@ -60,6 +60,7 @@ export const SettingsRemovalForm: React.FC<RemovalFormProps> = ({
                     <PInput
                         placeholder="XXXXXX"
                         value={email}
+                        errors={emailErrors}
                         append={
                             <>
                                 {emailTimer ? (
@@ -99,6 +100,7 @@ export const SettingsRemovalForm: React.FC<RemovalFormProps> = ({
                         <PInput
                             placeholder="XXXXXX"
                             value={code}
+                            errors={codeErrors}
                             onInput={(value) => setCode(value.toString())}
                         />
                         <div className="form__inner-item-data">

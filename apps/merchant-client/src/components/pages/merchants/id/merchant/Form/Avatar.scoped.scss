@@ -1,0 +1,130 @@
+@import '../../../../../../assets/scss/variables';
+@import '../../../../../../assets/scss/utils';
+
+.avatar {
+    $moderated: #{&}__moderated;
+    $uploaded: #{&}__uploaded;
+
+    width: px-to-rem(50);
+    height: px-to-rem(50);
+
+    @include breakpoint($screen-md) {
+        width: px-to-rem(60);
+        height: px-to-rem(60);
+    }
+
+    &__upload {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        border: px-to-rem(2) solid $color-grey;
+        background-color: $color-grey;
+        border-radius: 50%;
+        transition: border-color .2s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            border-color: $color-blue-light;
+        }
+    }
+
+    &__upload-icon {
+        width: px-to-rem(20);
+        height: auto;
+        stroke: $color-white;
+
+        @include breakpoint($screen-lg) {
+            width: px-to-rem(24);
+        }
+    }
+
+    &__moderated,
+    &__uploaded {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    &__moderated {
+        &::after {
+            content: 'Avatar under moderation';
+            position: absolute;
+            left: 0;
+            bottom: px-to-rem(-34);
+            display: inline-flex;
+            align-items: center;
+            width: auto;
+            height: px-to-rem(30);
+            padding: 0 px-to-rem(10);
+            white-space: nowrap;
+            font-size: px-to-rem(14);
+            font-weight: 500;
+            background-color: $color-grey;
+            border-radius: px-to-rem(6);
+            transition: opacity .2s ease-in-out;
+            opacity: 0;
+        }
+
+        &:hover {
+            &::after {
+                opacity: 1;
+            }
+        }
+    }
+
+    &__uploaded {
+        cursor: pointer;
+    }
+
+    &__moderated-image,
+    &__uploaded-image {
+        width: 100%;
+        height: 100%;
+        border-radius: px-to-rem(8);
+        transition: opacity .2s ease-in-out;
+    }
+
+    &__moderated-image {
+        #{$moderated}:hover & {
+            opacity: .5;
+        }
+    }
+
+    &__uploaded-image {
+        #{$uploaded}:hover & {
+            opacity: .5;
+        }
+    }
+
+    &__moderated-icon,
+    &__uploaded-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: px-to-rem(20);
+        height: auto;
+        stroke: $color-white;
+        fill: $color-white;
+        transition: opacity .2s ease-in-out;
+        opacity: 0;
+    }
+
+    &__moderated-icon {
+        #{$moderated}:hover & {
+            opacity: 1;
+        }
+
+        @include breakpoint($screen-lg) {
+            width: px-to-rem(24);
+        }
+    }
+
+    &__uploaded-icon {
+        #{$uploaded}:hover & {
+            opacity: 1;
+        }
+    }
+}
