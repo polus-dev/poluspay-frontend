@@ -12,7 +12,7 @@ import './styles.scss';
 
 type LabelStatus = 'success' | 'error' | 'warning';
 
-interface LabelProps {
+export interface LabelProps {
     visible: boolean;
     status?: LabelStatus;
     loading?: boolean;
@@ -20,7 +20,10 @@ interface LabelProps {
     description?: string;
 }
 
-export const PLabel: React.FC<LabelProps> = ({ status = 'success', ...props }) => {
+export const PLabel: React.FC<LabelProps> = ({
+    status = 'success',
+    ...props
+}) => {
     const [top, setTop] = useState(0);
     const elHeader = useRef<HTMLElement | null>(null);
 

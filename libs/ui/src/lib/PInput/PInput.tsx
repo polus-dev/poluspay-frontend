@@ -80,8 +80,8 @@ export const PInput: React.FC<InputProps> = ({
             type === 'number'
                 ? parseInt(target.value, 10) || target.value
                 : trim
-                    ? target.value.trim()
-                    : target.value
+                ? target.value.trim()
+                : target.value;
 
         props.onInput(value);
     };

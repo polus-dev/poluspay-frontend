@@ -87,4 +87,3 @@ export const PPagination: React.FC<PaginationProps> = ({
         </div>
     );
 };
-

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { emailRegex, CODE_LENGTH } from 'tools/index';
 
-import { PButton, PInput } from '@poluspay-frontend/ui';
+import { PButton, PInput, useNotify } from '@poluspay-frontend/ui';
 import { ConnectButton } from '../../ui/ConnectButton/ConnectButton';
 import { ReactComponent as IconMail } from '../../../assets/icons/mail.svg';
 import { ReactComponent as LogoGoogle } from '../../../assets/logos/google.svg';
@@ -19,6 +19,8 @@ export const LoginForm: React.FC = () => {
 
     const [email, setEmail] = useState('');
     const [emailErrors, setEmailErrors] = useState<string[]>([]);
+
+    const { Label, notify } = useNotify();
 
     useEffect(() => {
         if (!emailRegex.test(email) && email.length > 0) {
@@ -45,6 +47,11 @@ export const LoginForm: React.FC = () => {
 
     const handleSubmit = () => {
         if (stage === 2) {
+            notify({
+                title: 'Email sent',
+                description: 'Please check your inbox',
+                status: 'success',
+            });
             console.log('handle email submitting');
             sendCode({ email });
             setStage(3);
@@ -167,6 +174,7 @@ export const LoginForm: React.FC = () => {
                     />
                 </div>
             )}
+            <Label />
         </div>
     );
 };

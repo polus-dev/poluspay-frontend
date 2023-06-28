@@ -1,4 +1,4 @@
-import type { SelectOption } from 'libs/ui/src/index';
+import type { SelectOption } from '@poluspay-frontend/ui';
 
 import { useState } from 'react';
 
@@ -11,7 +11,7 @@ import {
     PDropdown,
     PSwitch,
     PLabel,
-} from 'libs/ui/src/index';
+} from '@poluspay-frontend/ui';
 
 import { ReactComponent as IconCross } from './assets/icons/cross.svg';
 import { ReactComponent as IconLoading } from './assets/icons/loading.svg';

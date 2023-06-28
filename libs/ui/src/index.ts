@@ -7,3 +7,4 @@ export * from './lib/PPagination/PPagination';
 export * from './lib/PSelect/PSelect';
 export * from './lib/PTabs/PTabs';
 export * from './lib/PSwitch/PSwitch';
+export * from './hooks/useNotify';

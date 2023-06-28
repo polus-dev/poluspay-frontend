@@ -271,4 +271,3 @@ export const PSelect: React.FC<SelectProps> = ({
         </div>
     );
 };
-

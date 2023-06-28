@@ -80,4 +80,3 @@ export const PTabs: React.FC<TabsProps> = ({
         </div>
     );
 };
-
