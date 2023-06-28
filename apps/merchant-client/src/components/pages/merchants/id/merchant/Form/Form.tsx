@@ -3,42 +3,42 @@ import { useState } from 'react';
 import { useModal } from '../../../../../../hooks/useModal';
 
 import { PButton, PInput } from '@poluspay-frontend/ui';
-import { MerchantProfileAvatar } from './Avatar'
-import { ModalMerchantDelete } from '../../../../../modals/MerchantDelete/MerchantDelete'
-import { ReactComponent as IconCopy } from '../../../../../../assets/icons/copy.svg'
+import { MerchantProfileAvatar } from './Avatar';
+import { ModalMerchantDelete } from '../../../../../modals/MerchantDelete/MerchantDelete';
+import { ReactComponent as IconCopy } from '../../../../../../assets/icons/copy.svg';
 
 import classNames from 'classnames';
 
-import './Form.scoped.scss'
+import './Form.scoped.scss';
 
 export const MerchantProfileForm: React.FC = () => {
-    const modalDelete = useModal()
-    const modalAvatar = useModal()
+    const modalDelete = useModal();
+    const modalAvatar = useModal();
 
-    const merchantId = '90ca217e-e429-4cbd-bf53-52b44e351e59'
+    const merchantId = '90ca217e-e429-4cbd-bf53-52b44e351e59';
 
-    const [copied, setCopied] = useState(false)
+    const [copied, setCopied] = useState(false);
 
-    const [name, setName] = useState('')
-    const [domain, setDomain] = useState('')
-    const [brand, setBrand] = useState('')
-    const [description, setDescription] = useState('')
+    const [name, setName] = useState('');
+    const [domain, setDomain] = useState('');
+    const [brand, setBrand] = useState('');
+    const [description, setDescription] = useState('');
 
     const getShortMerchantId = () => {
-        return `${merchantId.slice(0, 8)}...${merchantId.slice(-8)}`
-    }
+        return `${merchantId.slice(0, 8)}...${merchantId.slice(-8)}`;
+    };
 
     const copyId = () => {
-        if (copied) return undefined
+        if (copied) return undefined;
 
-        navigator.clipboard.writeText(merchantId)
+        navigator.clipboard.writeText(merchantId);
 
-        setCopied(true)
+        setCopied(true);
 
         setTimeout(() => {
-            setCopied(false)
-        }, 3000)
-    }
+            setCopied(false);
+        }, 3000);
+    };
 
     const handleTextareaInput = (event: React.FormEvent): void => {
         if (!event.target) return undefined;
@@ -54,14 +54,12 @@ export const MerchantProfileForm: React.FC = () => {
         // close modal, then remove merchant, then navigate to /merchants
         // then show the notification about successfull removal
 
-        console.log('remove merchant')
-    }
+        console.log('remove merchant');
+    };
 
     return (
         <div className="form">
-            <h4 className="form__title">
-                Merchant
-            </h4>
+            <h4 className="form__title">Merchant</h4>
             <div className="form__inner">
                 <div className="form__inner-user">
                     <div className="form__inner-user__avatar">
@@ -77,7 +75,8 @@ export const MerchantProfileForm: React.FC = () => {
                             <p
                                 className={classNames({
                                     'form__inner-user__data-id-value': true,
-                                    'form__inner-user__data-id-value--blue': copied
+                                    'form__inner-user__data-id-value--blue':
+                                        copied,
                                 })}
                             >
                                 {copied ? 'Copied!' : getShortMerchantId()}
@@ -85,8 +84,10 @@ export const MerchantProfileForm: React.FC = () => {
                             <p
                                 className={classNames({
                                     'form__inner-user__data-id-value': true,
-                                    'form__inner-user__data-id-value--blue': copied,
-                                    'form__inner-user__data-id-value--desktop': true
+                                    'form__inner-user__data-id-value--blue':
+                                        copied,
+                                    'form__inner-user__data-id-value--desktop':
+                                        true,
                                 })}
                             >
                                 {copied ? 'Copied!' : merchantId}
@@ -149,9 +150,7 @@ export const MerchantProfileForm: React.FC = () => {
                         <PButton
                             wide
                             disabled={true}
-                            children={
-                                <p>Save</p>
-                            }
+                            children={<p>Save</p>}
                             onClick={() => console.log('save changes')}
                         />
                     </div>
@@ -169,5 +168,5 @@ export const MerchantProfileForm: React.FC = () => {
                 onDelete={handleMerchantRemoval}
             />
         </div>
-    )
+    );
 };

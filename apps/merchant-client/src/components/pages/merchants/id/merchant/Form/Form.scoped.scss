@@ -78,7 +78,7 @@
             font-size: px-to-rem(16);
             font-weight: 400;
             line-height: 150%;
-            transition: color .15s ease-in-out;
+            transition: color 0.15s ease-in-out;
 
             @include breakpoint($screen-md) {
                 display: none;
@@ -101,7 +101,7 @@
             width: px-to-rem(20);
             height: auto;
             stroke: $color-white-dark;
-            transition: stroke .15s ease-in-out;
+            transition: stroke 0.15s ease-in-out;
             cursor: pointer;
 
             &:hover {
@@ -201,7 +201,7 @@
             font-size: px-to-rem(18);
             font-weight: 500;
             line-height: 130%;
-            transition: color .15s ease-in-out;
+            transition: color 0.15s ease-in-out;
             cursor: pointer;
 
             &:hover {

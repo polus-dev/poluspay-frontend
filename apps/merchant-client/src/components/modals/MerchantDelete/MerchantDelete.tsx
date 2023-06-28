@@ -1,45 +1,41 @@
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom';
 import { useEffect, useState } from 'react';
 
-import {
-    PButton,
-    PInput,
-    PModal
-} from "@poluspay-frontend/ui";
+import { PButton, PInput, PModal } from '@poluspay-frontend/ui';
 
-import './MerchantDelete.scoped.scss'
+import './MerchantDelete.scoped.scss';
 
 interface ModalProps {
-    visible: boolean
-    onClose: () => void
-    onDelete: () => void
+    visible: boolean;
+    onClose: () => void;
+    onDelete: () => void;
 }
 
 export const ModalMerchantDelete: React.FC<ModalProps> = ({
     visible,
     onClose,
-    onDelete
+    onDelete,
 }) => {
-    const merchantName = 'Polus Game'
+    const merchantName = 'Polus Game';
 
-    const [name, setName] = useState('')
-    const [errors, setErrors] = useState<string[]>([])
+    const [name, setName] = useState('');
+    const [errors, setErrors] = useState<string[]>([]);
 
     const handleDelete = () => {
         if (name !== merchantName) {
-            setErrors([ 'Invalid name' ])
+            setErrors(['Invalid name']);
 
-            return undefined
+            return undefined;
         }
 
-        onDelete()
-    }
+        onDelete();
+    };
 
     useEffect(() => {
         if (errors.length !== 0) {
-            setErrors([])
+            setErrors([]);
         }
-    }, [name])
+    }, [name]);
 
     return ReactDOM.createPortal(
         <>
@@ -60,8 +56,7 @@ export const ModalMerchantDelete: React.FC<ModalProps> = ({
                 body={
                     <div className="modal__body">
                         <p className="modal__body-description">
-                            To confirm, please enter
-                            the name of merchant
+                            To confirm, please enter the name of merchant
                         </p>
                         <PInput
                             autofocus
@@ -76,9 +71,7 @@ export const ModalMerchantDelete: React.FC<ModalProps> = ({
                                 <PButton
                                     wide
                                     outline
-                                    children={
-                                        <p>Cancel</p>
-                                    }
+                                    children={<p>Cancel</p>}
                                     onClick={onClose}
                                 />
                             </div>
@@ -86,9 +79,7 @@ export const ModalMerchantDelete: React.FC<ModalProps> = ({
                                 <PButton
                                     wide
                                     disabled={!name}
-                                    children={
-                                        <p>Delete</p>
-                                    }
+                                    children={<p>Delete</p>}
                                     onClick={handleDelete}
                                 />
                             </div>
@@ -99,5 +90,5 @@ export const ModalMerchantDelete: React.FC<ModalProps> = ({
             />
         </>,
         document.body
-    )
-}
+    );
+};

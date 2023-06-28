@@ -1,30 +1,25 @@
-import { useState } from "react"
+import { useState } from 'react';
 
-import { ReactComponent as IconUpload } from '../../../../../../assets/icons/upload.svg'
-import { ReactComponent as IconWarning } from '../../../../../../assets/icons/warning.svg'
-import { ReactComponent as IconEdit } from '../../../../../../assets/icons/edit.svg'
+import { ReactComponent as IconUpload } from '../../../../../../assets/icons/upload.svg';
+import { ReactComponent as IconWarning } from '../../../../../../assets/icons/warning.svg';
+import { ReactComponent as IconEdit } from '../../../../../../assets/icons/edit.svg';
 
-import './Avatar.scoped.scss'
+import './Avatar.scoped.scss';
 
-type AvatarState = 'undefined' | 'moderated' | 'uploaded'
+type AvatarState = 'undefined' | 'moderated' | 'uploaded';
 
 interface AvatarProps {
-    openModal: () => void
+    openModal: () => void;
 }
 
-export const MerchantProfileAvatar: React.FC<AvatarProps> = ({
-    openModal
-}) => {
+export const MerchantProfileAvatar: React.FC<AvatarProps> = ({ openModal }) => {
     // replace with actual data
-    const [avatarState, setAvatarState] = useState<AvatarState>('undefined')
+    const [avatarState, setAvatarState] = useState<AvatarState>('undefined');
 
     return (
         <div className="avatar">
             {avatarState === 'undefined' && (
-                <div
-                    className="avatar__upload"
-                    onClick={openModal}
-                >
+                <div className="avatar__upload" onClick={openModal}>
                     <IconUpload className="avatar__upload-icon" />
                 </div>
             )}
@@ -39,10 +34,7 @@ export const MerchantProfileAvatar: React.FC<AvatarProps> = ({
                 </div>
             )}
             {avatarState === 'uploaded' && (
-                <div
-                    className="avatar__uploaded"
-                    onClick={openModal}
-                >
+                <div className="avatar__uploaded" onClick={openModal}>
                     <img
                         className="avatar__uploaded-image"
                         src="/images/connect-button.jpg"
@@ -52,5 +44,5 @@ export const MerchantProfileAvatar: React.FC<AvatarProps> = ({
                 </div>
             )}
         </div>
-    )
-}
+    );
+};
