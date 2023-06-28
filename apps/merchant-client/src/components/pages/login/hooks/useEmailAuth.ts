@@ -1,8 +1,8 @@
 import { useAppDispatch } from 'apps/merchant-client/src/store/hooks';
 import { emailAuthThunk } from 'apps/merchant-client/src/store/api/endpoints/auth/emailAuthThunk';
 import { useTimer } from 'libs/hooks/src/index';
-import { useCallback, useEffect, useState } from 'react';
-import { StoragePolus } from 'apps/merchant-client/src/logic/storage';
+import { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface IEmailAuth {
     email: string;
@@ -10,36 +10,39 @@ interface IEmailAuth {
 }
 export const useEmailAuth = () => {
     const dispatch = useAppDispatch();
-    const storage = new StoragePolus();
-    const [expiresAt, setExpiresAt] = useState<string>(
-        storage.get('send_code_limit')
-    );
+    const navigate = useNavigate();
+    const [expiresAt, setExpiresAt] = useState<string>();
     const { timer, isExpired } = useTimer(expiresAt);
 
     const sendCode = useCallback(
-        (args: IEmailAuth) => {
-            const { email, code } = args;
-            if (!code) {
-                const sendCodeLimitExpire = new Date(
-                    Date.now() + 60000
-                ).toISOString();
-                setExpiresAt(sendCodeLimitExpire);
-                storage.save('send_code_limit', sendCodeLimitExpire);
+        async (args: IEmailAuth) => {
+            try {
+                const { email, code } = args;
+                if (!code) {
+                    debugger;
+                    const sendCodeLimitExpire = new Date(
+                        Date.now() + 60000
+                    ).toISOString();
+                    setExpiresAt(sendCodeLimitExpire);
+                    dispatch(emailAuthThunk({ email }));
+                } else if (isExpired) {
+                    const response = Boolean(
+                        await dispatch(emailAuthThunk({ code, email })).unwrap()
+                    );
+                    if (response) {
+                        navigate('/');
+                    }
+                }
+            } catch (error) {
+                console.error(error);
             }
-            isExpired && dispatch(emailAuthThunk({ code, email }));
         },
         [isExpired, dispatch]
     );
 
-    useEffect(() => {
-        if (isExpired) {
-            storage.del('send_code_limit');
-        }
-    }, [isExpired]);
     return {
         sendCode,
         timer,
         isExpired,
-        inProgress: Boolean(storage.get('send_code_limit')),
     };
 };

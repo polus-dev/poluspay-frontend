@@ -11,16 +11,16 @@ import { ReactComponent as LogoPolusPlanet } from '../../assets/logos/polus-plan
 import './Header.scoped.scss';
 import { useGetMeQuery } from '../../store/api/endpoints/user/User';
 import { useAppDispatch } from '../../store/hooks';
-import { logout } from '../../store/features/auth/authSlice';
 import { useAccount } from 'wagmi';
 import { formatAddress } from 'tools';
+import { useLogout } from './hooks/useLogout';
 
 export const Header: React.FC = () => {
     const elHeader = useRef<HTMLElement | null>(null);
 
     const { data, isLoading } = useGetMeQuery();
     const { address } = useAccount();
-    const dispatch = useAppDispatch();
+    const { logout } = useLogout();
 
     const [menuOpened, setMenuOpened] = useState(false);
     const isMenuScrolled = useRef(false);
@@ -57,11 +57,13 @@ export const Header: React.FC = () => {
                     <div className="header__menu-account">
                         <Account
                             username={
-                                data?.email ||
-                                (address && formatAddress(address)) ||
-                                ''
+                                isLoading
+                                    ? 'Loading...'
+                                    : data?.email ||
+                                      (address && formatAddress(address)) ||
+                                      ''
                             }
-                            logout={() => dispatch(logout())}
+                            logout={logout}
                         />
                     </div>
                     <Menu
@@ -73,11 +75,13 @@ export const Header: React.FC = () => {
                 <div className="header__account">
                     <Account
                         username={
-                            data?.email ||
-                            (address && formatAddress(address)) ||
-                            ''
+                            isLoading
+                                ? 'Loading...'
+                                : data?.email ||
+                                  (address && formatAddress(address)) ||
+                                  ''
                         }
-                        logout={() => dispatch(logout())}
+                        logout={logout}
                     />
                 </div>
             </div>

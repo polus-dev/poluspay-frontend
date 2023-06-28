@@ -13,8 +13,8 @@ import { useWalletAuth } from './hooks/useWalletAuth';
 import { useEmailAuth } from './hooks/useEmailAuth';
 
 export const LoginForm: React.FC = () => {
-    const { open, text } = useWalletAuth();
-    const { sendCode, timer, isExpired, inProgress } = useEmailAuth();
+    const { connectWallet, isAuthLoading } = useWalletAuth();
+    const { sendCode, timer, isExpired } = useEmailAuth();
     const [stage, setStage] = useState<1 | 2 | 3>(1);
 
     const [email, setEmail] = useState('');
@@ -60,7 +60,14 @@ export const LoginForm: React.FC = () => {
                 <div className="form__inner">
                     <h1 className="form__inner-title">Login</h1>
                     <div className="form__inner-buttons">
-                        <ConnectButton onClick={open} text={text} />
+                        <ConnectButton
+                            onClick={connectWallet}
+                            text={
+                                isAuthLoading
+                                    ? 'Connecting...'
+                                    : 'Connect Wallet'
+                            }
+                        />
                         <div className="form__inner-buttons-row">
                             <PButton
                                 wide
@@ -136,7 +143,7 @@ export const LoginForm: React.FC = () => {
                             <div
                                 className={classNames('form__inner-item-data', {
                                     'form__inner-item-data--disabled':
-                                        isExpired,
+                                        !isExpired,
                                 })}
                             >
                                 <p className="form__inner-item-label form__inner-item-label--timer">

@@ -1,25 +1,33 @@
 import { useWeb3Modal } from '@web3modal/react';
 import { walletAuthThunk } from 'apps/merchant-client/src/store/api/endpoints/auth/walletAuthThunk';
-import { useAppDispatch } from 'apps/merchant-client/src/store/hooks';
-import { useEffect, useState } from 'react';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from 'apps/merchant-client/src/store/hooks';
+import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 
 export const useWalletAuth = () => {
-    const [text, setText] = useState('Connect Wallet');
-
     const dispatch = useAppDispatch();
+    const isAuthLoading = useAppSelector((state) => state.auth.isAuthLoading);
+    const navigate = useNavigate();
 
-    const { address, isConnecting } = useAccount();
+    const { address } = useAccount();
 
     const { open } = useWeb3Modal();
 
-    useEffect(() => {
-        if (isConnecting) setText('Connecting...');
-    }, [isConnecting]);
+    const connectWallet = useCallback(async () => {
+        if (address) {
+            try {
+                await open();
+                await dispatch(walletAuthThunk(address)).unwrap();
+                navigate('/');
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }, [address, open, dispatch]);
 
-    useEffect(() => {
-        if (address) dispatch(walletAuthThunk(address));
-    }, [address]);
-
-    return { open, text };
+    return { connectWallet, isAuthLoading };
 };

@@ -10,9 +10,9 @@ export const routerSlice = createSlice({
     name: 'router',
     initialState,
     reducers: {
-        setRouter: (state, action: PayloadAction<string>) => {
+        setRouterPath: (state, action: PayloadAction<string>) => {
             state.path = action.payload;
         },
     },
 });
-export const { setRouter } = routerSlice.actions;
+export const { setRouterPath } = routerSlice.actions;
