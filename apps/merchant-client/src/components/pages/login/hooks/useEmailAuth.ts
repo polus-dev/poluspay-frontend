@@ -19,13 +19,12 @@ export const useEmailAuth = () => {
             try {
                 const { email, code } = args;
                 if (!code) {
-                    debugger;
                     const sendCodeLimitExpire = new Date(
                         Date.now() + 60000
                     ).toISOString();
                     setExpiresAt(sendCodeLimitExpire);
                     dispatch(emailAuthThunk({ email }));
-                } else if (isExpired) {
+                } else {
                     const response = Boolean(
                         await dispatch(emailAuthThunk({ code, email })).unwrap()
                     );
