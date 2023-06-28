@@ -1,12 +1,13 @@
 import { WagmiConfig } from 'wagmi';
-import LoginAbout from '../../components/pages/login/About';
-import LoginForm from '../../components/pages/login/Form';
+import { Web3Modal } from '@web3modal/react';
+import { ethereumClient, projectId, wagmiConfig } from '../../utils/Web3Modal';
+
+import { LoginAbout } from '../../components/pages/login/About';
+import { LoginForm } from '../../components/pages/login/Form';
 
 import './Login.scoped.scss';
-import { ethereumClient, projectId, wagmiConfig } from '../../utils/Web3Modal';
-import { Web3Modal } from '@web3modal/react';
 
-const LoginPage: React.FC = () => {
+export const LoginPage: React.FC = () => {
     return (
         <>
             <WagmiConfig config={wagmiConfig}>
@@ -25,5 +26,3 @@ const LoginPage: React.FC = () => {
         </>
     );
 };
-
-export default LoginPage;

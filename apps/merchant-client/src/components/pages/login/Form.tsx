@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { emailRegex, CODE_LENGTH } from 'tools/index';
-import PButton from '../../ui/PButton/PButton';
-import PInput from '../../ui/PInput/PInput';
-import ConnectButton from '../../ConnectButton/ConnectButton';
+
+import { PButton, PInput } from '@poluspay-frontend/ui';
+import { ConnectButton } from '../../ui/ConnectButton/ConnectButton';
 import { ReactComponent as IconMail } from '../../../assets/icons/mail.svg';
 import { ReactComponent as LogoGoogle } from '../../../assets/logos/google.svg';
 
@@ -12,7 +12,7 @@ import './Form.scoped.scss';
 import { useWalletAuth } from './hooks/useWalletAuth';
 import { useEmailAuth } from './hooks/useEmailAuth';
 
-const LoginForm: React.FC = () => {
+export const LoginForm: React.FC = () => {
     const { open, text } = useWalletAuth();
     const { sendCode, timer, isExpired, inProgress } = useEmailAuth();
     const [stage, setStage] = useState<1 | 2 | 3>(1);
@@ -160,5 +160,3 @@ const LoginForm: React.FC = () => {
         </div>
     );
 };
-
-export default LoginForm;

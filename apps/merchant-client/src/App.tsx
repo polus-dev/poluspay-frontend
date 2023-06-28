@@ -1,13 +1,13 @@
 import { Route, Routes, useNavigate } from 'react-router-dom';
 
-import Layout from './components/Layout/Layout';
-import LoginPage from './pages/login/Login';
-import MerchantsCreatePage from './pages/merchants/create/MerchantsCreate';
-import MerchantsPage from './pages/merchants/Merchants';
-import SettingsPage from './pages/settings/Settings';
+import { Layout } from './components/Layout/Layout';
+import { LoginPage } from './pages/login/Login';
+import { MerchantsCreatePage } from './pages/merchants/create/MerchantsCreate';
+import { MerchantsPage } from './pages/merchants/Merchants';
+import { SettingsPage } from './pages/settings/Settings';
 import { useAppSelector } from './store/hooks';
 import { useEffect } from 'react';
-import MerchantIDProfile from './pages/merchants/id/merchant/Merchant';
+import { MerchantProfilePage } from './pages/merchants/id/merchant/Merchant';
 
 export default function App() {
     const path = useAppSelector((state) => state.router.path);
@@ -40,12 +40,30 @@ export default function App() {
                         element={<MerchantsCreatePage />}
                     />
                 </Route>
-                <Route path="/merchants/:id" element={<Layout isMerchantPage />}>
-                    <Route path="/merchants/:id/merchant" element={<MerchantIDProfile />} />
-                    <Route path="/merchants/:id/invoices" element={<div>invoices page</div>} />
-                    <Route path="/merchants/:id/wallet" element={<div>wallet page</div>} />
-                    <Route path="/merchants/:id/api" element={<div>api page</div>} />
-                    <Route path="/merchants/:id/plugins" element={<div> plugins page</div>} />
+                <Route
+                    path="/merchants/:id"
+                    element={<Layout isMerchantPage />}
+                >
+                    <Route
+                        path="/merchants/:id/merchant"
+                        element={<MerchantProfilePage />}
+                    />
+                    <Route
+                        path="/merchants/:id/invoices"
+                        element={<div>invoices page</div>}
+                    />
+                    <Route
+                        path="/merchants/:id/wallet"
+                        element={<div>wallet page</div>}
+                    />
+                    <Route
+                        path="/merchants/:id/api"
+                        element={<div>api page</div>}
+                    />
+                    <Route
+                        path="/merchants/:id/plugins"
+                        element={<div> plugins page</div>}
+                    />
                 </Route>
             </Routes>
         </>

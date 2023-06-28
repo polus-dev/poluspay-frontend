@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import MerchantForm from '../../../components/pages/merchants/create/Form';
-import MerchantSetup from '../../../components/pages/merchants/create/Setup';
-import MerchantWallet from '../../../components/pages/merchants/create/Wallet';
-import ProgressBar from '../../../components/ProgressBar/ProgressBar';
+import { MerchantForm } from '../../../components/pages/merchants/create/Form';
+import { MerchantSetup } from '../../../components/pages/merchants/create/Setup';
+import { MerchantWallet } from '../../../components/pages/merchants/create/Wallet';
+import { ProgressBar } from '../../../components/ui/ProgressBar/ProgressBar';
 
 import './MerchantsCreate.scoped.scss';
 
-const MerchantsCreatePage: React.FC = () => {
+export const MerchantsCreatePage: React.FC = () => {
     const navigator = useNavigate();
     const [type, setType] = useState<string | null>(null);
     const [stage, setStage] = useState(0);
@@ -63,5 +63,3 @@ const MerchantsCreatePage: React.FC = () => {
         </div>
     );
 };
-
-export default MerchantsCreatePage;

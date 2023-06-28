@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
-import PInput from '../../../ui/PInput/PInput';
-import PButton from '../../../ui/PButton/PButton';
+import { PButton, PInput } from '@poluspay-frontend/ui';
 import { ReactComponent as IconWarning } from '../../../../assets/icons/warning.svg';
 
 import './RemovalForm.scoped.scss';
@@ -11,7 +10,7 @@ interface RemovalFormProps {
     onCancel: () => void;
 }
 
-const SettingsRemovalForm: React.FC<RemovalFormProps> = ({
+export const SettingsRemovalForm: React.FC<RemovalFormProps> = ({
     onDelete,
     onCancel,
 }) => {
@@ -127,5 +126,3 @@ const SettingsRemovalForm: React.FC<RemovalFormProps> = ({
         </div>
     );
 };
-
-export default SettingsRemovalForm;

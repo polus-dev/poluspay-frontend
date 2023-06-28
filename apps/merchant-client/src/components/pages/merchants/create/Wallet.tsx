@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import PInput from '../../../ui/PInput/PInput';
-import PTabs from '../../../ui/PTabs/PTabs';
-import PPagination from '../../../ui/PPagination/PPagination';
-import PButton from '../../../ui/PButton/PButton';
+import { PButton, PInput, PPagination, PTabs } from '@poluspay-frontend/ui';
 
 import { ReactComponent as LogoWalletConnect } from '../../../../assets/logos/wallet-connect.svg';
 import { ReactComponent as IconDelete } from '../../../../assets/icons/delete.svg';
@@ -28,7 +25,7 @@ interface FormProps {
     onComplete: () => void;
 }
 
-const MerchantWallet: React.FC<FormProps> = ({ onComplete }) => {
+export const MerchantWallet: React.FC<FormProps> = ({ onComplete }) => {
     // replace with real data
     const wallets: Wallet[] = [
         {
@@ -420,5 +417,3 @@ const MerchantWallet: React.FC<FormProps> = ({ onComplete }) => {
         </div>
     );
 };
-
-export default MerchantWallet;

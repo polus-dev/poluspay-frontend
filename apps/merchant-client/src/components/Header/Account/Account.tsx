@@ -1,4 +1,4 @@
-import PDropdown from '../../ui/PDropdown/PDropdown';
+import { PDropdown } from '@poluspay-frontend/ui';
 import { ReactComponent as IconChevron } from '../../../assets/icons/chevron.svg';
 import { ReactComponent as IconWallet } from '../../../assets/icons/wallet.svg';
 import { ReactComponent as IconLogout } from '../../../assets/icons/logout.svg';
@@ -10,7 +10,7 @@ interface IAccountProps {
     logout: () => void;
 }
 
-const Account: React.FC<IAccountProps> = (props) => {
+export const Account: React.FC<IAccountProps> = (props) => {
     const email = props.username;
 
     const getShortEmail = () => {
@@ -79,5 +79,3 @@ const Account: React.FC<IAccountProps> = (props) => {
         </div>
     );
 };
-
-export default Account;

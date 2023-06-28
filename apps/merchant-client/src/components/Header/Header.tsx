@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom';
 
 import { throttle } from 'lodash-es';
 
-import Menu from './Menu/Menu';
-import Account from './Account/Account';
+import { Menu } from './Menu/Menu';
+import { Account } from './Account/Account';
 import { ReactComponent as LogoPolus } from '../../assets/logos/poluspay.svg';
 import { ReactComponent as LogoPolusPlanet } from '../../assets/logos/polus-planet.svg';
 
@@ -15,7 +15,7 @@ import { logout } from '../../store/features/auth/authSlice';
 import { useAccount } from 'wagmi';
 import { formatAddress } from 'tools';
 
-const Header: React.FC = () => {
+export const Header: React.FC = () => {
     const elHeader = useRef<HTMLElement | null>(null);
 
     const { data, isLoading } = useGetMeQuery();
@@ -84,5 +84,3 @@ const Header: React.FC = () => {
         </header>
     );
 };
-
-export default Header;

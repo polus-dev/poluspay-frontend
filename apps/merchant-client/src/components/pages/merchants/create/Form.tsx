@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
-import PButton from '../../../ui/PButton/PButton';
-import PInput from '../../../ui/PInput/PInput';
+import { PButton, PInput } from '@poluspay-frontend/ui';
 
 import './Form.scoped.scss';
 
@@ -9,7 +8,7 @@ interface FormProps {
     changeStage: () => void;
 }
 
-const MerchantForm: React.FC<FormProps> = ({ changeStage }) => {
+export const MerchantForm: React.FC<FormProps> = ({ changeStage }) => {
     const [name, setName] = useState('');
     const [website, setWebsite] = useState('');
     const [description, setDescription] = useState('');
@@ -79,5 +78,3 @@ const MerchantForm: React.FC<FormProps> = ({ changeStage }) => {
         </div>
     );
 };
-
-export default MerchantForm;

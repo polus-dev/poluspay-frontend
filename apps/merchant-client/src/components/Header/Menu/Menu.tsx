@@ -2,7 +2,7 @@ import type { IMenuItem } from './MenuItem';
 
 import { useState } from 'react';
 
-import MenuItem from './MenuItem';
+import { MenuItem } from './MenuItem';
 import { ReactComponent as IconMenuOpen } from '../../../assets/icons/menu-open.svg';
 import { ReactComponent as IconMenuClose } from '../../../assets/icons/menu-close.svg';
 
@@ -15,7 +15,7 @@ interface MenuProps {
     onToggleMenu: () => void;
 }
 
-const Menu: React.FC<MenuProps> = ({ onCloseMenu, onToggleMenu }) => {
+export const Menu: React.FC<MenuProps> = ({ onCloseMenu, onToggleMenu }) => {
     const [menuOpened, setMenuOpened] = useState(false);
 
     const items: IMenuItem[] = [
@@ -84,5 +84,3 @@ const Menu: React.FC<MenuProps> = ({ onCloseMenu, onToggleMenu }) => {
         </>
     );
 };
-
-export default Menu;

@@ -13,7 +13,11 @@ interface IMerchantProps {
     id: string;
 }
 
-const MerchantItem: React.FC<IMerchantProps> = ({ name, website, id }) => {
+export const MerchantItem: React.FC<IMerchantProps> = ({
+    name,
+    website,
+    id,
+}) => {
     const navigate = useNavigate();
     const [copied, setCopied] = useState(false);
 
@@ -131,5 +135,3 @@ const MerchantItem: React.FC<IMerchantProps> = ({ name, website, id }) => {
         </Link>
     );
 };
-
-export default MerchantItem;

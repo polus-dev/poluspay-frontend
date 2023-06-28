@@ -1,29 +1,12 @@
 import { useState } from 'react';
-
-import MerchantItem from '../../components/pages/merchants/MerchantItem';
-import PButton from '../../components/ui/PButton/PButton';
-import PPagination from '../../components/ui/PPagination/PPagination';
-
-import './Merchants.scoped.scss';
 import { useGetMerchantsQuery } from '../../store/api/endpoints/merchant/Merchant';
 
-const MerchantsPage: React.FC = () => {
-    // get data for merchants list
-    // const merchants = [
-    //     { name: 'qwe', website: 'https://polus.fi', id: '1' },
-    //     { name: 'qwe', website: 'https://polus.fi', id: '1w' },
-    //     { name: 'qwe', website: 'https://polus.fi', id: '1ww' },
-    //     { name: 'qwe', website: 'https://polus.fi', id: '11' },
-    //     { name: 'qwe', website: 'https://polus.fi', id: '1w1' },
-    //     { name: 'qwe', website: 'https://polus.fi', id: '1w12w' },
-    //     { name: 'qwe', website: 'https://polus.fi', id: '1123' },
-    //     { name: 'qwe', website: 'https://polus.fi', id: '12315w' },
-    //     { name: 'qwe', website: 'https://polus.fi', id: '1w3456w' },
-    //     { name: 'qwe', website: 'https://polus.fi', id: '1457' },
-    //     { name: 'qwe', website: 'https://polus.fi', id: '1w346' },
-    //     { name: 'qwe', website: 'https://polus.fi', id: '1w35467w' },
-    // ];
+import { PButton, PPagination } from '@poluspay-frontend/ui';
+import { MerchantItem } from '../../components/pages/merchants/MerchantItem';
 
+import './Merchants.scoped.scss';
+
+export const MerchantsPage: React.FC = () => {
     const [current, setCurrent] = useState(1);
     const limit = 8;
 
@@ -40,7 +23,7 @@ const MerchantsPage: React.FC = () => {
 
     return (
         <div className="merchants">
-            {merchants?.totalCount !== 0 ? (
+            {merchants && merchants?.totalCount !== 0 ? (
                 <div className="merchants__inner">
                     <div className="merchants__header">
                         <h4 className="merchants__header-title">Merchants</h4>
@@ -77,7 +60,7 @@ const MerchantsPage: React.FC = () => {
                         </div>
                     </div>
                     <div className="merchants__pagination">
-                        {merchants?.totalCount > limit && (
+                        {merchants.totalCount > limit && (
                             <PPagination
                                 current={current}
                                 totalItems={merchants.totalCount}
@@ -112,5 +95,3 @@ const MerchantsPage: React.FC = () => {
         </div>
     );
 };
-
-export default MerchantsPage;

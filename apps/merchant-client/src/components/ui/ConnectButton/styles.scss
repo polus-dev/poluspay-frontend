@@ -1,8 +1,8 @@
-@import '../../assets/scss/variables';
-@import '../../assets/scss/utils';
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
 
 .connect-button {
-    background: url('../../images/connect-button.jpg') center center no-repeat;
+    background: url('../../../images/connect-button.jpg') center center no-repeat;
     background-size: cover;
     border-color: transparent !important;
     transition: background-position 0.25s ease-in-out;

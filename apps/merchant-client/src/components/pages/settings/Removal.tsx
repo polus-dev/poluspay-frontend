@@ -4,7 +4,7 @@ interface RemovalProps {
     onDelete: () => void;
 }
 
-const SettingsRemoval: React.FC<RemovalProps> = ({ onDelete }) => {
+export const SettingsRemoval: React.FC<RemovalProps> = ({ onDelete }) => {
     return (
         <div className="removal">
             <h6 className="removal__title">Account removal</h6>
@@ -14,5 +14,3 @@ const SettingsRemoval: React.FC<RemovalProps> = ({ onDelete }) => {
         </div>
     );
 };
-
-export default SettingsRemoval;

@@ -12,7 +12,7 @@ interface ProgressBarProps {
     options: ProgressBarItem[];
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = (props) => {
+export const ProgressBar: React.FC<ProgressBarProps> = (props) => {
     const firstId = props.options[0].id;
     const lastOption = props.options.slice(-1);
 
@@ -63,5 +63,3 @@ const ProgressBar: React.FC<ProgressBarProps> = (props) => {
         </div>
     );
 };
-
-export default ProgressBar;

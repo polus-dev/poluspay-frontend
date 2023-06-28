@@ -4,13 +4,12 @@ import { ReactComponent as LogoWooCommerce } from '../../../../assets/logos/plug
 import { ReactComponent as LogoTilda } from '../../../../assets/logos/plugins/tilda.svg';
 
 import './Setup.scoped.scss';
-import React from 'react';
 
 interface SetupProps {
     changeStage: (type: string) => void;
 }
 
-const MerchantSetup: React.FC<SetupProps> = ({ changeStage }) => {
+export const MerchantSetup: React.FC<SetupProps> = ({ changeStage }) => {
     const handleLinkClick = (event: React.MouseEvent) => {
         event.stopPropagation();
 
@@ -87,5 +86,3 @@ const MerchantSetup: React.FC<SetupProps> = ({ changeStage }) => {
         </div>
     );
 };
-
-export default MerchantSetup;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import PSwitch from '../../ui/PSwitch/PSwitch';
+import { PSwitch } from '@poluspay-frontend/ui';
 import { ReactComponent as Icon2FA } from '../../../assets/icons/2fa.svg';
 
 import './GoogleAuth.scoped.scss';
@@ -11,7 +11,9 @@ interface GoogleAuthProps {
     onButtonClick: (type: GoogleAuthAction) => void;
 }
 
-const SettingsGoogleAuth: React.FC<GoogleAuthProps> = ({ onButtonClick }) => {
+export const SettingsGoogleAuth: React.FC<GoogleAuthProps> = ({
+    onButtonClick,
+}) => {
     // replace with actual data
     const [value, setValue] = useState(true);
 
@@ -43,5 +45,3 @@ const SettingsGoogleAuth: React.FC<GoogleAuthProps> = ({ onButtonClick }) => {
         </div>
     );
 };
-
-export default SettingsGoogleAuth;

@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
-import SettingsForm from '../../components/pages/settings/Form';
-import SettingsGoogleAuth from '../../components/pages/settings/GoogleAuth';
-import SettingsRemoval from '../../components/pages/settings/Removal';
-import SettingsRemovalForm from '../../components/pages/settings/removal/RemovalForm';
-import PLabel from '../../components/ui/PLabel/PLabel';
+import { PLabel } from '@poluspay-frontend/ui';
+import { SettingsForm } from '../../components/pages/settings/Form';
+import { SettingsGoogleAuth } from '../../components/pages/settings/GoogleAuth';
+import { SettingsRemoval } from '../../components/pages/settings/Removal';
+import { SettingsRemovalForm } from '../../components/pages/settings/removal/RemovalForm';
 
 import './Settings.scoped.scss';
 
-const SettingsPage: React.FC = () => {
+export const SettingsPage: React.FC = () => {
     const [state, setState] = useState<'default' | '2fa' | 'removal'>(
         'default'
     );
@@ -76,5 +76,3 @@ const SettingsPage: React.FC = () => {
         </>
     );
 };
-
-export default SettingsPage;

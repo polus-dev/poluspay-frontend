@@ -26,7 +26,7 @@
         border: 1px solid $color-black-light;
         background-color: $color-black-light;
         border-radius: px-to-rem(8);
-        transition: border-color .15s ease-in-out;
+        transition: border-color 0.15s ease-in-out;
         cursor: pointer;
 
         &:hover {
@@ -74,7 +74,7 @@
         font-size: px-to-rem(14);
         font-weight: 300;
         line-height: 130%;
-        letter-spacing: px-to-rem(-.3);
+        letter-spacing: px-to-rem(-0.3);
 
         @include breakpoint($screen-sm) {
             font-size: px-to-rem(16);

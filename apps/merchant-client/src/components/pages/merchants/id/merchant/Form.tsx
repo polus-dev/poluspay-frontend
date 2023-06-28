@@ -1,10 +1,3 @@
-
-const MerchantProfileForm: React.FC = () => {
-    return (
-        <div className="form">
-
-        </div>
-    )
-}
-
-export default MerchantProfileForm
+export const MerchantProfileForm: React.FC = () => {
+    return <div className="form"></div>;
+};

@@ -1,53 +1,44 @@
-import { useState } from "react"
-import { NavLink } from "react-router-dom"
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
-import PButton from "../ui/PButton/PButton"
+import { PButton } from '@poluspay-frontend/ui';
 
-import classNames from "classnames"
+import classNames from 'classnames';
 
-import './MerchantMenu.scoped.scss'
+import './MerchantMenu.scoped.scss';
 
 interface MenuItem {
-    id: number
-    title: string
-    to: string
+    id: number;
+    title: string;
+    to: string;
 }
 
-const MerchantMenu: React.FC = () => {
+export const MerchantMenu: React.FC = () => {
     const items: MenuItem[] = [
         { id: 1, title: 'Merchant', to: 'merchant' },
         { id: 2, title: 'Invoices', to: 'invoices' },
         { id: 3, title: 'Tokens & Addresses', to: 'wallet' },
         { id: 4, title: 'API & Webhooks', to: 'api' },
-        { id: 5, title: 'Plugins', to: 'plugins' }
-    ]
+        { id: 5, title: 'Plugins', to: 'plugins' },
+    ];
 
-    const [opened, setOpened] = useState(false)
+    const [opened, setOpened] = useState(false);
 
     return (
-        <div
-            className={classNames(
-                'menu',
-                { 'menu--active': opened }
-            )}
-        >
+        <div className={classNames('menu', { 'menu--active': opened })}>
             <div className="menu__inner">
                 <div
-                    className={classNames(
-                        'menu__handler',
-                        { 'menu__handler--active': !opened }
-                    )}
+                    className={classNames('menu__handler', {
+                        'menu__handler--active': !opened,
+                    })}
                     onClick={() => setOpened(!opened)}
                 >
-                    <p className="menu__handler-text">
-                        Menu
-                    </p>
+                    <p className="menu__handler-text">Menu</p>
                 </div>
                 <div
-                    className={classNames(
-                        'menu__container',
-                        { 'menu__container--active': opened }
-                    )}
+                    className={classNames('menu__container', {
+                        'menu__container--active': opened,
+                    })}
                 >
                     <div className="menu__container-header">
                         <p className="menu__container-header-title">
@@ -79,15 +70,11 @@ const MerchantMenu: React.FC = () => {
                         <PButton
                             wide
                             to="invoices"
-                            children={
-                                <p>Create&nbsp;invoice</p>
-                            }
+                            children={<p>Create&nbsp;invoice</p>}
                         />
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
-
-export default MerchantMenu
+    );
+};

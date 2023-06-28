@@ -1,5 +1,5 @@
-import PButton from '../ui/PButton/PButton';
-import { ReactComponent as LogoWalletConnect } from '../../assets/logos/wallet-connect.svg';
+import { PButton } from '@poluspay-frontend/ui';
+import { ReactComponent as LogoWalletConnect } from '../../../assets/logos/wallet-connect.svg';
 
 import './styles.scss';
 
@@ -8,7 +8,7 @@ interface ConnectButtonProps {
     text?: string;
 }
 
-const ConnectButton: React.FC<ConnectButtonProps> = (props) => {
+export const ConnectButton: React.FC<ConnectButtonProps> = (props) => {
     return (
         <PButton
             wide
@@ -24,5 +24,3 @@ const ConnectButton: React.FC<ConnectButtonProps> = (props) => {
         />
     );
 };
-
-export default ConnectButton;

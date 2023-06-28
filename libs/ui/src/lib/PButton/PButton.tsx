@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import classNames from 'classnames';
 
-import { ReactComponent as IconLoading } from '../../../../../../apps/merchant-client/src/assets/icons/loading.svg';
+import { ReactComponent as IconLoading } from '../assets/icons/loading.svg';
 
 import './styles.scss';
 

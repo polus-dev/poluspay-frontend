@@ -1,8 +1,7 @@
 import { useState } from 'react';
 
-import PInput from '../../ui/PInput/PInput';
+import { PButton, PInput } from '@poluspay-frontend/ui';
 import { ReactComponent as IconPlus } from '../../../assets/icons/plus.svg';
-import PButton from '../../ui/PButton/PButton';
 
 import './Form.scoped.scss';
 
@@ -10,7 +9,7 @@ interface SettingsFormProps {
     onFinish: () => void;
 }
 
-const SettingsForm: React.FC<SettingsFormProps> = ({ onFinish }) => {
+export const SettingsForm: React.FC<SettingsFormProps> = ({ onFinish }) => {
     // replace with real data about user FIRST
     // connection type either with email or wallet
     const firstConnectedWithWallet = true;
@@ -219,5 +218,3 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ onFinish }) => {
         </div>
     );
 };
-
-export default SettingsForm;

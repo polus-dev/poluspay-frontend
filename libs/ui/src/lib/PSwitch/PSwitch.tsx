@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import classNames from 'classnames';
 
 import './styles.scss';
@@ -12,7 +10,7 @@ interface SwitchProps {
     onChange: (value: boolean) => void;
 }
 
-const PSwitch: React.FC<SwitchProps> = (props) => {
+export const PSwitch: React.FC<SwitchProps> = (props) => {
     const isOn = props.value == true;
 
     const handleUpdate = (value: boolean): void => {
@@ -51,5 +49,3 @@ const PSwitch: React.FC<SwitchProps> = (props) => {
         </div>
     );
 };
-
-export default PSwitch;

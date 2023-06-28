@@ -14,7 +14,11 @@ interface MenuItemProps {
     onCloseMenu: () => void;
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ title, path, onCloseMenu }) => {
+export const MenuItem: React.FC<MenuItemProps> = ({
+    title,
+    path,
+    onCloseMenu,
+}) => {
     return (
         <li className="menu-item">
             <NavLink
@@ -31,5 +35,3 @@ const MenuItem: React.FC<MenuItemProps> = ({ title, path, onCloseMenu }) => {
         </li>
     );
 };
-
-export default MenuItem;

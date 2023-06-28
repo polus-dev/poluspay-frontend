@@ -1,16 +1,22 @@
+import type { SelectOption } from 'libs/ui/src/index';
 
 import { useState } from 'react';
-import {} from "libs/ui/src/index"
 
-import useModal from './hooks/useModal';
-
+import {
+    PButton,
+    PInput,
+    PTabs,
+    PPagination,
+    PSelect,
+    PDropdown,
+    PSwitch,
+    PLabel,
+} from 'libs/ui/src/index';
 
 import { ReactComponent as IconCross } from './assets/icons/cross.svg';
 import { ReactComponent as IconLoading } from './assets/icons/loading.svg';
 
 export const App: React.FC = () => {
-    const { visible, open, close } = useModal();
-
     const [value, setValue] = useState<string>('');
 
     const [current, setCurrent] = useState<number>(1);
@@ -52,7 +58,12 @@ export const App: React.FC = () => {
                 }}
             >
                 <div style={{ width: '100%', maxWidth: '320px' }}>
-                    <PButton wide size="lg" children={'text'} onClick={open} />
+                    <PButton
+                        wide
+                        size="lg"
+                        children={'text'}
+                        onClick={() => console.log('click')}
+                    />
                     <div style={{ marginTop: '50px' }}>
                         <PInput
                             value={value}
@@ -148,7 +159,6 @@ export const App: React.FC = () => {
                 title="Congratulations!"
                 description="You successfully created a merchant"
             />
-            <ModalHyeta visible={visible} onClose={close} />
         </>
     );
 };

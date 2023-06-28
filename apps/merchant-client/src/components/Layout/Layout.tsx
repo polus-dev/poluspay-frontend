@@ -1,18 +1,16 @@
 import { Outlet } from 'react-router-dom';
 
-import Header from '../Header/Header';
-import MerchantMenu from '../MerchantMenu/MerchantMenu';
+import { Header } from '../Header/Header';
+import { MerchantMenu } from '../MerchantMenu/MerchantMenu';
 
 import '../../assets/scss/main.scss';
 import './styles.scss';
 
 interface LayoutProps {
-    isMerchantPage?: boolean
+    isMerchantPage?: boolean;
 }
 
-const Layout: React.FC<LayoutProps> = ({
-    isMerchantPage
-}) => {
+export const Layout: React.FC<LayoutProps> = ({ isMerchantPage }) => {
     return (
         <>
             <Header />
@@ -31,5 +29,3 @@ const Layout: React.FC<LayoutProps> = ({
         </>
     );
 };
-
-export default Layout;

@@ -12,7 +12,7 @@ interface Benefit {
     description: string;
 }
 
-const LoginAbout: React.FC = () => {
+export const LoginAbout: React.FC = () => {
     const data: Benefit[] = [
         {
             id: 1,
@@ -64,5 +64,3 @@ const LoginAbout: React.FC = () => {
         </div>
     );
 };
-
-export default LoginAbout;

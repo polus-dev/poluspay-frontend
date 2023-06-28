@@ -5,7 +5,7 @@
     position: fixed;
     top: px-to-rem(96);
     right: px-to-rem(-220);
-    transition: right .25s ease-in-out;
+    transition: right 0.25s ease-in-out;
     z-index: 10;
 
     @include breakpoint($screen-sm) {
@@ -81,7 +81,7 @@
         border-radius: 0 px-to-rem(12) px-to-rem(12) px-to-rem(12);
         opacity: 0;
         pointer-events: none;
-        transition: opacity .25s ease-in-out;
+        transition: opacity 0.25s ease-in-out;
 
         &--active {
             opacity: 1;
@@ -132,7 +132,7 @@
         gap: px-to-rem(12);
 
         @include breakpoint($screen-lg) {
-            gap: px-to-rem(16)
+            gap: px-to-rem(16);
         }
     }
 
@@ -141,7 +141,7 @@
         font-size: px-to-rem(16);
         font-weight: 400;
         line-height: 150%;
-        transition: color .15s ease-in-out;
+        transition: color 0.15s ease-in-out;
 
         &:hover {
             color: $color-orange;

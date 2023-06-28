@@ -3,10 +3,10 @@ import { CSSTransition } from 'react-transition-group';
 
 import classNames from 'classnames';
 
-import { ReactComponent as IconLoading } from '../../../../../../apps/merchant-client/src/assets/icons/loading.svg';
-import { ReactComponent as IconSuccess } from '../../../../../../apps/merchant-client/src/assets/icons/checkmark.svg';
-import { ReactComponent as IconError } from '../../../../../../apps/merchant-client/src/assets/icons/error.svg';
-import { ReactComponent as IconWarning } from '../../../../../../apps/merchant-client/src/assets/icons/warning.svg';
+import { ReactComponent as IconLoading } from '../assets/icons/loading.svg';
+import { ReactComponent as IconSuccess } from '../assets/icons/checkmark.svg';
+import { ReactComponent as IconError } from '../assets/icons/error.svg';
+import { ReactComponent as IconWarning } from '../assets/icons/warning.svg';
 
 import './styles.scss';
 

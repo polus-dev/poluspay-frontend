@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@import 'normalize.css';
+@import './_variables';
+
+html {
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    overflow-y: initial;
+    overflow-x: hidden;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Poppins', sans-serif;
+}
+
+a {
+    display: block;
+    color: $color-white;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+.polus-ui {
+    font-family: 'Inter', sans-serif;
+
+    &__scroll-lock {
+        overflow: hidden;
+    }
+}

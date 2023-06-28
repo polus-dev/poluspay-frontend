@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
-import { ReactComponent as IconCross } from '../../../../../../apps/merchant-client/src/assets/icons/cross.svg';
+import { ReactComponent as IconCross } from '../assets/icons/cross.svg';
 
 import './styles.scss';
 

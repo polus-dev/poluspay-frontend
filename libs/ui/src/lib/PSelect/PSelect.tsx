@@ -1,9 +1,8 @@
 import React, { useRef, useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
 
 import classNames from 'classnames';
 
-import { ReactComponent as IconChevron } from '../../../../../../apps/merchant-client/src/assets/icons/chevron.svg';
+import { ReactComponent as IconChevron } from '../assets/icons/chevron.svg';
 
 import './styles.scss';
 
