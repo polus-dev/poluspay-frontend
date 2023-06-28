@@ -18,14 +18,13 @@ export const useWalletAuth = () => {
     const { open } = useWeb3Modal();
 
     const connectWallet = useCallback(async () => {
-        if (address) {
-            try {
-                await open();
-                await dispatch(walletAuthThunk(address)).unwrap();
-                navigate('/');
-            } catch (error) {
-                console.error(error);
-            }
+        try {
+            await open();
+            if (!address) return;
+            await dispatch(walletAuthThunk(address)).unwrap();
+            navigate('/');
+        } catch (error) {
+            console.error(error);
         }
     }, [address, open, dispatch]);
 
