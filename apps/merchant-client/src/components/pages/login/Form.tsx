@@ -20,8 +20,6 @@ export const LoginForm: React.FC = () => {
     const [email, setEmail] = useState('');
     const [emailErrors, setEmailErrors] = useState<string[]>([]);
 
-    const { Label, notify } = useNotify();
-
     useEffect(() => {
         if (!emailRegex.test(email) && email.length > 0) {
             setEmailErrors(['Invalid email']);
@@ -47,11 +45,11 @@ export const LoginForm: React.FC = () => {
 
     const handleSubmit = () => {
         if (stage === 2) {
-            notify({
-                title: 'Email sent',
-                description: 'Please check your inbox',
-                status: 'success',
-            });
+            // notify({
+            //   title: 'Email sent',
+            //   description: 'Please check your inbox',
+            //   status: 'success',
+            // });
             console.log('handle email submitting');
             sendCode({ email });
             setStage(3);
@@ -174,7 +172,6 @@ export const LoginForm: React.FC = () => {
                     />
                 </div>
             )}
-            <Label />
         </div>
     );
 };
