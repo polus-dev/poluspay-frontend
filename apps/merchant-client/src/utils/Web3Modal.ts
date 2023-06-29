@@ -4,9 +4,9 @@ import {
     w3mProvider,
 } from '@web3modal/ethereum';
 import { configureChains, createConfig } from 'wagmi';
-import { arbitrum, mainnet, polygon } from 'wagmi/chains';
+import { mainnet } from 'wagmi/chains';
 
-const chains = [arbitrum, mainnet, polygon];
+const chains = [mainnet];
 export const projectId = import.meta.env.VITE_REACT_APP_PROJECT_ID;
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
@@ -15,4 +15,4 @@ export const wagmiConfig = createConfig({
     connectors: w3mConnectors({ projectId, version: 2, chains }),
     publicClient,
 });
-export const ethereumClient = new EthereumClient(wagmiConfig, chains);
+export const ethereumClient = new EthereumClient(wagmiConfig, []);
