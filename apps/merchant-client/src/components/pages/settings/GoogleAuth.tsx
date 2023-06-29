@@ -15,7 +15,7 @@ export const SettingsGoogleAuth: React.FC<GoogleAuthProps> = ({
     onButtonClick,
 }) => {
     // replace with actual data
-    const [value, setValue] = useState(true);
+    const [value, setValue] = useState(false);
 
     const handleButtonClick = () => {
         value ? onButtonClick('remove') : onButtonClick('add');

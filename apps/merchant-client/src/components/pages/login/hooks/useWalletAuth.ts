@@ -20,8 +20,8 @@ export const useWalletAuth = () => {
     const connectWallet = useCallback(async () => {
         try {
             if (!address) {
-              await open();
-              return
+                await open();
+                return;
             }
             await dispatch(walletAuthThunk(address)).unwrap();
             navigate('/');

@@ -1,0 +1,190 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/utils';
+
+.form {
+    width: 100%;
+    background-color: $color-black-light;
+    border-radius: px-to-rem(12);
+
+    &__inner {
+        padding: px-to-rem(20) px-to-rem(16);
+
+        @include breakpoint($screen-md) {
+            padding: px-to-rem(24);
+        }
+    }
+
+    &__inner-header {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(6);
+    }
+
+    &__inner-header-icon {
+        width: px-to-rem(24);
+        height: auto;
+
+        @include breakpoint($screen-md) {
+            width: px-to-rem(32);
+        }
+    }
+
+    &__inner-header-title {
+        font-size: px-to-rem(18);
+        font-weight: 500;
+        line-height: 150%;
+
+        @include breakpoint($screen-md) {
+            font-size: px-to-rem(24);
+            font-weight: 600;
+        }
+    }
+
+    &__inner-divider {
+        margin: px-to-rem(12) 0;
+        width: 100%;
+        height: 1px;
+        background-color: $color-grey;
+
+        @include breakpoint($screen-md) {
+            margin: px-to-rem(20) 0;
+        }
+    }
+
+    &__inner-paragraph {
+        width: 100%;
+
+        &:not(:first-child) {
+            margin-top: px-to-rem(16);
+
+            @include breakpoint($screen-md) {
+                margin-top: px-to-rem(30);
+            }
+        }
+    }
+
+    &__inner-paragraph-text {
+        font-size: px-to-rem(14);
+        font-weight: 300;
+        line-height: 130%;
+
+        @include breakpoint($screen-sm) {
+            font-size: px-to-rem(16);
+            font-weight: 400;
+            line-height: 150%;
+        }
+
+        @include breakpoint($screen-md) {
+            font-size: px-to-rem(18);
+        }
+    }
+
+    &__inner-qrcode {
+        margin: px-to-rem(24) auto;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    &__inner-qrcode-inner {
+        position: relative;
+        width: 100%;
+        max-width: px-to-rem(200);
+        padding: px-to-rem(20);
+        background-color: #fff;
+        border-radius: px-to-rem(12);
+
+        @include breakpoint($screen-md) {
+            max-width: px-to-rem(350);
+            padding: px-to-rem(30);
+        }
+    }
+
+    &__inner-qrcode-image {
+        width: 100%;
+        height: auto;
+    }
+
+    &__inner-qrcode-logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: px-to-rem(50);
+        height: px-to-rem(50);
+        background-color: $color-black-light;
+        border-radius: px-to-rem(8);
+
+        @include breakpoint($screen-md) {
+            width: px-to-rem(70);
+            height: px-to-rem(70);
+        }
+    }
+
+    &__inner-qrcode-logo-image {
+        width: px-to-rem(30);
+        height: auto;
+
+        @include breakpoint($screen-md) {
+            width: px-to-rem(50);
+        }
+    }
+
+    &__inner-item {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(8);
+    }
+
+    &__inner-item-data {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__inner-item-data-label {
+        font-size: px-to-rem(14);
+        font-weight: 300;
+        line-height: 130%;
+
+        &--error {
+            color: $color-red;
+        }
+
+        &--dark {
+            color: $color-white-dark;
+        }
+    }
+
+    &__inner-item-input-icon {
+        width: px-to-rem(24);
+        height: auto;
+        stroke: $color-white;
+        transition: stroke 0.15s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            stroke: $color-blue-light;
+        }
+    }
+
+    &__inner-item-input-text {
+        color: $color-blue-light;
+        transition: color 0.15s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            color: $color-blue;
+        }
+    }
+
+    &__inner-buttons {
+        margin-top: px-to-rem(30);
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(8);
+    }
+}
