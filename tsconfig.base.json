@@ -15,8 +15,11 @@
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
         "paths": {
+            "@poluspay-frontend/api": ["libs/api/src/index.ts"],
             "@poluspay-frontend/hooks": ["libs/hooks/src/index.ts"],
-            "@poluspay-frontend/redux": ["libs/redux/src/index.ts"],
+            "@poluspay-frontend/merchant-query": [
+                "apps/merchant-client/src/store/api/endpoints/index.ts"
+            ],
             "@poluspay-frontend/ui": ["libs/ui/src/index.ts"]
         }
     },

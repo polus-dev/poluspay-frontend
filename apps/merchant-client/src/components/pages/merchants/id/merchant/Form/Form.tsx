@@ -6,16 +6,25 @@ import { PButton, PInput } from '@poluspay-frontend/ui';
 import { MerchantProfileAvatar } from './Avatar';
 import { ModalMerchantDelete } from '../../../../../modals/MerchantDelete/MerchantDelete';
 import { ReactComponent as IconCopy } from '../../../../../../assets/icons/copy.svg';
+import { useDeleteMerchantMutation } from '@poluspay-frontend/merchant-query';
 
 import classNames from 'classnames';
 
 import './Form.scoped.scss';
 
+import { useParams } from 'react-router';
+
 export const MerchantProfileForm: React.FC = () => {
     const modalDelete = useModal();
     const modalAvatar = useModal();
 
-    const merchantId = '90ca217e-e429-4cbd-bf53-52b44e351e59';
+    const { id: merchantId } = useParams();
+
+    if (!merchantId) {
+        return <h1>Merchant not found</h1>;
+    }
+
+    const [deleteMerchant, { isLoading }] = useDeleteMerchantMutation();
 
     const [copied, setCopied] = useState(false);
 

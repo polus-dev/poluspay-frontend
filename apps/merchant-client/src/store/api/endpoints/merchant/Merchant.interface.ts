@@ -1,11 +1,8 @@
-import { IPagination } from '../../types';
-
+import { IPagination } from '@poluspay-frontend/redux';
 interface IMerchant {
     id: string;
     name: string;
     description: string;
-    evm_withdraw_address: string;
-    tron_withdraw_address: string;
     domain: string;
     domain_confirmation_code: string;
     success_redirect_url: string;
@@ -20,8 +17,6 @@ export interface ICreateMerchantRequest {
     name: string;
     description: string;
     domain: string;
-    evm_withdraw_address: string;
-    tron_withdraw_address: string;
     success_redirect_url?: string;
     fail_redirect_url?: string;
 }
@@ -32,8 +27,6 @@ export interface ICreateMerchantResponse {
     description: string;
     domain: string;
     domain_confirmation_code: string;
-    evm_withdraw_address: string;
-    tron_withdraw_address: string;
 }
 
 export interface IGetMerchantRequest extends IPagination {
