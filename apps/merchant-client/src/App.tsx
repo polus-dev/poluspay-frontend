@@ -6,10 +6,8 @@ import { MerchantsCreatePage } from './pages/merchants/create/MerchantsCreate';
 import { MerchantsPage } from './pages/merchants/Merchants';
 import { SettingsPage } from './pages/settings/Settings';
 import { MerchantProfilePage } from './pages/merchants/id/merchant/Merchant';
-import { useSystem } from './hooks/useSystem';
 
 export default function App() {
-    useSystem();
     return (
         <>
             <Routes>

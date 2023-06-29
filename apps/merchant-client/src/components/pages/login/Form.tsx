@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { emailRegex, CODE_LENGTH } from 'tools/index';
 
-import { PButton, PInput, useNotify } from '@poluspay-frontend/ui';
+import { PButton, PInput } from '@poluspay-frontend/ui';
 import { ConnectButton } from '../../ui/ConnectButton/ConnectButton';
 import { ReactComponent as IconMail } from '../../../assets/icons/mail.svg';
 import { ReactComponent as LogoGoogle } from '../../../assets/logos/google.svg';
@@ -13,8 +13,17 @@ import { useWalletAuth } from './hooks/useWalletAuth';
 import { useEmailAuth } from './hooks/useEmailAuth';
 
 export const LoginForm: React.FC = () => {
-    const { connectWallet, isAuthLoading } = useWalletAuth();
-    const { sendCode, timer, isExpired } = useEmailAuth();
+    const {
+        connectWallet,
+        isAuthLoading: isWalletAuthLoading,
+        buttonText,
+    } = useWalletAuth();
+    const {
+        sendCode,
+        timer,
+        isExpired,
+        isAuthLoading: isEmailAuthLoading,
+    } = useEmailAuth();
     const [stage, setStage] = useState<1 | 2 | 3>(1);
 
     const [email, setEmail] = useState('');
@@ -67,11 +76,7 @@ export const LoginForm: React.FC = () => {
                     <div className="form__inner-buttons">
                         <ConnectButton
                             onClick={connectWallet}
-                            text={
-                                isAuthLoading
-                                    ? 'Connecting...'
-                                    : 'Connect Wallet'
-                            }
+                            text={buttonText}
                         />
                         <div className="form__inner-buttons-row">
                             <PButton
@@ -164,6 +169,7 @@ export const LoginForm: React.FC = () => {
                         </div>
                     )}
                     <PButton
+                        loading={isEmailAuthLoading}
                         wide
                         size="lg"
                         disabled={disabled}

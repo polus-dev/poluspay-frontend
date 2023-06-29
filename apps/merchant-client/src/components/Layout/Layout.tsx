@@ -5,12 +5,14 @@ import { MerchantMenu } from '../MerchantMenu/MerchantMenu';
 
 import '../../assets/scss/main.scss';
 import './styles.scss';
+import { useRedirectAuth } from '../../hooks/useRedirectAuth';
 
 interface LayoutProps {
     isMerchantPage?: boolean;
 }
 
 export const Layout: React.FC<LayoutProps> = ({ isMerchantPage }) => {
+    useRedirectAuth();
     return (
         <>
             <Header />

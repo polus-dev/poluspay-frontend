@@ -1,7 +1,10 @@
-import { useAppDispatch } from 'apps/merchant-client/src/store/hooks';
+import {
+    useAppDispatch,
+    useAppSelector,
+} from 'apps/merchant-client/src/store/hooks';
 import { emailAuthThunk } from 'apps/merchant-client/src/store/api/endpoints/auth/emailAuthThunk';
 import { useTimer } from 'libs/hooks/src/index';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface IEmailAuth {
@@ -10,9 +13,15 @@ interface IEmailAuth {
 }
 export const useEmailAuth = () => {
     const dispatch = useAppDispatch();
+    const isAuthLoading = useAppSelector((state) => state.auth.loading);
+    const success = useAppSelector((state) => state.auth.success);
     const navigate = useNavigate();
     const [expiresAt, setExpiresAt] = useState<string>();
     const { timer, isExpired } = useTimer(expiresAt);
+
+    useEffect(() => {
+        if (success) navigate('/');
+    }, [success]);
 
     const sendCode = useCallback(
         async (args: IEmailAuth) => {
@@ -25,12 +34,7 @@ export const useEmailAuth = () => {
                     setExpiresAt(sendCodeLimitExpire);
                     dispatch(emailAuthThunk({ email }));
                 } else {
-                    const response = Boolean(
-                        await dispatch(emailAuthThunk({ code, email })).unwrap()
-                    );
-                    if (response) {
-                        navigate('/');
-                    }
+                    dispatch(emailAuthThunk({ code, email }));
                 }
             } catch (error) {
                 console.error(error);
@@ -43,5 +47,6 @@ export const useEmailAuth = () => {
         sendCode,
         timer,
         isExpired,
+        isAuthLoading,
     };
 };
