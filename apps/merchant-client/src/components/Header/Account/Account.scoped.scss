@@ -16,12 +16,17 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: px-to-rem(48);
+        gap: px-to-rem(6);
+        width: px-to-rem(66);
         height: px-to-rem(48);
         border: px-to-rem(2) solid $color-grey;
         background-color: $color-grey-dark;
         border-radius: px-to-rem(12);
         cursor: pointer;
+
+        @include breakpoint($screen-md) {
+            width: px-to-rem(70);
+        }
     }
 
     &__wallet-handler-icon {
@@ -29,6 +34,15 @@
         height: auto;
         fill: $color-white;
         stroke: $color-white;
+
+        &--arrow {
+            width: px-to-rem(12);
+            fill: transparent;
+
+            @include breakpoint($screen-md) {
+                width: px-to-rem(16);
+            }
+        }
     }
 
     &__wallet-content {

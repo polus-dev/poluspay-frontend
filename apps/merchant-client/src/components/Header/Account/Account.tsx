@@ -23,14 +23,16 @@ export const Account: React.FC<IAccountProps> = (props) => {
                 <div className="account__wallet">
                     <PDropdown
                         border
+                        align={window.innerWidth > 768 ? 'right' : 'center'}
                         gap={12}
                         minWidth={300}
                         maxWidth={300}
                         padding={[0, 0]}
-                        align="right"
+                        closeOnClickOutside={false}
                         handler={
                             <div className="account__wallet-handler">
                                 <IconWallet className="account__wallet-handler-icon" />
+                                <IconChevron className="account__wallet-handler-icon account__wallet-handler-icon--arrow" />
                             </div>
                         }
                         content={

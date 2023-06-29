@@ -23,6 +23,7 @@ interface DropdownProps {
     minWidth?: number;
     padding?: number[];
     border?: boolean;
+    closeOnClickOutside?: boolean;
     handler: React.ReactNode;
     content: React.ReactNode;
     onShow?: () => void;
@@ -34,6 +35,7 @@ export const PDropdown: React.FC<DropdownProps> = ({
     align = DropdownAlign.Left,
     gap = 14,
     padding = [16, 24],
+    closeOnClickOutside = true,
     ...props
 }) => {
     const elHandler = useRef<HTMLDivElement>(null);
@@ -121,10 +123,16 @@ export const PDropdown: React.FC<DropdownProps> = ({
     };
 
     const toggle = () => {
+        if (!closeOnClickOutside) {
+            return visible ? hide(false) : show()
+        }
+
         return visible ? hide() : show();
     };
 
     const onHide = (event: React.FocusEvent) => {
+        if (!closeOnClickOutside) return undefined
+
         const target = event.relatedTarget as unknown as Node;
 
         if (

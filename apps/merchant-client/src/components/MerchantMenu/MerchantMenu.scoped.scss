@@ -6,7 +6,7 @@
     top: px-to-rem(96);
     right: px-to-rem(-220);
     transition: right 0.25s ease-in-out;
-    z-index: 10;
+    z-index: 9;
 
     @include breakpoint($screen-sm) {
         top: px-to-rem(102);
