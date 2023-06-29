@@ -60,6 +60,7 @@ export const authSlice = createSlice({
             helper.setTokens(access_token, refresh_token);
             state.userToken = access_token;
             state.loading = false;
+            state.success = true;
         });
 
         builder.addCase(walletAuthThunk.rejected, (state, action) => {
