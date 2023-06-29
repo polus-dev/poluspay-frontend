@@ -7,11 +7,16 @@ import { SettingsRemoval } from '../../components/pages/settings/Removal';
 import { SettingsRemovalForm } from '../../components/pages/settings/removal/RemovalForm';
 
 import './Settings.scoped.scss';
+import { SettingsGoogleConnect } from '../../components/pages/settings/2fa/ConnectForm';
+
+export type GoogleAuthAction = 'add' | 'remove';
 
 export const SettingsPage: React.FC = () => {
     const [state, setState] = useState<'default' | '2fa' | 'removal'>(
         'default'
     );
+
+    const [googleAuthType, setGoogleAuthType] = useState<GoogleAuthAction>();
 
     const [formNotification, setFormNotification] = useState(false);
 
@@ -26,8 +31,24 @@ export const SettingsPage: React.FC = () => {
         }, 3000);
     };
 
+    const handleGoogleAuthPicker = (type: GoogleAuthAction) => {
+        setState('2fa');
+        setGoogleAuthType(type);
+    };
+
+    const handleGoogleAuth = () => {
+        console.log('submit');
+
+        if (googleAuthType === 'add') {
+            // add 2fa
+        } else if (googleAuthType === 'remove') {
+            // remove 2fa
+        }
+    };
+
     const refreshPageData = () => {
         setState('default');
+        setGoogleAuthType(undefined);
     };
 
     return (
@@ -44,7 +65,7 @@ export const SettingsPage: React.FC = () => {
                                     <div className="settings__inner-auth">
                                         <SettingsGoogleAuth
                                             onButtonClick={(type) =>
-                                                console.log(type)
+                                                handleGoogleAuthPicker(type)
                                             }
                                         />
                                     </div>
@@ -57,21 +78,25 @@ export const SettingsPage: React.FC = () => {
                             )}
                         </>
                     )}
+                    {state === '2fa' && (
+                        <SettingsGoogleConnect
+                            type={googleAuthType}
+                            onSubmit={handleGoogleAuth}
+                            onCancel={refreshPageData}
+                        />
+                    )}
                     {state === 'removal' && (
-                        <>
-                            <SettingsRemovalForm
-                                onDelete={() => console.log('delete account')}
-                                onCancel={refreshPageData}
-                            />
-                        </>
+                        <SettingsRemovalForm
+                            onDelete={() => console.log('delete account')}
+                            onCancel={refreshPageData}
+                        />
                     )}
                 </div>
             </div>
             <PLabel
                 visible={formNotification}
                 status="success"
-                title="Congratulations!"
-                description="Email successfully added"
+                title="Email added"
             />
         </>
     );

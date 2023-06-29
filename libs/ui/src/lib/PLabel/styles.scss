@@ -7,23 +7,19 @@
         top: 0;
         right: 0;
         width: 100%;
-        padding: 0 px-to-rem(16);
         transition: transform 0.3s ease-in-out;
         z-index: 999;
-
-        @include breakpoint($screen-md) {
-            padding: 0 px-to-rem(64);
-        }
-
-        @include breakpoint($screen-xl) {
-            padding: 0;
-        }
     }
 
     &__notification-container {
         margin: 0 auto;
         width: 100%;
-        max-width: px-to-rem(1520);
+        max-width: px-to-rem(1600);
+        padding: 0 px-to-rem(16);
+
+        @include breakpoint($screen-lg) {
+            padding: 0 px-to-rem(40);
+        }
     }
 
     &__notification-label {
