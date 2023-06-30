@@ -10,7 +10,7 @@
         "@itznevikat/router": "^0.1.0-beta28",
         "@reactour/tour": "^3.4.0",
         "@reduxjs/toolkit": "^1.9.5",
-        "@sentry/react": "^7.55.2",
+        "@sentry/react": "^7.57.0",
         "@swc/helpers": "~0.5.0",
         "@types/react-copy-to-clipboard": "^5.0.4",
         "@uniswap/permit2-sdk": "^1.2.0",
