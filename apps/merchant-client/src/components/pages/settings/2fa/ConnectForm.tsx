@@ -98,7 +98,8 @@ export const SettingsGoogleConnect: React.FC<GoogleAuthProps> = ({
                                         </p>
                                     </div>
                                     <PInput
-                                        disabled
+                                        readonly
+                                        overlay={false}
                                         value={copied ? 'Copied!' : key}
                                         append={
                                             <IconCopy

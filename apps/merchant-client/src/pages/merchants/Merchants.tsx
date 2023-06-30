@@ -59,16 +59,16 @@ export const MerchantsPage: React.FC = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="merchants__pagination">
-                        {merchants.totalCount > limit && (
+                    {merchants.totalCount > limit && (
+                        <div className="merchants__pagination">
                             <PPagination
                                 current={current}
                                 totalItems={merchants.totalCount}
                                 pageItems={limit}
                                 onPageChange={(value) => onPageChange(value)}
                             />
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </div>
             ) : (
                 <div className="merchants__error">

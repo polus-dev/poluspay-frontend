@@ -32,6 +32,7 @@ interface InputProps {
     size?: InputSize | `${InputSize}`;
     align?: InputAlign | `${InputAlign}`;
     errors?: string[];
+    overlay?: boolean;
     prepend?: React.ReactNode;
     append?: React.ReactNode;
     onInput: (value: string | number) => void;
@@ -41,6 +42,7 @@ interface InputProps {
 
 export const PInput: React.FC<InputProps> = ({
     trim = true,
+    overlay = true,
     type = InputType.Text,
     size = InputSize.Medium,
     align = InputAlign.Left,
@@ -120,8 +122,9 @@ export const PInput: React.FC<InputProps> = ({
             {hasAppendix && (
                 <div className="polus-ui__input-appendix">{props.append}</div>
             )}
-            {props.disabled ||
-                (props.readonly && <div className={overlayClassnames} />)}
+            {(props.disabled || props.readonly) && overlay && (
+                <div className={overlayClassnames} />
+            )}
         </div>
     );
 };
