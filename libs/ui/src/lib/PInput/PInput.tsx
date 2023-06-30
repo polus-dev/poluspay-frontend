@@ -22,7 +22,7 @@ export enum InputAlign {
 }
 
 interface InputProps {
-    value: string;
+    value?: string;
     placeholder?: string;
     readonly?: boolean;
     disabled?: boolean;
@@ -35,9 +35,10 @@ interface InputProps {
     overlay?: boolean;
     prepend?: React.ReactNode;
     append?: React.ReactNode;
-    onInput: (value: string | number) => void;
+    onInput?: (value: string | number) => void;
     onFocus?: (event: React.FocusEvent) => void;
     onBlur?: (event: React.FocusEvent) => void;
+    reg: any;
 }
 
 export const PInput: React.FC<InputProps> = ({
@@ -85,7 +86,7 @@ export const PInput: React.FC<InputProps> = ({
                 ? target.value.trim()
                 : target.value;
 
-        props.onInput(value);
+        props.onInput?.(value);
     };
 
     const handleFocus = (event: React.FocusEvent): void => {
@@ -118,6 +119,7 @@ export const PInput: React.FC<InputProps> = ({
                 onFocus={(event) => handleFocus(event)}
                 onBlur={(event) => handleBlur(event)}
                 onInput={(event) => handleInput(event)}
+                {...props.reg}
             />
             {hasAppendix && (
                 <div className="polus-ui__input-appendix">{props.append}</div>
