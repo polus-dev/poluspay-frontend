@@ -139,30 +139,31 @@ export const MerchantProfileForm: React.FC = () => {
                             <p className="form__inner-container__item-label">
                                 Merchant name
                             </p>
-                            <input {...register('merchantName')} />
-                            {/* <PInput
-                {...register('merchantName')}
-                placeholder="Company name"
-                type="text"
-              />
-             */}
+                            {/* <input {...register('merchantName')} /> */}
+                            <PInput
+                                reg={register('merchantName')}
+                                placeholder="Company name"
+                                type="text"
+                            />
                         </div>
                         <div className="form__inner-container__item">
                             <p className="form__inner-container__item-label">
                                 Website
                             </p>
-                            <input {...register('website')} />
-                            {/* <PInput
-                placeholder="https://example.com" */}
+                            <PInput
+                                placeholder="https://example.com"
+                                reg={register('website')}
+                            />
                         </div>
                         <div className="form__inner-container__item">
                             <p className="form__inner-container__item-label">
                                 Brand
                             </p>
 
-                            <input {...register('brand')} />
-                            {/* <PInput
-                placeholder="Brand name" */}
+                            <PInput
+                                placeholder="Brand name"
+                                reg={register('brand')}
+                            />
                         </div>
                     </div>
                     <div className="form__inner-container__item">
