@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useGetMerchantsQuery } from '../../../../../libs/redux/src/lib/api/endpoints/merchant/Merchant';
+import { useGetMerchantsQuery } from '@poluspay-frontend/merchant-query';
 
 import { PButton, PPagination } from '@poluspay-frontend/ui';
 import { MerchantItem } from '../../components/pages/merchants/MerchantItem';

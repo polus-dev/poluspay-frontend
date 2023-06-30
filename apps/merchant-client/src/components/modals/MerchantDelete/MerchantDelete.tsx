@@ -9,15 +9,15 @@ interface ModalProps {
     visible: boolean;
     onClose: () => void;
     onDelete: () => void;
+    merchantName: string;
 }
 
 export const ModalMerchantDelete: React.FC<ModalProps> = ({
     visible,
     onClose,
     onDelete,
+    merchantName,
 }) => {
-    const merchantName = 'Polus Game';
-
     const [name, setName] = useState('');
     const [errors, setErrors] = useState<string[]>([]);
 
@@ -78,7 +78,7 @@ export const ModalMerchantDelete: React.FC<ModalProps> = ({
                             <div className="modal__body-buttons-item">
                                 <PButton
                                     wide
-                                    disabled={!name}
+                                    disabled={name !== merchantName}
                                     children={<p>Delete</p>}
                                     onClick={handleDelete}
                                 />

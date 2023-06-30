@@ -31,9 +31,10 @@ export const merchantApi = createApi({
             return headers;
         },
     }),
+    tagTypes: ['Merchant'],
     endpoints: (builder) => ({
         createMerchant: builder.mutation<
-            ICreateMerchantResponse | IResponseError,
+            ICreateMerchantResponse,
             ICreateMerchantRequest
         >({
             query: (body) => ({
@@ -41,6 +42,8 @@ export const merchantApi = createApi({
                 method: 'POST',
                 body,
             }),
+            invalidatesTags: (result) =>
+                result ? [{ type: 'Merchant', id: result.id }] : ['Merchant'],
         }),
         getMerchantById: builder.query<
             IGetMerchantByIdResponse,
@@ -52,6 +55,8 @@ export const merchantApi = createApi({
                 body,
             }),
             transformResponse: (response: IGetMerchantResponse) => response[0],
+            providesTags: (result) =>
+                result ? [{ type: 'Merchant', id: result.id }] : ['Merchant'],
         }),
         getMerchants: builder.query<
             IGetMerchantResponseWithTotalCount,
@@ -67,10 +72,11 @@ export const merchantApi = createApi({
                 totalCount:
                     Number(meta?.response?.headers.get('x-total-records')) ?? 0,
             }),
+            providesTags: ['Merchant'],
         }),
 
         updateMerchantFields: builder.mutation<
-            IResponseError | IGetMerchantResponse[number],
+            IGetMerchantResponse[number],
             IUpdateMerchantRequest
         >({
             query: (body) => {
@@ -86,6 +92,9 @@ export const merchantApi = createApi({
                     body: filteredBody,
                 };
             },
+            // invalidatesTags: (result) =>
+            //     result ? [{ type: 'Merchant', id: result.id }] : ['Merchant'],
+            invalidatesTags: ['Merchant'],
         }),
 
         setWebhook: builder.mutation<void | IResponseError, ISetWebhookRequest>(
@@ -106,6 +115,10 @@ export const merchantApi = createApi({
                 method: 'POST',
                 body,
             }),
+            invalidatesTags: (result, error, args) =>
+                result
+                    ? [{ type: 'Merchant', id: args.merchant_id }]
+                    : ['Merchant'],
         }),
         getWebhookHistory: builder.query<IGetWebhookHistoryResponse, void>({
             query: (body) => ({

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useModal } from '../../../../../../hooks/useModal';
 
@@ -6,13 +7,18 @@ import { PButton, PInput } from '@poluspay-frontend/ui';
 import { MerchantProfileAvatar } from './Avatar';
 import { ModalMerchantDelete } from '../../../../../modals/MerchantDelete/MerchantDelete';
 import { ReactComponent as IconCopy } from '../../../../../../assets/icons/copy.svg';
-import { useDeleteMerchantMutation } from '@poluspay-frontend/merchant-query';
+import {
+    useDeleteMerchantMutation,
+    useGetMerchantByIdQuery,
+    useUpdateMerchantFieldsMutation,
+} from '@poluspay-frontend/merchant-query';
 
 import classNames from 'classnames';
 
 import './Form.scoped.scss';
 
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router-dom';
+import { IMerchantForm } from './Form.interface';
 
 export const MerchantProfileForm: React.FC = () => {
     const modalDelete = useModal();
@@ -21,17 +27,28 @@ export const MerchantProfileForm: React.FC = () => {
     const { id: merchantId } = useParams();
 
     if (!merchantId) {
-        return <h1>Merchant not found</h1>;
+        return <></>;
     }
 
-    const [deleteMerchant, { isLoading }] = useDeleteMerchantMutation();
+    const [deleteMerchant, { isLoading: isDeleteMerchantLoading }] =
+        useDeleteMerchantMutation();
+    const [updateMerchantFields, { isLoading: isUpdatingMerchantFields }] =
+        useUpdateMerchantFieldsMutation();
+    const { data: merchant, isLoading: isGetMerchantByIdLoading } =
+        useGetMerchantByIdQuery({ merchant_id: merchantId });
+
+    const { register, handleSubmit, reset } = useForm<IMerchantForm>();
+    useEffect(() => {
+        if (merchant) {
+            reset({
+                website: merchant.domain,
+                description: merchant.description,
+                merchantName: merchant.name,
+            });
+        }
+    }, [merchant]);
 
     const [copied, setCopied] = useState(false);
-
-    const [name, setName] = useState('');
-    const [domain, setDomain] = useState('');
-    const [brand, setBrand] = useState('');
-    const [description, setDescription] = useState('');
 
     const getShortMerchantId = () => {
         return `${merchantId.slice(0, 8)}...${merchantId.slice(-8)}`;
@@ -49,25 +66,33 @@ export const MerchantProfileForm: React.FC = () => {
         }, 3000);
     };
 
-    const handleTextareaInput = (event: React.FormEvent): void => {
-        if (!event.target) return undefined;
-
-        const target = event.target as HTMLInputElement;
-        const value = target.value.trim();
-
-        setDescription(value);
-    };
-
-    const handleMerchantRemoval = () => {
+    const handleMerchantRemoval = async () => {
         // modal passes this prop only when merchant name entered correctly
         // close modal, then remove merchant, then navigate to /merchants
         // then show the notification about successfull removal
+        try {
+            await deleteMerchant({ merchant_id: merchantId });
+            console.log('remove merchant');
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
-        console.log('remove merchant');
+    const submit: SubmitHandler<IMerchantForm> = async (data) => {
+        try {
+            await updateMerchantFields({
+                description: data.description,
+                name: data.merchantName,
+                domain: data.website,
+                merchant_id: merchantId,
+            }).unwrap();
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
-        <div className="form">
+        <form onSubmit={handleSubmit(submit)} className="form">
             <h4 className="form__title">Merchant</h4>
             <div className="form__inner">
                 <div className="form__inner-user">
@@ -114,31 +139,30 @@ export const MerchantProfileForm: React.FC = () => {
                             <p className="form__inner-container__item-label">
                                 Merchant name
                             </p>
-                            <PInput
-                                placeholder="Company name"
-                                value={name}
-                                onInput={(value) => setName(value.toString())}
-                            />
+                            <input {...register('merchantName')} />
+                            {/* <PInput
+                {...register('merchantName')}
+                placeholder="Company name"
+                type="text"
+              />
+             */}
                         </div>
                         <div className="form__inner-container__item">
                             <p className="form__inner-container__item-label">
                                 Website
                             </p>
-                            <PInput
-                                placeholder="https://example.com"
-                                value={domain}
-                                onInput={(value) => setDomain(value.toString())}
-                            />
+                            <input {...register('website')} />
+                            {/* <PInput
+                placeholder="https://example.com" */}
                         </div>
                         <div className="form__inner-container__item">
                             <p className="form__inner-container__item-label">
                                 Brand
                             </p>
-                            <PInput
-                                placeholder="Brand name"
-                                value={brand}
-                                onInput={(value) => setBrand(value.toString())}
-                            />
+
+                            <input {...register('brand')} />
+                            {/* <PInput
+                placeholder="Brand name" */}
                         </div>
                     </div>
                     <div className="form__inner-container__item">
@@ -148,8 +172,7 @@ export const MerchantProfileForm: React.FC = () => {
                         <textarea
                             placeholder="Few words about merchant"
                             className="form__inner-container__item-textarea"
-                            value={description}
-                            onInput={(event) => handleTextareaInput(event)}
+                            {...register('description')}
                         />
                     </div>
                 </div>
@@ -158,7 +181,8 @@ export const MerchantProfileForm: React.FC = () => {
                         {/* add disabled if no changes were made */}
                         <PButton
                             wide
-                            disabled={true}
+                            // disabled={true}
+                            loading={isUpdatingMerchantFields}
                             children={<p>Save</p>}
                             onClick={() => console.log('save changes')}
                         />
@@ -175,7 +199,8 @@ export const MerchantProfileForm: React.FC = () => {
                 visible={modalDelete.visible}
                 onClose={() => modalDelete.close()}
                 onDelete={handleMerchantRemoval}
+                merchantName={merchant?.name ?? ''}
             />
-        </div>
+        </form>
     );
 };

@@ -1,4 +1,4 @@
-import { IPagination } from '@poluspay-frontend/redux';
+import { IPagination } from '@poluspay-frontend/api';
 interface IMerchant {
     id: string;
     name: string;
@@ -29,15 +29,13 @@ export interface ICreateMerchantResponse {
     domain_confirmation_code: string;
 }
 
-export interface IGetMerchantRequest extends IPagination {
-    merchant_id?: string;
-}
-
 export interface IMerchantId {
     merchant_id: string;
 }
 
-export type IDeleteMerchantRequest = IMerchant;
+export interface IGetMerchantRequest extends IMerchantId {}
+
+export type IDeleteMerchantRequest = IMerchantId;
 
 interface IWebhookItem {
     id: string;
