@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useGetMerchantsQuery } from '../../../../../libs/redux/src/lib/api/endpoints/merchant/Merchant';
+import { useGetMerchantsQuery } from '../../store/api/endpoints/merchant/Merchant';
 
 import { PButton, PPagination } from '@poluspay-frontend/ui';
 import { MerchantItem } from '../../components/pages/merchants/MerchantItem';
@@ -59,16 +59,16 @@ export const MerchantsPage: React.FC = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="merchants__pagination">
-                        {merchants.totalCount > limit && (
+                    {merchants.totalCount > limit && (
+                        <div className="merchants__pagination">
                             <PPagination
                                 current={current}
                                 totalItems={merchants.totalCount}
                                 pageItems={limit}
                                 onPageChange={(value) => onPageChange(value)}
                             />
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </div>
             ) : (
                 <div className="merchants__error">
