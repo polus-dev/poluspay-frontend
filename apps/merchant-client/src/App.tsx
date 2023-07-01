@@ -7,6 +7,7 @@ import { MerchantsPage } from './pages/merchants/Merchants';
 import { SettingsPage } from './pages/settings/Settings';
 import { MerchantProfilePage } from './pages/merchants/id/merchant/Merchant';
 import { MerchantApiPage } from './pages/merchants/id/api/Webhooks';
+import { MerchantWalletPage } from './pages/merchants/id/wallet/MerchantWallet';
 
 export default function App() {
     return (
@@ -38,7 +39,7 @@ export default function App() {
                     />
                     <Route
                         path="/merchants/:id/wallet"
-                        element={<div>wallet page</div>}
+                        element={<MerchantWalletPage />}
                     />
                     <Route
                         path="/merchants/:id/api"

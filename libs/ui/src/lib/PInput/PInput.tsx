@@ -35,10 +35,10 @@ interface InputProps {
     overlay?: boolean;
     prepend?: React.ReactNode;
     append?: React.ReactNode;
+    reg?: any;
     onInput?: (value: string | number) => void;
     onFocus?: (event: React.FocusEvent) => void;
     onBlur?: (event: React.FocusEvent) => void;
-    reg?: any;
 }
 
 export const PInput: React.FC<InputProps> = ({
