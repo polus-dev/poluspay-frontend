@@ -147,5 +147,5 @@ export const {
     useGetMerchantsQuery,
     useGetWebhookHistoryQuery,
     useGetMerchantByIdQuery,
-    useVerifyDomainMutation,
+    eVerifyDomainMutation,
 } = merchantApi;
