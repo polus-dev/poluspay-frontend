@@ -18,7 +18,7 @@ import classNames from 'classnames';
 import './Form.scoped.scss';
 
 import { useNavigate, useParams } from 'react-router-dom';
-import { IMerchantForm } from './Form.interface';
+import { IMerchantForm } from '../../../Form.interface';
 
 export const MerchantProfileForm: React.FC = () => {
     const modalDelete = useModal();
@@ -141,7 +141,9 @@ export const MerchantProfileForm: React.FC = () => {
                             </p>
                             {/* <input {...register('merchantName')} /> */}
                             <PInput
-                                reg={register('merchantName')}
+                                reg={register('merchantName', {
+                                    required: true,
+                                })}
                                 placeholder="Company name"
                                 type="text"
                             />
@@ -152,7 +154,7 @@ export const MerchantProfileForm: React.FC = () => {
                             </p>
                             <PInput
                                 placeholder="https://example.com"
-                                reg={register('website')}
+                                reg={register('website', { required: true })}
                             />
                         </div>
                         <div className="form__inner-container__item">
@@ -162,7 +164,7 @@ export const MerchantProfileForm: React.FC = () => {
 
                             <PInput
                                 placeholder="Brand name"
-                                reg={register('brand')}
+                                reg={register('brand', { required: true })}
                             />
                         </div>
                     </div>
@@ -173,7 +175,7 @@ export const MerchantProfileForm: React.FC = () => {
                         <textarea
                             placeholder="Few words about merchant"
                             className="form__inner-container__item-textarea"
-                            {...register('description')}
+                            {...register('description', { required: true })}
                         />
                     </div>
                 </div>
