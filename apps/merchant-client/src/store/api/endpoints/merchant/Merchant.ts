@@ -13,6 +13,7 @@ import {
     IGetMerchantResponse,
     IGetMerchantResponseWithTotalCount,
     IGetWebhookHistoryResponse,
+    IGetWebhookHistoryResponseWithTotalCount,
     IMerchantId,
     ISetWebhookRequest,
     IUpdateMerchantRequest,
@@ -105,6 +106,11 @@ export const merchantApi = createApi({
                     method: 'POST',
                     body,
                 }),
+                invalidatesTags: (result, err, args) => {
+                    return result
+                        ? [{ type: 'Merchant', id: args.merchant_id }]
+                        : ['Merchant'];
+                },
             }
         ),
         deleteMerchant: builder.mutation<
@@ -122,12 +128,24 @@ export const merchantApi = createApi({
             //         ? [{ type: 'Merchant', id: args.merchant_id }]
             //         : ['Merchant'],
         }),
-        getWebhookHistory: builder.query<IGetWebhookHistoryResponse, void>({
+        getWebhookHistory: builder.query<
+            IGetWebhookHistoryResponseWithTotalCount,
+            IMerchantId
+        >({
             query: (body) => ({
                 url: 'merchant.webhook.get',
                 method: 'POST',
                 body,
             }),
+            transformResponse(response: IGetWebhookHistoryResponse, meta) {
+                return {
+                    data: response,
+                    totalCount:
+                        Number(
+                            meta?.response?.headers.get('x-total-records')
+                        ) ?? 0,
+                };
+            },
         }),
         verifyDomain: builder.mutation<IResponseApiDefault, IMerchantId>({
             query: (body) => ({
@@ -147,5 +165,5 @@ export const {
     useGetMerchantsQuery,
     useGetWebhookHistoryQuery,
     useGetMerchantByIdQuery,
-    eVerifyDomainMutation,
+    useVerifyDomainMutation,
 } = merchantApi;

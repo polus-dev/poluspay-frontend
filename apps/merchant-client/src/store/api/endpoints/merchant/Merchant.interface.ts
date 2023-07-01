@@ -13,6 +13,8 @@ interface IMerchant {
     created_at: string;
 }
 
+type UnparsedJSON = string;
+
 export interface ICreateMerchantRequest {
     name: string;
     description: string;
@@ -42,8 +44,8 @@ interface IWebhookItem {
     merchant_id: string;
     payment_id: string;
     endpoint: string;
-    response_body: string;
-    response_status_code: number;
+    response_body: UnparsedJSON;
+    response_status_code: 200 | 500;
     created_at: string;
 }
 
@@ -53,7 +55,11 @@ export interface ISetWebhookRequest {
 }
 
 export type IGetWebhookHistoryResponse = IWebhookItem[];
-export type IGetMerchantResponse = IMerchant[] & { totalCount: number };
+export type IGetWebhookHistoryResponseWithTotalCount = {
+    data: IWebhookItem[];
+    totalCount: number;
+};
+export type IGetMerchantResponse = IMerchant[];
 export type IGetMerchantResponseWithTotalCount = {
     data: IMerchant[];
     totalCount: number;

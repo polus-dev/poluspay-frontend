@@ -7,30 +7,40 @@ import { ReactComponent as IconHide } from '../../../../../assets/icons/hide.svg
 import './Form.scoped.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IApiForm } from './ApiForm.interface';
-import { useParams } from 'react-router';
 import {
     useSetWebhookMutation,
     useUpdateMerchantFieldsMutation,
+    useGetMerchantByIdQuery,
 } from '@poluspay-frontend/merchant-query';
 import { httpsUrlRegex } from 'tools';
 
-export const MerchantApiForm: React.FC = () => {
-    const { register, handleSubmit } = useForm<IApiForm>();
+interface IMerchantApiFormProps {
+    merchantId: string;
+}
+
+export const MerchantApiForm = (props: IMerchantApiFormProps) => {
+    const { register, handleSubmit, setValue } = useForm<IApiForm>();
     const [updateMerchantFields, { isLoading: isUpdateting }] =
         useUpdateMerchantFieldsMutation();
     const [setWebhook, { isLoading: isSettingWebhook }] =
         useSetWebhookMutation();
-    const { id: merchantId } = useParams<{ id: string }>();
-    if (!merchantId) {
-        return <></>;
-    }
+    const { data: merchant } = useGetMerchantByIdQuery({
+        merchant_id: props.merchantId,
+    });
+    useEffect(() => {
+        if (merchant) {
+            const { fail_redirect_url, success_redirect_url } = merchant;
+            setValue('failRedirectUrl', fail_redirect_url);
+            setValue('successRedirectUrl', success_redirect_url);
+        }
+    }, [merchant]);
     const submit: SubmitHandler<IApiForm> = async (data) => {
         try {
             const promises = [];
             if (data.failRedirectUrl || data.successRedirectUrl) {
                 promises.push(
                     updateMerchantFields({
-                        merchant_id: merchantId,
+                        merchant_id: props.merchantId,
                         fail_redirect_url: data.failRedirectUrl,
                         success_redirect_url: data.successRedirectUrl,
                     }).unwrap()
@@ -39,7 +49,7 @@ export const MerchantApiForm: React.FC = () => {
             if (data.webhookUrl) {
                 promises.push(
                     setWebhook({
-                        merchant_id: merchantId,
+                        merchant_id: props.merchantId,
                         webhook_url: data.webhookUrl,
                     }).unwrap()
                 );
@@ -135,7 +145,6 @@ export const MerchantApiForm: React.FC = () => {
                             loading={isSettingWebhook || isUpdateting}
                             disabled={false}
                             children={<p>Save</p>}
-                            onClick={() => console.log('save changes')}
                         />
                     </div>
                 </div>
