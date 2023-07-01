@@ -38,7 +38,7 @@ interface InputProps {
     onInput?: (value: string | number) => void;
     onFocus?: (event: React.FocusEvent) => void;
     onBlur?: (event: React.FocusEvent) => void;
-    reg: any;
+    reg?: any;
 }
 
 export const PInput: React.FC<InputProps> = ({
