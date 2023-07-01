@@ -58,9 +58,8 @@ export const MerchantForm: React.FC<FormProps> = ({ changeStage }) => {
                     <PInput
                         reg={register('website', {
                             required: true,
-                            pattern: httpsUrlRegex,
                         })}
-                        placeholder="https://example.com"
+                        placeholder="example.com"
                     />
                 </div>
                 <div className="form__item">

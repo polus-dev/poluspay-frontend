@@ -19,7 +19,12 @@ interface IMerchantApiFormProps {
 }
 
 export const MerchantApiForm = (props: IMerchantApiFormProps) => {
-    const { register, handleSubmit, setValue } = useForm<IApiForm>();
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors },
+    } = useForm<IApiForm>();
     const [updateMerchantFields, { isLoading: isUpdateting }] =
         useUpdateMerchantFieldsMutation();
     const [setWebhook, { isLoading: isSettingWebhook }] =
@@ -118,22 +123,48 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
                 <div className="form__inner-item">
                     <p className="form__inner-item-label">URL WebHook</p>
                     <PInput
-                        reg={register('webhookUrl', { pattern: httpsUrlRegex })}
+                        errors={
+                            errors.webhookUrl?.message
+                                ? [errors.webhookUrl.message]
+                                : []
+                        }
+                        reg={register('webhookUrl', {
+                            pattern: {
+                                value: httpsUrlRegex,
+                                message: 'invalid  WebHook URL',
+                            },
+                        })}
                     />
                 </div>
                 <div className="form__inner-item">
                     <p className="form__inner-item-label">Success URL</p>
                     <PInput
+                        errors={
+                            errors.successRedirectUrl?.message
+                                ? [errors.successRedirectUrl.message]
+                                : []
+                        }
                         reg={register('successRedirectUrl', {
-                            pattern: httpsUrlRegex,
+                            pattern: {
+                                value: httpsUrlRegex,
+                                message: 'invalid Success URL',
+                            },
                         })}
                     />
                 </div>
                 <div className="form__inner-item">
                     <p className="form__inner-item-label">Fail URL</p>
                     <PInput
+                        errors={
+                            errors.failRedirectUrl?.message
+                                ? [errors.failRedirectUrl.message]
+                                : []
+                        }
                         reg={register('failRedirectUrl', {
-                            pattern: httpsUrlRegex,
+                            pattern: {
+                                value: httpsUrlRegex,
+                                message: 'invalid fail URL',
+                            },
                         })}
                     />
                 </div>
