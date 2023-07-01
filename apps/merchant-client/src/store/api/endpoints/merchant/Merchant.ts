@@ -42,8 +42,9 @@ export const merchantApi = createApi({
                 method: 'POST',
                 body,
             }),
-            invalidatesTags: (result) =>
-                result ? [{ type: 'Merchant', id: result.id }] : ['Merchant'],
+            // invalidatesTags: (result) =>
+            //     result ? [{ type: 'Merchant', id: result.id }] : ['Merchant'],
+            invalidatesTags: ['Merchant'],
         }),
         getMerchantById: builder.query<
             IGetMerchantByIdResponse,
@@ -115,10 +116,11 @@ export const merchantApi = createApi({
                 method: 'POST',
                 body,
             }),
-            invalidatesTags: (result, error, args) =>
-                result
-                    ? [{ type: 'Merchant', id: args.merchant_id }]
-                    : ['Merchant'],
+            invalidatesTags: ['Merchant'],
+            // invalidatesTags: (result, error, args) =>
+            //     result
+            //         ? [{ type: 'Merchant', id: args.merchant_id }]
+            //         : ['Merchant'],
         }),
         getWebhookHistory: builder.query<IGetWebhookHistoryResponse, void>({
             query: (body) => ({
@@ -145,5 +147,5 @@ export const {
     useGetMerchantsQuery,
     useGetWebhookHistoryQuery,
     useGetMerchantByIdQuery,
-    useVerifyDomainMutation,
+    eVerifyDomainMutation,
 } = merchantApi;

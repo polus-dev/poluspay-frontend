@@ -15,8 +15,8 @@ export const MerchantsCreatePage: React.FC = () => {
 
     const progressOptions = [
         { id: 0, title: 'Make a selection' },
-        { id: 1, title: 'Make a selection' },
-        { id: 2, title: 'Make a selection' },
+        { id: 1, title: 'Merchant information' },
+        { id: 2, title: 'Add wallets' },
     ];
 
     const handleStageTypeChange = (typeC?: string) => {

@@ -3,27 +3,42 @@ import React, { useState } from 'react';
 import { PButton, PInput } from '@poluspay-frontend/ui';
 
 import './Form.scoped.scss';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { IMerchantForm } from '../Form.interface';
+import { useCreateMerchantMutation } from '@poluspay-frontend/merchant-query';
+import { useNavigate } from 'react-router-dom';
 
 interface FormProps {
     changeStage: () => void;
 }
 
 export const MerchantForm: React.FC<FormProps> = ({ changeStage }) => {
-    const [name, setName] = useState('');
-    const [website, setWebsite] = useState('');
-    const [description, setDescription] = useState('');
+    const {
+        register,
+        handleSubmit,
+        formState: { isValid },
+    } = useForm<Omit<IMerchantForm, 'brand'>>();
+    const [createMerchant, { isLoading: isCreatingMerchantLoading }] =
+        useCreateMerchantMutation();
 
-    const handleTextareaInput = (event: React.FormEvent): void => {
-        if (!event.target) return undefined;
+    const navigate = useNavigate();
 
-        const target = event.target as HTMLInputElement;
-        const value = target.value.trim();
-
-        setDescription(value);
+    const submit: SubmitHandler<Omit<IMerchantForm, 'brand'>> = async (
+        data
+    ) => {
+        try {
+            const merchant = await createMerchant({
+                name: data.merchantName,
+                domain: data.website,
+                description: data.description,
+            }).unwrap();
+            navigate(`/merchants/${merchant.id}/merchant`);
+        } catch (error) {
+            console.error(error);
+        }
     };
-
     return (
-        <div className="form">
+        <form onSubmit={handleSubmit(submit)} className="form">
             <div className="form__inner">
                 <div className="form__item">
                     <p className="form__item-label">
@@ -33,48 +48,53 @@ export const MerchantForm: React.FC<FormProps> = ({ changeStage }) => {
                         </span>
                     </p>
                     <PInput
+                        reg={register('merchantName', { required: true })}
                         placeholder="Company name"
-                        value={name}
-                        onInput={(value) => setName(value.toString())}
                     />
                 </div>
                 <div className="form__item">
                     <p className="form__item-label">Merchant's website</p>
                     <PInput
+                        reg={register('website', {
+                            required: true,
+                            pattern: /^(?!https?:\/\/).*/,
+                        })}
                         placeholder="https://example.com"
-                        value={website}
-                        onInput={(value) => setWebsite(value.toString())}
                     />
                 </div>
                 <div className="form__item">
                     <p className="form__item-label">Description</p>
                     <textarea
+                        {...register('description', {
+                            required: true,
+                            minLength: 10,
+                        })}
                         className="form__item-textarea"
                         placeholder="Few words about merchant"
-                        value={description}
-                        onInput={(event) => handleTextareaInput(event)}
                     />
                 </div>
             </div>
             <div className="form__button">
                 <PButton
                     wide
+                    loading={isCreatingMerchantLoading}
+                    disabled={!isValid}
                     classname="form__button"
-                    disabled={name.length === 0}
                     children={<p>Continue</p>}
-                    onClick={() => changeStage()}
+                    // onClick={() => changeStage()}
                 />
             </div>
             <div className="form__button form__button--desktop">
                 <PButton
                     wide
+                    loading={isCreatingMerchantLoading}
+                    disabled={!isValid}
                     size="lg"
                     classname="form__button form__button--desktop"
-                    disabled={name.length === 0}
                     children={<p>Continue</p>}
-                    onClick={() => changeStage()}
+                    // onClick={() => changeStage()}
                 />
             </div>
-        </div>
+        </form>
     );
 };
