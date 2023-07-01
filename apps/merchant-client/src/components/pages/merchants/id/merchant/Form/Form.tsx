@@ -24,7 +24,7 @@ export const MerchantProfileForm: React.FC = () => {
     const modalDelete = useModal();
     const modalAvatar = useModal();
 
-    const { id: merchantId } = useParams();
+    const { id: merchantId } = useParams<{ id: string }>();
 
     if (!merchantId) {
         return <></>;

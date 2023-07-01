@@ -7,6 +7,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { IMerchantForm } from '../Form.interface';
 import { useCreateMerchantMutation } from '@poluspay-frontend/merchant-query';
 import { useNavigate } from 'react-router-dom';
+import { httpsUrlRegex } from 'tools';
 
 interface FormProps {
     changeStage: () => void;
@@ -57,7 +58,7 @@ export const MerchantForm: React.FC<FormProps> = ({ changeStage }) => {
                     <PInput
                         reg={register('website', {
                             required: true,
-                            pattern: /^(?!https?:\/\/).*/,
+                            pattern: httpsUrlRegex,
                         })}
                         placeholder="https://example.com"
                     />
