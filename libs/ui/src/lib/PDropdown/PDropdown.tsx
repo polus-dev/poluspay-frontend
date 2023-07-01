@@ -124,14 +124,14 @@ export const PDropdown: React.FC<DropdownProps> = ({
 
     const toggle = () => {
         if (!closeOnClickOutside) {
-            return visible ? hide(false) : show()
+            return visible ? hide(false) : show();
         }
 
         return visible ? hide() : show();
     };
 
     const onHide = (event: React.FocusEvent) => {
-        if (!closeOnClickOutside) return undefined
+        if (!closeOnClickOutside) return undefined;
 
         const target = event.relatedTarget as unknown as Node;
 

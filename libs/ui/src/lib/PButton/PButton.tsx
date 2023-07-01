@@ -26,6 +26,7 @@ export enum ButtonAlign {
 
 interface ButtonProps {
     to?: string;
+    type?: 'button' | 'submit' | 'reset';
     href?: string;
     target?: string;
     size?: ButtonSize | `${ButtonSize}`;
@@ -93,7 +94,11 @@ export const PButton: React.FC<ButtonProps> = ({
                     )}
                 </a>
             ) : (
-                <button className={classnames} onClick={handleClick}>
+                <button
+                    type={props.type}
+                    className={classnames}
+                    onClick={handleClick}
+                >
                     {props.loading ? (
                         <IconLoading className="polus-ui__button-loader" />
                     ) : (
