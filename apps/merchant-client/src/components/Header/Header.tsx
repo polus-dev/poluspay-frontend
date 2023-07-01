@@ -10,7 +10,6 @@ import { ReactComponent as LogoPolusPlanet } from '../../assets/logos/polus-plan
 
 import './Header.scoped.scss';
 import { useGetMeQuery } from '../../store/api/endpoints/user/User';
-import { useAppDispatch } from '../../store/hooks';
 import { useAccount } from 'wagmi';
 import { formatAddress } from 'tools';
 import { useLogout } from './hooks/useLogout';
@@ -18,7 +17,9 @@ import { useLogout } from './hooks/useLogout';
 export const Header: React.FC = () => {
     const elHeader = useRef<HTMLElement | null>(null);
 
-    const { data, isLoading } = useGetMeQuery();
+    const { data, isLoading } = useGetMeQuery(undefined, {
+        refetchOnMountOrArgChange: true,
+    });
     const { address } = useAccount();
     const { logout } = useLogout();
 
