@@ -51,6 +51,16 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
 
     const [selectedWallet, setSelectedWallet] = useState<WalletItem | null>(null)
 
+    const handleSelect = (item: WalletItem) => {
+        if (item.id === selectedWallet?.id) {
+            setSelectedWallet(null)
+
+            return undefined
+        }
+
+        setSelectedWallet(item)
+    }
+
     useEffect(() => {
         if (tab.id === 'all') {
             const paginated: WalletItem[] = walletList
@@ -143,7 +153,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                         <MerchantWalletItem
                             item={el}
                             selected={selectedWallet?.id === el.id}
-                            onSelect={() => setSelectedWallet(el)}
+                            onSelect={() => handleSelect(el)}
                         />
                     </div>
                 )) : walletsPaginated.map((el) => (
@@ -157,7 +167,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                         <MerchantWalletItem
                             item={el}
                             selected={selectedWallet?.id === el.id}
-                            onSelect={() => setSelectedWallet(el)}
+                            onSelect={() => handleSelect(el)}
                         />
                     </div>
                 ))}
