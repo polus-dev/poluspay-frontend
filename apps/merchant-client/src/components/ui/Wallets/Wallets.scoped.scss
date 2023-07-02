@@ -81,6 +81,21 @@
         }
     }
 
+    &__connected {
+        margin-bottom: px-to-rem(16);
+        display: flex;
+        flex-wrap: wrap;
+        gap: px-to-rem(12);
+
+        @include breakpoint($screen-sm) {
+            margin-bottom: px-to-rem(24);
+        }
+
+        @include breakpoint($screen-xl) {
+            gap: px-to-rem(16);
+        }
+    }
+
     &__container {
         display: grid;
         grid-template-columns: repeat(12, 1fr);

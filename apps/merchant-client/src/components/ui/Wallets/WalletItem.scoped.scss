@@ -8,10 +8,11 @@
     width: 100%;
     height: px-to-rem(52);
     padding: 0 px-to-rem(8);
+    cursor: pointer;
 
     &:hover {
         &__inner {
-            transform: scale(.95);
+            transform: scale(0.95);
         }
     }
 
@@ -29,7 +30,7 @@
         display: flex;
         align-items: center;
         gap: px-to-rem(4);
-        transition: transform .2s ease-in-out;
+        transition: transform 0.2s ease-in-out;
 
         @include breakpoint($screen-sm) {
             gap: px-to-rem(8);
