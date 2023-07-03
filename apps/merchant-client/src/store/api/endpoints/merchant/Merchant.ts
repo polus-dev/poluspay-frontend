@@ -8,6 +8,7 @@ import {
     ICreateMerchantRequest,
     ICreateMerchantResponse,
     IDeleteMerchantRequest,
+    IGenerateSigningKeyResponse,
     IGetMerchantByIdResponse,
     IGetMerchantRequest,
     IGetMerchantResponse,
@@ -147,6 +148,16 @@ export const merchantApi = createApi({
                 };
             },
         }),
+        generateSigningKey: builder.mutation<
+            IGenerateSigningKeyResponse,
+            IMerchantId
+        >({
+            query: (body) => ({
+                url: 'merchant.generateSigningKey',
+                method: 'POST',
+                body,
+            }),
+        }),
         verifyDomain: builder.mutation<IResponseApiDefault, IMerchantId>({
             query: (body) => ({
                 url: 'merchant.verifyDomain',
@@ -166,4 +177,5 @@ export const {
     useGetWebhookHistoryQuery,
     useGetMerchantByIdQuery,
     useVerifyDomainMutation,
+    useGenerateSigningKeyMutation,
 } = merchantApi;

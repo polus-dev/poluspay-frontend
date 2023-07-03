@@ -11,6 +11,7 @@ import {
     useSetWebhookMutation,
     useUpdateMerchantFieldsMutation,
     useGetMerchantByIdQuery,
+    useGenerateSigningKeyMutation,
 } from '@poluspay-frontend/merchant-query';
 import { httpsUrlRegex } from 'tools';
 
@@ -32,6 +33,22 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
     const { data: merchant } = useGetMerchantByIdQuery({
         merchant_id: props.merchantId,
     });
+
+    const [apiKey, setApiKey] = useState<string>('you have no api key');
+    const [generateApiKey, { isLoading: isGeneratingApiKey }] =
+        useGenerateSigningKeyMutation();
+
+    const updateApiKey = async () => {
+        try {
+            const { signing_key } = await generateApiKey({
+                merchant_id: props.merchantId,
+            }).unwrap();
+            setApiKey(signing_key);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     useEffect(() => {
         if (merchant) {
             const { fail_redirect_url, success_redirect_url } = merchant;
@@ -64,7 +81,6 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
             console.error(error);
         }
     };
-    const apiKey = 'dfsryJGHJN65grfvbfghxg';
     const [bluredApiKey, setBluredApiKey] = useState('');
     const [visible, setVisible] = useState(false);
 
@@ -91,7 +107,6 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
                         <div className="form__inner-item-container-input">
                             <PInput
                                 readonly
-                                reg={register('apiKey')}
                                 overlay={false}
                                 value={visible ? apiKey : bluredApiKey}
                                 append={
@@ -113,9 +128,10 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
                             <PButton
                                 type="button"
                                 wide
+                                loading={isGeneratingApiKey}
                                 outline
                                 children={<p>Update</p>}
-                                onClick={() => console.log('update apiKey')}
+                                onClick={updateApiKey}
                             />
                         </div>
                     </div>

@@ -68,3 +68,8 @@ export type IGetMerchantByIdResponse = IMerchant;
 export type IUpdateMerchantRequest = Partial<
     ICreateMerchantRequest & { merchant_id: string }
 >;
+
+export interface IGenerateSigningKeyResponse {
+    merchant_id: string;
+    signing_key: string;
+}
