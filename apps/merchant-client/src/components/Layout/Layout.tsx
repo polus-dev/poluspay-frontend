@@ -6,12 +6,17 @@ import { MerchantMenu } from '../MerchantMenu/MerchantMenu';
 import '../../assets/scss/main.scss';
 import './styles.scss';
 import { useRedirectAuth } from '../../hooks/useRedirectAuth';
+import classNames from 'classnames';
 
 interface LayoutProps {
     isMerchantPage?: boolean;
+    centered?: boolean
 }
 
-export const Layout: React.FC<LayoutProps> = ({ isMerchantPage }) => {
+export const Layout: React.FC<LayoutProps> = ({
+    isMerchantPage,
+    centered
+}) => {
     useRedirectAuth();
     return (
         <>
@@ -19,7 +24,12 @@ export const Layout: React.FC<LayoutProps> = ({ isMerchantPage }) => {
             <div className="content">
                 {isMerchantPage ? (
                     <div className="merchant-page">
-                        <div className="merchant-page__inner">
+                        <div
+                            className={classNames({
+                                'merchant-page__inner': true,
+                                'merchant-page__inner--centered': centered
+                            })}
+                        >
                             <Outlet />
                         </div>
                         <MerchantMenu />

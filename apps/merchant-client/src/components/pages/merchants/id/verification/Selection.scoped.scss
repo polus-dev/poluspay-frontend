@@ -1,0 +1,74 @@
+@import '../../../../../assets/scss/variables';
+@import '../../../../../assets/scss/utils';
+
+.selection {
+    width: 100%;
+
+    &__title {
+        margin-bottom: px-to-rem(20);
+        text-align: center;
+        font-size: px-to-rem(18);
+        font-weight: 500;
+        line-height: 150%;
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(12);
+        width: 100%;
+    }
+
+    &__container-item {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(8);
+        width: 100%;
+        height: auto;
+        padding: px-to-rem(16);
+        stroke: $color-blue-light;
+        background-color: $color-black-light;
+        border-radius: px-to-rem(12);
+        cursor: pointer;
+
+        &:hover {
+            stroke: $color-blue;
+        }
+
+        &__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        &__header-title {
+            font-size: px-to-rem(18);
+            font-weight: 500;
+            line-height: 150%;
+        }
+
+        &__header-icon {
+            width: px-to-rem(20);
+            height: auto;
+            stroke: inherit;
+            transition: stroke .15s ease-in-out;
+        }
+
+        &__description {
+            width: 100%;
+        }
+
+        &__description-text {
+            color: $color-white-dark;
+            font-size: px-to-rem(14);
+            font-weight: 300;
+            line-height: 130%;
+
+            @include breakpoint($screen-sm) {
+                font-size: px-to-rem(16);
+                font-weight: 400;
+                line-height: 150%;
+            }
+        }
+    }
+}

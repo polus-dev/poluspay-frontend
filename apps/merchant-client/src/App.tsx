@@ -8,6 +8,8 @@ import { SettingsPage } from './pages/settings/Settings';
 import { MerchantProfilePage } from './pages/merchants/id/merchant/Merchant';
 import { MerchantApiPage } from './pages/merchants/id/api/Webhooks';
 import { MerchantWalletPage } from './pages/merchants/id/wallet/MerchantWallet';
+import { MerchantDomainPage } from './pages/merchants/id/verification/Domain';
+import { MerchantBrandPage } from './pages/merchants/id/verification/Brand';
 
 export default function App() {
     return (
@@ -48,6 +50,19 @@ export default function App() {
                     <Route
                         path="/merchants/:id/plugins"
                         element={<div> plugins page</div>}
+                    />
+                </Route>
+                <Route
+                    path="/merchants/:id"
+                    element={<Layout isMerchantPage centered />}
+                >
+                    <Route
+                        path="/merchants/:id/domain"
+                        element={<MerchantDomainPage />}
+                    />
+                    <Route
+                        path="/merchants/:id/brand"
+                        element={<MerchantBrandPage />}
                     />
                 </Route>
             </Routes>
