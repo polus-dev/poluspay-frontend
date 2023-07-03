@@ -56,19 +56,14 @@ export const MerchantForm: React.FC<FormProps> = ({ changeStage }) => {
                 <div className="form__item">
                     <p className="form__item-label">Merchant's website</p>
                     <PInput
-                        reg={register('website', {
-                            required: true,
-                        })}
+                        reg={register('website')}
                         placeholder="example.com"
                     />
                 </div>
                 <div className="form__item">
                     <p className="form__item-label">Description</p>
                     <textarea
-                        {...register('description', {
-                            required: true,
-                            minLength: 10,
-                        })}
+                        {...register('description')}
                         className="form__item-textarea"
                         placeholder="Few words about merchant"
                     />
