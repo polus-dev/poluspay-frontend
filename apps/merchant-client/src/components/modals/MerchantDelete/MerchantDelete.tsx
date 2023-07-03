@@ -16,7 +16,7 @@ export const ModalMerchantDelete: React.FC<ModalProps> = ({
     visible,
     merchantName,
     onClose,
-    onDelete
+    onDelete,
 }) => {
     const [name, setName] = useState('');
     const [errors, setErrors] = useState<string[]>([]);

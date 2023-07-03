@@ -30,7 +30,7 @@ export const MerchantWalletItem: React.FC<WalletItemProps> = ({
             <IconCheckbox
                 className={classNames({
                     'wallet-item__icon': true,
-                    'wallet-item__icon--active': selected
+                    'wallet-item__icon--active': selected,
                 })}
             />
         </div>

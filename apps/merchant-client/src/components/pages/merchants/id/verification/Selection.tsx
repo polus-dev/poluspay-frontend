@@ -1,44 +1,49 @@
-import type { DomainVerification } from '../../../../../pages/merchants/id/verification/Domain'
+import type { DomainVerification } from '../../../../../pages/merchants/id/verification/Domain';
 
-import { ReactComponent as IconArrow } from '../../../../../assets/icons/arrow.svg'
+import { ReactComponent as IconArrow } from '../../../../../assets/icons/arrow.svg';
 
-import './Selection.scoped.scss'
+import './Selection.scoped.scss';
 
 interface DomainSelectionProps {
-    onSelect: (type: DomainVerification) => void
+    onSelect: (type: DomainVerification) => void;
 }
 
 interface DomainSelectionOption {
-    id: number
-    type: DomainVerification
-    title: string
-    description: string
+    id: number;
+    type: DomainVerification;
+    title: string;
+    description: string;
 }
 
 export const MerchantDomainSelection: React.FC<DomainSelectionProps> = ({
-    onSelect
+    onSelect,
 }) => {
-    const options: DomainSelectionOption[] = [{
-        id: 1,
-        type: 'dns',
-        title: 'DNS record',
-        description: 'Some description'
-    }, {
-        id: 2,
-        type: 'html',
-        title: 'HTML tag',
-        description: 'Some description'
-    }, {
-        id: 3,
-        type: 'file',
-        title: 'File',
-        description: 'Some description'
-    }, {
-        id: 4,
-        type: 'server',
-        title: 'Server response',
-        description: 'Some description'
-    }]
+    const options: DomainSelectionOption[] = [
+        {
+            id: 1,
+            type: 'dns',
+            title: 'DNS record',
+            description: 'Some description',
+        },
+        {
+            id: 2,
+            type: 'html',
+            title: 'HTML tag',
+            description: 'Some description',
+        },
+        {
+            id: 3,
+            type: 'file',
+            title: 'File',
+            description: 'Some description',
+        },
+        {
+            id: 4,
+            type: 'server',
+            title: 'Server response',
+            description: 'Some description',
+        },
+    ];
 
     return (
         <div className="selection">
@@ -67,5 +72,5 @@ export const MerchantDomainSelection: React.FC<DomainSelectionProps> = ({
                 ))}
             </div>
         </div>
-    )
-}
+    );
+};

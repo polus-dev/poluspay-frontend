@@ -6,9 +6,9 @@ import { ReactComponent as IconArrow } from '../../../../../assets/icons/arrow.s
 import './Alerts.scoped.scss';
 
 export const MerchantProfileAlerts: React.FC = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const merchantId = '123'
+    const merchantId = '123';
 
     return (
         <div className="alerts">

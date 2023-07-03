@@ -18,7 +18,7 @@ export const MerchantsCreatePage: React.FC = () => {
     const [type, setType] = useState<string | null>(null);
     const [stage, setStage] = useState(0);
 
-    const modalBlockchain = useModal()
+    const modalBlockchain = useModal();
 
     const progressOptions = [
         { id: 0, title: 'Make a selection' },
@@ -33,8 +33,8 @@ export const MerchantsCreatePage: React.FC = () => {
     };
 
     const handleButtonClick = () => {
-        console.log('qwe')
-    }
+        console.log('qwe');
+    };
 
     const onFinishRegistation = () => {
         navigator('/merchants');

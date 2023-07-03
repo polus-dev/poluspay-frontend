@@ -1,28 +1,28 @@
-import ReactDOM from 'react-dom'
-import { useEffect, useState } from 'react'
+import ReactDOM from 'react-dom';
+import { useEffect, useState } from 'react';
 
-import { PModal, PInput, PButton } from '@poluspay-frontend/ui'
-import { ReactComponent as IconSearch } from '../../../assets/icons/search.svg'
+import { PModal, PInput, PButton } from '@poluspay-frontend/ui';
+import { ReactComponent as IconSearch } from '../../../assets/icons/search.svg';
 import { ReactComponent as IconCheckbox } from '../../../assets/icons/checkbox-fill.svg';
 
-import classNames from 'classnames'
+import classNames from 'classnames';
 
-import './BlockchainSelector.scoped.scss'
+import './BlockchainSelector.scoped.scss';
 
 interface Blockchain {
-    id: number
-    name: string
-    image: string
-    [key: string]: string | number
+    id: number;
+    name: string;
+    image: string;
+    [key: string]: string | number;
 }
 
 interface ModalProps {
-    visible: boolean
-    multi?: boolean
-    hasSearch?: boolean
-    options: Blockchain[]
-    onApply: (items: Blockchain[]) => void
-    onClose: () => void
+    visible: boolean;
+    multi?: boolean;
+    hasSearch?: boolean;
+    options: Blockchain[];
+    onApply: (items: Blockchain[]) => void;
+    onClose: () => void;
 }
 
 export const ModalBlockChainSelector: React.FC<ModalProps> = ({
@@ -31,34 +31,35 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
     hasSearch,
     options,
     onApply,
-    onClose
+    onClose,
 }) => {
-    const [search, setSearch] = useState('')
+    const [search, setSearch] = useState('');
 
-    const [blockchains, setBlockchains] = useState<Blockchain[]>(options)
+    const [blockchains, setBlockchains] = useState<Blockchain[]>(options);
 
-    const [selected, setSelected] = useState<Blockchain[]>([])
+    const [selected, setSelected] = useState<Blockchain[]>([]);
 
     const handleSelect = (item: Blockchain) => {
         if (selected.some((el) => el.id === item.id)) {
-            const filtered = selected.filter((el) => el.id !== item.id)
+            const filtered = selected.filter((el) => el.id !== item.id);
 
-            setSelected(filtered)
+            setSelected(filtered);
         } else {
-            if (!multi && selected.length > 0) return undefined
+            if (!multi && selected.length > 0) return undefined;
 
-            setSelected([...selected, item])
+            setSelected([...selected, item]);
         }
-    }
+    };
 
     useEffect(() => {
-        if (!search) return undefined
+        if (!search) return undefined;
 
-        const filtered = blockchains
-            .filter((el) => el.name.toLowerCase().includes(search.toLocaleLowerCase()))
+        const filtered = blockchains.filter((el) =>
+            el.name.toLowerCase().includes(search.toLocaleLowerCase())
+        );
 
-        setBlockchains(filtered)
-    }, [search])
+        setBlockchains(filtered);
+    }, [search]);
 
     return ReactDOM.createPortal(
         <>
@@ -79,11 +80,11 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
                                     placeholder="Search"
                                     value={search}
                                     prepend={
-                                        <IconSearch
-                                            className="modal__body-search-icon"
-                                        />
+                                        <IconSearch className="modal__body-search-icon" />
                                     }
-                                    onInput={(value) => setSearch(value.toString())}
+                                    onInput={(value) =>
+                                        setSearch(value.toString())
+                                    }
                                 />
                             </div>
                         )}
@@ -106,8 +107,12 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
                                     </div>
                                     <IconCheckbox
                                         className={classNames({
-                                            'modal__body-container-item__icon': true,
-                                            'modal__body-container-item__icon--active': selected.some((item) => item.id === el.id)
+                                            'modal__body-container-item__icon':
+                                                true,
+                                            'modal__body-container-item__icon--active':
+                                                selected.some(
+                                                    (item) => item.id === el.id
+                                                ),
                                         })}
                                     />
                                 </div>
@@ -116,9 +121,7 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
                         <div className="modal__body-button">
                             <PButton
                                 wide
-                                children={
-                                    <>Next</>
-                                }
+                                children={<>Next</>}
                                 onClick={() => onApply(selected)}
                             />
                         </div>
@@ -128,5 +131,5 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
             />
         </>,
         document.body
-    )
-}
+    );
+};

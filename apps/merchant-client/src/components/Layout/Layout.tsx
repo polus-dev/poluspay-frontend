@@ -10,13 +10,10 @@ import classNames from 'classnames';
 
 interface LayoutProps {
     isMerchantPage?: boolean;
-    centered?: boolean
+    centered?: boolean;
 }
 
-export const Layout: React.FC<LayoutProps> = ({
-    isMerchantPage,
-    centered
-}) => {
+export const Layout: React.FC<LayoutProps> = ({ isMerchantPage, centered }) => {
     useRedirectAuth();
     return (
         <>
@@ -27,7 +24,7 @@ export const Layout: React.FC<LayoutProps> = ({
                         <div
                             className={classNames({
                                 'merchant-page__inner': true,
-                                'merchant-page__inner--centered': centered
+                                'merchant-page__inner--centered': centered,
                             })}
                         >
                             <Outlet />

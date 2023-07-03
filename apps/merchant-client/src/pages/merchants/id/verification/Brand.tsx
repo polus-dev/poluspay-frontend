@@ -1,26 +1,26 @@
-import { useState } from "react"
+import { useState } from 'react';
 
-import { PButton, PInput } from "@poluspay-frontend/ui"
-import { ReactComponent as IconCopy } from '../../../../assets/icons/copy.svg'
+import { PButton, PInput } from '@poluspay-frontend/ui';
+import { ReactComponent as IconCopy } from '../../../../assets/icons/copy.svg';
 
-import './Brand.scoped.scss'
+import './Brand.scoped.scss';
 
 export const MerchantBrandPage: React.FC = () => {
-    const id = '90ca217e-e429-4cbd-bf53-52b44e351e59'
+    const id = '90ca217e-e429-4cbd-bf53-52b44e351e59';
 
-    const [copied, setCopied] = useState(false)
+    const [copied, setCopied] = useState(false);
 
     const copy = async () => {
-        if (copied) return undefined
+        if (copied) return undefined;
 
-        navigator.clipboard.writeText(id)
+        navigator.clipboard.writeText(id);
 
-        setCopied(true)
+        setCopied(true);
 
         setTimeout(() => {
-            setCopied(false)
-        }, 3000)
-    }
+            setCopied(false);
+        }, 3000);
+    };
 
     return (
         <div className="brand">
@@ -39,9 +39,7 @@ export const MerchantBrandPage: React.FC = () => {
                     src=""
                     alt="Manager's photo"
                 />
-                <p className="brand__manager-name">
-                    Sergey
-                </p>
+                <p className="brand__manager-name">Sergey</p>
             </div>
             <div className="brand__form">
                 <div className="brand__form-item">
@@ -67,11 +65,9 @@ export const MerchantBrandPage: React.FC = () => {
                     wide
                     href="https://t.me/polus_sergey/"
                     target="_blank"
-                    children={
-                        <p>Contact</p>
-                    }
+                    children={<p>Contact</p>}
                 />
             </div>
         </div>
-    )
-}
+    );
+};
