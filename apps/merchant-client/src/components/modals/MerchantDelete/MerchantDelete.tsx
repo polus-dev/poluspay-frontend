@@ -7,16 +7,16 @@ import './MerchantDelete.scoped.scss';
 
 interface ModalProps {
     visible: boolean;
+    merchantName: string;
     onClose: () => void;
     onDelete: () => void;
-    merchantName: string;
 }
 
 export const ModalMerchantDelete: React.FC<ModalProps> = ({
     visible,
-    onClose,
-    onDelete,
     merchantName,
+    onClose,
+    onDelete
 }) => {
     const [name, setName] = useState('');
     const [errors, setErrors] = useState<string[]>([]);

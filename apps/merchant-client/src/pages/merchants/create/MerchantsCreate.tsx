@@ -1,17 +1,24 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useModal } from 'apps/merchant-client/src/hooks/useModal';
+
 import { MerchantForm } from '../../../components/pages/merchants/create/Form';
 import { MerchantSetup } from '../../../components/pages/merchants/create/Setup';
-import { MerchantWallet } from '../../../components/pages/merchants/create/Wallet';
+import { MerchantWallets } from '../../../components/ui/Wallets/Wallets';
 import { ProgressBar } from '../../../components/ui/ProgressBar/ProgressBar';
+import { ModalBlockChainSelector } from '../../../components/modals/BlockchainSelector/BlockchainSelector';
 
 import './MerchantsCreate.scoped.scss';
+
+import { connectedWalletList } from '../../../components/ui/Wallets/wallet-list';
 
 export const MerchantsCreatePage: React.FC = () => {
     const navigator = useNavigate();
     const [type, setType] = useState<string | null>(null);
     const [stage, setStage] = useState(0);
+
+    const modalBlockchain = useModal()
 
     const progressOptions = [
         { id: 0, title: 'Make a selection' },
@@ -24,6 +31,10 @@ export const MerchantsCreatePage: React.FC = () => {
 
         setStage(stage + 1);
     };
+
+    const handleButtonClick = () => {
+        console.log('qwe')
+    }
 
     const onFinishRegistation = () => {
         navigator('/merchants');
@@ -56,10 +67,19 @@ export const MerchantsCreatePage: React.FC = () => {
                 )}
                 {type === 'personal' && stage === 2 && (
                     <div className="merchants__inner-wallet">
-                        <MerchantWallet onComplete={onFinishRegistation} />
+                        <MerchantWallets
+                            isRegistation
+                            onButtonClick={handleButtonClick}
+                        />
                     </div>
                 )}
             </div>
+            <ModalBlockChainSelector
+                visible={true}
+                options={connectedWalletList}
+                onApply={() => console.log('qwe')}
+                onClose={() => console.log('close')}
+            />
         </div>
     );
 };

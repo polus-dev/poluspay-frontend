@@ -2,6 +2,8 @@ import type { WalletItem } from './wallet-list';
 
 import { ReactComponent as IconCheckbox } from '../../../assets/icons/checkbox-fill.svg';
 
+import classNames from 'classnames';
+
 import './WalletItem.scoped.scss';
 
 interface WalletItemProps {
@@ -25,7 +27,12 @@ export const MerchantWalletItem: React.FC<WalletItemProps> = ({
                 />
                 <p className="wallet-item__inner-name">{item.name}</p>
             </div>
-            {selected && <IconCheckbox className="wallet-item__icon" />}
+            <IconCheckbox
+                className={classNames({
+                    'wallet-item__icon': true,
+                    'wallet-item__icon--active': selected
+                })}
+            />
         </div>
     );
 };

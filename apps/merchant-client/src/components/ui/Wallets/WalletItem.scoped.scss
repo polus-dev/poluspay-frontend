@@ -76,5 +76,11 @@
     &__icon {
         width: px-to-rem(20);
         height: auto;
+        opacity: 0;
+        transition: opacity .15s ease-in-out;
+
+        &--active {
+            opacity: 1;
+        }
     }
 }
