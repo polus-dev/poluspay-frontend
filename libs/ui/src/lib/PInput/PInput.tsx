@@ -21,7 +21,7 @@ export enum InputAlign {
     Right = 'right',
 }
 
-interface InputProps {
+export interface InputProps {
     value?: string;
     placeholder?: string;
     readonly?: boolean;
