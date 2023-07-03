@@ -1,3 +1,4 @@
 export interface IUserEntity {
-    email: string;
+    email: string | null;
+    address: string | null;
 }

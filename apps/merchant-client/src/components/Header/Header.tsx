@@ -10,7 +10,6 @@ import { ReactComponent as LogoPolusPlanet } from '../../assets/logos/polus-plan
 
 import './Header.scoped.scss';
 import { useGetMeQuery } from '../../store/api/endpoints/user/User';
-import { useAccount } from 'wagmi';
 import { formatAddress } from 'tools';
 import { useLogout } from './hooks/useLogout';
 
@@ -20,7 +19,6 @@ export const Header: React.FC = () => {
     const { data, isLoading } = useGetMeQuery(undefined, {
         refetchOnMountOrArgChange: true,
     });
-    const { address } = useAccount();
     const { logout } = useLogout();
 
     const [menuOpened, setMenuOpened] = useState(false);
@@ -61,8 +59,9 @@ export const Header: React.FC = () => {
                                 isLoading
                                     ? 'Loading...'
                                     : data?.email ||
-                                      (address && formatAddress(address)) ||
-                                      ''
+                                      (data?.address &&
+                                          formatAddress(data.address)) ||
+                                      'unknown user'
                             }
                             logout={logout}
                         />
@@ -79,8 +78,9 @@ export const Header: React.FC = () => {
                             isLoading
                                 ? 'Loading...'
                                 : data?.email ||
-                                  (address && formatAddress(address)) ||
-                                  ''
+                                  (data?.address &&
+                                      formatAddress(data.address)) ||
+                                  'unknown user'
                         }
                         logout={logout}
                     />
