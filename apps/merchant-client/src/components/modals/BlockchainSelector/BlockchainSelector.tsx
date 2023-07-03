@@ -55,7 +55,7 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
         if (!search) return undefined;
 
         const filtered = blockchains.filter((el) =>
-            el.name.toLowerCase().includes(search.toLocaleLowerCase())
+            el.name.toLowerCase().includes(search.toLowerCase())
         );
 
         setBlockchains(filtered);

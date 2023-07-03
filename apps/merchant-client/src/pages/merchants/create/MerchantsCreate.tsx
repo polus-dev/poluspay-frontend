@@ -12,6 +12,7 @@ import { ModalBlockChainSelector } from '../../../components/modals/BlockchainSe
 import './MerchantsCreate.scoped.scss';
 
 import { connectedWalletList } from '../../../components/ui/Wallets/wallet-list';
+import { ModalWalletAddition } from 'apps/merchant-client/src/components/modals/WalletAddition/WalletAddition';
 
 export const MerchantsCreatePage: React.FC = () => {
     const navigator = useNavigate();
@@ -75,10 +76,16 @@ export const MerchantsCreatePage: React.FC = () => {
                 )}
             </div>
             <ModalBlockChainSelector
+                hasSearch
                 visible={true}
                 options={connectedWalletList}
                 onApply={() => console.log('qwe')}
                 onClose={() => console.log('close')}
+            />
+            <ModalWalletAddition
+                visible={false}
+                onClose={() => console.log('close')}
+                onImport={(address) => console.log(address)}
             />
         </div>
     );

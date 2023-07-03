@@ -17,7 +17,7 @@
         width: 100%;
     }
 
-    &__body-searc-icon {
+    &__body-search-icon {
         width: px-to-rem(16);
         height: auto;
     }
@@ -33,6 +33,7 @@
         justify-content: space-between;
         width: 100%;
         height: px-to-rem(56);
+        cursor: pointer;
 
         &__inner {
             display: flex;
