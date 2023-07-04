@@ -1,15 +1,17 @@
-export interface WalletItem {
+import { Blockchain } from 'tools';
+
+export interface Item {
     id: number;
     name: string;
     image: string;
     type: 'wallet' | 'exchange' | 'blockchain';
 }
 
-export interface WalletItemConnected extends WalletItem {
+export interface WalletItemConnected extends Item {
     address: string;
 }
 
-export const walletList: WalletItem[] = [
+export const walletList: Item[] = [
     {
         id: 1,
         name: 'Metamask',
@@ -148,6 +150,9 @@ export const walletList: WalletItem[] = [
         image: 'citadel',
         type: 'wallet',
     },
+];
+
+export const exchangeList: Item[] = [
     {
         id: 24,
         name: 'Coinbase',
@@ -190,59 +195,80 @@ export const walletList: WalletItem[] = [
         image: 'bybit',
         type: 'exchange',
     },
+];
+
+export const blockchainList: (Item & { label: Blockchain; evm: boolean })[] = [
     {
         id: 31,
         name: 'Arbitrum',
         image: 'arbitrum',
         type: 'blockchain',
+        label: 'arbitrum',
+        evm: true,
     },
     {
         id: 32,
         name: 'Ethereum',
         image: 'ethereum',
         type: 'blockchain',
+        label: 'ethereum',
+        evm: true,
     },
     {
         id: 33,
         name: 'Doge',
         image: 'doge',
         type: 'blockchain',
+        label: 'dogecoin',
+        evm: false,
     },
     {
         id: 34,
         name: 'Optimism',
         image: 'optimism',
         type: 'blockchain',
+        label: 'optimism',
+        evm: true,
     },
     {
         id: 35,
         name: 'Binance Smart Chain',
         image: 'bsc',
         type: 'blockchain',
+        label: 'bsc',
+        evm: true,
     },
     {
         id: 36,
         name: 'Polygon',
         image: 'polygon',
         type: 'blockchain',
+        label: 'polygon',
+        evm: true,
     },
     {
         id: 37,
         name: 'Bitcoin',
         image: 'bitcoin',
         type: 'blockchain',
+        label: 'bitcoin',
+        evm: false,
     },
     {
         id: 38,
         name: 'Bitcoin Cash',
         image: 'bitcoin-cash',
         type: 'blockchain',
+        label: 'bitcoin-cash',
+        evm: false,
     },
     {
         id: 39,
         name: 'Tron',
         image: 'tron',
         type: 'blockchain',
+        label: 'tron',
+        evm: false,
     },
 ];
 

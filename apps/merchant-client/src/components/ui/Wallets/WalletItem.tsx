@@ -1,4 +1,4 @@
-import type { WalletItem } from './wallet-list';
+import type { Item } from './wallet-list';
 
 import { ReactComponent as IconCheckbox } from '../../../assets/icons/checkbox-fill.svg';
 
@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import './WalletItem.scoped.scss';
 
 interface WalletItemProps {
-    item: WalletItem;
+    item: Item;
     selected: boolean;
     onSelect: () => void;
 }

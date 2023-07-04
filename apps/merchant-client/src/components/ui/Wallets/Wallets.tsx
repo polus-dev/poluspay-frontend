@@ -1,5 +1,6 @@
-import type { WalletItem } from './wallet-list';
+import { Item, blockchainList, exchangeList } from './wallet-list';
 import { useEffect, useState } from 'react';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 import { walletList, connectedWalletList } from './wallet-list';
 
@@ -12,35 +13,53 @@ import classNames from 'classnames';
 
 import './Wallets.scoped.scss';
 import { MerchantWalletItemConnected } from './WalletItemConnected';
+import { shuffleArray } from 'tools';
 
 interface MerchantWalletsProps {
     isRegistation?: boolean;
     buttonDisabled?: boolean;
     onButtonClick?: () => void;
+    selectedWallets: Item[];
+    handleSelect: (wallets: Item) => void;
 }
+
+const allArray = [...walletList, ...exchangeList, ...blockchainList];
+shuffleArray(allArray);
+
+const tabContent = {
+    all: allArray,
+    wallet: walletList,
+    exchange: exchangeList,
+    blockchain: blockchainList,
+};
 
 export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
     isRegistation,
     buttonDisabled,
     onButtonClick,
+    selectedWallets,
+    handleSelect,
 }) => {
     const tabs = [
-        { id: 'all', text: 'All' },
+        {
+            id: 'all',
+            text: 'All',
+        },
         { id: 'wallet', text: 'Wallets' },
         { id: 'exchange', text: 'Exchanges' },
         { id: 'blockchain', text: 'Blockchains' },
-    ];
+    ] as const;
 
     const [tab, setTab] = useState(tabs[0]);
+    const [parent] = useAutoAnimate();
 
     const [search, setSearch] = useState('');
 
-    const [walletsSearched, setWalletsSearched] =
-        useState<WalletItem[]>(walletList);
+    const [searched, setSearched] = useState<Item[]>();
 
     const limit = 24;
     const [currentPage, setCurrentPage] = useState(1);
-    const [walletsPaginated, setWalletsPaginated] = useState<WalletItem[]>(
+    const [walletsPaginated, setWalletsPaginated] = useState<Item[]>(
         walletList.slice(
             (currentPage - 1) * limit,
             (currentPage - 1) * limit + limit
@@ -51,68 +70,25 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
         setCurrentPage(value);
     };
 
-    const [selectedWallet, setSelectedWallet] = useState<WalletItem | null>(
-        null
-    );
-
-    const handleSelect = (item: WalletItem) => {
-        if (item.id === selectedWallet?.id) {
-            setSelectedWallet(null);
-
-            return undefined;
-        }
-
-        setSelectedWallet(item);
-    };
-
     useEffect(() => {
-        if (tab.id === 'all') {
-            const paginated: WalletItem[] = walletList.slice(
-                (currentPage - 1) * limit,
-                (currentPage - 1) * limit + limit
-            );
-
-            setWalletsPaginated(paginated);
-        } else {
-            const paginated: WalletItem[] = walletList
-                .filter((el) => el.type === tab.id)
-                .slice(
-                    (currentPage - 1) * limit,
-                    (currentPage - 1) * limit + limit
-                );
-
-            setWalletsPaginated(paginated);
-        }
+        const paginated: Item[] = tabContent[tab.id].slice(
+            (currentPage - 1) * limit,
+            (currentPage - 1) * limit + limit
+        );
+        setWalletsPaginated(paginated);
     }, [tab, currentPage]);
 
     useEffect(() => {
-        if (tab.id === 'all') {
-            const searched: WalletItem[] = walletList.filter((el) =>
-                el.name.toLocaleLowerCase().includes(search.toLowerCase())
+        if (search) {
+            const filtered = tabContent[tab.id].filter((el) =>
+                el.name.toLowerCase().includes(search.toLowerCase())
             );
-
-            setWalletsSearched(searched);
+            setSearched(filtered);
         } else {
-            const searched: WalletItem[] = walletList
-                .filter((el) => el.type === tab.id)
-                .filter((el) =>
-                    el.name.toLocaleLowerCase().includes(search.toLowerCase())
-                );
-
-            setWalletsSearched(searched);
+            setSearched(undefined);
         }
+        setCurrentPage(1);
     }, [search, tab]);
-
-    useEffect(() => {
-        if (!search) return undefined;
-
-        setTab(tabs[0]);
-        setCurrentPage(1);
-    }, [search]);
-
-    useEffect(() => {
-        setCurrentPage(1);
-    }, [tab]);
 
     return (
         <div className="wallets">
@@ -135,12 +111,14 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                     <PTabs
                         size="sm"
                         active={tab}
+                        // @ts-ignore
                         items={tabs}
+                        // @ts-ignore
                         onChange={(item) => setTab(item)}
                     />
                 </div>
             </div>
-            {true && (
+            {false && (
                 <div className="wallets__connected">
                     {connectedWalletList.map((el) => (
                         <MerchantWalletItemConnected
@@ -153,9 +131,9 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                     ))}
                 </div>
             )}
-            <div className="wallets__container">
-                {search
-                    ? walletsSearched.map((el) => (
+            <div ref={parent} className="wallets__container">
+                {searched
+                    ? searched.map((el) => (
                           <div
                               className={classNames({
                                   'wallets__container-item': true,
@@ -166,7 +144,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                           >
                               <MerchantWalletItem
                                   item={el}
-                                  selected={selectedWallet?.id === el.id}
+                                  selected={selectedWallets.includes(el)}
                                   onSelect={() => handleSelect(el)}
                               />
                           </div>
@@ -182,7 +160,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                           >
                               <MerchantWalletItem
                                   item={el}
-                                  selected={selectedWallet?.id === el.id}
+                                  selected={selectedWallets.includes(el)}
                                   onSelect={() => handleSelect(el)}
                               />
                           </div>
@@ -193,7 +171,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                     <PPagination
                         current={currentPage}
                         pageItems={limit}
-                        totalItems={walletList.length}
+                        totalItems={tabContent[tab.id].length}
                         onPageChange={(page) => onPageChange(page)}
                     />
                 </div>
@@ -203,7 +181,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                     <PButton
                         wide
                         size="lg"
-                        disabled={!selectedWallet || buttonDisabled}
+                        disabled={!selectedWallets || buttonDisabled}
                         children={<>Save</>}
                         onClick={onButtonClick}
                     />

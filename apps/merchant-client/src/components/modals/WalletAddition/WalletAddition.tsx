@@ -10,12 +10,14 @@ interface ModalProps {
     visible: boolean;
     onClose: () => void;
     onImport: (address: string) => void;
+    isEvmChain: boolean;
 }
 
 export const ModalWalletAddition: React.FC<ModalProps> = ({
     visible,
     onClose,
     onImport,
+    isEvmChain,
 }) => {
     const [address, setAddress] = useState('');
     const [evm, setEvm] = useState(true);
@@ -58,16 +60,19 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
                             />
                         </div>
                         {/* display this only for EVM networks */}
-                        <div className="modal__body-switch">
-                            <PSwitch
-                                value={evm}
-                                onChange={(value) => setEvm(value)}
-                            />
-                            <p className="modal__body-switch-text">
-                                Apply the entered address to all EVM networks:
-                                Arbitrum, Ethereum, Polygon, Optimism, BSC
-                            </p>
-                        </div>
+                        {isEvmChain && (
+                            <div className="modal__body-switch">
+                                <PSwitch
+                                    value={evm}
+                                    onChange={(value) => setEvm(value)}
+                                />
+                                <p className="modal__body-switch-text">
+                                    Apply the entered address to all EVM
+                                    networks: Arbitrum, Ethereum, Polygon,
+                                    Optimism, BSC
+                                </p>
+                            </div>
+                        )}
                         <div className="modal__body-buttons">
                             <div className="modal__body-buttons-item">
                                 <PButton
