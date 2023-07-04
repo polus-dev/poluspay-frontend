@@ -154,7 +154,7 @@ export const MerchantProfileForm: React.FC = () => {
                             </p>
                             <PInput
                                 placeholder="https://example.com"
-                                reg={register('website', { required: true })}
+                                reg={register('website')}
                             />
                         </div>
                         <div className="form__inner-container__item">
@@ -164,7 +164,7 @@ export const MerchantProfileForm: React.FC = () => {
 
                             <PInput
                                 placeholder="Brand name"
-                                reg={register('brand', { required: true })}
+                                reg={register('brand')}
                             />
                         </div>
                     </div>
