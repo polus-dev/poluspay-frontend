@@ -5,8 +5,10 @@ import {
     IResponseApiDefault,
 } from '@poluspay-frontend/api';
 import {
+    IChangeMerchantWalletStatusRequest,
     ICreateMerchantRequest,
     ICreateMerchantResponse,
+    ICreateMerchantWalletRequest,
     IDeleteMerchantRequest,
     IGenerateSigningKeyResponse,
     IGetMerchantByIdResponse,
@@ -16,6 +18,7 @@ import {
     IGetWebhookHistoryResponse,
     IGetWebhookHistoryResponseWithTotalCount,
     IMerchantId,
+    IMerchantWallet,
     ISetWebhookRequest,
     IUpdateMerchantRequest,
 } from './Merchant.interface';
@@ -165,9 +168,45 @@ export const merchantApi = createApi({
                 body,
             }),
         }),
+        createMerchantWallet: builder.mutation<
+            IMerchantWallet,
+            ICreateMerchantWalletRequest
+        >({
+            query: (body) => ({
+                url: 'merchant.wallet.create',
+                method: 'POST',
+                body,
+            }),
+        }),
+        getMerchantWallet: builder.query<IMerchantWallet[], IMerchantId>({
+            query: (body) => ({
+                url: 'merchant.wallet.get',
+                method: 'POST',
+                body,
+            }),
+        }),
+        enableMerchantWallet: builder.mutation<
+            IMerchantWallet,
+            IChangeMerchantWalletStatusRequest
+        >({
+            query: (body) => ({
+                url: 'merchant.wallet.enable',
+                method: 'POST',
+                body,
+            }),
+        }),
+        disableMerchantWallet: builder.mutation<
+            IMerchantWallet,
+            IChangeMerchantWalletStatusRequest
+        >({
+            query: (body) => ({
+                url: 'merchant.wallet.disable',
+                method: 'POST',
+                body,
+            }),
+        }),
     }),
 });
-
 export const {
     useCreateMerchantMutation,
     useDeleteMerchantMutation,

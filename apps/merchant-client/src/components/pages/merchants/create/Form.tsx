@@ -6,8 +6,6 @@ import './Form.scoped.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IMerchantForm } from '../Form.interface';
 import { useCreateMerchantMutation } from '@poluspay-frontend/merchant-query';
-import { useNavigate } from 'react-router-dom';
-import { httpsUrlRegex } from 'tools';
 
 interface FormProps {
     changeStage: () => void;
@@ -22,18 +20,19 @@ export const MerchantForm: React.FC<FormProps> = ({ changeStage }) => {
     const [createMerchant, { isLoading: isCreatingMerchantLoading }] =
         useCreateMerchantMutation();
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const submit: SubmitHandler<Omit<IMerchantForm, 'brand'>> = async (
         data
     ) => {
         try {
-            const merchant = await createMerchant({
-                name: data.merchantName,
-                domain: data.website,
-                description: data.description,
-            }).unwrap();
-            navigate(`/merchants/${merchant.id}/merchant`);
+            // const merchant = await createMerchant({
+            //     name: data.merchantName,
+            //     domain: data.website,
+            //     description: data.description,
+            // }).unwrap();
+            changeStage();
+            // navigate(`/merchants/${merchant.id}/merchant`);
         } catch (error) {
             console.error(error);
         }

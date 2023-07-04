@@ -1,4 +1,4 @@
-import { IPagination } from '@poluspay-frontend/api';
+import type { Blockchain } from 'tools';
 interface IMerchant {
     id: string;
     name: string;
@@ -49,8 +49,7 @@ interface IWebhookItem {
     created_at: string;
 }
 
-export interface ISetWebhookRequest {
-    merchant_id: string;
+export interface ISetWebhookRequest extends IMerchantId {
     webhook_url: string;
 }
 
@@ -69,7 +68,19 @@ export type IUpdateMerchantRequest = Partial<
     ICreateMerchantRequest & { merchant_id: string }
 >;
 
-export interface IGenerateSigningKeyResponse {
-    merchant_id: string;
+export interface IGenerateSigningKeyResponse extends IMerchantId {
     signing_key: string;
+}
+
+export interface ICreateMerchantWalletRequest extends IMerchantId {
+    address: string;
+    network: Blockchain;
+}
+
+export interface IMerchantWallet extends ICreateMerchantWalletRequest {
+    is_disabled: boolean;
+}
+
+export interface IChangeMerchantWalletStatusRequest {
+    network: Blockchain;
 }

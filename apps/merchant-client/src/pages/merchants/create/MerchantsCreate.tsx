@@ -16,8 +16,12 @@ import { ModalWalletAddition } from 'apps/merchant-client/src/components/modals/
 
 export const MerchantsCreatePage: React.FC = () => {
     const navigator = useNavigate();
-    const [type, setType] = useState<string | null>(null);
-    const [stage, setStage] = useState(0);
+    const [type, setType] = useState<string | null>('personal');
+    const [stage, setStage] = useState(2);
+    const [selectedWallets, setSelectedWallets] = useState<string[]>([]);
+
+    const [modalWalletVisible, setModalWalletVisible] = useState(false);
+    const [modalBlockchainVisible, setModalBlockchainVisible] = useState(false);
 
     const modalBlockchain = useModal();
 
@@ -69,7 +73,7 @@ export const MerchantsCreatePage: React.FC = () => {
                 {type === 'personal' && stage === 2 && (
                     <div className="merchants__inner-wallet">
                         <MerchantWallets
-                            isRegistation
+                            // isRegistation
                             onButtonClick={handleButtonClick}
                         />
                     </div>
@@ -77,13 +81,13 @@ export const MerchantsCreatePage: React.FC = () => {
             </div>
             <ModalBlockChainSelector
                 hasSearch
-                visible={true}
+                visible={modalBlockchainVisible}
                 options={connectedWalletList}
                 onApply={() => console.log('qwe')}
                 onClose={() => console.log('close')}
             />
             <ModalWalletAddition
-                visible={false}
+                visible={modalWalletVisible}
                 onClose={() => console.log('close')}
                 onImport={(address) => console.log(address)}
             />
