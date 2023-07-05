@@ -21,6 +21,7 @@ import {
     IMerchantWallet,
     ISetWebhookRequest,
     IUpdateMerchantRequest,
+    IVerifyDomainRequest,
 } from './Merchant.interface';
 import { RootState } from '../../../store';
 
@@ -161,12 +162,19 @@ export const merchantApi = createApi({
                 body,
             }),
         }),
-        verifyDomain: builder.mutation<IResponseApiDefault, IMerchantId>({
+        verifyDomain: builder.mutation<
+            IResponseApiDefault,
+            IVerifyDomainRequest
+        >({
             query: (body) => ({
                 url: 'merchant.verifyDomain',
                 method: 'POST',
                 body,
             }),
+            invalidatesTags: (result, error, args) =>
+                result
+                    ? [{ type: 'Merchant', id: args.merchant_id }]
+                    : ['Merchant'],
         }),
         createMerchantWallet: builder.mutation<
             IMerchantWallet,

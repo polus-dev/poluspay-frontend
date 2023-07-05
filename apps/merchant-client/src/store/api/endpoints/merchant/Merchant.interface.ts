@@ -86,3 +86,8 @@ export interface IMerchantWallet extends IMerchantId {
 export interface IChangeMerchantWalletStatusRequest extends IMerchantId {
     network: Blockchain;
 }
+
+export interface IVerifyDomainRequest extends IMerchantId {
+    method: 'dns' | 'response';
+    path?: string;
+}

@@ -7,6 +7,11 @@ import { ReactComponent as IconCopy } from '../../../../../assets/icons/copy.svg
 import { ReactComponent as IconYoutube } from '../../../../../assets/icons/youtube.svg';
 
 import './Form.scoped.scss';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+    useGetMerchantByIdQuery,
+    useVerifyDomainMutation,
+} from '@poluspay-frontend/merchant-query';
 
 interface MerchantDomainFormProps {
     type: DomainVerification | null;
@@ -16,6 +21,21 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
     type,
 }) => {
     const [copied, setCopied] = useState(false);
+
+    const [fileName, setFileName] = useState('polus-verification.txt');
+
+    const { id: merchantId } = useParams<{ id: string }>();
+    if (!merchantId) {
+        return null;
+    }
+
+    const navigate = useNavigate();
+
+    const { data: merchant } = useGetMerchantByIdQuery({
+        merchant_id: merchantId,
+    });
+
+    const [veirfyDomain, { isLoading }] = useVerifyDomainMutation();
 
     const copy = async (value: string) => {
         if (copied) return undefined;
@@ -29,9 +49,17 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
         }, 3000);
     };
 
-    const handleButtonClick = () => {
-        // check the type of domain verification
-        // (dns | file | html | server)
+    const handleButtonClick = async () => {
+        try {
+            await veirfyDomain({
+                merchant_id: merchantId,
+                method: type === 'dns' ? 'dns' : 'response',
+                path: type === 'file' ? fileName : undefined,
+            }).unwrap();
+            navigate(`/merchants/${merchantId}/merchant`);
+        } catch (error) {
+            console.error(error);
+        }
 
         return undefined;
     };
@@ -56,12 +84,20 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                             <PInput
                                 readonly
                                 overlay={false}
-                                value={copied ? 'Copied!' : 'verification code'}
+                                value={
+                                    copied
+                                        ? 'Copied!'
+                                        : merchant?.domain_confirmation_code ??
+                                          'loading...'
+                                }
                                 append={
                                     <IconCopy
                                         className="form__point-item-icon"
                                         onClick={() =>
-                                            copy('verification code')
+                                            copy(
+                                                merchant!
+                                                    .domain_confirmation_code
+                                            )
                                         }
                                     />
                                 }
@@ -96,6 +132,7 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                         </div>
                         <div className="form__buttons-item">
                             <PButton
+                                loading={isLoading}
                                 wide
                                 children={<p>Confirm</p>}
                                 onClick={handleButtonClick}
@@ -115,11 +152,24 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                             <PInput
                                 readonly
                                 overlay={false}
-                                value={copied ? 'Copied!' : 'metatag'}
+                                value={
+                                    copied
+                                        ? 'Copied!'
+                                        : merchant?.domain_confirmation_code
+                                        ? `<meta name="poluspay" content="${merchant.domain_confirmation_code}" />`
+                                        : 'loading...'
+                                }
                                 append={
                                     <IconCopy
                                         className="form__point-item-icon"
-                                        onClick={() => copy('metatag')}
+                                        onClick={() =>
+                                            copy(
+                                                `<meta name="poluspay" content="${
+                                                    merchant!
+                                                        .domain_confirmation_code
+                                                }" />`
+                                            )
+                                        }
                                     />
                                 }
                                 onInput={() => {}}
@@ -148,6 +198,7 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                         </div>
                         <div className="form__buttons-item">
                             <PButton
+                                loading={isLoading}
                                 wide
                                 children={<p>Check&nbsp;HTML&nbsp;record</p>}
                                 onClick={handleButtonClick}
@@ -165,11 +216,7 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                             <PInput
                                 readonly
                                 overlay={false}
-                                value={
-                                    copied
-                                        ? 'Copied!'
-                                        : 'polus-verification.txt'
-                                }
+                                value={copied ? 'Copied!' : fileName}
                                 append={
                                     <IconCopy
                                         className="form__point-item-icon"
@@ -193,12 +240,20 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                             <PInput
                                 readonly
                                 overlay={false}
-                                value={copied ? 'Copied!' : 'verification code'}
+                                value={
+                                    copied
+                                        ? 'Copied!'
+                                        : merchant?.domain_confirmation_code ??
+                                          'loading...'
+                                }
                                 append={
                                     <IconCopy
                                         className="form__point-item-icon"
                                         onClick={() =>
-                                            copy('verification code')
+                                            copy(
+                                                merchant!
+                                                    .domain_confirmation_code
+                                            )
                                         }
                                     />
                                 }
@@ -233,6 +288,7 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                         </div>
                         <div className="form__buttons-item">
                             <PButton
+                                loading={isLoading}
                                 wide
                                 children={<p>Check file</p>}
                                 onClick={handleButtonClick}
@@ -255,12 +311,20 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                             <PInput
                                 readonly
                                 overlay={false}
-                                value={copied ? 'Copied!' : 'verification code'}
+                                value={
+                                    copied
+                                        ? 'Copied!'
+                                        : merchant?.domain_confirmation_code ??
+                                          'loading...'
+                                }
                                 append={
                                     <IconCopy
                                         className="form__point-item-icon"
                                         onClick={() =>
-                                            copy('verification code')
+                                            copy(
+                                                merchant!
+                                                    .domain_confirmation_code
+                                            )
                                         }
                                     />
                                 }
@@ -290,6 +354,7 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                         </div>
                         <div className="form__buttons-item">
                             <PButton
+                                loading={isLoading}
                                 wide
                                 children={<p>Check</p>}
                                 onClick={handleButtonClick}
