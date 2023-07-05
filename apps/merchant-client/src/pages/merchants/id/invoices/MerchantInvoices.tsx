@@ -22,7 +22,7 @@ export const MerchantInvoicesPage: React.FC = () => {
             currency: 'usdc',
             hash: 'dnhgiwuetg8ys0gnb098sue',
             date: '28-05-2023',
-            status: 'processing',
+            status: 'in_progress',
         },
         {
             id: '389456298741029359',

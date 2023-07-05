@@ -4,7 +4,7 @@ import './Table.scoped.scss';
 
 type InvoiceStatus =
     | 'success'
-    | 'processing'
+    | 'in_progress'
     | 'pending'
     | 'failed'
     | 'expired';
@@ -30,6 +30,12 @@ export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
     const getShortHash = (value: string) => {
         return `${value.slice(0, 3)}...${value.slice(-3)}`;
     };
+
+    const normalizeStatus = (status: InvoiceStatus) => {
+        return status === 'in_progress'
+            ? 'in progress'
+            : status
+    }
 
     return (
         <div className="table">
@@ -78,7 +84,7 @@ export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
                                             true,
                                     })}
                                 >
-                                    {el.status}
+                                    {normalizeStatus(el.status)}
                                 </p>
                             </div>
                         </div>
