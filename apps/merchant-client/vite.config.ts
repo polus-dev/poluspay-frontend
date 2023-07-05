@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react';
 import viteTsConfigPaths from 'vite-tsconfig-paths';
 import svgr from 'vite-plugin-svgr';
 import { reactScopedCssPlugin } from 'rollup-plugin-react-scoped-css';
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 
 export default defineConfig({
     cacheDir: '../../node_modules/.vite/merchant-client',
@@ -54,6 +55,22 @@ export default defineConfig({
     //    }),
     //  ],
     // },
+    //
+
+    optimizeDeps: {
+        esbuildOptions: {
+            // Node.js global to browser globalThis
+            define: {
+                global: 'globalThis',
+            },
+            // Enable esbuild polyfill plugins
+            plugins: [
+                NodeGlobalsPolyfillPlugin({
+                    buffer: true,
+                }),
+            ],
+        },
+    },
 
     test: {
         globals: true,

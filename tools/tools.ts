@@ -1,4 +1,5 @@
 import { Blockchain } from './types';
+import WAValidator from 'multicoin-address-validator';
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const CODE_LENGTH = 6;
@@ -27,16 +28,42 @@ export const validateAddress = (
         case 'polygon':
         case 'optimism':
         case 'arbitrum':
-            return /^0x[a-fA-F0-9]{40}$/.test(address);
+            return WAValidator.validate(address, 'Ethereum');
         case 'tron':
-            return /^T[a-zA-Z0-9]{33}$/.test(address);
+            return WAValidator.validate(address, 'Tron');
         case 'bitcoin-cash':
-            return /^((bitcoincash:)?(q|p)[a-z0-9]{41})$/.test(address);
+            return WAValidator.validate(address, 'BitcoinCash');
         case 'bitcoin':
-            return /^(bc1|[13])[a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(address);
+            return WAValidator.validate(address, 'Bitcoin');
         case 'dogecoin':
-            return /^((dogecoin:)?(q|p)[a-z0-9]{41})$/.test(address);
+            return WAValidator.validate(address, 'DogeCoin');
         default:
             return false;
     }
 };
+
+export const placeHolderForAddress = (blockchain: Blockchain) => {
+    switch (blockchain) {
+        case 'bitcoin':
+            return 'bc1...';
+        case 'bitcoin-cash':
+            return 'bitcoincash:...';
+        case 'tron':
+            return 'T...';
+        case 'dogecoin':
+            return 'D...';
+        default:
+            return '0x...';
+    }
+};
+
+const evmBlockchains: Blockchain[] = [
+    'ethereum',
+    'bsc',
+    'polygon',
+    'optimism',
+    'arbitrum',
+];
+
+export const isEVMBlockchain = (blockchain: Blockchain) =>
+    evmBlockchains.includes(blockchain);
