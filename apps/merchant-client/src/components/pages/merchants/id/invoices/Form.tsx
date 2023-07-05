@@ -7,6 +7,7 @@ import { ReactComponent as IconChevron } from '../../../../../assets/icons/chevr
 import { ReactComponent as IconCross } from '../../../../../assets/icons/cross.svg';
 import { ModalCurrencySelector } from '../../../../../components/modals/CurrencySelector/CurrencySelector';
 import { ModalBlockChainSelector } from '../../../../../components/modals/BlockchainSelector/BlockchainSelector';
+import { ModalPreviewForm } from '../../../../../components/modals/PreviewForm/PreviewForm';
 
 import './Form.scoped.scss';
 
@@ -30,6 +31,7 @@ export const MerchantInvoicesForm: React.FC = () => {
 
     const modalCurrency = useModal();
     const modalBlockchains = useModal();
+    const modalPreview = useModal();
 
     const removeSelectedBlockchain = (
         event: React.MouseEvent,
@@ -186,7 +188,7 @@ export const MerchantInvoicesForm: React.FC = () => {
                             wide
                             outline
                             children={<p>Preview</p>}
-                            onClick={() => console.log('qwe')}
+                            onClick={() => modalPreview.open()}
                         />
                     </div>
                     <div className="form__inner-buttons-item">
@@ -209,6 +211,10 @@ export const MerchantInvoicesForm: React.FC = () => {
                 options={blockchainsList}
                 onClose={() => modalBlockchains.close()}
                 onApply={(items) => handleModalBlockchains(items)}
+            />
+            <ModalPreviewForm
+                visible={modalPreview.visible}
+                onClose={() => modalPreview.close()}
             />
         </div>
     );
