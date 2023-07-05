@@ -28,6 +28,20 @@ import { steps } from './guid/steps';
 const chains = [polygon, mainnet, arbitrum, bsc, optimism];
 const projectId = import.meta.env.VITE_REACT_APP_PROJECT_ID;
 
+if (import.meta.env.PROD) {
+  Sentry.init({
+    dsn: import.meta.env.VITE_REACT_APP_SENTRY_DSN,
+    integrations: [
+      new Sentry.BrowserTracing({
+        tracePropagationTargets: [import.meta.env.VITE_REACT_API_URL],
+      }),
+      new Sentry.Replay({ maskAllText: false, blockAllMedia: false }),
+    ],
+    replaysSessionSampleRate: 1.0,
+    replaysOnErrorSampleRate: 1.0,
+  });
+}
+
 const { provider } = configureChains(chains, [
   walletConnectProvider({ projectId }),
 ]);
@@ -41,29 +55,6 @@ const wagmiClient = createClient({
   }),
   provider,
 });
-
-if (import.meta.env.PROD) {
-  Sentry.init({
-    dsn: import.meta.env.VITE_REACT_APP_SENTRY_DSN,
-    integrations: [
-      new Sentry.BrowserTracing({
-        tracePropagationTargets: [import.meta.env.VITE_REACT_API_URL],
-      }),
-      new Sentry.Replay({ maskAllText: false, blockAllMedia: false }),
-    ],
-    tracesSampleRate:
-      parseFloat(import.meta.env.VITE_REACT_SENTRY_TRACES_SAMPLE_RATE) ||
-      0.1,
-    replaysSessionSampleRate:
-      parseFloat(
-        import.meta.env.VITE_REACT_SENTRY_REPLAYS_SESSION_SAMPLE_RATE
-      ) || 0.1,
-    replaysOnErrorSampleRate:
-      parseFloat(
-        import.meta.env.VITE_REACT_SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE
-      ) || 1.0,
-  });
-}
 
 // Web3Modal Ethereum Client
 const ethereumClient = new EthereumClient(wagmiClient, chains);

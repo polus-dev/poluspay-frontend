@@ -18,7 +18,7 @@ const AdaptivityProviderFix: any = AdaptivityProvider;
 
 if (import.meta.env.PROD) {
   Sentry.init({
-    dsn: import.meta.env.VITE_REACT_APP_SENTRY_DSN,
+    dsn: import.meta.env.VITE_REACT_APP_MERCHANT_SENTRY_DSN,
     integrations: [
       new Sentry.BrowserTracing({
         tracePropagationTargets: [import.meta.env.VITE_REACT_API_URL],
@@ -30,15 +30,8 @@ if (import.meta.env.PROD) {
         networkResponseHeaders: ['X-Request-Id'],
       }),
     ],
-    tracesSampleRate: parseFloat(
-      import.meta.env.VITE_REACT_SENTRY_TRACES_SAMPLE_RATE
-    ),
-    replaysSessionSampleRate: parseFloat(
-      import.meta.env.VITE_REACT_SENTRY_REPLAYS_SESSION_SAMPLE_RATE
-    ),
-    replaysOnErrorSampleRate: parseFloat(
-      import.meta.env.VITE_REACT_SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE
-    ),
+    replaysSessionSampleRate: 1.0,
+    replaysOnErrorSampleRate: 1.0,
   });
 }
 
