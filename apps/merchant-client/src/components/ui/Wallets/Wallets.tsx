@@ -119,7 +119,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                 </div>
             </div>
             {false && (
-                <div className="wallets__connected">
+                <div ref={parent} className="wallets__connected">
                     {connectedWalletList.map((el) => (
                         <MerchantWalletItemConnected
                             enabled
@@ -131,7 +131,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                     ))}
                 </div>
             )}
-            <div ref={parent} className="wallets__container">
+            <div className="wallets__container">
                 {searched
                     ? searched.map((el) => (
                           <div

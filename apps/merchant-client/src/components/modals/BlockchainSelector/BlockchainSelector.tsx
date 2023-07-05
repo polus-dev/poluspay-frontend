@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import type { Blockchain as Label } from 'tools';
 
 import { PModal, PInput, PButton } from '@poluspay-frontend/ui';
 import { ReactComponent as IconSearch } from '../../../assets/icons/search.svg';
@@ -13,7 +14,8 @@ interface Blockchain {
     id: number;
     name: string;
     image: string;
-    [key: string]: string | number;
+    label: Label;
+    // [key: string]: string | number;
 }
 
 interface ModalProps {
@@ -21,8 +23,10 @@ interface ModalProps {
     multi?: boolean;
     hasSearch?: boolean;
     options: Blockchain[];
-    onApply: (items: Blockchain[]) => void;
+    // onApply: (items: Blockchain[]) => void;
     onClose: () => void;
+    selected?: Label;
+    setSelected: (items: Label) => void;
 }
 
 export const ModalBlockChainSelector: React.FC<ModalProps> = ({
@@ -30,36 +34,45 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
     multi,
     hasSearch,
     options,
-    onApply,
     onClose,
+    setSelected,
+    selected,
 }) => {
     const [search, setSearch] = useState('');
 
     const [blockchains, setBlockchains] = useState<Blockchain[]>(options);
 
-    const [selected, setSelected] = useState<Blockchain[]>([]);
-
     const handleSelect = (item: Blockchain) => {
-        if (selected.some((el) => el.id === item.id)) {
-            const filtered = selected.filter((el) => el.id !== item.id);
-
-            setSelected(filtered);
-        } else {
-            if (!multi && selected.length > 0) return undefined;
-
-            setSelected([...selected, item]);
-        }
+        setSelected(item.label);
     };
 
     useEffect(() => {
-        if (!search) return undefined;
+        if (!search) {
+            setBlockchains(options);
+        } else {
+            const filtered = blockchains.filter((el) =>
+                el.name.toLowerCase().includes(search.toLowerCase())
+            );
 
-        const filtered = blockchains.filter((el) =>
-            el.name.toLowerCase().includes(search.toLowerCase())
-        );
-
-        setBlockchains(filtered);
+            setBlockchains(filtered);
+        }
     }, [search]);
+
+    // make close on click outside
+    // make close on esc
+    //
+    const ref = useRef<HTMLDivElement | null>(null);
+    useEffect(() => {
+        const checkIfClickedOutside = (e: MouseEvent) => {
+            if (ref.current && !ref.current.contains(e.target as Node)) {
+                onClose();
+            }
+        };
+        document.addEventListener('click', checkIfClickedOutside);
+        return () => {
+            document.removeEventListener('click', checkIfClickedOutside);
+        };
+    }, [onClose]);
 
     return ReactDOM.createPortal(
         <>
@@ -73,7 +86,7 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
                     </div>
                 }
                 body={
-                    <div className="modal__body">
+                    <div ref={ref} className="modal__body">
                         {hasSearch && (
                             <div className="modal__body-search">
                                 <PInput
@@ -89,42 +102,49 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
                             </div>
                         )}
                         <div className="modal__body-container">
-                            {blockchains.map((el) => (
-                                <div
-                                    className="modal__body-container-item"
-                                    key={el.id}
-                                    onClick={() => handleSelect(el)}
-                                >
-                                    <div className="modal__body-container-item__inner">
-                                        <img
-                                            className="modal__body-container-item__inner-image"
-                                            src={`/images/wallets/${el.image}.png`}
-                                            alt={el.name}
+                            {blockchains.length ? (
+                                blockchains.map((el) => (
+                                    <div
+                                        className="modal__body-container-item"
+                                        key={el.id}
+                                        onClick={() => handleSelect(el)}
+                                    >
+                                        <div className="modal__body-container-item__inner">
+                                            <img
+                                                className="modal__body-container-item__inner-image"
+                                                src={`/images/wallets/${el.image}.png`}
+                                                alt={el.name}
+                                            />
+                                            <p className="modal__body-container-item__inner-name">
+                                                {el.name}
+                                            </p>
+                                        </div>
+                                        <IconCheckbox
+                                            className={classNames({
+                                                'modal__body-container-item__icon':
+                                                    true,
+                                                'modal__body-container-item__icon--active':
+                                                    selected === el.label,
+                                            })}
                                         />
-                                        <p className="modal__body-container-item__inner-name">
-                                            {el.name}
-                                        </p>
                                     </div>
-                                    <IconCheckbox
-                                        className={classNames({
-                                            'modal__body-container-item__icon':
-                                                true,
-                                            'modal__body-container-item__icon--active':
-                                                selected.some(
-                                                    (item) => item.id === el.id
-                                                ),
-                                        })}
-                                    />
+                                ))
+                            ) : (
+                                <div className="modal__body-container-item">
+                                    <p className="modal__body-container-item__inner-name">
+                                        No results
+                                    </p>
                                 </div>
-                            ))}
+                            )}
                         </div>
-                        <div className="modal__body-button">
+                        {/* <div className="modal__body-button">
                             <PButton
                                 wide
                                 children={<>Next</>}
                                 onClick={() => onApply(selected)}
                             />
                         </div>
+                        */}
                     </div>
                 }
                 onClose={onClose}

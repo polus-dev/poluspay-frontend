@@ -1,16 +1,18 @@
 import ReactDOM from 'react-dom';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { PButton, PInput, PModal, PSwitch } from '@poluspay-frontend/ui';
 import { ReactComponent as IconChevron } from '../../../assets/icons/chevron.svg';
 
 import './WalletAddition.scoped.scss';
+import { Blockchain } from 'tools';
 
 interface ModalProps {
     visible: boolean;
     onClose: () => void;
-    onImport: (address: string) => void;
+    onImport: (address: string, evm: boolean) => void;
     isEvmChain: boolean;
+    selectedBlockchain?: Blockchain;
 }
 
 export const ModalWalletAddition: React.FC<ModalProps> = ({
@@ -18,9 +20,23 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
     onClose,
     onImport,
     isEvmChain,
+    selectedBlockchain,
 }) => {
     const [address, setAddress] = useState('');
     const [evm, setEvm] = useState(true);
+
+    const ref = useRef<HTMLDivElement | null>(null);
+    useEffect(() => {
+        const checkIfClickedOutside = (e: MouseEvent) => {
+            if (ref.current && !ref.current.contains(e.target as Node)) {
+                onClose();
+            }
+        };
+        document.addEventListener('click', checkIfClickedOutside);
+        return () => {
+            document.removeEventListener('click', checkIfClickedOutside);
+        };
+    }, [onClose]);
 
     return ReactDOM.createPortal(
         <>
@@ -39,7 +55,7 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
                     </div>
                 }
                 body={
-                    <div className="modal__body">
+                    <div ref={ref} className="modal__body">
                         <div className="modal__body-form">
                             <div className="modal__body-form-data">
                                 <p className="modal__body-form-data-label">
@@ -91,7 +107,7 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
                                 <PButton
                                     wide
                                     children={<p>Import</p>}
-                                    onClick={() => onImport(address)}
+                                    onClick={() => onImport(address, evm)}
                                 />
                             </div>
                         </div>

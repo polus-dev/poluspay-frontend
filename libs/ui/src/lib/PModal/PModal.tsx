@@ -6,6 +6,7 @@ import { ReactComponent as IconCross } from '../assets/icons/cross.svg';
 import './styles.scss';
 
 interface ModalProps {
+    ref?: React.RefObject<HTMLDivElement>;
     visible: boolean;
     closable?: boolean;
     tabindex?: number;

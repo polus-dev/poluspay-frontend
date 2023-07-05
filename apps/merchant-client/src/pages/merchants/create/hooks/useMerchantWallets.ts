@@ -7,8 +7,23 @@ export const useMerchantWallets = () => {
     const [selectedBlockchain, setSelectedBlockchain] = useState<Blockchain>();
     const [modalWalletVisible, setModalWalletVisible] = useState(false);
     const [modalBlockchainVisible, setModalBlockchainVisible] = useState(false);
-    useState(false);
-    const handleSelect = (item: Item) => {
+    const [importedWallets, setImportedWallets] = useState<{
+        address: string;
+        evm?: boolean;
+    }>();
+
+    const onImportWallet = (address: string, evm?: boolean) => {
+        setImportedWallets({ address, evm });
+    };
+
+    useEffect(() => {
+        if (selectedBlockchain) {
+            setModalBlockchainVisible(false);
+            setModalWalletVisible(true);
+        }
+    }, [selectedBlockchain]);
+
+    const handleWalletSelect = (item: Item) => {
         const el = selectedWallets.find((el) => el.id === item.id);
         if (el) {
             setSelectedWallets(
@@ -17,6 +32,10 @@ export const useMerchantWallets = () => {
         } else {
             setSelectedWallets([...selectedWallets, item]);
         }
+    };
+
+    const handleBlockchainSelect = (item: Blockchain) => {
+        setSelectedBlockchain(item);
     };
 
     const onCloseWalletModal = () => {
@@ -44,12 +63,13 @@ export const useMerchantWallets = () => {
 
     return {
         selectedWallets,
-        handleSelect,
+        selectedBlockchain,
+        handleWalletSelect,
         modalWalletVisible,
         modalBlockchainVisible,
-        setModalWalletVisible,
-        setModalBlockchainVisible,
         onCloseWalletModal,
         onCloseBlockchainModal,
+        handleBlockchainSelect,
+        onImportWallet,
     };
 };
