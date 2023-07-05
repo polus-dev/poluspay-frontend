@@ -46,7 +46,7 @@
         width: 100%;
         height: auto;
         min-height: px-to-rem(44);
-        padding: 0 px-to-rem(12);
+        padding: px-to-rem(6) px-to-rem(12);
         font-size: px-to-rem(18);
         font-weight: 400;
         border: 1px solid $color-grey;
@@ -154,13 +154,19 @@
     &__item {
         display: inline-flex;
         align-items: center;
-        gap: px-to-rem(2);
+        gap: px-to-rem(4);
         width: auto;
-        height: px-to-rem(34);
+        height: px-to-rem(30);
         padding: 0 px-to-rem(8);
+        border: 1px solid $color-black-light;
         background-color: $color-black-light;
         border-radius: px-to-rem(6);
+        transition: border-color 0.15s ease-in-out;
         cursor: pointer;
+
+        &:hover {
+            border-color: color.adjust($color-grey, $lightness: 5%);
+        }
     }
 
     &__item-image {

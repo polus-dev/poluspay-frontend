@@ -163,7 +163,7 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
                         id: 1,
                         name: 'MATIC',
                         subname: 'MATIC',
-                        image: 'qwe',
+                        image: 'polygon',
                     })
                 }
             />

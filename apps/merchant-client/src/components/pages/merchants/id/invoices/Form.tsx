@@ -6,6 +6,7 @@ import { FormInput, PButton } from '@poluspay-frontend/ui';
 import { ReactComponent as IconChevron } from '../../../../../assets/icons/chevron.svg';
 import { ReactComponent as IconCross } from '../../../../../assets/icons/cross.svg';
 import { ModalCurrencySelector } from '../../../../../components/modals/CurrencySelector/CurrencySelector';
+import { ModalBlockChainSelector } from '../../../../../components/modals/BlockchainSelector/BlockchainSelector';
 
 import './Form.scoped.scss';
 
@@ -28,9 +29,19 @@ export const MerchantInvoicesForm: React.FC = () => {
     const [description, setDescription] = useState('');
 
     const modalCurrency = useModal();
+    const modalBlockchains = useModal();
 
-    const removeSelectedBlockchain = (item: Blockchain) => {
-        console.log('remove selected');
+    const removeSelectedBlockchain = (
+        event: React.MouseEvent,
+        item: Blockchain
+    ) => {
+        event?.stopPropagation();
+
+        if (blockchains.some((el) => el.id === item.id)) {
+            const filtered = blockchains.filter((el) => el.id !== item.id);
+
+            setBlockchains(filtered);
+        }
     };
 
     const handleModalCurrency = (asset: Asset) => {
@@ -38,6 +49,55 @@ export const MerchantInvoicesForm: React.FC = () => {
 
         setAsset(asset);
     };
+
+    const handleModalBlockchains = (items: Blockchain[]) => {
+        modalBlockchains.close();
+
+        setBlockchains(items);
+    };
+
+    const blockchainsList = [
+        {
+            id: 1,
+            name: 'polygon',
+            image: 'polygon',
+        },
+        {
+            id: 2,
+            name: 'polygon',
+            image: 'polygon',
+        },
+        {
+            id: 3,
+            name: 'polygon',
+            image: 'polygon',
+        },
+        {
+            id: 4,
+            name: 'polygon',
+            image: 'polygon',
+        },
+        {
+            id: 5,
+            name: 'polygon',
+            image: 'polygon',
+        },
+        {
+            id: 6,
+            name: 'polygon',
+            image: 'polygon',
+        },
+        {
+            id: 7,
+            name: 'polygon',
+            image: 'polygon',
+        },
+        {
+            id: 8,
+            name: 'polygon',
+            image: 'polygon',
+        },
+    ];
 
     return (
         <div className="form">
@@ -79,15 +139,18 @@ export const MerchantInvoicesForm: React.FC = () => {
                 </div>
                 <div className="form__inner-item">
                     <p className="form__inner-item-label">Blockchains</p>
-                    <div className="form__inner-item-select">
+                    <div
+                        className="form__inner-item-select"
+                        onClick={() => modalBlockchains.open()}
+                    >
                         <div className="form__inner-item-select__multi multi">
                             {blockchains.length ? (
                                 blockchains.map((el) => (
                                     <div
                                         className="multi__item"
                                         key={el.id}
-                                        onClick={() =>
-                                            removeSelectedBlockchain(el)
+                                        onClick={(event) =>
+                                            removeSelectedBlockchain(event, el)
                                         }
                                     >
                                         <img
@@ -127,6 +190,7 @@ export const MerchantInvoicesForm: React.FC = () => {
                         />
                     </div>
                     <div className="form__inner-buttons-item">
+                        {/* add disabled if no asset/blockchain selected and no amount entered */}
                         <PButton
                             wide
                             children={<p>Create</p>}
@@ -138,6 +202,13 @@ export const MerchantInvoicesForm: React.FC = () => {
             <ModalCurrencySelector
                 visible={modalCurrency.visible}
                 onClose={(asset) => handleModalCurrency(asset)}
+            />
+            <ModalBlockChainSelector
+                multi
+                visible={modalBlockchains.visible}
+                options={blockchainsList}
+                onClose={() => modalBlockchains.close()}
+                onApply={(items) => handleModalBlockchains(items)}
             />
         </div>
     );
