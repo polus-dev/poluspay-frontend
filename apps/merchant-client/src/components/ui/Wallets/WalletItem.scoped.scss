@@ -8,6 +8,7 @@
     width: 100%;
     height: px-to-rem(52);
     padding: 0 px-to-rem(8);
+    will-change: transform;
     transition: transform 0.2s ease-in-out;
     cursor: pointer;
 

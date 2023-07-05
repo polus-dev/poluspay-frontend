@@ -33,7 +33,13 @@
         justify-content: space-between;
         width: 100%;
         height: px-to-rem(56);
+        will-change: transform;
+        transition: transform 0.2s ease-in-out;
         cursor: pointer;
+
+        &:hover {
+            transform: scale(0.95);
+        }
 
         &__inner {
             display: flex;
