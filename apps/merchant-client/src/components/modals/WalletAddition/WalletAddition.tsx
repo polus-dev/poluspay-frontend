@@ -47,6 +47,7 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
         };
         document.addEventListener('click', checkIfClickedOutside);
         return () => {
+            setAddress('');
             document.removeEventListener('click', checkIfClickedOutside);
         };
     }, [onClose]);
