@@ -7,8 +7,9 @@ export interface Item {
     type: 'wallet' | 'exchange' | 'blockchain';
 }
 
-export interface WalletItemConnected extends Item {
+export interface WalletItemConnected extends Omit<Item, 'id'> {
     address: string;
+    label: Blockchain;
 }
 
 export const walletList: Item[] = [
@@ -266,33 +267,69 @@ export const blockchainList: (Item & { label: Blockchain; evm: boolean })[] = [
     },
 ];
 
+const address = '0x00000000000000000000000000 ';
 export const connectedWalletList: WalletItemConnected[] = [
     {
-        id: 1,
-        name: 'Metamask',
-        image: 'metamask',
-        type: 'wallet',
-        address: '0x29C5b4624452cE4411f6820a1DDC614ce8CD3197',
-    },
-    {
-        id: 24,
-        name: 'Coinbase',
-        image: 'coinbase',
-        type: 'exchange',
-        address: '0x29C5b4624452cE4411f6820a1DDC614ce8CD3197',
-    },
-    {
-        id: 36,
-        name: 'Polygon',
-        image: 'polygon',
-        type: 'blockchain',
-        address: '0x29C5b4624452cE4411f6820a1DDC614ce8CD3197',
-    },
-    {
-        id: 31,
         name: 'Arbitrum',
         image: 'arbitrum',
         type: 'blockchain',
-        address: '0x29C5b4624452cE4411f6820a1DDC614ce8CD3197',
+        label: 'arbitrum',
+        address,
+    },
+    {
+        name: 'Ethereum',
+        image: 'ethereum',
+        type: 'blockchain',
+        label: 'ethereum',
+        address,
+    },
+    {
+        name: 'Doge',
+        image: 'doge',
+        type: 'blockchain',
+        label: 'dogecoin',
+        address,
+    },
+    {
+        name: 'Optimism',
+        image: 'optimism',
+        type: 'blockchain',
+        label: 'optimism',
+        address,
+    },
+    {
+        name: 'Binance Smart Chain',
+        image: 'bsc',
+        type: 'blockchain',
+        label: 'bsc',
+        address,
+    },
+    {
+        name: 'Polygon',
+        image: 'polygon',
+        type: 'blockchain',
+        label: 'polygon',
+        address,
+    },
+    {
+        name: 'Bitcoin',
+        image: 'bitcoin',
+        type: 'blockchain',
+        label: 'bitcoin',
+        address,
+    },
+    {
+        name: 'Bitcoin Cash',
+        image: 'bitcoin-cash',
+        type: 'blockchain',
+        label: 'bitcoin-cash',
+        address,
+    },
+    {
+        name: 'Tron',
+        image: 'tron',
+        address: '',
+        type: 'blockchain',
+        label: 'tron',
     },
 ];

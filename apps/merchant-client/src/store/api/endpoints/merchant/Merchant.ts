@@ -36,7 +36,7 @@ export const merchantApi = createApi({
             return headers;
         },
     }),
-    tagTypes: ['Merchant'],
+    tagTypes: ['Merchant', 'Wallet'],
     endpoints: (builder) => ({
         createMerchant: builder.mutation<
             ICreateMerchantResponse,
@@ -177,6 +177,7 @@ export const merchantApi = createApi({
                 method: 'POST',
                 body,
             }),
+            invalidatesTags: ['Wallet'],
         }),
         getMerchantWallet: builder.query<IMerchantWallet[], IMerchantId>({
             query: (body) => ({
@@ -184,6 +185,7 @@ export const merchantApi = createApi({
                 method: 'POST',
                 body,
             }),
+            providesTags: ['Wallet'],
         }),
         enableMerchantWallet: builder.mutation<
             IMerchantWallet,
@@ -194,6 +196,7 @@ export const merchantApi = createApi({
                 method: 'POST',
                 body,
             }),
+            invalidatesTags: ['Wallet'],
         }),
         disableMerchantWallet: builder.mutation<
             IMerchantWallet,
@@ -204,6 +207,7 @@ export const merchantApi = createApi({
                 method: 'POST',
                 body,
             }),
+            invalidatesTags: ['Wallet'],
         }),
     }),
 });
@@ -217,4 +221,8 @@ export const {
     useGetMerchantByIdQuery,
     useVerifyDomainMutation,
     useGenerateSigningKeyMutation,
+    useCreateMerchantWalletMutation,
+    useEnableMerchantWalletMutation,
+    useDisableMerchantWalletMutation,
+    useGetMerchantWalletQuery,
 } = merchantApi;

@@ -1,3 +1,5 @@
+import { useCreateMerchantWalletMutation } from '@poluspay-frontend/merchant-query';
+import { blockchainList } from 'apps/merchant-client/src/components/ui/Wallets/wallet-list';
 import { Item } from 'apps/merchant-client/src/components/ui/Wallets/wallet-list';
 import { useEffect, useState } from 'react';
 import { Blockchain } from 'tools';
@@ -7,13 +9,31 @@ export const useMerchantWallets = () => {
     const [selectedBlockchain, setSelectedBlockchain] = useState<Blockchain>();
     const [modalWalletVisible, setModalWalletVisible] = useState(false);
     const [modalBlockchainVisible, setModalBlockchainVisible] = useState(false);
-    const [importedWallets, setImportedWallets] = useState<{
-        address: string;
-        evm?: boolean;
-    }>();
+    const [isCreateMerchantWalletLoading, setIsCreateMerchantWalletLoading] =
+        useState(false);
+    const [createMerchantWallet] = useCreateMerchantWalletMutation();
+    const [merchantId, setMerchantId] = useState<string>();
 
-    const onImportWallet = (address: string, evm?: boolean) => {
-        setImportedWallets({ address, evm });
+    const onImportWallet = async (address: string, evm?: boolean) => {
+        try {
+            if (!merchantId) throw new Error('Merchant id is not defined');
+            if (!selectedBlockchain)
+                throw new Error('Blockchain is not defined');
+            setIsCreateMerchantWalletLoading(true);
+            const network: Blockchain[] = evm
+                ? ['bsc', 'polygon', 'ethereum', 'arbitrum', 'optimism']
+                : [selectedBlockchain];
+            await createMerchantWallet({
+                merchant_id: merchantId,
+                address,
+                network,
+            }).unwrap();
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsCreateMerchantWalletLoading(false);
+            setModalWalletVisible(false);
+        }
     };
 
     useEffect(() => {
@@ -23,7 +43,19 @@ export const useMerchantWallets = () => {
         }
     }, [selectedBlockchain]);
 
+    const handleBlockchainSelect = (item: Blockchain) => {
+        setSelectedBlockchain(item);
+    };
+
     const handleWalletSelect = (item: Item) => {
+        // TODO: delete this in the future
+        if (item.type === 'blockchain') {
+            const chain = blockchainList.find((el) => el.id === item.id);
+            if (chain) {
+                handleBlockchainSelect(chain.label);
+                return;
+            }
+        }
         const el = selectedWallets.find((el) => el.id === item.id);
         if (el) {
             setSelectedWallets(
@@ -32,10 +64,6 @@ export const useMerchantWallets = () => {
         } else {
             setSelectedWallets([...selectedWallets, item]);
         }
-    };
-
-    const handleBlockchainSelect = (item: Blockchain) => {
-        setSelectedBlockchain(item);
     };
 
     const onCloseWalletModal = () => {
@@ -71,5 +99,8 @@ export const useMerchantWallets = () => {
         onCloseBlockchainModal,
         handleBlockchainSelect,
         onImportWallet,
+        isCreateMerchantWalletLoading,
+        setMerchantId,
+        merchantId,
     };
 };

@@ -107,7 +107,10 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
                                     <div
                                         className="modal__body-container-item"
                                         key={el.id}
-                                        onClick={() => handleSelect(el)}
+                                        onClick={() => {
+                                            console.log('item', el);
+                                            handleSelect(el);
+                                        }}
                                     >
                                         <div className="modal__body-container-item__inner">
                                             <img

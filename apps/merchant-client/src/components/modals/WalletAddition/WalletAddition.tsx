@@ -5,7 +5,7 @@ import { PButton, PInput, PModal, PSwitch } from '@poluspay-frontend/ui';
 import { ReactComponent as IconChevron } from '../../../assets/icons/chevron.svg';
 
 import './WalletAddition.scoped.scss';
-import { Blockchain } from 'tools';
+import { Blockchain, placeHolderForAddress, validateAddress } from 'tools';
 
 interface ModalProps {
     visible: boolean;
@@ -13,6 +13,7 @@ interface ModalProps {
     onImport: (address: string, evm: boolean) => void;
     isEvmChain: boolean;
     selectedBlockchain?: Blockchain;
+    isLoading: boolean;
 }
 
 export const ModalWalletAddition: React.FC<ModalProps> = ({
@@ -21,9 +22,21 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
     onImport,
     isEvmChain,
     selectedBlockchain,
+    isLoading,
 }) => {
     const [address, setAddress] = useState('');
     const [evm, setEvm] = useState(true);
+    const [isValidAddress, setValidAddress] = useState(false);
+
+    useEffect(() => {
+        if (address && selectedBlockchain) {
+            if (validateAddress(address, selectedBlockchain)) {
+                setValidAddress(true);
+            } else {
+                setValidAddress(false);
+            }
+        }
+    }, [address]);
 
     const ref = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
@@ -47,11 +60,16 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
                         {/* replace src and  name with dynamic ones */}
                         <img
                             className="modal__header-image"
-                            src="/images/wallets/polygon.png"
+                            src={`/images/wallets/${selectedBlockchain}.png`}
                             alt="blockchain name"
                         />
                         {/* replace with dynamic */}
-                        <p className="modal__header-text">Connect Polygon</p>
+                        <p className="modal__header-text">
+                            Connect{' '}
+                            {selectedBlockchain &&
+                                selectedBlockchain.charAt(0).toUpperCase() +
+                                    selectedBlockchain.slice(1)}
+                        </p>
                     </div>
                 }
                 body={
@@ -61,14 +79,17 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
                                 <p className="modal__body-form-data-label">
                                     Public address
                                 </p>
-                                {/* replace with errors after address validation */}
-                                <p className="modal__body-form-data-label modal__body-form-data-label--error">
-                                    errors
-                                </p>
+                                {!isValidAddress && address.length > 0 && (
+                                    <p className="modal__body-form-data-label modal__body-form-data-label--error">
+                                        invalid address
+                                    </p>
+                                )}
                             </div>
                             {/* replace placeholder with dynamic one */}
                             <PInput
-                                placeholder="0x..."
+                                placeholder={placeHolderForAddress(
+                                    selectedBlockchain!
+                                )}
                                 value={address}
                                 onInput={(value) =>
                                     setAddress(value.toString())
@@ -105,6 +126,8 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
                             </div>
                             <div className="modal__body-buttons-item">
                                 <PButton
+                                    loading={isLoading}
+                                    disabled={!isValidAddress}
                                     wide
                                     children={<p>Import</p>}
                                     onClick={() => onImport(address, evm)}

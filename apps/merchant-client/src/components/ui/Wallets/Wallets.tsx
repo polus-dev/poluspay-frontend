@@ -1,8 +1,18 @@
-import { Item, blockchainList, exchangeList } from './wallet-list';
+import {
+    Item,
+    blockchainList,
+    connectedWalletList,
+    exchangeList,
+} from './wallet-list';
 import { useEffect, useState } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 
-import { walletList, connectedWalletList } from './wallet-list';
+import { walletList } from './wallet-list';
+import {
+    useDisableMerchantWalletMutation,
+    useEnableMerchantWalletMutation,
+    useGetMerchantWalletQuery,
+} from '@poluspay-frontend/merchant-query';
 
 import { MerchantWalletItem } from './WalletItem';
 import { PButton, PInput, PPagination, PTabs } from '@poluspay-frontend/ui';
@@ -21,6 +31,7 @@ interface MerchantWalletsProps {
     onButtonClick?: () => void;
     selectedWallets: Item[];
     handleSelect: (wallets: Item) => void;
+    merchantId: string;
 }
 
 const allArray = [...walletList, ...exchangeList, ...blockchainList];
@@ -39,6 +50,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
     onButtonClick,
     selectedWallets,
     handleSelect,
+    merchantId,
 }) => {
     const tabs = [
         {
@@ -49,6 +61,13 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
         { id: 'exchange', text: 'Exchanges' },
         { id: 'blockchain', text: 'Blockchains' },
     ] as const;
+
+    const { data: connectedWallets } = useGetMerchantWalletQuery({
+        merchant_id: merchantId,
+    });
+
+    const [disableMerchantWallet] = useDisableMerchantWalletMutation();
+    const [enableMerchatWallet] = useEnableMerchantWalletMutation();
 
     const [tab, setTab] = useState(tabs[0]);
     const [parent] = useAutoAnimate();
@@ -118,17 +137,35 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                     />
                 </div>
             </div>
-            {false && (
+            {connectedWallets && connectedWallets.length > 0 && (
                 <div ref={parent} className="wallets__connected">
-                    {connectedWalletList.map((el) => (
+                    {connectedWallets.map((el) => (
                         <MerchantWalletItemConnected
-                            enabled
-                            item={el}
-                            key={el.id}
-                            onSwitch={(value) => {}}
+                            enabled={!el.is_disabled}
+                            item={{
+                                ...connectedWalletList.find(
+                                    (item) => item.label === el.network
+                                )!,
+                                address: el.address,
+                            }}
+                            key={el.address + el.network}
+                            onSwitch={(v) => {
+                                if (v) {
+                                    enableMerchatWallet({
+                                        merchant_id: merchantId,
+                                        network: el.network,
+                                    });
+                                } else {
+                                    disableMerchantWallet({
+                                        merchant_id: merchantId,
+                                        network: el.network,
+                                    });
+                                }
+                            }}
                             onDelete={() => {}}
                         />
                     ))}
+                    )
                 </div>
             )}
             <div className="wallets__container">

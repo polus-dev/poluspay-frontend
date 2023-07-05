@@ -9,9 +9,13 @@ import { useCreateMerchantMutation } from '@poluspay-frontend/merchant-query';
 
 interface FormProps {
     changeStage: () => void;
+    setMerchantId: (id: string) => void;
 }
 
-export const MerchantForm: React.FC<FormProps> = ({ changeStage }) => {
+export const MerchantForm: React.FC<FormProps> = ({
+    changeStage,
+    setMerchantId,
+}) => {
     const {
         register,
         handleSubmit,
@@ -26,11 +30,12 @@ export const MerchantForm: React.FC<FormProps> = ({ changeStage }) => {
         data
     ) => {
         try {
-            // const merchant = await createMerchant({
-            //     name: data.merchantName,
-            //     domain: data.website,
-            //     description: data.description,
-            // }).unwrap();
+            const merchant = await createMerchant({
+                name: data.merchantName,
+                domain: data.website,
+                description: data.description,
+            }).unwrap();
+            setMerchantId(merchant.id);
             changeStage();
             // navigate(`/merchants/${merchant.id}/merchant`);
         } catch (error) {

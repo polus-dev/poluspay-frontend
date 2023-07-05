@@ -74,13 +74,15 @@ export interface IGenerateSigningKeyResponse extends IMerchantId {
 
 export interface ICreateMerchantWalletRequest extends IMerchantId {
     address: string;
+    network: Blockchain[];
+}
+
+export interface IMerchantWallet extends IMerchantId {
+    is_disabled: boolean;
+    address: string;
     network: Blockchain;
 }
 
-export interface IMerchantWallet extends ICreateMerchantWalletRequest {
-    is_disabled: boolean;
-}
-
-export interface IChangeMerchantWalletStatusRequest {
+export interface IChangeMerchantWalletStatusRequest extends IMerchantId {
     network: Blockchain;
 }

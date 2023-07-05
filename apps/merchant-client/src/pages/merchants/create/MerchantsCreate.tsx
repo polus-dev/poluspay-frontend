@@ -11,12 +11,10 @@ import { ModalBlockChainSelector } from '../../../components/modals/BlockchainSe
 
 import './MerchantsCreate.scoped.scss';
 
-import {
-    blockchainList,
-    connectedWalletList,
-} from '../../../components/ui/Wallets/wallet-list';
+import { blockchainList } from '../../../components/ui/Wallets/wallet-list';
 import { ModalWalletAddition } from 'apps/merchant-client/src/components/modals/WalletAddition/WalletAddition';
 import { useMerchantWallets } from './hooks/useMerchantWallets';
+import { isEVMBlockchain } from 'tools';
 
 export const MerchantsCreatePage: React.FC = () => {
     const navigator = useNavigate();
@@ -33,6 +31,9 @@ export const MerchantsCreatePage: React.FC = () => {
         onCloseWalletModal,
         onCloseBlockchainModal,
         onImportWallet,
+        setMerchantId,
+        isCreateMerchantWalletLoading,
+        merchantId,
     } = useMerchantWallets();
 
     const modalBlockchain = useModal();
@@ -79,12 +80,16 @@ export const MerchantsCreatePage: React.FC = () => {
                 )}
                 {type === 'personal' && stage === 1 && (
                     <div className="merchants__inner-form">
-                        <MerchantForm changeStage={handleStageTypeChange} />
+                        <MerchantForm
+                            setMerchantId={setMerchantId}
+                            changeStage={handleStageTypeChange}
+                        />
                     </div>
                 )}
                 {type === 'personal' && stage === 2 && (
                     <div className="merchants__inner-wallet">
                         <MerchantWallets
+                            merchantId={merchantId!}
                             onButtonClick={handleButtonClick}
                             selectedWallets={selectedWallets}
                             handleSelect={handleWalletSelect}
@@ -101,9 +106,10 @@ export const MerchantsCreatePage: React.FC = () => {
                 setSelected={handleBlockchainSelect}
             />
             <ModalWalletAddition
+                isLoading={isCreateMerchantWalletLoading}
                 visible={modalWalletVisible}
                 selectedBlockchain={selectedBlockchain}
-                isEvmChain={true}
+                isEvmChain={isEVMBlockchain(selectedBlockchain!)}
                 onClose={() => onCloseWalletModal()}
                 onImport={onImportWallet}
             />
