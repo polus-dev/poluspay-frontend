@@ -31,6 +31,7 @@ $tabs-sizes: (
         -webkit-overflow-scrolling: touch;
         -ms-overflow-style: -ms-autohiding-scrollbar;
         overflow-x: scroll;
+        gap: px-to-rem(8);
 
         &::-webkit-scrollbar {
             display: none;
@@ -49,7 +50,6 @@ $tabs-sizes: (
         border: 1px solid $color-grey;
         color: $color-white;
         cursor: pointer;
-        margin-right: px-to-rem(8);
         padding: map.get($tabs-sizes, 'md', 'padding');
         font-size: map.get($tabs-sizes, 'md', 'font-size');
         line-height: 1;
@@ -59,10 +59,6 @@ $tabs-sizes: (
         transition-property: background-color, border, color;
         transition-duration: 0.15s;
         transition-timing-function: ease-in-out;
-
-        &:last-child {
-            margin-right: 0;
-        }
 
         &::before {
             content: attr(text);
