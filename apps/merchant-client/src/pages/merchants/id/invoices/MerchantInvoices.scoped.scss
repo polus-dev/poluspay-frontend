@@ -28,11 +28,23 @@
     }
 
     &__inner-container-form {
-        width: calc(100% - px-to-rem(440));
+        display: flex;
+        width: 100%;
+
+        @include breakpoint($screen-lg) {
+            width: calc(100% - px-to-rem(440));
+            min-height: px-to-rem(520);
+        }
     }
 
     &__inner-container-preview {
-        width: px-to-rem(420);
+        display: none;
+
+        @include breakpoint($screen-lg) {
+            display: flex;
+            width: px-to-rem(420);
+            height: px-to-rem(520);
+        }
     }
 
     &__table-title {

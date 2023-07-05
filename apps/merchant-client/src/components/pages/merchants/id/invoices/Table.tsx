@@ -32,10 +32,8 @@ export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
     };
 
     const normalizeStatus = (status: InvoiceStatus) => {
-        return status === 'in_progress'
-            ? 'in progress'
-            : status
-    }
+        return status === 'in_progress' ? 'in progress' : status;
+    };
 
     return (
         <div className="table">
