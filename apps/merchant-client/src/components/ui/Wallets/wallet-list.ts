@@ -13,12 +13,6 @@ export interface WalletItemConnected extends Item {
 
 export const walletList: Item[] = [
     {
-        id: 1,
-        name: 'Metamask',
-        image: 'metamask',
-        type: 'wallet',
-    },
-    {
         id: 2,
         name: '1inch Wallet',
         image: '1inch',
