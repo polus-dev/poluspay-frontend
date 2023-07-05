@@ -21,7 +21,7 @@ import { useMerchantWallets } from './hooks/useMerchantWallets';
 export const MerchantsCreatePage: React.FC = () => {
     const navigator = useNavigate();
     const [type, setType] = useState<string | null>('personal');
-    const [stage, setStage] = useState(2);
+    const [stage, setStage] = useState(0);
 
     const {
         modalBlockchainVisible,
