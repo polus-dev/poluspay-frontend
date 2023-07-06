@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { PButton, PInput } from '@poluspay-frontend/ui';
+import { FormInput, PButton, PInput } from '@poluspay-frontend/ui';
 
 import './Form.scoped.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -19,7 +19,7 @@ export const MerchantForm: React.FC<FormProps> = ({
     const {
         register,
         handleSubmit,
-        formState: { isValid },
+        formState: { isValid, errors },
     } = useForm<Omit<IMerchantForm, 'brand'>>();
     const [createMerchant, { isLoading: isCreatingMerchantLoading }] =
         useCreateMerchantMutation();
@@ -52,15 +52,22 @@ export const MerchantForm: React.FC<FormProps> = ({
                             *
                         </span>
                     </p>
-                    <PInput
+                    <FormInput
                         reg={register('merchantName', { required: true })}
                         placeholder="Company name"
                     />
                 </div>
                 <div className="form__item">
                     <p className="form__item-label">Merchant's website</p>
-                    <PInput
-                        reg={register('website')}
+                    <FormInput
+                        error={errors.website?.message}
+                        reg={register('website', {
+                            required: true,
+                            pattern: {
+                                value: /\w+\.\w+/,
+                                message: 'Invalid domain',
+                            },
+                        })}
                         placeholder="example.com"
                     />
                 </div>
