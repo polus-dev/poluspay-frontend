@@ -99,9 +99,8 @@
     &__container {
         display: grid;
         grid-template-columns: repeat(12, 1fr);
-        gap: 1px;
-        border: 1px solid $color-grey;
-        background-color: $color-grey;
+        border-top: 1px solid $color-grey;
+        border-left: 1px solid $color-grey;
         border-radius: px-to-rem(6);
         overflow: hidden;
     }
@@ -109,7 +108,12 @@
     &__container-item {
         grid-column-start: span 6;
         grid-column-end: span 6;
-        background-color: $color-black-light;
+        border-right: 1px solid $color-grey;
+        border-bottom: 1px solid $color-grey;
+
+        &:last-child {
+            border-bottom-right-radius: px-to-rem(6);
+        }
 
         @include breakpoint($screen-md) {
             grid-column-start: span 4;

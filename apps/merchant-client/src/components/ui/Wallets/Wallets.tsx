@@ -5,7 +5,6 @@ import {
     exchangeList,
 } from './wallet-list';
 import { useEffect, useState } from 'react';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 import { walletList } from './wallet-list';
 import {
@@ -70,7 +69,6 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
     const [enableMerchatWallet] = useEnableMerchantWalletMutation();
 
     const [tab, setTab] = useState(tabs[0]);
-    const [parent] = useAutoAnimate();
 
     const [search, setSearch] = useState('');
 
@@ -138,7 +136,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                 </div>
             </div>
             {connectedWallets && connectedWallets.length > 0 && (
-                <div ref={parent} className="wallets__connected">
+                <div className="wallets__connected">
                     {connectedWallets.map((el) => (
                         <MerchantWalletItemConnected
                             enabled={!el.is_disabled}
@@ -165,7 +163,6 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                             onDelete={() => {}}
                         />
                     ))}
-                    )
                 </div>
             )}
             <div className="wallets__container">
@@ -185,7 +182,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                                   onSelect={() => handleSelect(el)}
                               />
                           </div>
-                      ))
+                    ))
                     : walletsPaginated.map((el) => (
                           <div
                               className={classNames({
@@ -201,7 +198,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                                   onSelect={() => handleSelect(el)}
                               />
                           </div>
-                      ))}
+                    ))}
             </div>
             {!search && tab.id === 'all' && (
                 <div className="wallets__pagination">
