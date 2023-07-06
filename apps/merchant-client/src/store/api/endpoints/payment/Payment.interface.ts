@@ -1,4 +1,4 @@
-import { IPagination } from '../../types';
+import { IPagination } from '@poluspay-frontend/api';
 
 interface IPayment {
     id: string;

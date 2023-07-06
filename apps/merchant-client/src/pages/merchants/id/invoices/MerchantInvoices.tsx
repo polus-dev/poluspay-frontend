@@ -5,8 +5,22 @@ import { MerchantInvoicesTable } from '../../../../components/pages/merchants/id
 import { MerchantInvoicesPreview } from '../../../../components/pages/merchants/id/invoices/Preview';
 
 import './MerchantInvoices.scoped.scss';
+import { useParams } from 'react-router-dom';
+import { useGetPaymentByMerchantIdQuery } from '@poluspay-frontend/merchant-query';
 
 export const MerchantInvoicesPage: React.FC = () => {
+    const { id: merchantId } = useParams<{ id: string }>();
+    if (!merchantId) {
+        return null;
+    }
+
+    const { data: payments, isFetching: paymentsIsFetching } =
+        useGetPaymentByMerchantIdQuery({
+            merchant_id: merchantId,
+            limit: 10,
+            offset: 0,
+        });
+
     const invoices: Invoice[] = [
         {
             id: '3894562938741029359',
