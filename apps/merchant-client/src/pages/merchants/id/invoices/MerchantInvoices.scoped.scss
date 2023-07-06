@@ -53,4 +53,8 @@
         font-weight: 500;
         line-height: 150%;
     }
+
+    &__table-pagination {
+        margin-top: px-to-rem(30);
+    }
 }
