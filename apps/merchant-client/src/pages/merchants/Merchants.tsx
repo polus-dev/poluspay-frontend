@@ -10,7 +10,10 @@ export const MerchantsPage: React.FC = () => {
     const [current, setCurrent] = useState(1);
     const limit = 8;
 
-    const { data: merchants } = useGetMerchantsQuery({ limit, offset: 0 });
+    const { data: merchants } = useGetMerchantsQuery({
+        limit,
+        offset: current - 1,
+    });
 
     const merchantsPaginated = merchants?.data.slice(
         (current - 1) * limit,
