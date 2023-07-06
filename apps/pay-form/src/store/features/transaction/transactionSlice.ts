@@ -90,6 +90,7 @@ export const transactionSlice = createSlice({
   reducers: {
     initTransactionState: (state, action: PayloadAction<IPayload>) => {
       // TODO: refactor
+      state.pathTrade.amount = undefined;
       state.amount = action.payload.amount;
       const h = new PaymentHelper(action.payload.blockchain, action.payload.userToken, action.payload.merchantToken, action.payload.userAddress)
       // @ts-ignore
