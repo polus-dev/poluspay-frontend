@@ -37,24 +37,16 @@
         line-height: 130%;
     }
 
-    &__inner-item-icon-container {
-        display: flex;
-        align-items: center;
+    &__inner-item-icon {
         width: px-to-rem(20);
         height: auto;
-        fill: $color-white-dark;
+        stroke: $color-white;
+        transition: stroke 0.15s ease-in-out;
         cursor: pointer;
 
         &:hover {
-            fill: $color-white;
+            stroke: $color-blue-light;
         }
-    }
-
-    &__inner-item-icon {
-        width: 100%;
-        height: auto;
-        fill: inherit;
-        transition: fill 0.15s ease-in-out;
     }
 
     &__inner-item-container {

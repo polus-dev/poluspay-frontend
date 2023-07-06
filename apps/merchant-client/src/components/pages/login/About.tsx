@@ -36,7 +36,7 @@ export const LoginAbout: React.FC = () => {
             id: 4,
             icon: IconFee,
             description:
-                'No monthly fee, no withdrawal fee, lowest 0.2% industry fee',
+                'No monthly fee, no withdrawal fee, lowest 0.5% industry fee',
         },
     ];
 

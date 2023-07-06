@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { PInput, PButton } from '@poluspay-frontend/ui';
-import { ReactComponent as IconView } from '../../../../../assets/icons/view.svg';
-import { ReactComponent as IconHide } from '../../../../../assets/icons/hide.svg';
+import { ReactComponent as IconCopy} from '../../../../../assets/icons/copy.svg';
 
 import './Form.scoped.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -34,7 +33,7 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
         merchant_id: props.merchantId,
     });
 
-    const [apiKey, setApiKey] = useState<string>('you have no api key');
+    const [signingKey, setSigningKey] = useState<string>('**********************************');
     const [generateApiKey, { isLoading: isGeneratingApiKey }] =
         useGenerateSigningKeyMutation();
 
@@ -43,7 +42,7 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
             const { signing_key } = await generateApiKey({
                 merchant_id: props.merchantId,
             }).unwrap();
-            setApiKey(signing_key);
+            setSigningKey(signing_key);
         } catch (error) {
             console.error(error);
         }
@@ -81,45 +80,39 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
             console.error(error);
         }
     };
-    const [bluredApiKey, setBluredApiKey] = useState('');
-    const [visible, setVisible] = useState(false);
 
-    const blurText = () => {
-        const blured = apiKey.replace(/./g, '*');
+    const [copied, setCopied] = useState(false)
 
-        setBluredApiKey(blured);
-    };
+    const copy = async () => {
+        if (copied) return undefined
 
-    const toggle = () => {
-        setVisible(!visible);
-    };
+        await navigator.clipboard.writeText(signingKey)
 
-    useEffect(() => {
-        blurText();
-    }, [apiKey]);
+        setCopied(true)
+
+        setTimeout(() => {
+            setCopied(false)
+        }, 3000)
+    }
 
     return (
         <form onSubmit={handleSubmit(submit)} className="form">
             <div className="form__inner">
                 <div className="form__inner-item">
-                    <p className="form__inner-item-label">API key</p>
+                    <p className="form__inner-item-label">Signing key</p>
                     <div className="form__inner-item-container">
                         <div className="form__inner-item-container-input">
                             <PInput
                                 readonly
                                 overlay={false}
-                                value={visible ? apiKey : bluredApiKey}
+                                value={copied ? 'Copied!' : signingKey}
                                 append={
-                                    <div
-                                        className="form__inner-item-icon-container"
-                                        onClick={toggle}
-                                    >
-                                        {visible ? (
-                                            <IconHide className="form__inner-item-icon" />
-                                        ) : (
-                                            <IconView className="form__inner-item-icon" />
-                                        )}
-                                    </div>
+                                    !signingKey.includes('*') && (
+                                        <IconCopy
+                                            className="form__inner-item-icon"
+                                            onClick={copy}
+                                        />
+                                    )
                                 }
                                 onInput={() => {}}
                             />
