@@ -6,6 +6,7 @@ import { useModal } from '../../../../../../hooks/useModal';
 import { PButton, PInput } from '@poluspay-frontend/ui';
 import { MerchantProfileAvatar } from './Avatar';
 import { ModalMerchantDelete } from '../../../../../modals/MerchantDelete/MerchantDelete';
+import { ModalMerchantAvatar } from '../../../../../modals/MerchantAvatar/MerchantAvatar';
 import { ReactComponent as IconCopy } from '../../../../../../assets/icons/copy.svg';
 import {
     useDeleteMerchantMutation,
@@ -98,7 +99,7 @@ export const MerchantProfileForm: React.FC = () => {
                 <div className="form__inner-user">
                     <div className="form__inner-user__avatar">
                         <MerchantProfileAvatar
-                            openModal={() => console.log('open modal')}
+                            openModal={() => modalAvatar.open()}
                         />
                     </div>
                     <div className="form__inner-user__data">
@@ -203,6 +204,11 @@ export const MerchantProfileForm: React.FC = () => {
                 onClose={() => modalDelete.close()}
                 onDelete={handleMerchantRemoval}
                 merchantName={merchant?.name ?? ''}
+            />
+            <ModalMerchantAvatar
+                visible={modalAvatar.visible}
+                onSave={() => console.log('send image to backend')}
+                onClose={() => modalAvatar.close()}
             />
         </form>
     );

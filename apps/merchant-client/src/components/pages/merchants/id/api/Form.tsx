@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { PInput, PButton } from '@poluspay-frontend/ui';
-import { ReactComponent as IconCopy} from '../../../../../assets/icons/copy.svg';
+import { ReactComponent as IconCopy } from '../../../../../assets/icons/copy.svg';
 
 import './Form.scoped.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -33,7 +33,9 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
         merchant_id: props.merchantId,
     });
 
-    const [signingKey, setSigningKey] = useState<string>('**********************************');
+    const [signingKey, setSigningKey] = useState<string>(
+        '**********************************'
+    );
     const [generateApiKey, { isLoading: isGeneratingApiKey }] =
         useGenerateSigningKeyMutation();
 
@@ -81,19 +83,19 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
         }
     };
 
-    const [copied, setCopied] = useState(false)
+    const [copied, setCopied] = useState(false);
 
     const copy = async () => {
-        if (copied) return undefined
+        if (copied) return undefined;
 
-        await navigator.clipboard.writeText(signingKey)
+        await navigator.clipboard.writeText(signingKey);
 
-        setCopied(true)
+        setCopied(true);
 
         setTimeout(() => {
-            setCopied(false)
-        }, 3000)
-    }
+            setCopied(false);
+        }, 3000);
+    };
 
     return (
         <form onSubmit={handleSubmit(submit)} className="form">

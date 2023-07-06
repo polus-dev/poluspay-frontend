@@ -182,7 +182,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                                   onSelect={() => handleSelect(el)}
                               />
                           </div>
-                    ))
+                      ))
                     : walletsPaginated.map((el) => (
                           <div
                               className={classNames({
@@ -198,7 +198,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                                   onSelect={() => handleSelect(el)}
                               />
                           </div>
-                    ))}
+                      ))}
             </div>
             {!search && tab.id === 'all' && (
                 <div className="wallets__pagination">
