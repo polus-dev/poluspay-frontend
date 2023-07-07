@@ -23,19 +23,19 @@ export const MerchantDomainSelection: React.FC<DomainSelectionProps> = ({
             id: 1,
             type: 'dns',
             title: 'DNS record',
-            description: 'Some description',
+            description: "Add a TXT type record to your website's DNS records",
         },
         {
             id: 2,
             type: 'html',
             title: 'HTML tag',
-            description: 'Some description',
+            description: "Add meta tag to the HTML source code of your website's homepage",
         },
         {
             id: 3,
             type: 'file',
             title: 'File',
-            description: 'Some description',
+            description: 'Upload a small text file containing a verification token to your server',
         },
         {
             id: 4,

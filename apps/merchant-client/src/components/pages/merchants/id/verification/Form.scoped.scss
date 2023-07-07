@@ -68,9 +68,15 @@
     }
 
     &__point-text {
+        display: inline-flex;
+        align-items: center;
         font-size: px-to-rem(16);
         font-weight: 400;
         line-height: 150%;
+
+        &--bald {
+            font-weight: 500;
+        }
 
         @include breakpoint($screen-sm) {
             font-size: px-to-rem(18);
