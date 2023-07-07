@@ -53,5 +53,5 @@ export const errorCodes: ErrorCodeMap = JSON.parse(`{
     "4008": "value cannot be empty",
     "5001": "unsupported network",
     "5002": "merchants wallet already exists",
-    "5003": "merchants wallet doesn;t exists",
+    "5003": "merchants wallet doesn't exists"
   }`);

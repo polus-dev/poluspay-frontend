@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-
 import './Table.scoped.scss';
+import { makeShortHash } from 'tools';
 
 type InvoiceStatus =
     | 'success'
@@ -11,9 +11,13 @@ type InvoiceStatus =
 
 export interface Invoice {
     id: string;
-    amount: number;
+    amount: string;
     currency: string;
-    hash: string;
+    hash: {
+        value: string;
+        link?: string;
+        isSettled: boolean;
+    };
     date: string;
     status: InvoiceStatus;
 }
@@ -23,18 +27,6 @@ interface TableProps {
 }
 
 export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
-    const getShortId = (value: string) => {
-        return `${value.slice(0, 5)}...${value.slice(-5)}`;
-    };
-
-    const getShortHash = (value: string) => {
-        return `${value.slice(0, 3)}...${value.slice(-3)}`;
-    };
-
-    const normalizeStatus = (status: InvoiceStatus) => {
-        return status === 'in_progress' ? 'in progress' : status;
-    };
-
     return (
         <div className="table">
             <div className="table__wrapper">
@@ -51,7 +43,7 @@ export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
                         <div className="table__row" key={el.id}>
                             <div className="table__row-id">
                                 <p className="table__row-id-text">
-                                    {getShortId(el.id)}
+                                    {makeShortHash(el.id, 5)}
                                 </p>
                             </div>
                             <div className="table__row-amount">
@@ -66,7 +58,9 @@ export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
                             </div>
                             <div className="table__row-hash">
                                 <p className="table__row-hash-text">
-                                    {getShortHash(el.hash)}
+                                    {el.hash.isSettled
+                                        ? makeShortHash(el.hash.value, 3)
+                                        : el.hash.value}
                                 </p>
                             </div>
                             <div className="table__row-date">
@@ -82,7 +76,7 @@ export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
                                             true,
                                     })}
                                 >
-                                    {normalizeStatus(el.status)}
+                                    {el.status}
                                 </p>
                             </div>
                         </div>

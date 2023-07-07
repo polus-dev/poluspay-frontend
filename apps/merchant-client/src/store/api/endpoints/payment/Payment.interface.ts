@@ -1,26 +1,4 @@
-import { IPagination } from '@poluspay-frontend/api';
-
-interface IPayment {
-    id: string;
-    merchant_id: string;
-    description: string;
-    assets: IAssets;
-    evm_fee_address: string;
-    // TODO: make types
-    status: string;
-    transaction?: ITransaction;
-    // TODO: make types
-    selected_blockchain: any;
-    expires_at: string;
-    created_at: string;
-}
-
-interface ITransaction {
-    hash: string;
-    network: Blockchain_t;
-    network_id: number;
-    notification_delivered: boolean;
-}
+import { IPagination, IPayment } from '@poluspay-frontend/api';
 
 export type Blockchain_t =
     | 'arbitrum'

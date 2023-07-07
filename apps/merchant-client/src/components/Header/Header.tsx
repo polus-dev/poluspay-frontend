@@ -10,7 +10,7 @@ import { ReactComponent as LogoPolusPlanet } from '../../assets/logos/polus-plan
 
 import './Header.scoped.scss';
 import { useGetMeQuery } from '../../store/api/endpoints/user/User';
-import { formatAddress } from 'tools';
+import { formatAddress, makeShortHash } from 'tools';
 import { useLogout } from './hooks/useLogout';
 
 export const Header: React.FC = () => {
@@ -60,7 +60,7 @@ export const Header: React.FC = () => {
                                     ? 'Loading...'
                                     : data?.email ||
                                       (data?.address &&
-                                          formatAddress(data.address)) ||
+                                          makeShortHash(data.address, 6, 4)) ||
                                       'unknown user'
                             }
                             logout={logout}
@@ -79,7 +79,7 @@ export const Header: React.FC = () => {
                                 ? 'Loading...'
                                 : data?.email ||
                                   (data?.address &&
-                                      formatAddress(data.address)) ||
+                                      makeShortHash(data.address, 6, 4)) ||
                                   'unknown user'
                         }
                         logout={logout}

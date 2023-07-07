@@ -7,8 +7,8 @@ import {
     IGetPaymentsResponse,
     IGetPaymentsResponseWithTotalCount,
 } from './Payment.interface';
-import { IResponseError } from '../../types';
 import { AuthHelper } from 'apps/merchant-client/src/logic/api';
+import { IResponseError } from '@poluspay-frontend/api';
 
 export const paymentApi = createApi({
     reducerPath: 'paymentApi' as const,

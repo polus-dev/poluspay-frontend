@@ -3,9 +3,9 @@ import { merchantApi } from './api/endpoints/merchant/Merchant';
 import { userApi } from './api/endpoints/user/User';
 import { paymentApi } from './api/endpoints/payment/Payment';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { assetApi } from './api/endpoints/asset/Asset';
 import { authSlice } from './features/auth/authSlice';
 import { routerSlice } from './features/router/routerSlice';
+import { assetApi } from './api/endpoints/asset/Asset';
 
 export const store = configureStore({
     reducer: {

@@ -1,4 +1,4 @@
-export interface IAsset {
+interface IAsset {
     categories: string[] | null;
     networks: {
         [chain: string]: {
@@ -10,4 +10,8 @@ export interface IAsset {
             available_for_accept: boolean;
         };
     };
+}
+
+export interface IAssetsResponseFromApi {
+    [asset: string]: IAsset;
 }

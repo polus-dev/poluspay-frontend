@@ -1,6 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
+import { IAssetsResponseFromApi } from '@poluspay-frontend/api';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IAssetsResponse } from './Asset.interface';
-
 export const assetApi = createApi({
     reducerPath: 'assetApi' as const,
     baseQuery: fetchBaseQuery({
@@ -12,7 +12,41 @@ export const assetApi = createApi({
                 url: `payment.assets.get`,
                 method: 'POST',
             }),
+            transformResponse: (response: IAssetsResponseFromApi) => {
+                const result: IAssetsResponse = {
+                    categories: [{ name: 'unknown', value: [] }],
+                    decimals: {},
+                };
+
+                Object.keys(response).forEach((asset) => {
+                    const assetObj = response[asset];
+                    if (assetObj.categories) {
+                        assetObj.categories.forEach((category) => {
+                            const categoryObj = result.categories.find(
+                                (cat) => cat.name === category
+                            );
+                            if (categoryObj) {
+                                categoryObj.value.push(asset);
+                            } else {
+                                result.categories.push({
+                                    name: category,
+                                    value: [asset],
+                                });
+                            }
+                        });
+                    } else {
+                        result.categories[0].value.push(asset);
+                    }
+                    Object.keys(assetObj.networks).forEach((network) => {
+                        result.decimals[network] = {
+                            [asset]: assetObj.networks[network].decimals,
+                        };
+                    });
+                });
+                return result;
+            },
         }),
     }),
 });
+
 export const { useGetAssetsQuery } = assetApi;

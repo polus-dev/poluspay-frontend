@@ -1,5 +1,3 @@
-import type { Invoice } from '../../../../components/pages/merchants/id/invoices/Table';
-
 import { useState } from 'react';
 
 import { PPagination } from '@poluspay-frontend/ui';
@@ -8,77 +6,25 @@ import { MerchantInvoicesTable } from '../../../../components/pages/merchants/id
 import { MerchantInvoicesPreview } from '../../../../components/pages/merchants/id/invoices/Preview';
 
 import './MerchantInvoices.scoped.scss';
-import { useParams } from 'react-router-dom';
-import { useGetPaymentByMerchantIdQuery } from '@poluspay-frontend/merchant-query';
+import { useGetPaginatedInvoices } from './hooks/useGetPaginatedInvoices';
 
 export const MerchantInvoicesPage: React.FC = () => {
-    const { id: merchantId } = useParams<{ id: string }>();
-    if (!merchantId) {
-        return null;
-    }
-
-    const { data: payments, isFetching: paymentsIsFetching } =
-        useGetPaymentByMerchantIdQuery({
-            merchant_id: merchantId,
-            limit: 10,
-            offset: 0,
-        });
-
-    const invoices: Invoice[] = [
-        {
-            id: '3894562938741029359',
-            amount: 75,
-            currency: 'usdc',
-            hash: 'dnhgiwuetg8ys0gnb098sue',
-            date: '28-05-2023',
-            status: 'success',
-        },
-        {
-            id: '38945629387410299',
-            amount: 75,
-            currency: 'usdc',
-            hash: 'dnhgiwuetg8ys0gnb098sue',
-            date: '28-05-2023',
-            status: 'in_progress',
-        },
-        {
-            id: '389456298741029359',
-            amount: 75,
-            currency: 'usdc',
-            hash: 'dnhgiwuetg8ys0gnb098sue',
-            date: '28-05-2023',
-            status: 'pending',
-        },
-        {
-            id: '389456293841029359',
-            amount: 75,
-            currency: 'usdc',
-            hash: 'dnhgiwuetg8ys0gnb098sue',
-            date: '28-05-2023',
-            status: 'failed',
-        },
-        {
-            id: '34562938741029359',
-            amount: 75,
-            currency: 'usdc',
-            hash: 'dnhgiwuetg8ys0gnb098sue',
-            date: '28-05-2023',
-            status: 'expired',
-        },
-    ];
-
     const [current, setCurrent] = useState(1);
     const limit = 10;
-
-    const invoicesPaginated =
-        invoices.slice(
-            (current - 1) * limit,
-            (current - 1) * limit + limit
-        );
+    const { invoices: invoicesPaginated, totalItems } = useGetPaginatedInvoices(
+        {
+            limit,
+            current,
+        }
+    );
 
     const onPageChange = (value: number) => {
         setCurrent(value);
     };
+
+    if (!invoicesPaginated) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="invoices">
@@ -98,11 +44,11 @@ export const MerchantInvoicesPage: React.FC = () => {
                 <div className="invoices__table-container">
                     <MerchantInvoicesTable invoices={invoicesPaginated} />
                 </div>
-                {invoices.length > limit && (
+                {invoicesPaginated && totalItems > limit && (
                     <div className="invoices__table-pagination">
                         <PPagination
                             current={current}
-                            totalItems={invoices.length}
+                            totalItems={totalItems}
                             pageItems={limit}
                             onPageChange={(value) => onPageChange(value)}
                         />

@@ -1,6 +1,6 @@
 import { Blockchain_t } from '../store/api/endpoints/payment/Payment.interface';
 
-export const getExplorer = (blockchain: Blockchain_t) => {
+const getExplorer = (blockchain: Blockchain_t) => {
     switch (blockchain) {
         case 'bitcoin':
             return 'https://www.blockchain.com/btc/tx/';

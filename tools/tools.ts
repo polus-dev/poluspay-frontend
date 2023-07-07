@@ -4,8 +4,11 @@ export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const CODE_LENGTH = 6;
 
-export const formatAddress = (address: string) =>
-    `${address.slice(0, 6)}...${address.slice(-4)}`;
+export const makeShortHash = (
+    hash: string,
+    leftAlignment: number = 4,
+    rightAlignment = leftAlignment
+) => `${hash.slice(0, leftAlignment)}...${hash.slice(-rightAlignment)}`;
 
 export const httpsUrlRegex = /^https:\/\/.*/;
 
@@ -67,3 +70,60 @@ const evmBlockchains: Blockchain[] = [
 
 export const isEVMBlockchain = (blockchain: Blockchain) =>
     evmBlockchains.includes(blockchain);
+
+export const roundCryptoAmount = (amount: string) => {
+    let z = '0',
+        o = 4,
+        v = '.',
+        isStartWithZero = amount.startsWith(z),
+        floatPointIndex = amount.indexOf(v);
+    while (
+        isStartWithZero
+            ? amount[++floatPointIndex] === z
+            : amount[++floatPointIndex] !== z &&
+              floatPointIndex < amount.length &&
+              floatPointIndex <= o
+    );
+    return amount.slice(
+        0,
+        amount[floatPointIndex - 1] === v && !isStartWithZero
+            ? floatPointIndex - 1
+            : isStartWithZero
+            ? floatPointIndex + 1
+            : floatPointIndex
+    );
+};
+
+export const formatDate = function (date: Date) {
+    const formatNumbers = function (num: number) {
+        return num < 10 ? '0' + num : num;
+    };
+    let day = formatNumbers(date.getDate());
+    let month = formatNumbers(date.getMonth() + 1);
+    let year = date.getFullYear();
+    return day + '-' + month + '-' + year;
+};
+
+export const getExplorer = (blockchain: string) => {
+    switch (blockchain) {
+        case 'bitcoin':
+            return 'https://www.blockchain.com/btc/tx/';
+        case 'ethereum':
+            return 'https://etherscan.io/tx/';
+        case 'litecoin':
+            return 'https://live.blockcypher.com/ltc/tx/';
+        case 'tron':
+            return 'https://tronscan.org/#/transaction/';
+        case 'bsc':
+            return 'https://explorer.binance.org/tx/';
+        case 'dogecoin':
+            return 'https://live.blockcypher.com/doge/tx/';
+        case 'polygon':
+            return 'https://polygonscan.com/tx/';
+        case 'arbitrum':
+            return 'https://arbiscan.io/tx/';
+
+        default:
+            return 'https://www.blockchain.com/';
+    }
+};
