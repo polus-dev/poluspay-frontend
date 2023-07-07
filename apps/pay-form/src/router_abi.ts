@@ -1,4 +1,4 @@
-[
+export default [
   {
     "inputs": [
       {
@@ -1060,4 +1060,4 @@
     "stateMutability": "payable",
     "type": "receive"
   }
-]
+] as const
