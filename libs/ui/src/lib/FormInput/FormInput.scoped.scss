@@ -14,7 +14,8 @@
     }
 
     &__data-label {
-        display: inline;
+        display: inline-flex;
+        align-items: center;
         color: $color-white;
         font-size: px-to-rem(14);
         font-weight: 300;
@@ -37,6 +38,7 @@
         }
 
         &--error {
+            align-self: flex-end;
             color: $color-red;
         }
 
@@ -46,7 +48,7 @@
     }
 
     &__data-label-asterisk {
-        color: inherit;
+        color: $color-red;
         font-size: inherit;
         font-weight: inherit;
         line-height: inherit;

@@ -19,39 +19,39 @@ export const FormInput: React.FC<FormInputProps> = ({
     labelSize = 'sm',
     asterisk,
     underlabel,
+    error,
     ...props
 }) => {
     return (
         <div className="form-input">
-            {label ||
-                (props.error && (
-                    <div className="form-input__data">
-                        {label && (
-                            <p
-                                className={classNames({
-                                    'form-input__data-label': true,
-                                    [`form-input__data-label--${labelSize}`]: true
-                                })}
-                            >
-                                {label}
-                                {asterisk && (
-                                    <span className="form-input__data-label-asterisk">
-                                        &nbsp;*
-                                    </span>
-                                )}
-                            </p>
-                        )}
-                        {props.error && (
-                            <p className="form-input__data-label form-input__data-label--error">
-                                {props.error}
-                            </p>
-                        )}
-                    </div>
-                ))}
+            {(label || error) && (
+                <div className="form-input__data">
+                    {label && (
+                        <p
+                            className={classNames({
+                                'form-input__data-label': true,
+                                [`form-input__data-label--${labelSize}`]: true
+                            })}
+                        >
+                            {label}
+                            {asterisk && (
+                                <span className="form-input__data-label-asterisk">
+                                    &nbsp;*
+                                </span>
+                            )}
+                        </p>
+                    )}
+                    {error && (
+                        <p className="form-input__data-label form-input__data-label--error">
+                            {error}
+                        </p>
+                    )}
+                </div>
+            )}
             <div className="form-input__element">
                 <PInput
                     {...props}
-                    errors={props.error ? [props.error] : undefined}
+                    errors={error ? [error] : []}
                 />
             </div>
             {underlabel && (
