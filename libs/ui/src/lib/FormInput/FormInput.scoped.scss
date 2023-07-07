@@ -14,10 +14,27 @@
     }
 
     &__data-label {
+        display: inline;
         color: $color-white;
         font-size: px-to-rem(14);
         font-weight: 300;
         line-height: 130%;
+
+        &--sm {
+            // ...
+        }
+
+        &--md {
+            font-size: px-to-rem(16);
+            font-weight: 400;
+            line-height: 150%;
+        }
+
+        &--lg {
+            font-size: px-to-rem(18);
+            font-weight: 400;
+            line-height: 150%;
+        }
 
         &--error {
             color: $color-red;
@@ -26,6 +43,13 @@
         &--dark {
             color: $color-white-dark;
         }
+    }
+
+    &__data-label-asterisk {
+        color: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
     }
 
     &__element {
