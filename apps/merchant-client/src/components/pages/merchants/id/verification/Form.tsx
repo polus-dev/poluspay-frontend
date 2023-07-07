@@ -2,7 +2,7 @@ import type { DomainVerification } from '../../../../../pages/merchants/id/verif
 
 import { useState } from 'react';
 
-import { PButton, PInput } from '@poluspay-frontend/ui';
+import { FormInput, PButton } from '@poluspay-frontend/ui';
 import { ReactComponent as IconCopy } from '../../../../../assets/icons/copy.svg';
 import { ReactComponent as IconYoutube } from '../../../../../assets/icons/youtube.svg';
 
@@ -75,14 +75,13 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                 <>
                     <div className="form__point">
                         <p className="form__point-text">
-                            1. Add TXT Record code to DNS domain:
+                            1. Add TXT record to your website's DNS records.
+                            Paste the following verification token into the value:
                         </p>
                         <div className="form__point-item">
-                            <p className="form__point-item-label">
-                                DNS TXT Record code
-                            </p>
-                            <PInput
+                            <FormInput
                                 readonly
+                                label="Verification token"
                                 overlay={false}
                                 value={
                                     copied
@@ -107,12 +106,15 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                     </div>
                     <div className="form__point">
                         <p className="form__point-text">
-                            2. Wait for DNS update
+                            2. Wait for DNS records to update
                         </p>
                     </div>
                     <div className="form__point">
                         <p className="form__point-text">
-                            3. Click the button "Confirm"
+                            3. Once the TXT record is set, click
+                            <span className="form__point-text form__point-text--bald">
+                                &nbsp;Verify
+                            </span>
                         </p>
                     </div>
                     <div className="form__buttons">
@@ -134,7 +136,7 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                             <PButton
                                 loading={isLoading}
                                 wide
-                                children={<p>Confirm</p>}
+                                children={<p>Verify</p>}
                                 onClick={handleButtonClick}
                             />
                         </div>
@@ -145,12 +147,12 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                 <>
                     <div className="form__point">
                         <p className="form__point-text">
-                            1. Add HTML tag to your code
+                            1. Add the following meta tag to the HTML code of your website's homepage:
                         </p>
                         <div className="form__point-item">
-                            <p className="form__point-item-label">HTML tag</p>
-                            <PInput
+                            <FormInput
                                 readonly
+                                label="Meta tag"
                                 overlay={false}
                                 value={
                                     copied
@@ -178,7 +180,10 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                     </div>
                     <div className="form__point">
                         <p className="form__point-text">
-                            2. Click the button "Check HTML record"
+                            2. Once the meta tag is set, click
+                            <span className="form__point-text form__point-text--bald">
+                                &nbsp;Verify
+                            </span>
                         </p>
                     </div>
                     <div className="form__buttons">
@@ -200,7 +205,7 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                             <PButton
                                 loading={isLoading}
                                 wide
-                                children={<p>Check&nbsp;HTML&nbsp;record</p>}
+                                children={<p>Verify</p>}
                                 onClick={handleButtonClick}
                             />
                         </div>
@@ -210,18 +215,20 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
             {type === 'file' && (
                 <>
                     <div className="form__point">
-                        <p className="form__point-text">1. Create TXT file</p>
+                        <p className="form__point-text">
+                            1. Create TXT file with the following name:
+                        </p>
                         <div className="form__point-item">
-                            <p className="form__point-item-label">File name</p>
-                            <PInput
+                            <FormInput
                                 readonly
+                                label="File name"
                                 overlay={false}
                                 value={copied ? 'Copied!' : fileName}
                                 append={
                                     <IconCopy
                                         className="form__point-item-icon"
                                         onClick={() =>
-                                            copy('polus-verification.txt')
+                                            copy(fileName)
                                         }
                                     />
                                 }
@@ -231,14 +238,12 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                     </div>
                     <div className="form__point">
                         <p className="form__point-text">
-                            2. Inside the file, write the record code
+                            2. Write the following verification token into this file:
                         </p>
                         <div className="form__point-item">
-                            <p className="form__point-item-label">
-                                Record code
-                            </p>
-                            <PInput
+                            <FormInput
                                 readonly
+                                label="Verification token"
                                 overlay={false}
                                 value={
                                     copied
@@ -268,7 +273,10 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                     </div>
                     <div className="form__point">
                         <p className="form__point-text">
-                            4. Click the button "Check file"
+                            4. Once the file is uploaded, click
+                            <span className="form__point-text form__point-text--bald">
+                                &nbsp;Verify
+                            </span>
                         </p>
                     </div>
                     <div className="form__buttons">
@@ -290,7 +298,7 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                             <PButton
                                 loading={isLoading}
                                 wide
-                                children={<p>Check file</p>}
+                                children={<p>Verify</p>}
                                 onClick={handleButtonClick}
                             />
                         </div>
@@ -305,11 +313,9 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                             your server should respond with the following code:
                         </p>
                         <div className="form__point-item">
-                            <p className="form__point-item-label">
-                                Verification code
-                            </p>
-                            <PInput
+                            <FormInput
                                 readonly
+                                label="Verification code"
                                 overlay={false}
                                 value={
                                     copied
@@ -334,7 +340,10 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                     </div>
                     <div className="form__point">
                         <p className="form__point-text">
-                            4. Click the button "Check"
+                            4. Click
+                            <span className="form__point-text form__point-text--bald">
+                                &nbsp;Verify
+                            </span>
                         </p>
                     </div>
                     <div className="form__buttons">
@@ -356,7 +365,7 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                             <PButton
                                 loading={isLoading}
                                 wide
-                                children={<p>Check</p>}
+                                children={<p>Verify</p>}
                                 onClick={handleButtonClick}
                             />
                         </div>

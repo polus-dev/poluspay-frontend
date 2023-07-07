@@ -109,6 +109,7 @@ export const PInput: React.FC<InputProps> = ({
             <input
                 ref={elInput}
                 role="input"
+                autoComplete="off"
                 className={inputClassnames}
                 type={type}
                 value={props.value}

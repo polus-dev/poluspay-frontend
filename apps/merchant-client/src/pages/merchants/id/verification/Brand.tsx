@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { PButton, PInput } from '@poluspay-frontend/ui';
+import { FormInput, PButton } from '@poluspay-frontend/ui';
 import { ReactComponent as IconCopy } from '../../../../assets/icons/copy.svg';
 
 import './Brand.scoped.scss';
@@ -34,20 +34,20 @@ export const MerchantBrandPage: React.FC = () => {
             </div>
             <div className="brand__divider" />
             <div className="brand__manager">
-                <img
-                    className="brand__manager-image"
-                    src=""
-                    alt="Manager's photo"
-                />
+                <div className="brand__manager-image-wrapper">
+                    <img
+                        className="brand__manager-image"
+                        src="/images/sergey.jpg"
+                        alt="Manager's photo"
+                    />
+                </div>
                 <p className="brand__manager-name">Sergey</p>
             </div>
             <div className="brand__form">
                 <div className="brand__form-item">
-                    <p className="brand__form-item-label">
-                        Copy and provide this ID to our manager:
-                    </p>
-                    <PInput
+                    <FormInput
                         readonly
+                        label="Copy and provide this ID to our manager:"
                         overlay={false}
                         value={copied ? 'Copied!' : id}
                         append={

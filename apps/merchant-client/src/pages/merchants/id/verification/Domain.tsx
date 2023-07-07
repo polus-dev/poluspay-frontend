@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { MerchantDomainSelection } from 'apps/merchant-client/src/components/pages/merchants/id/verification/Selection';
-import { ProgressBar } from 'apps/merchant-client/src/components/ui/ProgressBar/ProgressBar';
+import { ProgressBar } from '../../../../components/ui/ProgressBar/ProgressBar';
+import { MerchantDomainSelection } from '../../../../components/pages/merchants/id/verification/Selection';
+import { MerchantDomainForm } from '../../../../components/pages/merchants/id/verification/Form';
 
 import './Domain.scoped.scss';
-import { MerchantDomainForm } from 'apps/merchant-client/src/components/pages/merchants/id/verification/Form';
 
 export type DomainVerification = 'dns' | 'html' | 'file' | 'server';
 

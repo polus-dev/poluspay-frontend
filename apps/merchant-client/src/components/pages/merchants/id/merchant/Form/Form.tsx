@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useModal } from '../../../../../../hooks/useModal';
 
-import { PButton, PInput } from '@poluspay-frontend/ui';
+import { PButton, FormInput } from '@poluspay-frontend/ui';
 import { MerchantProfileAvatar } from './Avatar';
 import { ModalMerchantDelete } from '../../../../../modals/MerchantDelete/MerchantDelete';
 import { ModalMerchantAvatar } from '../../../../../modals/MerchantAvatar/MerchantAvatar';
@@ -18,7 +18,7 @@ import classNames from 'classnames';
 
 import './Form.scoped.scss';
 
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { IMerchantForm } from '../../../Form.interface';
 
 export const MerchantProfileForm: React.FC = () => {
@@ -137,33 +137,25 @@ export const MerchantProfileForm: React.FC = () => {
                 <div className="form__inner-container">
                     <div className="form__inner-container-topline">
                         <div className="form__inner-container__item">
-                            <p className="form__inner-container__item-label">
-                                Merchant name
-                            </p>
-                            {/* <input {...register('merchantName')} /> */}
-                            <PInput
+                            <FormInput
+                                label="Merchant name"
+                                placeholder="Company name"
                                 reg={register('merchantName', {
                                     required: true,
                                 })}
-                                placeholder="Company name"
-                                type="text"
                             />
                         </div>
                         <div className="form__inner-container__item">
-                            <p className="form__inner-container__item-label">
-                                Website
-                            </p>
-                            <PInput
+                            <FormInput
+                                readonly
+                                label="Website"
                                 placeholder="https://example.com"
                                 reg={register('website')}
                             />
                         </div>
                         <div className="form__inner-container__item">
-                            <p className="form__inner-container__item-label">
-                                Brand
-                            </p>
-
-                            <PInput
+                            <FormInput
+                                label="Brand"
                                 placeholder="Brand name"
                                 reg={register('brand')}
                             />

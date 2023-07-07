@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { PButton, PInput } from '@poluspay-frontend/ui';
+import { FormInput, PButton } from '@poluspay-frontend/ui';
 import { ReactComponent as IconPlus } from '../../../assets/icons/plus.svg';
 
 import './Form.scoped.scss';
@@ -60,25 +60,17 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ onFinish }) => {
                 {firstConnectedWithWallet && isConnectedEmail && (
                     <>
                         <div className="form__inner-item">
-                            <div className="form__inner-item-data">
-                                <p className="form__inner-item-data-label">
-                                    Wallet
-                                </p>
-                            </div>
-                            <PInput
+                            <FormInput
                                 readonly
+                                label="Wallet"
                                 value={getShortAddress()}
                                 onInput={() => {}}
                             />
                         </div>
                         <div className="form__inner-item">
-                            <div className="form__inner-item-data">
-                                <p className="form__inner-item-data-label">
-                                    Email address
-                                </p>
-                            </div>
-                            <PInput
+                            <FormInput
                                 readonly
+                                label="Email address"
                                 value={connectedEmail}
                                 onInput={() => {}}
                             />
@@ -88,13 +80,9 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ onFinish }) => {
                 {!firstConnectedWithWallet && (
                     <>
                         <div className="form__inner-item">
-                            <div className="form__inner-item-data">
-                                <p className="form__inner-item-data-label">
-                                    Email address
-                                </p>
-                            </div>
-                            <PInput
+                            <FormInput
                                 readonly
+                                label="Email address"
                                 value={connectedEmail}
                                 onInput={() => {}}
                             />
@@ -104,44 +92,38 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ onFinish }) => {
                 {firstConnectedWithWallet && !isConnectedEmail && (
                     <>
                         <div className="form__inner-item">
-                            <div className="form__inner-item-data">
-                                <p className="form__inner-item-data-label">
-                                    Wallet
-                                </p>
-                            </div>
-                            <PInput
+                            <FormInput
                                 readonly
+                                label="Wallet"
                                 value={getShortAddress()}
                                 onInput={() => {}}
                             />
                         </div>
                         <div className="form__inner-item">
-                            <div className="form__inner-item-data">
-                                <p className="form__inner-item-data-label">
-                                    Email address
-                                </p>
-                                {stage === 2 && emailErrors.length > 0 && (
-                                    <p className="form__inner-item-data-label form__inner-item-data-label--error">
-                                        {emailErrors[0]}
-                                    </p>
-                                )}
-                            </div>
                             {stage === 1 && (
-                                <div
-                                    onClick={() => setStage(2)}
-                                    className="form__inner-action"
-                                >
-                                    <IconPlus className="form__inner-action-icon" />
-                                    <p className="form__inner-action-text">
-                                        Add email
-                                    </p>
-                                </div>
+                                <>
+                                    <div className="form__inner-item-data">
+                                        <p className="form__inner-item-data-label">
+                                            Email address
+                                        </p>
+                                    </div>
+                                    <div
+                                        onClick={() => setStage(2)}
+                                        className="form__inner-action"
+                                    >
+                                        <IconPlus className="form__inner-action-icon" />
+                                        <p className="form__inner-action-text">
+                                            Add email
+                                        </p>
+                                    </div>
+                                </>
                             )}
                             {stage > 1 && (
-                                <PInput
+                                <FormInput
                                     placeholder="example@gmail.com"
+                                    label="Email address"
                                     value={email}
-                                    errors={emailErrors}
+                                    error={emailErrors[0]}
                                     readonly={stage === 3}
                                     onInput={(value) =>
                                         setEmail(value.toString())
@@ -151,18 +133,10 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ onFinish }) => {
                         </div>
                         {stage === 3 && (
                             <div className="form__inner-item">
-                                <div className="form__inner-item-data">
-                                    <p className="form__inner-item-data-label">
-                                        Verification code
-                                    </p>
-                                    {codeErrors.length > 0 && (
-                                        <p className="form__inner-item-data-label form__inner-item-data-label--error">
-                                            {codeErrors[0]}
-                                        </p>
-                                    )}
-                                </div>
-                                <PInput
+                                <FormInput
                                     placeholder="XXXXXX"
+                                    label="Verification code"
+                                    error={codeErrors[0]}
                                     value={code}
                                     errors={codeErrors}
                                     onInput={(value) =>
