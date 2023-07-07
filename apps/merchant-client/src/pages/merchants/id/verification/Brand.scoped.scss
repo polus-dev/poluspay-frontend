@@ -58,9 +58,22 @@
         gap: px-to-rem(8);
     }
 
-    &__manager-image {
+    &__manager-image-wrapper {
+        position: relative;
         width: px-to-rem(115);
         height: px-to-rem(115);
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    &__manager-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        scale: 1.1;
+        width: 100%;
+        height: auto;
     }
 
     &__manager-name {
@@ -77,7 +90,6 @@
     &__form-item {
         display: flex;
         flex-direction: column;
-        gap: px-to-rem(12);
         width: 100%;
     }
 

@@ -80,13 +80,6 @@
     &__point-item {
         display: flex;
         flex-direction: column;
-        gap: px-to-rem(8);
-    }
-
-    &__point-item-label {
-        font-size: px-to-rem(14);
-        font-weight: 300;
-        line-height: 130%;
     }
 
     &__point-item-icon {

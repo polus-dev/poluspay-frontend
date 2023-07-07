@@ -2,7 +2,7 @@ import type { DomainVerification } from '../../../../../pages/merchants/id/verif
 
 import { useState } from 'react';
 
-import { PButton, PInput } from '@poluspay-frontend/ui';
+import { FormInput, PButton } from '@poluspay-frontend/ui';
 import { ReactComponent as IconCopy } from '../../../../../assets/icons/copy.svg';
 import { ReactComponent as IconYoutube } from '../../../../../assets/icons/youtube.svg';
 
@@ -78,11 +78,9 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                             1. Add TXT Record code to DNS domain:
                         </p>
                         <div className="form__point-item">
-                            <p className="form__point-item-label">
-                                DNS TXT Record code
-                            </p>
-                            <PInput
+                            <FormInput
                                 readonly
+                                label="DNS TXT Record code"
                                 overlay={false}
                                 value={
                                     copied
@@ -148,9 +146,9 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                             1. Add HTML tag to your code
                         </p>
                         <div className="form__point-item">
-                            <p className="form__point-item-label">HTML tag</p>
-                            <PInput
+                            <FormInput
                                 readonly
+                                label="HTML tag"
                                 overlay={false}
                                 value={
                                     copied
@@ -212,9 +210,9 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                     <div className="form__point">
                         <p className="form__point-text">1. Create TXT file</p>
                         <div className="form__point-item">
-                            <p className="form__point-item-label">File name</p>
-                            <PInput
+                            <FormInput
                                 readonly
+                                label="File name"
                                 overlay={false}
                                 value={copied ? 'Copied!' : fileName}
                                 append={
@@ -234,11 +232,9 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                             2. Inside the file, write the record code
                         </p>
                         <div className="form__point-item">
-                            <p className="form__point-item-label">
-                                Record code
-                            </p>
-                            <PInput
+                            <FormInput
                                 readonly
+                                label="Record code"
                                 overlay={false}
                                 value={
                                     copied
@@ -305,11 +301,9 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                             your server should respond with the following code:
                         </p>
                         <div className="form__point-item">
-                            <p className="form__point-item-label">
-                                Verification code
-                            </p>
-                            <PInput
+                            <FormInput
                                 readonly
+                                label="Verification code"
                                 overlay={false}
                                 value={
                                     copied

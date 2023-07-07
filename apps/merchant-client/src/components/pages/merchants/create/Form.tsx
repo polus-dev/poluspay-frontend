@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { FormInput, PButton, PInput } from '@poluspay-frontend/ui';
+import { FormInput, PButton } from '@poluspay-frontend/ui';
 
 import './Form.scoped.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -43,23 +43,23 @@ export const MerchantForm: React.FC<FormProps> = ({
         }
     };
     return (
-        <form onSubmit={handleSubmit(submit)} className="form">
+        <form className="form" onSubmit={handleSubmit(submit)}>
             <div className="form__inner">
                 <div className="form__item">
-                    <p className="form__item-label">
-                        Merchant name&nbsp;&nbsp;
-                        <span className="form__item-label form__item-label--required">
-                            *
-                        </span>
-                    </p>
                     <FormInput
-                        reg={register('merchantName', { required: true })}
+                        asterisk
                         placeholder="Company name"
+                        label="Merchant name"
+                        labelSize="lg"
+                        reg={register('merchantName', { required: true })}
                     />
                 </div>
                 <div className="form__item">
-                    <p className="form__item-label">Merchant's website</p>
                     <FormInput
+                        asterisk
+                        placeholder="example.com"
+                        label="Merchant's website"
+                        labelSize="lg"
                         error={errors.website?.message}
                         reg={register('website', {
                             required: true,
@@ -68,15 +68,14 @@ export const MerchantForm: React.FC<FormProps> = ({
                                 message: 'Invalid domain',
                             },
                         })}
-                        placeholder="example.com"
                     />
                 </div>
                 <div className="form__item">
                     <p className="form__item-label">Description</p>
                     <textarea
-                        {...register('description')}
                         className="form__item-textarea"
                         placeholder="Few words about merchant"
+                        {...register('description')}
                     />
                 </div>
             </div>
