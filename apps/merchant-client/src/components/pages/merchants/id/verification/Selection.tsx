@@ -29,13 +29,15 @@ export const MerchantDomainSelection: React.FC<DomainSelectionProps> = ({
             id: 2,
             type: 'html',
             title: 'HTML tag',
-            description: "Add meta tag to the HTML source code of your website's homepage",
+            description:
+                "Add meta tag to the HTML source code of your website's homepage",
         },
         {
             id: 3,
             type: 'file',
             title: 'File',
-            description: 'Upload a small text file containing a verification token to your server',
+            description:
+                'Upload a small text file containing a verification token to your server',
         },
         {
             id: 4,

@@ -9,3 +9,5 @@ export * from './lib/PTabs/PTabs';
 export * from './lib/PSwitch/PSwitch';
 export * from './hooks/useNotify';
 export * from './lib/FormInput/FormInput';
+export * from './lib/modals/BlockchainSelector/BlockchainSelector';
+export * from './lib/modals/CurrencySelector/CurrencySelector';
