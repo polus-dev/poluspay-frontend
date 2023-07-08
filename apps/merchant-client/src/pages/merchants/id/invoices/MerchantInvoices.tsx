@@ -15,7 +15,7 @@ export const MerchantInvoicesPage: React.FC = () => {
     const limit = 10;
 
     // replace with actual data
-    const loading = false
+    const loading = false;
 
     const { invoices: invoicesPaginated, totalItems } = useGetPaginatedInvoices(
         {

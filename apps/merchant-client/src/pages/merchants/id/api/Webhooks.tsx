@@ -14,7 +14,7 @@ import { ErrorBlock } from 'apps/merchant-client/src/components/ui/Error/Error';
 export const MerchantApiPage: React.FC = () => {
     const { id: merchantId } = useParams<{ id: string }>();
 
-    if (!merchantId) return null
+    if (!merchantId) return null;
 
     const { data: webhooks, isLoading: isWebhooksLoading } =
         useGetWebhookHistoryQuery({
@@ -39,9 +39,7 @@ export const MerchantApiPage: React.FC = () => {
             <div className="webhooks__form">
                 <MerchantApiForm merchantId={merchantId} />
             </div>
-            <h6 className="webhooks__title">
-                WebHook History
-            </h6>
+            <h6 className="webhooks__title">WebHook History</h6>
             {isWebhooksLoading ? (
                 <Loader />
             ) : !webhooks?.data.length ? (

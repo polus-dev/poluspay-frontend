@@ -12,7 +12,7 @@ export const MerchantsPage: React.FC = () => {
     const limit = 8;
 
     // replace this with actual data
-    const loading = true
+    const loading = true;
 
     const { data: merchants } = useGetMerchantsQuery({
         limit,

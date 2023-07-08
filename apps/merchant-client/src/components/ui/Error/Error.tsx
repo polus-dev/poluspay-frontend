@@ -1,13 +1,13 @@
-import classNames from 'classnames'
+import classNames from 'classnames';
 
-import './Error.scoped.scss'
+import './Error.scoped.scss';
 
 interface ErrorProps {
-    title?: string
-    height?: number
-    borderRadius?: number
-    hasBackground?: boolean
-    largeTitle?: boolean
+    title?: string;
+    height?: number;
+    borderRadius?: number;
+    hasBackground?: boolean;
+    largeTitle?: boolean;
 }
 
 export const ErrorBlock: React.FC<ErrorProps> = ({
@@ -15,13 +15,13 @@ export const ErrorBlock: React.FC<ErrorProps> = ({
     height,
     borderRadius,
     hasBackground = true,
-    largeTitle
+    largeTitle,
 }) => {
     return (
         <div
             className={classNames({
-                'error': true,
-                'error--background': hasBackground
+                error: true,
+                'error--background': hasBackground,
             })}
             style={{
                 height: height ? `${height}px` : undefined,
@@ -32,12 +32,12 @@ export const ErrorBlock: React.FC<ErrorProps> = ({
                 <p
                     className={classNames({
                         'error__inner-title': true,
-                        'error__inner-title--large': largeTitle
+                        'error__inner-title--large': largeTitle,
                     })}
                 >
                     {title}
                 </p>
             </div>
         </div>
-    )
-}
+    );
+};
