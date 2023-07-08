@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { emailRegex, CODE_LENGTH } from 'tools/index';
+import { emailRegex, EMAIL_CODE_LENGTH } from 'tools/index';
 
 import { PButton, PInput } from '@poluspay-frontend/ui';
 import { ConnectButton } from '../../ui/ConnectButton/ConnectButton';
@@ -41,7 +41,7 @@ export const LoginForm: React.FC = () => {
     const [codeErrors, setCodeErrors] = useState<string[]>([]);
 
     useEffect(() => {
-        if (code.length > CODE_LENGTH && code.length > 0) {
+        if (code.length > EMAIL_CODE_LENGTH && code.length > 0) {
             setCodeErrors(['Invalid code']);
         } else {
             setCodeErrors([]);

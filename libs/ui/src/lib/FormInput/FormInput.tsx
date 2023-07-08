@@ -4,12 +4,12 @@ import classNames from 'classnames';
 
 import './FormInput.scoped.scss';
 
-type LabelSize = 'sm' | 'md' | 'lg'
+type LabelSize = 'sm' | 'md' | 'lg';
 
 interface FormInputProps extends InputProps {
     label?: string;
-    labelSize?: LabelSize
-    asterisk?: boolean
+    labelSize?: LabelSize;
+    asterisk?: boolean;
     underlabel?: string;
     error?: string;
 }
@@ -30,7 +30,7 @@ export const FormInput: React.FC<FormInputProps> = ({
                         <p
                             className={classNames({
                                 'form-input__data-label': true,
-                                [`form-input__data-label--${labelSize}`]: true
+                                [`form-input__data-label--${labelSize}`]: true,
                             })}
                         >
                             {label}
@@ -49,10 +49,7 @@ export const FormInput: React.FC<FormInputProps> = ({
                 </div>
             )}
             <div className="form-input__element">
-                <PInput
-                    {...props}
-                    errors={error ? [error] : []}
-                />
+                <PInput {...props} errors={error ? [error] : []} />
             </div>
             {underlabel && (
                 <div className="form-input__data">

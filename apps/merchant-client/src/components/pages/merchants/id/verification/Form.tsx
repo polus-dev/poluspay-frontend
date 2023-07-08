@@ -76,7 +76,8 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                     <div className="form__point">
                         <p className="form__point-text">
                             1. Add TXT record to your website's DNS records.
-                            Paste the following verification token into the value:
+                            Paste the following verification token into the
+                            value:
                         </p>
                         <div className="form__point-item">
                             <FormInput
@@ -147,7 +148,8 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                 <>
                     <div className="form__point">
                         <p className="form__point-text">
-                            1. Add the following meta tag to the HTML code of your website's homepage:
+                            1. Add the following meta tag to the HTML code of
+                            your website's homepage:
                         </p>
                         <div className="form__point-item">
                             <FormInput
@@ -227,9 +229,7 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                                 append={
                                     <IconCopy
                                         className="form__point-item-icon"
-                                        onClick={() =>
-                                            copy(fileName)
-                                        }
+                                        onClick={() => copy(fileName)}
                                     />
                                 }
                                 onInput={() => {}}
@@ -238,7 +238,8 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                     </div>
                     <div className="form__point">
                         <p className="form__point-text">
-                            2. Write the following verification token into this file:
+                            2. Write the following verification token into this
+                            file:
                         </p>
                         <div className="form__point-item">
                             <FormInput
