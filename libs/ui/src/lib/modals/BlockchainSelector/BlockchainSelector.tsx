@@ -3,8 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import type { Blockchain as Label } from 'tools';
 
 import { PModal, PInput, PButton } from '@poluspay-frontend/ui';
-import { ReactComponent as IconSearch } from '../../../assets/icons/search.svg';
-import { ReactComponent as IconCheckbox } from '../../../assets/icons/checkbox-fill.svg';
+import { ReactComponent as IconSearch } from '../../assets/icons/search.svg';
+import { ReactComponent as IconCheckbox } from '../../assets/icons/checkbox-fill.svg';
 
 import classNames from 'classnames';
 
@@ -15,7 +15,6 @@ interface Blockchain {
     name: string;
     image: string;
     label: Label;
-    // [key: string]: string | number;
 }
 
 interface ModalProps {

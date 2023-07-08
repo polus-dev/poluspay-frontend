@@ -2,12 +2,15 @@ import { useState } from 'react';
 
 import { useModal } from '../../../../../hooks/useModal';
 
-import { FormInput, PButton } from '@poluspay-frontend/ui';
+import {
+    FormInput,
+    ModalBlockChainSelector,
+    ModalCurrencySelector,
+    PButton,
+} from '@poluspay-frontend/ui';
+import { ModalPreviewForm } from '../../../../../components/modals/PreviewForm/PreviewForm';
 import { ReactComponent as IconChevron } from '../../../../../assets/icons/chevron.svg';
 import { ReactComponent as IconCross } from '../../../../../assets/icons/cross.svg';
-import { ModalCurrencySelector } from '../../../../../components/modals/CurrencySelector/CurrencySelector';
-import { ModalBlockChainSelector } from '../../../../../components/modals/BlockchainSelector/BlockchainSelector';
-import { ModalPreviewForm } from '../../../../../components/modals/PreviewForm/PreviewForm';
 
 import './Form.scoped.scss';
 

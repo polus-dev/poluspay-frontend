@@ -2,8 +2,8 @@ import { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import { PInput, PModal, PTabs } from '@poluspay-frontend/ui';
-import { ReactComponent as IconSearch } from '../../../assets/icons/search.svg';
-import { ReactComponent as IconCheckbox } from '../../../assets/icons/checkbox-fill.svg';
+import { ReactComponent as IconSearch } from '../../assets/icons/search.svg';
+import { ReactComponent as IconCheckbox } from '../../assets/icons/checkbox-fill.svg';
 
 import classNames from 'classnames';
 

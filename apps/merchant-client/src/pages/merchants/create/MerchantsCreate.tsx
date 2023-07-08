@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { useModal } from 'apps/merchant-client/src/hooks/useModal';
 
+import { ModalBlockChainSelector } from '@poluspay-frontend/ui';
 import { MerchantForm } from '../../../components/pages/merchants/create/Form';
 import { MerchantSetup } from '../../../components/pages/merchants/create/Setup';
 import { MerchantWallets } from '../../../components/ui/Wallets/Wallets';
 import { ProgressBar } from '../../../components/ui/ProgressBar/ProgressBar';
-import { ModalBlockChainSelector } from '../../../components/modals/BlockchainSelector/BlockchainSelector';
+import { ModalWalletAddition } from '../../../components/modals/WalletAddition/WalletAddition';
 
 import './MerchantsCreate.scoped.scss';
 
 import { blockchainList } from '../../../components/ui/Wallets/wallet-list';
-import { ModalWalletAddition } from 'apps/merchant-client/src/components/modals/WalletAddition/WalletAddition';
 import { useMerchantWallets } from './hooks/useMerchantWallets';
 import { isEVMBlockchain } from 'tools';
 
@@ -57,11 +57,6 @@ export const MerchantsCreatePage: React.FC = () => {
     const onFinishRegistation = () => {
         navigator('/merchants');
     };
-
-    // useEffect(() => {
-    //     setType(null);
-    //     setStage(0);
-    // }, []);
 
     return (
         <div className="merchants">

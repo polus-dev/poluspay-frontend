@@ -5,10 +5,14 @@ import { PButton, PPagination } from '@poluspay-frontend/ui';
 import { MerchantItem } from '../../components/pages/merchants/MerchantItem';
 
 import './Merchants.scoped.scss';
+import { Loader } from '../../components/ui/Loader/Loader';
 
 export const MerchantsPage: React.FC = () => {
     const [current, setCurrent] = useState(1);
     const limit = 8;
+
+    // replace this with actual data
+    const loading = true;
 
     const { data: merchants } = useGetMerchantsQuery({
         limit,
@@ -73,6 +77,8 @@ export const MerchantsPage: React.FC = () => {
                         </div>
                     )}
                 </div>
+            ) : loading ? (
+                <Loader height={400} />
             ) : (
                 <div className="merchants__error">
                     <h6 className="merchants__error-title">

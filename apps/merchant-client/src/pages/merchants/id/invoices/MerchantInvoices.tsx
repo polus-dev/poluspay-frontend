@@ -4,6 +4,8 @@ import { PPagination } from '@poluspay-frontend/ui';
 import { MerchantInvoicesForm } from '../../../../components/pages/merchants/id/invoices/Form';
 import { MerchantInvoicesTable } from '../../../../components/pages/merchants/id/invoices/Table';
 import { MerchantInvoicesPreview } from '../../../../components/pages/merchants/id/invoices/Preview';
+import { Loader } from '../../../../components/ui/Loader/Loader';
+import { ErrorBlock } from '../../../../components/ui/Error/Error';
 
 import './MerchantInvoices.scoped.scss';
 import { useGetPaginatedInvoices } from './hooks/useGetPaginatedInvoices';
@@ -11,6 +13,10 @@ import { useGetPaginatedInvoices } from './hooks/useGetPaginatedInvoices';
 export const MerchantInvoicesPage: React.FC = () => {
     const [current, setCurrent] = useState(1);
     const limit = 10;
+
+    // replace with actual data
+    const loading = false;
+
     const { invoices: invoicesPaginated, totalItems } = useGetPaginatedInvoices(
         {
             limit,
@@ -21,10 +27,6 @@ export const MerchantInvoicesPage: React.FC = () => {
     const onPageChange = (value: number) => {
         setCurrent(value);
     };
-
-    if (!invoicesPaginated) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <div className="invoices">
@@ -41,9 +43,15 @@ export const MerchantInvoicesPage: React.FC = () => {
             </div>
             <div className="invoices__table">
                 <h6 className="invoices__table-title">Invoices</h6>
-                <div className="invoices__table-container">
-                    <MerchantInvoicesTable invoices={invoicesPaginated} />
-                </div>
+                {loading ? (
+                    <Loader />
+                ) : !invoicesPaginated.length ? (
+                    <ErrorBlock title="No invoices found" />
+                ) : (
+                    <div className="invoices__table-container">
+                        <MerchantInvoicesTable invoices={invoicesPaginated} />
+                    </div>
+                )}
                 {invoicesPaginated && totalItems > limit && (
                     <div className="invoices__table-pagination">
                         <PPagination
