@@ -1,6 +1,5 @@
 import { AllowanceTransfer, PermitSingle } from '@uniswap/permit2-sdk';
 import { erc20ABI } from '@wagmi/core';
-// import { mainnet, arbitrum, bsc, optimism, polygon } from 'viem/chains';
 import permit2 from '../permit_abi';
 import { CustomRouter } from './router';
 import { Blockchain_t, ChainId } from '../store/api/endpoints/types';
@@ -34,7 +33,8 @@ export type Permit2AllowanceType = {
 interface DataSign {
     domain: any;
     types: any;
-    value: any;
+    primaryType: string;
+    message: any;
 }
 
 export class CustomProvider {
@@ -54,22 +54,31 @@ export class CustomProvider {
         return ChainId[this.blockchain];
     }
 
-    public async getValueForSwap(path: Hex, amountOut: Hex): Promise<bigint> {
-        const a = encodeAbiParameters(parseAbiParameters('bytes', 'uint256'), [
-            path,
-            amountOut,
-        ]);
-
-        const data = ('0x2f80bb1d' + a) as Hex;
-        //         .encode(['bytes', 'uint256'], [path, amountOut])
-        //         .replace('0x', '');
+    public async getValueForSwap(
+        path: Hex,
+        amountOut: bigint
+    ): Promise<bigint> {
+        const data = ('0x2f80bb1d' +
+            encodeAbiParameters(
+                [
+                    { name: 'path', type: 'bytes' },
+                    { name: 'amountOut', type: 'uint256' },
+                ],
+                [path, amountOut]
+            )) as Hex;
 
         const result = await this.publicClient.call({
             // @ts-ignore
             to: QUOTER_ADDRESS[this.blockchain],
             data,
         });
-        return decodeAbiParameters(parseAbiParameters('uint256'), result)[0];
+        if (!result.data) {
+            throw new Error('getValueForSwap: result.data is undefined');
+        }
+        return decodeAbiParameters(
+            parseAbiParameters('uint256'),
+            result.data
+        )[0];
     }
 
     get RouterAddress(): Address {
@@ -169,7 +178,8 @@ export class PaymentHelper extends CustomProvider {
         return {
             domain,
             types,
-            value: values,
+            message: values,
+            primaryType: 'Mail',
         };
     }
 
@@ -177,11 +187,16 @@ export class PaymentHelper extends CustomProvider {
         type: 'router' | 'polus'
     ): Promise<Permit2AllowanceType> {
         try {
-            return await this.permitContract.read.allowance([
+            const response = await this.permitContract.read.allowance([
                 this.userAddress,
                 this.userToken.contract as Address,
                 type === 'router' ? this.RouterAddress : this.PolusAddress,
             ]);
+            return {
+                amount: response[0],
+                expiration: response[1],
+                nonce: response[2],
+            };
         } catch (error) {
             throw new Error('checkPermit:error');
         }
