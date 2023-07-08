@@ -8,11 +8,7 @@
         margin-bottom: px-to-rem(40);
     }
 
-    &__inner {
-        width: 100%;
-    }
-
-    &__inner-title {
+    &__title {
         margin-bottom: px-to-rem(16);
         font-size: px-to-rem(18);
         font-weight: 500;
@@ -21,6 +17,10 @@
         @include breakpoint($screen-md) {
             margin-bottom: px-to-rem(20);
         }
+    }
+
+    &__inner {
+        width: 100%;
     }
 
     &__inner-table-wrapper {

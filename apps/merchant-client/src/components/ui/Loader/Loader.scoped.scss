@@ -1,0 +1,26 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: px-to-rem(300);
+    background-color: transparent;
+    border-radius: px-to-rem(12);
+
+    &--background {
+        background-color: $color-black-light;
+    }
+
+    &__icon {
+        width: px-to-rem(50);
+        height: auto;
+        fill: $color-white-dark;
+
+        @include breakpoint($screen-md) {
+            width: px-to-rem(60);
+        }
+    }
+}
