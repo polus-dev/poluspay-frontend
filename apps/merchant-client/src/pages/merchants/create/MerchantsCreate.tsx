@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useModal } from 'apps/merchant-client/src/hooks/useModal';
+import { useModal } from '../../../hooks/useModal';
 
 import { ModalBlockChainSelector } from '@poluspay-frontend/ui';
 import { MerchantForm } from '../../../components/pages/merchants/create/Form';

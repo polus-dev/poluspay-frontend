@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCopyText } from '../../../../hooks/useCopyText';
 
 import { FormInput, PButton } from '@poluspay-frontend/ui';
 import { ReactComponent as IconCopy } from '../../../../assets/icons/copy.svg';
@@ -8,19 +8,7 @@ import './Brand.scoped.scss';
 export const MerchantBrandPage: React.FC = () => {
     const id = '90ca217e-e429-4cbd-bf53-52b44e351e59';
 
-    const [copied, setCopied] = useState(false);
-
-    const copy = async () => {
-        if (copied) return undefined;
-
-        navigator.clipboard.writeText(id);
-
-        setCopied(true);
-
-        setTimeout(() => {
-            setCopied(false);
-        }, 3000);
-    };
+    const copy = useCopyText();
 
     return (
         <div className="brand">
@@ -49,11 +37,11 @@ export const MerchantBrandPage: React.FC = () => {
                         readonly
                         label="Copy and provide this ID to our manager:"
                         overlay={false}
-                        value={copied ? 'Copied!' : id}
+                        value={copy.copied ? 'Copied!' : id}
                         append={
                             <IconCopy
                                 className="brand__form-item-icon"
-                                onClick={copy}
+                                onClick={() => copy.copy(id)}
                             />
                         }
                         onInput={() => {}}

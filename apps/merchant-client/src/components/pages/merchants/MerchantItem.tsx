@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+
+import { useCopyText } from '../../../hooks/useCopyText';
 
 import './MerchantItem.scoped.scss';
 import { ReactComponent as IconCopy } from '../../../assets/icons/copy.svg';
@@ -19,7 +21,7 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
     id,
 }) => {
     const navigate = useNavigate();
-    const [copied, setCopied] = useState(false);
+    const copy = useCopyText();
 
     const getShortName = () => {
         if (name.length > 20 && window.innerWidth > 768)
@@ -40,20 +42,6 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
         return website.includes('https://')
             ? website.replace('https://', '')
             : website;
-    };
-
-    const copy = async (event: React.MouseEvent): Promise<void> => {
-        event.preventDefault();
-
-        if (copied) return undefined;
-
-        await navigator.clipboard.writeText(id);
-
-        setCopied(true);
-
-        setTimeout(() => {
-            setCopied(false);
-        }, 1500);
     };
 
     const navigateToWebsite = (event: React.MouseEvent): void => {
@@ -115,11 +103,11 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
                             className="merchant-item__id-inner-text"
                             onClick={(event) => event.preventDefault()}
                         >
-                            {copied ? 'Copied!' : getShortId()}
+                            {copy.copied ? 'Copied!' : getShortId()}
                         </p>
                         <IconCopy
                             className="merchant-item__id-inner-icon"
-                            onClick={(event) => copy(event)}
+                            onClick={(event) => copy.copy(id, event)}
                         />
                     </div>
                 </div>

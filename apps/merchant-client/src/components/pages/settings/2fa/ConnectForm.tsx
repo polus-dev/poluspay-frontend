@@ -2,6 +2,8 @@ import type { GoogleAuthAction } from '../../../../pages/settings/Settings';
 
 import { useState } from 'react';
 
+import { useCopyText } from '../../../../hooks/useCopyText';
+
 import { QRCodeSVG } from 'qrcode.react';
 
 import { PButton, FormInput } from '@poluspay-frontend/ui';
@@ -22,29 +24,17 @@ export const SettingsGoogleConnect: React.FC<GoogleAuthProps> = ({
     onSubmit,
 }) => {
     const key = 'DFGFH675H8L9WDGK';
+    const copy = useCopyText();
 
     const [code, setCode] = useState('');
     const [errors, setErrors] = useState<string[]>([]);
 
     const [connectionStage, setConnectionStage] = useState<1 | 2>(1);
 
-    const [copied, setCopied] = useState(false);
-
     const paste = async () => {
         const buffer = await navigator.clipboard.readText();
 
         setCode(buffer);
-    };
-
-    const copy = async () => {
-        if (copied) return undefined;
-
-        await navigator.clipboard.writeText(key);
-        setCopied(true);
-
-        setTimeout(() => {
-            setCopied(false);
-        }, 3000);
     };
 
     const validate = () => {
@@ -96,11 +86,11 @@ export const SettingsGoogleConnect: React.FC<GoogleAuthProps> = ({
                                         readonly
                                         label="16-digit key"
                                         overlay={false}
-                                        value={copied ? 'Copied!' : key}
+                                        value={copy.copied ? 'Copied!' : key}
                                         append={
                                             <IconCopy
                                                 className="form__inner-item-input-icon"
-                                                onClick={copy}
+                                                onClick={() => copy.copy(key)}
                                             />
                                         }
                                         onInput={() => {}}

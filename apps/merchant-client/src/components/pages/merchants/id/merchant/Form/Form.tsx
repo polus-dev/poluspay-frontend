@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useModal } from '../../../../../../hooks/useModal';
+import { useCopyText } from '../../../../../../hooks/useCopyText';
 
 import { PButton, FormInput } from '@poluspay-frontend/ui';
 import { MerchantProfileAvatar } from './Avatar';
@@ -24,6 +25,7 @@ import { IMerchantForm } from '../../../Form.interface';
 export const MerchantProfileForm: React.FC = () => {
     const modalDelete = useModal();
     const modalAvatar = useModal();
+    const copy = useCopyText();
 
     const { id: merchantId } = useParams<{ id: string }>();
 
@@ -49,22 +51,8 @@ export const MerchantProfileForm: React.FC = () => {
         }
     }, [merchant]);
 
-    const [copied, setCopied] = useState(false);
-
     const getShortMerchantId = () => {
         return `${merchantId.slice(0, 8)}...${merchantId.slice(-8)}`;
-    };
-
-    const copyId = () => {
-        if (copied) return undefined;
-
-        navigator.clipboard.writeText(merchantId);
-
-        setCopied(true);
-
-        setTimeout(() => {
-            setCopied(false);
-        }, 3000);
     };
 
     const handleMerchantRemoval = async () => {
@@ -104,32 +92,32 @@ export const MerchantProfileForm: React.FC = () => {
                     </div>
                     <div className="form__inner-user__data">
                         <p className="form__inner-user__data-name">
-                            Merchant name
+                            {merchant?.name}
                         </p>
                         <div className="form__inner-user__data-id">
                             <p
                                 className={classNames({
                                     'form__inner-user__data-id-value': true,
                                     'form__inner-user__data-id-value--blue':
-                                        copied,
+                                        copy.copied,
                                 })}
                             >
-                                {copied ? 'Copied!' : getShortMerchantId()}
+                                {copy.copied ? 'Copied!' : getShortMerchantId()}
                             </p>
                             <p
                                 className={classNames({
                                     'form__inner-user__data-id-value': true,
                                     'form__inner-user__data-id-value--blue':
-                                        copied,
+                                        copy.copied,
                                     'form__inner-user__data-id-value--desktop':
                                         true,
                                 })}
                             >
-                                {copied ? 'Copied!' : merchantId}
+                                {copy.copied ? 'Copied!' : merchantId}
                             </p>
                             <IconCopy
                                 className="form__inner-user__data-id-icon"
-                                onClick={copyId}
+                                onClick={() => copy.copy(merchantId)}
                             />
                         </div>
                     </div>

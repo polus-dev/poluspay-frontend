@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { useCopyText } from '../../../../../hooks/useCopyText';
+
 import { PInput, PButton } from '@poluspay-frontend/ui';
 import { ReactComponent as IconCopy } from '../../../../../assets/icons/copy.svg';
 
@@ -19,6 +21,8 @@ interface IMerchantApiFormProps {
 }
 
 export const MerchantApiForm = (props: IMerchantApiFormProps) => {
+    const copy = useCopyText();
+
     const {
         register,
         handleSubmit,
@@ -83,20 +87,6 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
         }
     };
 
-    const [copied, setCopied] = useState(false);
-
-    const copy = async () => {
-        if (copied) return undefined;
-
-        await navigator.clipboard.writeText(signingKey);
-
-        setCopied(true);
-
-        setTimeout(() => {
-            setCopied(false);
-        }, 3000);
-    };
-
     return (
         <form onSubmit={handleSubmit(submit)} className="form">
             <div className="form__inner">
@@ -107,12 +97,14 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
                             <PInput
                                 readonly
                                 overlay={false}
-                                value={copied ? 'Copied!' : signingKey}
+                                value={copy.copied ? 'Copied!' : signingKey}
                                 append={
                                     !signingKey.includes('*') && (
                                         <IconCopy
                                             className="form__inner-item-icon"
-                                            onClick={copy}
+                                            onClick={() =>
+                                                copy.copy(signingKey)
+                                            }
                                         />
                                     )
                                 }
