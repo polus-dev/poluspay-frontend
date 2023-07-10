@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import './Form.scoped.scss';
 import { useWalletAuth } from './hooks/useWalletAuth';
 import { useEmailAuth } from './hooks/useEmailAuth';
+import { doGoogleRedirect } from '../../../store/api/endpoints/auth/googleAuth';
 
 export const LoginForm: React.FC = () => {
     const {
@@ -103,6 +104,7 @@ export const LoginForm: React.FC = () => {
                                         Google
                                     </>
                                 }
+                                onClick={() => doGoogleRedirect()}
                             />
                         </div>
                     </div>

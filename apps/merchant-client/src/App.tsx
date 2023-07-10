@@ -13,15 +13,20 @@ import { MerchantBrandPage } from './pages/merchants/id/verification/Brand';
 import { MerchantInvoicesPage } from './pages/merchants/id/invoices/MerchantInvoices';
 import { NotFoundPage } from './pages/404/NotFound';
 import { UnderDevelopmentPage } from './pages/UnderDevelopment/UnderDevelopment';
+import { GoogleAuth } from './pages/auth/google/Auth';
 
 export default function App() {
     return (
         <>
             <Routes>
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/auth/google" element={<GoogleAuth />} />
                 <Route path="/" element={<Layout />}>
                     <Route index element={<UnderDevelopmentPage />} />
-                    <Route path="/dashboard" element={<UnderDevelopmentPage />} />
+                    <Route
+                        path="/dashboard"
+                        element={<UnderDevelopmentPage />}
+                    />
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/merchants" element={<MerchantsPage />} />
                     <Route
