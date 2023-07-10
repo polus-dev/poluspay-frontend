@@ -21,9 +21,11 @@ import {
     IMerchantWallet,
     ISetWebhookRequest,
     IUpdateMerchantRequest,
+    IUploadLogoRequest,
     IVerifyDomainRequest,
 } from './Merchant.interface';
 import { RootState } from '../../../store';
+import { IMerchant } from '../../../../../../pay-form/src/store/api/endpoints/merchant/Merchant.interface';
 
 export const merchantApi = createApi({
     reducerPath: 'merchantApi' as const,
@@ -217,8 +219,29 @@ export const merchantApi = createApi({
             }),
             invalidatesTags: ['Wallet'],
         }),
+        uploadLogo: builder.mutation<IMerchant, IUploadLogoRequest>({
+            query: (body) => {
+                const formData = new FormData();
+                formData.append('image', body.image);
+                formData.append('merchant_id', body.merchant_id);
+                return {
+                    url: 'merchant.logo.update',
+                    method: 'POST',
+                    body: formData,
+                };
+            },
+            invalidatesTags: (result, error, args) =>
+                result
+                    ? [{ type: 'Merchant', id: args.merchant_id }]
+                    : ['Merchant'],
+        }),
     }),
 });
+function createFormData(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    return formData;
+}
 export const {
     useCreateMerchantMutation,
     useDeleteMerchantMutation,
@@ -233,4 +256,5 @@ export const {
     useEnableMerchantWalletMutation,
     useDisableMerchantWalletMutation,
     useGetMerchantWalletQuery,
+    useUploadLogoMutation,
 } = merchantApi;

@@ -1,9 +1,12 @@
-import type { Blockchain } from 'tools';
+import type { Blockchain, URL } from 'tools';
 interface IMerchant {
     id: string;
     name: string;
-    description: string;
-    domain: string;
+    display_name: string | null;
+    logo: URL | null;
+    logo_status: LogoStatus;
+    description: string | null;
+    domain: string | null;
     domain_confirmation_code: string;
     success_redirect_url: string;
     fail_redirect_url: string;
@@ -12,6 +15,8 @@ interface IMerchant {
     is_signing_key_generated: boolean;
     created_at: string;
 }
+
+export type LogoStatus = 'on_moderation' | 'declined' | 'accepted' | null;
 
 type UnparsedJSON = string;
 
@@ -90,4 +95,8 @@ export interface IChangeMerchantWalletStatusRequest extends IMerchantId {
 export interface IVerifyDomainRequest extends IMerchantId {
     method: 'dns' | 'response';
     path?: string;
+}
+
+export interface IUploadLogoRequest extends IMerchantId {
+    image: File;
 }

@@ -8,3 +8,5 @@ export type Blockchain =
     | 'bitcoin-cash'
     | 'bitcoin'
     | 'dogecoin';
+
+export type URL = string;

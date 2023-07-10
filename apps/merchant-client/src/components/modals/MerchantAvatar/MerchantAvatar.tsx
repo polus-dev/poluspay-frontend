@@ -10,21 +10,23 @@ import classNames from 'classnames';
 interface ModalProps {
     visible: boolean;
     onClose: () => void;
-    onSave: () => void;
+    onSave: (image: File) => void;
+    isUploading: boolean;
 }
 
 export const ModalMerchantAvatar: React.FC<ModalProps> = ({
     visible,
     onClose,
     onSave,
+    isUploading,
 }) => {
     const [image, setImage] = useState<File | null>(null);
     const [previewImage, setPreviewImage] = useState('');
     const [error, setError] = useState(false);
 
     const validateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setError(false);
         const file = event.target.files?.[0];
-
         if (!file) return undefined;
         if (!file.type.match('image/png')) return undefined;
 
@@ -46,6 +48,7 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
 
         reader.onloadend = () => {
             setPreviewImage(reader.result?.toString() || '');
+            setImage(file);
         };
     };
 
@@ -68,7 +71,6 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
                                     )}
                                     <input
                                         type="file"
-                                        accept="image/png"
                                         className="modal__body-container-upload__handler-input"
                                         onChange={(event) =>
                                             validateImage(event)
@@ -109,8 +111,15 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
                                 {/* disable if image does not match the requirements or image is not uploaded by user */}
                                 <PButton
                                     wide
+                                    loading={isUploading}
+                                    disabled={error || !previewImage || !image}
                                     children={<p>Save</p>}
-                                    onClick={onSave}
+                                    onClick={() => {
+                                        if (image) {
+                                            onSave(image);
+                                            onClose();
+                                        }
+                                    }}
                                 />
                             </div>
                         </div>
