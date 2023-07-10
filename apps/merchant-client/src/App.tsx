@@ -11,6 +11,8 @@ import { MerchantWalletPage } from './pages/merchants/id/wallet/MerchantWallet';
 import { MerchantDomainPage } from './pages/merchants/id/verification/Domain';
 import { MerchantBrandPage } from './pages/merchants/id/verification/Brand';
 import { MerchantInvoicesPage } from './pages/merchants/id/invoices/MerchantInvoices';
+import { NotFoundPage } from './pages/404/NotFound';
+import { UnderDevelopmentPage } from './pages/UnderDevelopment/UnderDevelopment';
 
 export default function App() {
     return (
@@ -18,9 +20,8 @@ export default function App() {
             <Routes>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/" element={<Layout />}>
-                    <Route index element={<>app</>} />
-                    <Route path="/main" element={<>main page</>} />
-                    <Route path="/dashboard" element={<>dashboard page</>} />
+                    <Route index element={<UnderDevelopmentPage />} />
+                    <Route path="/dashboard" element={<UnderDevelopmentPage />} />
                     <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/merchants" element={<MerchantsPage />} />
                     <Route
@@ -65,6 +66,9 @@ export default function App() {
                         path="/merchants/:id/brand"
                         element={<MerchantBrandPage />}
                     />
+                </Route>
+                <Route path="*" element={<Layout />}>
+                    <Route path="*" element={<NotFoundPage />} />
                 </Route>
             </Routes>
         </>

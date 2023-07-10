@@ -10,7 +10,7 @@ import { ReactComponent as LogoPolusPlanet } from '../../assets/logos/polus-plan
 
 import './Header.scoped.scss';
 import { useGetMeQuery } from '../../store/api/endpoints/user/User';
-import { formatAddress, makeShortHash } from 'tools';
+import { makeShortHash } from 'tools';
 import { useLogout } from './hooks/useLogout';
 
 export const Header: React.FC = () => {
@@ -45,7 +45,7 @@ export const Header: React.FC = () => {
         <header className="header">
             <div className="header__container">
                 <div className="header__logo">
-                    <NavLink to="/main">
+                    <NavLink to="/">
                         <LogoPolusPlanet className="header__logo-image" />
                         <LogoPolus className="header__logo-image header__logo-image--desktop" />
                     </NavLink>

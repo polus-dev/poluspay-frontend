@@ -19,7 +19,7 @@ export const Menu: React.FC<MenuProps> = ({ onCloseMenu, onToggleMenu }) => {
     const [menuOpened, setMenuOpened] = useState(false);
 
     const items: IMenuItem[] = [
-        { id: 1, title: 'Main', path: '/main' },
+        { id: 1, title: 'Main', path: '/' },
         { id: 2, title: 'Merchants', path: '/merchants' },
         { id: 3, title: 'Dashboard', path: '/dashboard' },
         { id: 4, title: 'Settings', path: '/settings' },
