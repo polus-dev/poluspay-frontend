@@ -1,0 +1,55 @@
+.PnotifyContainer {
+  position: relative;
+}
+
+.PnotifyContainer__wrapper {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+}
+
+.PnotifyContainer__list--item {
+  padding: 10px;
+}
+
+.PnotifyContainer__list--item {
+  background-color: black;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.PnotifyContainer__list--item.slide-out {
+  opacity: 1;
+  animation-name: slideOut;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.PnotifyContainer__list--item {
+  opacity: 0;
+  animation-name: slideIn;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}

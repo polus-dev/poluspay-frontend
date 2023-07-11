@@ -11,3 +11,4 @@ export * from './hooks/useNotify';
 export * from './lib/FormInput/FormInput';
 export * from './lib/modals/BlockchainSelector/BlockchainSelector';
 export * from './lib/modals/CurrencySelector/CurrencySelector';
+export * from './lib/PNotify/index';

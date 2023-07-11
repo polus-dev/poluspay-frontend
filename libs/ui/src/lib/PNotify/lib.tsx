@@ -1,42 +1,66 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { Observer } from './observer';
 import { PNotifyContainerProps } from './types';
 import { PLabel } from '@poluspay-frontend/ui';
-
-const observer = new Observer<INotify>({ title: '' });
+import './style.css';
 interface INotify {
     title: string;
     loading?: boolean;
     description?: string;
     status?: 'error' | 'success' | 'warning';
 }
+
+const observer = new Observer<INotify>();
 export function notify(args: INotify) {
     observer.emit(args);
 }
 
 export const PNotifyContainer: FC<PNotifyContainerProps> = ({ ms = 3000 }) => {
-    const [notify, setNotify] = useState<INotify>();
+    const [notify, setNotify] = useState<(INotify & { id: string })[]>([]);
 
     useEffect(() => {
-        return observer.subscribe((newNotify) => {
-            setNotify(notify);
+        observer.subscribe((newNotify) => {
+            const id = Math.random().toString(16);
+            setNotify((state) => [...state, { ...newNotify, id }]);
+            removeNotifyTimer(id);
         });
     }, []);
 
-    useEffect(() => {
-        const timerId = setTimeout(() => {
-            setNotify(undefined);
-        }, ms);
-        return () => clearTimeout(timerId);
-    }, [notify, ms]);
+    const removeNotifyTimer = useCallback(
+        (id: string) => {
+            return setTimeout(() => {
+                setNotify((state) => state.filter((item) => item.id !== id));
+            }, ms + 200);
+        },
+        [ms]
+    );
 
     return (
-        <PLabel
-            visible={Boolean(notify)}
-            title={notify?.title || ''}
-            status={notify?.status}
-            loading={notify?.loading}
-            description={notify?.description}
-        />
+        <>
+            <div className="PnotifyContainer">
+                <div className="PnotifyContainer__wrapper">
+                    <div className="PnotifyContainer__list">
+                        {notify.map((item) => {
+                            return (
+                                //  <div
+                                //   className={`PnotifyContainer__list--item ${removingNotifyId.includes(
+                                //     item.id ? 'slide-out' : ''
+                                //   )}`}
+                                // >
+                                <PLabel
+                                    key={item.id}
+                                    visible={notify.includes(item)}
+                                    title={item.title}
+                                    loading={item.loading}
+                                    description={item.description}
+                                    status={item.status}
+                                />
+                                // </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </div>
+        </>
     );
 };
