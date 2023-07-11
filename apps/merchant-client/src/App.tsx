@@ -56,7 +56,7 @@ export default function App() {
                     />
                     <Route
                         path="/merchants/:id/plugins"
-                        element={<div> plugins page</div>}
+                        element={<UnderDevelopmentPage />}
                     />
                 </Route>
                 <Route
