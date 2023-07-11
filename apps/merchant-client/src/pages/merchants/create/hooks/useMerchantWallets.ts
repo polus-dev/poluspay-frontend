@@ -1,4 +1,5 @@
 import { useCreateMerchantWalletMutation } from '@poluspay-frontend/merchant-query';
+import { notify } from '@poluspay-frontend/ui';
 import { blockchainList } from 'apps/merchant-client/src/components/ui/Wallets/wallet-list';
 import { Item } from 'apps/merchant-client/src/components/ui/Wallets/wallet-list';
 import { useEffect, useState } from 'react';
@@ -29,6 +30,12 @@ export const useMerchantWallets = () => {
                 network,
             }).unwrap();
         } catch (error) {
+            notify({
+                status: 'error',
+                title: 'Error',
+                description:
+                    'An error has occurred while creating the wallet. Please try again later.',
+            });
             console.error(error);
         } finally {
             setIsCreateMerchantWalletLoading(false);

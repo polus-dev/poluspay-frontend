@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import { useCopyText } from '../../../../../hooks/useCopyText';
 
-import { FormInput, PButton } from '@poluspay-frontend/ui';
+import { FormInput, notify, PButton } from '@poluspay-frontend/ui';
 import { ReactComponent as IconCopy } from '../../../../../assets/icons/copy.svg';
 import { ReactComponent as IconYoutube } from '../../../../../assets/icons/youtube.svg';
 
@@ -45,8 +45,10 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                 method: type === 'dns' ? 'dns' : 'response',
                 path: type === 'file' ? fileName : undefined,
             }).unwrap();
+            notify({ title: 'Success response', status: 'success' });
             navigate(`/merchants/${merchantId}/merchant`);
         } catch (error) {
+            notify({ title: 'Error response', status: 'error' });
             console.error(error);
         }
 

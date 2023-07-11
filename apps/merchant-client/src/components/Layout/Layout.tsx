@@ -7,6 +7,7 @@ import '../../assets/scss/main.scss';
 import './styles.scss';
 import { useRedirectAuth } from '../../hooks/useRedirectAuth';
 import classNames from 'classnames';
+import { PNotifyContainer } from '@poluspay-frontend/ui';
 
 interface LayoutProps {
     isMerchantPage?: boolean;
@@ -34,6 +35,7 @@ export const Layout: React.FC<LayoutProps> = ({ isMerchantPage, centered }) => {
                 ) : (
                     <Outlet />
                 )}
+                <PNotifyContainer ms={2000} />
             </div>
         </>
     );

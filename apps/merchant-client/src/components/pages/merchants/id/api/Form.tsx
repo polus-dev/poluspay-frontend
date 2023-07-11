@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { useCopyText } from '../../../../../hooks/useCopyText';
 
-import { PInput, PButton } from '@poluspay-frontend/ui';
+import { PInput, PButton, notify } from '@poluspay-frontend/ui';
 import { ReactComponent as IconCopy } from '../../../../../assets/icons/copy.svg';
 
 import './Form.scoped.scss';
@@ -49,8 +49,9 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
                 merchant_id: props.merchantId,
             }).unwrap();
             setSigningKey(signing_key);
+            notify({ title: 'Success', status: 'success' });
         } catch (error) {
-            console.error(error);
+            notify({ title: 'Error', status: 'error' });
         }
     };
 
@@ -82,8 +83,9 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
                 );
             }
             await Promise.all(promises);
+            notify({ title: 'Success', status: 'success' });
         } catch (error) {
-            console.error(error);
+            notify({ title: 'Error', status: 'error' });
         }
     };
 
