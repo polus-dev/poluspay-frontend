@@ -73,6 +73,7 @@ export const MerchantsCreatePage: React.FC = () => {
                         />
                     </div>
                 )}
+
                 {type === 'personal' && stage === 1 && (
                     <div className="merchants__inner-form">
                         <MerchantForm

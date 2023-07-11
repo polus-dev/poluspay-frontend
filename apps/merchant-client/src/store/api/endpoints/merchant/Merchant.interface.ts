@@ -69,9 +69,9 @@ export type IGetMerchantResponseWithTotalCount = {
     totalCount: number;
 };
 export type IGetMerchantByIdResponse = IMerchant;
-export type IUpdateMerchantRequest = Partial<
-    ICreateMerchantRequest & { merchant_id: string }
->;
+export interface IUpdateMerchantRequest
+    extends IMerchantId,
+        Partial<ICreateMerchantRequest & Pick<IMerchant, 'display_name'>> {}
 
 export interface IGenerateSigningKeyResponse extends IMerchantId {
     signing_key: string;

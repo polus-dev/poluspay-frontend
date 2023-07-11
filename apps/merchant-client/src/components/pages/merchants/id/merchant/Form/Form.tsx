@@ -47,6 +47,7 @@ export const MerchantProfileForm: React.FC = () => {
                 website: merchant.domain,
                 description: merchant.description,
                 merchantName: merchant.name,
+                brand: merchant.display_name,
             });
         }
     }, [merchant]);
@@ -74,6 +75,7 @@ export const MerchantProfileForm: React.FC = () => {
                 name: data.merchantName,
                 domain: data.website,
                 merchant_id: merchantId,
+                display_name: data.brand,
             }).unwrap();
         } catch (error) {
             console.error(error);

@@ -6,7 +6,7 @@ export const GoogleAuth = () => {
     const navigate = useNavigate();
     useEffect(() => {
         doGoogleLogin().then(() => {
-            navigate('/merchants');
+            navigate('/');
         });
     }, [navigate]);
     return <h1>Auth...</h1>;

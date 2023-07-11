@@ -6,6 +6,8 @@ import { PButton } from '@poluspay-frontend/ui';
 import classNames from 'classnames';
 
 import './MerchantMenu.scoped.scss';
+import { useGetMerchantIdFromParams } from '../../hooks/useGetMerchantId';
+import { useGetMerchantByIdQuery } from '@poluspay-frontend/merchant-query';
 
 interface MenuItem {
     id: number;
@@ -21,6 +23,13 @@ export const MerchantMenu: React.FC = () => {
         { id: 4, title: 'API & Webhooks', to: 'api' },
         { id: 5, title: 'Plugins', to: 'plugins' },
     ];
+
+    const merchantId = useGetMerchantIdFromParams();
+    const {
+        data: merchant,
+        isLoading,
+        isError,
+    } = useGetMerchantByIdQuery({ merchant_id: merchantId });
 
     const [opened, setOpened] = useState(false);
 
@@ -42,7 +51,11 @@ export const MerchantMenu: React.FC = () => {
                 >
                     <div className="menu__container-header">
                         <p className="menu__container-header-title">
-                            Merchant name
+                            {isLoading
+                                ? 'Loading...'
+                                : isError
+                                ? 'Error'
+                                : merchant?.name}
                         </p>
                     </div>
                     <div className="menu__container-divider" />
