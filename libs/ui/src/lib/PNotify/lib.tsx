@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useState, useId } from 'react';
 import { Observer } from './observer';
 import { PNotifyContainerProps } from './types';
 import { PLabel } from '@poluspay-frontend/ui';
@@ -20,7 +20,7 @@ export const PNotifyContainer: FC<PNotifyContainerProps> = ({ ms = 3000 }) => {
 
     useEffect(() => {
         observer.subscribe((newNotify) => {
-            const id = Math.random().toString(16);
+            const id = useId();
             setNotify((state) => [...state, { ...newNotify, id }]);
             removeNotifyTimer(id);
         });
