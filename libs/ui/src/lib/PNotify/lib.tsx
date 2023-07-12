@@ -20,7 +20,7 @@ export const PNotifyContainer: FC<PNotifyContainerProps> = ({ ms = 3000 }) => {
 
     useEffect(() => {
         observer.subscribe((newNotify) => {
-            const id = useId();
+            const id = Math.random().toString(36).substr(2, 9);
             setNotify((state) => [...state, { ...newNotify, id }]);
             removeNotifyTimer(id);
         });
