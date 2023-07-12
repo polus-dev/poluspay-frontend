@@ -9,27 +9,27 @@ export interface RPCproviderType {
 export const RPCprovider: RPCproviderType[] = [
   {
     name: "ethereum",
-    url: "https://eth-mainnet.g.alchemy.com/v2/Q59fIJ1Y_uMFPE2Zg7cCdI182EgN9rvD",
+    url: import.meta.env.VITE_REACT_ETHEREUM_RPC,
     chainId: ChainId.ethereum,
   },
   {
     name: "bsc",
-    url: "https://bsc-dataseed1.binance.org/",
+    url: import.meta.env.VITE_REACT_BSC_RPC,
     chainId: ChainId.bsc,
   },
   {
     name: "polygon",
-    url: "https://polygon-mainnet.g.alchemy.com/v2/jIKi9Sm2Wr8kjGissTbEQlRu_-aWaFM5",
+    url: import.meta.env.VITE_REACT_POLYGON_RPC,
     chainId: ChainId.polygon,
   },
   {
     name: "arbitrum",
-    url: "https://arb-mainnet.g.alchemy.com/v2/IbMFg1XQzi-eyshgzQ3hTD338aylLB4g",
+    url: import.meta.env.VITE_REACT_ARBITRUM_RPC,
     chainId: ChainId.arbitrum,
   },
   {
     name: "optimism",
-    url: "https://rpc.optimism.gateway.fm",
+    url: import.meta.env.VITE_REACT_OPTIMISM_RPC,
     chainId: ChainId.optimism,
   },
 ];
