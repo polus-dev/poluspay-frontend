@@ -80,7 +80,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
     const [enableMerchatWallet] = useEnableMerchantWalletMutation();
     const [ref] = useAutoAnimate();
 
-    const [tab, setTab] = useState(tabs[0]);
+    const [tab, setTab] = useState(tabs[3]);
 
     const [search, setSearch] = useState('');
 

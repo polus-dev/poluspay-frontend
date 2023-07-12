@@ -16,6 +16,7 @@ export const assetApi = createApi({
                 const result: IAssetsResponse = {
                     categories: [{ name: 'unknown', value: [] }],
                     decimals: {},
+                    assets: [],
                 };
 
                 Object.keys(response).forEach((asset) => {
@@ -42,6 +43,24 @@ export const assetApi = createApi({
                             [asset]: assetObj.networks[network].decimals,
                         };
                     });
+
+                    // new code
+                    if (
+                        assetObj.networks[Object.keys(assetObj.networks)[0]]
+                            .available_for_accept
+                    ) {
+                        // @ts-ignore
+                        const newAsset: (typeof result.assets)[number] = {
+                            category: [],
+                        };
+
+                        for (const assetObjKey in assetObj.categories) {
+                            newAsset.category.push(assetObjKey);
+                        }
+                        newAsset.name = asset;
+                        newAsset.meta = assetObj;
+                        result.assets.push(newAsset);
+                    }
                 });
                 return result;
             },

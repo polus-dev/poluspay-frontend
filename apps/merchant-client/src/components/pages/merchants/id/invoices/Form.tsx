@@ -13,6 +13,15 @@ import { ReactComponent as IconChevron } from '../../../../../assets/icons/chevr
 import { ReactComponent as IconCross } from '../../../../../assets/icons/cross.svg';
 
 import './Form.scoped.scss';
+import {
+    FormState,
+    SubmitHandler,
+    UseFormHandleSubmit,
+    UseFormRegister,
+    UseFormSetValue,
+} from 'react-hook-form';
+import { InvoiceForm } from '../../../../../pages/merchants/id/invoices/hooks/form.interface';
+import { useGetAssetsQuery } from '@poluspay-frontend/merchant-query';
 
 interface Asset {
     id: number;
@@ -26,7 +35,19 @@ interface Blockchain {
     image: string;
 }
 
-export const MerchantInvoicesForm: React.FC = () => {
+interface MerchantInvoicesFormProps {
+    register: UseFormRegister<InvoiceForm>;
+    handleSubmit: UseFormHandleSubmit<InvoiceForm>;
+    formState: FormState<InvoiceForm>;
+    setValue: UseFormSetValue<InvoiceForm>;
+}
+
+export const MerchantInvoicesForm = ({
+    register,
+    handleSubmit,
+    formState,
+    setValue,
+}: MerchantInvoicesFormProps) => {
     const [amount, setAmount] = useState('');
     const [asset, setAsset] = useState<Asset>();
     const [blockchains, setBlockchains] = useState<Blockchain[]>([]);
@@ -35,6 +56,9 @@ export const MerchantInvoicesForm: React.FC = () => {
     const modalCurrency = useModal();
     const modalBlockchains = useModal();
     const modalPreview = useModal();
+    const { data } = useGetAssetsQuery();
+
+    const submit: SubmitHandler<InvoiceForm> = (data) => {};
 
     const removeSelectedBlockchain = (
         event: React.MouseEvent,
@@ -105,14 +129,19 @@ export const MerchantInvoicesForm: React.FC = () => {
     ];
 
     return (
-        <div className="form">
+        <form onSubmit={handleSubmit(submit)} className="form">
             <div className="form__inner">
                 <div className="form__inner-item">
                     <FormInput
+                        error={formState.errors.amount?.message}
+                        reg={register('amount', {
+                            required: "Amount can't be empty",
+                            minLength: 1,
+                        })}
                         label="Amount"
                         placeholder="0"
-                        value={amount}
-                        onInput={(value) => setAmount(value.toString())}
+                        // value={amount}
+                        // onInput={(value) => setAmount(value.toString())}
                     />
                 </div>
                 <div className="form__inner-item">
@@ -179,10 +208,11 @@ export const MerchantInvoicesForm: React.FC = () => {
                 <div className="form__inner-item">
                     <p className="form__inner-item-label">Description</p>
                     <textarea
+                        {...register('description')}
                         placeholder="Few words about invoice"
                         className="form__inner-item-textarea"
-                        value={description}
-                        onInput={() => {}}
+                        // value={description}
+                        // onInput={() => {}}
                     />
                 </div>
                 <div className="form__inner-buttons">
@@ -219,6 +249,6 @@ export const MerchantInvoicesForm: React.FC = () => {
                 visible={modalPreview.visible}
                 onClose={() => modalPreview.close()}
             />
-        </div>
+        </form>
     );
 };

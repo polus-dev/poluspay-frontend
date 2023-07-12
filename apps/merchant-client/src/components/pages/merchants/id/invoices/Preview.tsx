@@ -4,14 +4,24 @@ import { ReactComponent as LogoPolusPay } from '../../../../../assets/logos/polu
 import classNames from 'classnames';
 
 import './Preview.scoped.scss';
+import { UseFormWatch } from 'react-hook-form';
+import { InvoiceForm } from '../../../../../pages/merchants/id/invoices/hooks/form.interface';
+import { useGetMerchantIdFromParams } from '../../../../../hooks/useGetMerchantId';
+import { useGetMerchantByIdQuery } from '@poluspay-frontend/merchant-query';
 
 interface PreviewProps {
     isModal?: boolean;
+    watch: UseFormWatch<InvoiceForm>;
 }
 
 export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
     isModal,
+    watch,
 }) => {
+    const merchantId = useGetMerchantIdFromParams();
+    const { data: merchant } = useGetMerchantByIdQuery({
+        merchant_id: merchantId,
+    });
     return (
         <div
             className={classNames({
@@ -28,10 +38,10 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
                 <div className="preview__header-data">
                     <div className="preview__header-data__row">
                         <p className="preview__header-data__row-domain">
-                            toys.com
+                            {merchant?.domain}
                         </p>
                         <p className="preview__header-data__row-amount">
-                            Total: 1
+                            Total: {watch('amount')}
                             <span className="preview__header-data__row-amount preview__header-data__row-amount--dark">
                                 USDT
                             </span>
@@ -39,7 +49,7 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
                     </div>
                     <div className="preview__header-data__row">
                         <p className="preview__header-data__row-description">
-                            Plush toys buying in the store by crypto
+                            {watch('description')}
                         </p>
                     </div>
                 </div>

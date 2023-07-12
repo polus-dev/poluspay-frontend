@@ -9,20 +9,22 @@ import { ErrorBlock } from '../../../../components/ui/Error/Error';
 
 import './MerchantInvoices.scoped.scss';
 import { useGetPaginatedInvoices } from './hooks/useGetPaginatedInvoices';
+import { useInvoiceForm } from './hooks/useInvoiceForm';
 
 export const MerchantInvoicesPage: React.FC = () => {
     const [current, setCurrent] = useState(1);
     const limit = 10;
+    const { register, handleSubmit, watch, formState, setValue } =
+        useInvoiceForm();
 
-    // replace with actual data
-    const loading = false;
-
-    const { invoices: invoicesPaginated, totalItems } = useGetPaginatedInvoices(
-        {
-            limit,
-            current,
-        }
-    );
+    const {
+        invoices: invoicesPaginated,
+        totalItems,
+        isLoading,
+    } = useGetPaginatedInvoices({
+        limit,
+        current,
+    });
 
     const onPageChange = (value: number) => {
         setCurrent(value);
@@ -34,16 +36,21 @@ export const MerchantInvoicesPage: React.FC = () => {
                 <h4 className="invoices__inner-title">Create invoice</h4>
                 <div className="invoices__inner-container">
                     <div className="invoices__inner-container-form">
-                        <MerchantInvoicesForm />
+                        <MerchantInvoicesForm
+                            formState={formState}
+                            handleSubmit={handleSubmit}
+                            register={register}
+                            setValue={setValue}
+                        />
                     </div>
                     <div className="invoices__inner-container-preview">
-                        <MerchantInvoicesPreview />
+                        <MerchantInvoicesPreview watch={watch} />
                     </div>
                 </div>
             </div>
             <div className="invoices__table">
                 <h6 className="invoices__table-title">Invoices</h6>
-                {loading ? (
+                {isLoading ? (
                     <Loader />
                 ) : !invoicesPaginated.length ? (
                     <ErrorBlock title="No invoices found" />

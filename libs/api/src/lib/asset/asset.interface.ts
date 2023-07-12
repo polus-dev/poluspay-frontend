@@ -1,4 +1,4 @@
-interface IAsset {
+export interface IAsset {
     categories: string[] | null;
     networks: {
         [chain: string]: {
