@@ -20,21 +20,20 @@ export const MerchantsCreatePage: React.FC = () => {
     const navigator = useNavigate();
     const [type, setType] = useState<string | null>('personal');
     const [stage, setStage] = useState(0);
-
+    const [merchantId, setMerchantId] = useState<string | null>(null);
     const {
         modalBlockchainVisible,
         modalWalletVisible,
         selectedWallets,
         selectedBlockchain,
-        handleWalletSelect,
+        handleSelect,
         handleBlockchainSelect,
         onCloseWalletModal,
         onCloseBlockchainModal,
         onImportWallet,
-        setMerchantId,
         isCreateMerchantWalletLoading,
-        merchantId,
-    } = useMerchantWallets();
+        next,
+    } = useMerchantWallets({ merchantId });
 
     const modalBlockchain = useModal();
 
@@ -48,10 +47,6 @@ export const MerchantsCreatePage: React.FC = () => {
         if (typeC && type !== typeC) setType(typeC);
 
         setStage(stage + 1);
-    };
-
-    const handleButtonClick = () => {
-        console.log('qwe');
     };
 
     const onFinishRegistation = () => {
@@ -85,15 +80,23 @@ export const MerchantsCreatePage: React.FC = () => {
                 {type === 'personal' && stage === 2 && (
                     <div className="merchants__inner-wallet">
                         <MerchantWallets
+                            next={onFinishRegistation}
+                            isRegistration
+                            selectedBlockchain={selectedBlockchain}
                             merchantId={merchantId!}
-                            onButtonClick={handleButtonClick}
-                            selectedWallets={selectedWallets}
-                            handleSelect={handleWalletSelect}
+                            selectedWallet={selectedWallets}
+                            handleSelect={handleSelect}
+                            buttonDisabled={
+                                !(selectedBlockchain || selectedWallets) ||
+                                modalWalletVisible ||
+                                modalBlockchainVisible
+                            }
                         />
                     </div>
                 )}
             </div>
             <ModalBlockChainSelector
+                next={next}
                 hasSearch
                 visible={modalBlockchainVisible}
                 options={blockchainList}
@@ -105,7 +108,7 @@ export const MerchantsCreatePage: React.FC = () => {
                 isLoading={isCreateMerchantWalletLoading}
                 visible={modalWalletVisible}
                 selectedBlockchain={selectedBlockchain}
-                isEvmChain={isEVMBlockchain(selectedBlockchain!)}
+                isEvmChain={isEVMBlockchain(selectedBlockchain?.label!)}
                 onClose={() => onCloseWalletModal()}
                 onImport={onImportWallet}
             />

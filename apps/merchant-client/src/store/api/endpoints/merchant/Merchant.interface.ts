@@ -1,5 +1,5 @@
 import type { Blockchain, URL } from 'tools';
-interface IMerchant {
+export interface IMerchant {
     id: string;
     name: string;
     display_name: string | null;
@@ -79,7 +79,7 @@ export interface IGenerateSigningKeyResponse extends IMerchantId {
 
 export interface ICreateMerchantWalletRequest extends IMerchantId {
     address: string;
-    network: Blockchain[];
+    networks: Blockchain[];
 }
 
 export interface IMerchantWallet extends IMerchantId {

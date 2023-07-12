@@ -9,23 +9,18 @@ import { ReactComponent as IconCheckbox } from '../../assets/icons/checkbox-fill
 import classNames from 'classnames';
 
 import './BlockchainSelector.scoped.scss';
-
-interface Blockchain {
-    id: number;
-    name: string;
-    image: string;
-    label: Label;
-}
+import { BlockchainItem } from '../../../../../../apps/merchant-client/src/components/ui/Wallets/wallet-list';
+import { Stage } from '../../../../../../apps/merchant-client/src/pages/merchants/create/hooks/useMerchantWallets';
 
 interface ModalProps {
     visible: boolean;
     multi?: boolean;
     hasSearch?: boolean;
-    options: Blockchain[];
-    // onApply: (items: Blockchain[]) => void;
+    options: BlockchainItem[];
+    next: (a?: Stage) => void;
     onClose: () => void;
-    selected?: Label;
-    setSelected: (items: Label) => void;
+    selected?: BlockchainItem;
+    setSelected: (items: BlockchainItem) => void;
 }
 
 export const ModalBlockChainSelector: React.FC<ModalProps> = ({
@@ -35,14 +30,15 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
     options,
     onClose,
     setSelected,
+    next,
     selected,
 }) => {
     const [search, setSearch] = useState('');
 
-    const [blockchains, setBlockchains] = useState<Blockchain[]>(options);
+    const [blockchains, setBlockchains] = useState<BlockchainItem[]>(options);
 
-    const handleSelect = (item: Blockchain) => {
-        setSelected(item.label);
+    const handleSelect = (item: BlockchainItem) => {
+        setSelected(item);
     };
 
     useEffect(() => {
@@ -126,7 +122,7 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
                                                 'modal__body-container-item__icon':
                                                     true,
                                                 'modal__body-container-item__icon--active':
-                                                    selected === el.label,
+                                                    selected === el,
                                             })}
                                         />
                                     </div>
@@ -139,14 +135,13 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
                                 </div>
                             )}
                         </div>
-                        {/* <div className="modal__body-button">
+                        <div className="modal__body-button">
                             <PButton
                                 wide
                                 children={<>Next</>}
-                                onClick={() => onApply(selected)}
+                                onClick={() => next()}
                             />
                         </div>
-                        */}
                     </div>
                 }
                 onClose={onClose}

@@ -3,6 +3,7 @@ import {
     blockchainList,
     connectedWalletList,
     exchangeList,
+    BlockchainItem,
 } from './wallet-list';
 import { useEffect, useState } from 'react';
 
@@ -14,7 +15,13 @@ import {
 } from '@poluspay-frontend/merchant-query';
 
 import { MerchantWalletItem } from './WalletItem';
-import { PButton, PInput, PPagination, PTabs } from '@poluspay-frontend/ui';
+import {
+    notify,
+    PButton,
+    PInput,
+    PPagination,
+    PTabs,
+} from '@poluspay-frontend/ui';
 
 import { ReactComponent as IconSearch } from '../../../assets/icons/search.svg';
 
@@ -23,14 +30,17 @@ import classNames from 'classnames';
 import './Wallets.scoped.scss';
 import { MerchantWalletItemConnected } from './WalletItemConnected';
 import { shuffleArray } from 'tools';
+import { Stage } from '../../../pages/merchants/create/hooks/useMerchantWallets';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 interface MerchantWalletsProps {
-    isRegistation?: boolean;
+    isRegistration?: boolean;
     buttonDisabled?: boolean;
-    onButtonClick?: () => void;
-    selectedWallets: Item[];
+    selectedWallet?: Item;
+    selectedBlockchain?: BlockchainItem;
     handleSelect: (wallets: Item) => void;
     merchantId: string;
+    next: (a?: Stage) => void;
 }
 
 const allArray = [...walletList, ...exchangeList, ...blockchainList];
@@ -44,12 +54,13 @@ const tabContent = {
 };
 
 export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
-    isRegistation,
+    isRegistration,
     buttonDisabled,
-    onButtonClick,
-    selectedWallets,
+    selectedWallet,
     handleSelect,
+    selectedBlockchain,
     merchantId,
+    next,
 }) => {
     const tabs = [
         {
@@ -67,6 +78,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
 
     const [disableMerchantWallet] = useDisableMerchantWalletMutation();
     const [enableMerchatWallet] = useEnableMerchantWalletMutation();
+    const [ref] = useAutoAnimate();
 
     const [tab, setTab] = useState(tabs[0]);
 
@@ -107,6 +119,13 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
         setCurrentPage(1);
     }, [search, tab]);
 
+    const onDelete = () => {
+        notify({
+            title: 'Not implemented yet',
+            status: 'warning',
+        });
+    };
+
     return (
         <div className="wallets">
             <div className="wallets__header">
@@ -135,36 +154,38 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                     />
                 </div>
             </div>
-            {connectedWallets && connectedWallets.length > 0 && (
-                <div className="wallets__connected">
-                    {connectedWallets.map((el) => (
-                        <MerchantWalletItemConnected
-                            enabled={!el.is_disabled}
-                            item={{
-                                ...connectedWalletList.find(
-                                    (item) => item.label === el.network
-                                )!,
-                                address: el.address,
-                            }}
-                            key={el.address + el.network}
-                            onSwitch={(v) => {
-                                if (v) {
-                                    enableMerchatWallet({
-                                        merchant_id: merchantId,
-                                        network: el.network,
-                                    });
-                                } else {
-                                    disableMerchantWallet({
-                                        merchant_id: merchantId,
-                                        network: el.network,
-                                    });
-                                }
-                            }}
-                            onDelete={() => {}}
-                        />
-                    ))}
-                </div>
-            )}
+            <div ref={ref}>
+                {connectedWallets && connectedWallets.length > 0 && (
+                    <div className="wallets__connected">
+                        {connectedWallets.map((el) => (
+                            <MerchantWalletItemConnected
+                                enabled={!el.is_disabled}
+                                item={{
+                                    ...connectedWalletList.find(
+                                        (item) => item.label === el.network
+                                    )!,
+                                    address: el.address,
+                                }}
+                                key={el.address + el.network}
+                                onSwitch={(v) => {
+                                    if (v) {
+                                        enableMerchatWallet({
+                                            merchant_id: merchantId,
+                                            network: el.network,
+                                        });
+                                    } else {
+                                        disableMerchantWallet({
+                                            merchant_id: merchantId,
+                                            network: el.network,
+                                        });
+                                    }
+                                }}
+                                onDelete={onDelete}
+                            />
+                        ))}
+                    </div>
+                )}
+            </div>
             <div className="wallets__container">
                 {searched
                     ? searched.map((el) => (
@@ -172,13 +193,16 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                               className={classNames({
                                   'wallets__container-item': true,
                                   'wallets__container-item--wide':
-                                      isRegistation,
+                                      isRegistration,
                               })}
                               key={el.id}
                           >
                               <MerchantWalletItem
                                   item={el}
-                                  selected={selectedWallets.includes(el)}
+                                  selected={
+                                      selectedWallet?.id === el.id ||
+                                      selectedBlockchain?.id === el.id
+                                  }
                                   onSelect={() => handleSelect(el)}
                               />
                           </div>
@@ -188,13 +212,16 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                               className={classNames({
                                   'wallets__container-item': true,
                                   'wallets__container-item--wide':
-                                      isRegistation,
+                                      isRegistration,
                               })}
                               key={el.id}
                           >
                               <MerchantWalletItem
                                   item={el}
-                                  selected={selectedWallets.includes(el)}
+                                  selected={
+                                      selectedWallet?.id === el.id ||
+                                      selectedBlockchain?.id === el.id
+                                  }
                                   onSelect={() => handleSelect(el)}
                               />
                           </div>
@@ -215,9 +242,9 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                     <PButton
                         wide
                         size="lg"
-                        disabled={!selectedWallets || buttonDisabled}
-                        children={<>Save</>}
-                        onClick={onButtonClick}
+                        disabled={buttonDisabled}
+                        children={<>{isRegistration ? 'Save' : 'Next'}</>}
+                        onClick={() => next()}
                     />
                 </div>
             </div>

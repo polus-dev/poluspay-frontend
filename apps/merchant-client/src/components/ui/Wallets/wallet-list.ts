@@ -7,6 +7,11 @@ export interface Item {
     type: 'wallet' | 'exchange' | 'blockchain';
 }
 
+export interface BlockchainItem extends Item {
+    label: Blockchain;
+    evm: boolean;
+}
+
 export interface WalletItemConnected extends Omit<Item, 'id'> {
     address: string;
     label: Blockchain;
@@ -192,7 +197,7 @@ export const exchangeList: Item[] = [
     },
 ];
 
-export const blockchainList: (Item & { label: Blockchain; evm: boolean })[] = [
+export const blockchainList: BlockchainItem[] = [
     {
         id: 31,
         name: 'Arbitrum',

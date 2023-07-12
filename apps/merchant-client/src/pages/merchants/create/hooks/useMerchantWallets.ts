@@ -1,19 +1,56 @@
 import { useCreateMerchantWalletMutation } from '@poluspay-frontend/merchant-query';
 import { notify } from '@poluspay-frontend/ui';
-import { blockchainList } from 'apps/merchant-client/src/components/ui/Wallets/wallet-list';
+import {
+    BlockchainItem,
+    blockchainList,
+    exchangeList,
+    walletList,
+} from 'apps/merchant-client/src/components/ui/Wallets/wallet-list';
 import { Item } from 'apps/merchant-client/src/components/ui/Wallets/wallet-list';
 import { useEffect, useState } from 'react';
 import { Blockchain } from 'tools';
 
-export const useMerchantWallets = () => {
-    const [selectedWallets, setSelectedWallets] = useState<Item[]>([]);
-    const [selectedBlockchain, setSelectedBlockchain] = useState<Blockchain>();
+interface IProps {
+    merchantId: string | null;
+}
+
+export type Stage = 'blockchainSelect' | 'walletSelect' | 'walletImport';
+
+export const useMerchantWallets = ({ merchantId }: IProps) => {
+    const [selectedWallet, setSelectedWallet] = useState<Item>();
+    const [selectedBlockchain, setSelectedBlockchain] =
+        useState<BlockchainItem>();
     const [modalWalletVisible, setModalWalletVisible] = useState(false);
     const [modalBlockchainVisible, setModalBlockchainVisible] = useState(false);
     const [isCreateMerchantWalletLoading, setIsCreateMerchantWalletLoading] =
         useState(false);
     const [createMerchantWallet] = useCreateMerchantWalletMutation();
-    const [merchantId, setMerchantId] = useState<string>();
+
+    const next = (to?: Stage) => {
+        const doNext = (t: Stage) => {
+            if (t === 'blockchainSelect') {
+                setModalBlockchainVisible(true);
+                setModalWalletVisible(false);
+            } else if (t === 'walletImport') {
+                setModalBlockchainVisible(false);
+                setModalWalletVisible(true);
+            } else if (t === 'walletSelect') {
+                setModalBlockchainVisible(false);
+                setModalWalletVisible(false);
+            }
+        };
+        if (to) {
+            doNext(to);
+        } else {
+            if (selectedBlockchain && !selectedWallet) {
+                doNext('walletImport');
+            } else if (selectedWallet && !selectedBlockchain) {
+                doNext('blockchainSelect');
+            } else {
+                throw new Error('Invalid state');
+            }
+        }
+    };
 
     const onImportWallet = async (address: string, evm?: boolean) => {
         try {
@@ -21,13 +58,13 @@ export const useMerchantWallets = () => {
             if (!selectedBlockchain)
                 throw new Error('Blockchain is not defined');
             setIsCreateMerchantWalletLoading(true);
-            const network: Blockchain[] = evm
+            const networks: Blockchain[] = evm
                 ? ['bsc', 'polygon', 'ethereum', 'arbitrum', 'optimism']
-                : [selectedBlockchain];
+                : [selectedBlockchain.label];
             await createMerchantWallet({
                 merchant_id: merchantId,
                 address,
-                network,
+                networks,
             }).unwrap();
         } catch (error) {
             notify({
@@ -43,39 +80,63 @@ export const useMerchantWallets = () => {
         }
     };
 
-    useEffect(() => {
-        if (selectedBlockchain) {
-            setModalBlockchainVisible(false);
-            setModalWalletVisible(true);
+    const handleBlockchainSelect = (item: BlockchainItem) => {
+        if (item.id === selectedBlockchain?.id) {
+            setSelectedBlockchain(undefined);
+        } else {
+            setSelectedBlockchain(item);
+            setSelectedWallet(undefined);
         }
-    }, [selectedBlockchain]);
-
-    const handleBlockchainSelect = (item: Blockchain) => {
-        setSelectedBlockchain(item);
     };
 
     const handleWalletSelect = (item: Item) => {
-        // TODO: delete this in the future
+        if (item.id === selectedWallet?.id) {
+            setSelectedWallet(undefined);
+        } else {
+            setSelectedWallet(item);
+            setSelectedBlockchain(undefined);
+        }
+    };
+
+    const handleSelect = (item: Item) => {
         if (item.type === 'blockchain') {
             const chain = blockchainList.find((el) => el.id === item.id);
             if (chain) {
-                handleBlockchainSelect(chain.label);
-                return;
+                handleBlockchainSelect(chain);
+            } else {
+                notify({
+                    status: 'error',
+                    title: 'Error',
+                    description: 'Blockchain not found',
+                });
             }
-        }
-        const el = selectedWallets.find((el) => el.id === item.id);
-        if (el) {
-            setSelectedWallets(
-                selectedWallets.filter((el) => el.id !== item.id)
-            );
-        } else {
-            setSelectedWallets([...selectedWallets, item]);
+        } else if (item.type === 'exchange') {
+            const exchanger = exchangeList.find((el) => el.id === item.id);
+            if (exchanger) {
+                handleWalletSelect(exchanger);
+            } else {
+                notify({
+                    status: 'error',
+                    title: 'Error',
+                    description: 'Exchanger not found',
+                });
+            }
+        } else if (item.type === 'wallet') {
+            const wallet = walletList.find((el) => el.id === item.id);
+            if (wallet) {
+                handleWalletSelect(wallet);
+            } else {
+                notify({
+                    status: 'error',
+                    title: 'Error',
+                    description: 'Wallet not found',
+                });
+            }
         }
     };
 
     const onCloseWalletModal = () => {
-        if (selectedWallets.length)
-            setSelectedWallets(selectedWallets.slice(0, -1));
+        if (selectedWallet) setSelectedWallet(undefined);
         setModalWalletVisible(false);
     };
 
@@ -85,21 +146,17 @@ export const useMerchantWallets = () => {
     };
 
     useEffect(() => {
-        if (selectedWallets.length) {
-            const item = selectedWallets.pop();
-            if (!item) return;
-            if (item.type === 'wallet') {
-                setModalBlockchainVisible(true);
-            } else {
-                setModalWalletVisible(true);
-            }
+        if (selectedBlockchain && !selectedWallet) {
+            next('walletImport');
+        } else if (selectedWallet && !selectedBlockchain) {
+            next('blockchainSelect');
         }
-    }, [selectedWallets]);
+    }, [selectedWallet, selectedBlockchain]);
 
     return {
-        selectedWallets,
+        selectedWallets: selectedWallet,
         selectedBlockchain,
-        handleWalletSelect,
+        handleSelect,
         modalWalletVisible,
         modalBlockchainVisible,
         onCloseWalletModal,
@@ -107,7 +164,6 @@ export const useMerchantWallets = () => {
         handleBlockchainSelect,
         onImportWallet,
         isCreateMerchantWalletLoading,
-        setMerchantId,
-        merchantId,
+        next,
     };
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { FormInput, PButton } from '@poluspay-frontend/ui';
+import { FormInput, notify, PButton } from '@poluspay-frontend/ui';
 
 import './Form.scoped.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -39,6 +39,11 @@ export const MerchantForm: React.FC<FormProps> = ({
             changeStage();
             // navigate(`/merchants/${merchant.id}/merchant`);
         } catch (error) {
+            notify({
+                title: 'Error',
+                description: 'Something went wrong',
+                status: 'error',
+            });
             console.error(error);
         }
     };

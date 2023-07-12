@@ -6,13 +6,14 @@ import { ReactComponent as IconChevron } from '../../../assets/icons/chevron.svg
 
 import './WalletAddition.scoped.scss';
 import { Blockchain, placeHolderForAddress, validateAddress } from 'tools';
+import { BlockchainItem } from '../../ui/Wallets/wallet-list';
 
 interface ModalProps {
     visible: boolean;
     onClose: () => void;
     onImport: (address: string, evm: boolean) => void;
     isEvmChain: boolean;
-    selectedBlockchain?: Blockchain;
+    selectedBlockchain?: BlockchainItem;
     isLoading: boolean;
 }
 
@@ -30,7 +31,7 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
 
     useEffect(() => {
         if (address && selectedBlockchain) {
-            if (validateAddress(address, selectedBlockchain)) {
+            if (validateAddress(address, selectedBlockchain.label)) {
                 setValidAddress(true);
             } else {
                 setValidAddress(false);
@@ -59,17 +60,19 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
                 header={
                     <div className="modal__header">
                         {/* replace src and  name with dynamic ones */}
-                        <img
-                            className="modal__header-image"
-                            src={`/images/wallets/${selectedBlockchain}.png`}
-                            alt="blockchain name"
-                        />
+                        {/*<img*/}
+                        {/*    className="modal__header-image"*/}
+                        {/*    src={`/images/wallets/${selectedBlockchain?.label}.png`}*/}
+                        {/*    alt="blockchain name"*/}
+                        {/*/>*/}
                         {/* replace with dynamic */}
                         <p className="modal__header-text">
                             Connect{' '}
                             {selectedBlockchain &&
-                                selectedBlockchain.charAt(0).toUpperCase() +
-                                    selectedBlockchain.slice(1)}
+                                selectedBlockchain.label
+                                    .charAt(0)
+                                    .toUpperCase() +
+                                    selectedBlockchain.label.slice(1)}
                         </p>
                     </div>
                 }
@@ -89,7 +92,7 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
                             {/* replace placeholder with dynamic one */}
                             <PInput
                                 placeholder={placeHolderForAddress(
-                                    selectedBlockchain!
+                                    selectedBlockchain?.label!
                                 )}
                                 value={address}
                                 onInput={(value) =>

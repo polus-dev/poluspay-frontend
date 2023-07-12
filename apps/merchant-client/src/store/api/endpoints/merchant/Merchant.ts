@@ -17,6 +17,7 @@ import {
     IGetMerchantResponseWithTotalCount,
     IGetWebhookHistoryResponse,
     IGetWebhookHistoryResponseWithTotalCount,
+    IMerchant,
     IMerchantId,
     IMerchantWallet,
     ISetWebhookRequest,
@@ -25,7 +26,6 @@ import {
     IVerifyDomainRequest,
 } from './Merchant.interface';
 import { RootState } from '../../../store';
-import { IMerchant } from '../../../../../../pay-form/src/store/api/endpoints/merchant/Merchant.interface';
 
 export const merchantApi = createApi({
     reducerPath: 'merchantApi' as const,

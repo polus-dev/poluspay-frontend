@@ -16,13 +16,8 @@ export const MerchantsPage: React.FC = () => {
     const { data: merchants, isLoading: isMerchantLoading } =
         useGetMerchantsQuery({
             limit,
-            offset: current - 1,
+            offset: current * limit - limit,
         });
-
-    const merchantsPaginated = merchants?.data.slice(
-        (current - 1) * limit,
-        (current - 1) * limit + limit
-    );
 
     const onPageChange = (value: number) => {
         setCurrent(value);
@@ -56,7 +51,7 @@ export const MerchantsPage: React.FC = () => {
                             <p className="merchants__table-headline-id">ID</p>
                         </div>
                         <div className="merchants__table-container">
-                            {merchantsPaginated?.map((el) => (
+                            {merchants.data?.map((el) => (
                                 <MerchantItem
                                     name={el.name}
                                     website={el.domain}
