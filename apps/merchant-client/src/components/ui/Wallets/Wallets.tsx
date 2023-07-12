@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 
 import { walletList } from './wallet-list';
 import {
+    useDeleteMerchantWalletMutation,
     useDisableMerchantWalletMutation,
     useEnableMerchantWalletMutation,
     useGetMerchantWalletQuery,
@@ -78,6 +79,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
 
     const [disableMerchantWallet] = useDisableMerchantWalletMutation();
     const [enableMerchatWallet] = useEnableMerchantWalletMutation();
+    const [deleteMerchantWallet] = useDeleteMerchantWalletMutation();
     const [ref] = useAutoAnimate();
 
     const [tab, setTab] = useState(tabs[3]);
@@ -119,11 +121,23 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
         setCurrentPage(1);
     }, [search, tab]);
 
-    const onDelete = () => {
-        notify({
-            title: 'Not implemented yet',
-            status: 'warning',
-        });
+    const onDelete = async (network: string) => {
+        try {
+            await deleteMerchantWallet({
+                merchant_id: merchantId,
+                network,
+            }).unwrap();
+            notify({
+                title: 'Wallet deleted',
+                status: 'success',
+            });
+        } catch (e) {
+            notify({
+                title: 'Error',
+                description: "Can't delete wallet",
+                status: 'error',
+            });
+        }
     };
 
     return (
@@ -180,7 +194,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                                         });
                                     }
                                 }}
-                                onDelete={onDelete}
+                                onDelete={() => onDelete(el.network)}
                             />
                         ))}
                     </div>

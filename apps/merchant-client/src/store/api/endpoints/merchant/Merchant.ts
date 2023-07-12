@@ -10,6 +10,7 @@ import {
     ICreateMerchantResponse,
     ICreateMerchantWalletRequest,
     IDeleteMerchantRequest,
+    IDeleteMerchantWalletRequest,
     IGenerateSigningKeyResponse,
     IGetMerchantByIdResponse,
     IGetMerchantRequest,
@@ -219,6 +220,17 @@ export const merchantApi = createApi({
             }),
             invalidatesTags: ['Wallet'],
         }),
+        deleteMerchantWallet: builder.mutation<
+            void,
+            IDeleteMerchantWalletRequest
+        >({
+            query: (body) => ({
+                url: 'merchant.wallet.delete',
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: ['Wallet'],
+        }),
         uploadLogo: builder.mutation<IMerchant, IUploadLogoRequest>({
             query: (body) => {
                 const formData = new FormData();
@@ -257,4 +269,5 @@ export const {
     useDisableMerchantWalletMutation,
     useGetMerchantWalletQuery,
     useUploadLogoMutation,
+    useDeleteMerchantWalletMutation,
 } = merchantApi;

@@ -100,3 +100,7 @@ export interface IVerifyDomainRequest extends IMerchantId {
 export interface IUploadLogoRequest extends IMerchantId {
     image: File;
 }
+
+export interface IDeleteMerchantWalletRequest extends IMerchantId {
+    network: string;
+}
