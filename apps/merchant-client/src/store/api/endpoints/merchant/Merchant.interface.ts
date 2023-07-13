@@ -16,7 +16,7 @@ export interface IMerchant {
     created_at: string;
 }
 
-export type LogoStatus = 'on_moderation' | 'declined' | 'accepted' | null;
+export type LogoStatus = 'on_moderation' | 'declined' | 'confirmed' | null;
 
 type UnparsedJSON = string;
 

@@ -6,19 +6,24 @@ import { useCopyText } from '../../../hooks/useCopyText';
 import './MerchantItem.scoped.scss';
 import { ReactComponent as IconCopy } from '../../../assets/icons/copy.svg';
 // remove the import below
-import image from '../../../images/connect-button.jpg';
+import defaultLogo from '../../../images/connect-button.jpg';
+import { LogoStatus } from '../../../store/api/endpoints/merchant/Merchant.interface';
 
 // replace interface and props below with the correct ones
 interface IMerchantProps {
     name: string;
     website: string;
     id: string;
+    logo: string | null;
+    avatarStatus: LogoStatus;
 }
 
 export const MerchantItem: React.FC<IMerchantProps> = ({
     name,
     website,
     id,
+    logo,
+    avatarStatus,
 }) => {
     const navigate = useNavigate();
     const copy = useCopyText();
@@ -65,7 +70,11 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
                     <img
                         className="merchant-item__name-image"
                         alt="Merchant avatar"
-                        src={image}
+                        src={
+                            avatarStatus === 'confirmed' && logo
+                                ? logo
+                                : defaultLogo
+                        }
                     />
                     <p className="merchant-item__name-text">{getShortName()}</p>
                 </div>
@@ -76,7 +85,11 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
                         <img
                             className="merchant-item__nameweb__inner-image"
                             alt="Merchant avatar"
-                            src={image}
+                            src={
+                                avatarStatus === 'confirmed' && logo
+                                    ? logo
+                                    : defaultLogo
+                            }
                         />
                         <p className="merchant-item__nameweb__inner-text">
                             {getShortName()}

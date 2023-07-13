@@ -20,8 +20,6 @@ export const MerchantProfileAvatar: React.FC<AvatarProps> = ({
     image,
     avatarStatus,
 }) => {
-    // replace with actual data
-
     return (
         <div className="avatar">
             {!avatarStatus && (
@@ -40,7 +38,7 @@ export const MerchantProfileAvatar: React.FC<AvatarProps> = ({
                     <IconWarning className="avatar__moderated-icon" />
                 </div>
             )}
-            {avatarStatus === 'accepted' && (
+            {avatarStatus === 'confirmed' && (
                 <div className="avatar__uploaded" onClick={openModal}>
                     <img
                         className="avatar__uploaded-image"

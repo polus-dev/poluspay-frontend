@@ -53,6 +53,8 @@ export const MerchantsPage: React.FC = () => {
                         <div className="merchants__table-container">
                             {merchants.data?.map((el) => (
                                 <MerchantItem
+                                    logo={el.logo}
+                                    avatarStatus={el.logo_status}
                                     name={el.name}
                                     website={el.domain}
                                     id={el.id}
