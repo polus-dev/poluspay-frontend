@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { throttle } from 'lodash-es';
 
@@ -19,6 +19,7 @@ export const Header: React.FC = () => {
     const { data, isLoading } = useGetMeQuery(undefined, {
         refetchOnMountOrArgChange: true,
     });
+    const navigate = useNavigate();
     const { logout } = useLogout();
 
     const [menuOpened, setMenuOpened] = useState(false);
@@ -39,6 +40,7 @@ export const Header: React.FC = () => {
         );
 
         setMenuScrolled();
+        navigate('/merchants');
     }, []);
 
     return (
