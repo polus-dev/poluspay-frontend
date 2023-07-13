@@ -26,6 +26,13 @@ interface TableProps {
     invoices: Invoice[];
 }
 
+const openInvoice = (id: string) => {
+    window.open(
+        `${import.meta.env.VITE_REACT_APP_PAYFORM_URL}?uuid=${id}`,
+        '_blank'
+    );
+};
+
 export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
     return (
         <div className="table">
@@ -42,7 +49,12 @@ export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
                     {invoices.map((el) => (
                         <div className="table__row" key={el.id}>
                             <div className="table__row-id">
-                                <p className="table__row-id-text">
+                                {/* TODO: refactor styles */}
+                                <p
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={() => openInvoice(el.id)}
+                                    className="table__row-id-text"
+                                >
                                     {makeShortHash(el.id, 5)}
                                 </p>
                             </div>
