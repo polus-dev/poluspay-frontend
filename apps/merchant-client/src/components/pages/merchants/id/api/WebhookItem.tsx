@@ -11,6 +11,7 @@ export interface WebhookHistoryItem {
     date: string;
     status: 200 | 500;
     webhookURL: string;
+    responseBody: string;
 }
 
 interface WebhookItemProps {
@@ -81,10 +82,10 @@ export const MerchantWebhookItem: React.FC<WebhookItemProps> = ({ item }) => {
                         </div>
                         {/* replace with the condition if webhook has any details
                         or whatever it's called */}
-                        {true && (
+                        {item.responseBody && (
                             <div className="webhook__extended-details">
                                 <p className="webhook__extended-details-text">
-                                    "detail": "unauthorized"
+                                    {item.responseBody}
                                 </p>
                             </div>
                         )}

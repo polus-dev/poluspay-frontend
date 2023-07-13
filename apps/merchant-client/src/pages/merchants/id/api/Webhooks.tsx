@@ -67,6 +67,7 @@ export const MerchantApiPage: React.FC = () => {
                                             status: el.response_status_code,
                                             uuid: el.id,
                                             webhookURL: el.endpoint,
+                                            responseBody: el.response_body,
                                         }}
                                         key={el.id}
                                     />
