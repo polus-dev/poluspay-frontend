@@ -1,127 +1,273 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  ICreateMerchantRequest,
-  ICreateMerchantResponse,
-  IDeleteMerchantRequest,
-  IGetMerchantByIdResponse,
-  IGetMerchantRequest,
-  IGetMerchantResponse,
-  IGetMerchantResponseWithTotalCount,
-  IGetWebhookHistoryResponse,
-  IMerchantId,
-  ISetWebhookRequest,
-  IUpdateMerchantRequest,
+    IResponseError,
+    IPagination,
+    IResponseApiDefault,
+} from '@poluspay-frontend/api';
+import {
+    IChangeMerchantWalletStatusRequest,
+    ICreateMerchantRequest,
+    ICreateMerchantResponse,
+    ICreateMerchantWalletRequest,
+    IDeleteMerchantRequest,
+    IDeleteMerchantWalletRequest,
+    IGenerateSigningKeyResponse,
+    IGetMerchantByIdResponse,
+    IGetMerchantRequest,
+    IGetMerchantResponse,
+    IGetMerchantResponseWithTotalCount,
+    IGetWebhookHistoryResponse,
+    IGetWebhookHistoryResponseWithTotalCount,
+    IMerchant,
+    IMerchantId,
+    IMerchantWallet,
+    ISetWebhookRequest,
+    IUpdateMerchantRequest,
+    IUploadLogoRequest,
+    IVerifyDomainRequest,
 } from './Merchant.interface';
-import { IPagination, IResponseApiDefault, IResponseError } from '../../types';
 import { RootState } from '../../../store';
 
 export const merchantApi = createApi({
-  reducerPath: 'merchantApi' as const,
-  baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_REACT_APP_BASE_URL + 'private',
-    prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth.token;
-      if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
-  tagTypes: ['Merchant'],
-  endpoints: (builder) => ({
-    createMerchant: builder.mutation<
-      ICreateMerchantResponse | IResponseError,
-      ICreateMerchantRequest
-    >({
-      query: (body) => ({
-        url: `merchant.create`,
-        method: 'POST',
-        body,
-      }),
-      invalidatesTags: ['Merchant'],
+    reducerPath: 'merchantApi' as const,
+    baseQuery: fetchBaseQuery({
+        baseUrl: import.meta.env.VITE_REACT_APP_BASE_URL + 'private',
+        prepareHeaders: (headers, { getState }) => {
+            const token = (getState() as RootState).auth.userToken;
+            if (token) {
+                headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        },
     }),
-    getMerchantById: builder.query<
-      IGetMerchantByIdResponse,
-      IGetMerchantRequest
-    >({
-      query: (body) => ({
-        url: `merchant.get`,
-        method: 'POST',
-        body,
-      }),
-      transformResponse: (response: IGetMerchantResponse) => response[0],
-    }),
-    getMerchants: builder.query<IGetMerchantResponseWithTotalCount, IPagination>({
-      query: (body) => ({
-        url: `merchant.get`,
-        method: 'POST',
-        body,
-      }),
-      transformResponse: (response: IGetMerchantResponse, meta) => ({ data: response, totalCount: Number(meta?.response?.headers.get('x-total-records')) ?? 0 }),
-      providesTags: ['Merchant']
-    }),
+    tagTypes: ['Merchant', 'Wallet'],
+    endpoints: (builder) => ({
+        createMerchant: builder.mutation<
+            ICreateMerchantResponse,
+            ICreateMerchantRequest
+        >({
+            query: (body) => ({
+                url: `merchant.create`,
+                method: 'POST',
+                body,
+            }),
+            // invalidatesTags: (result) =>
+            //     result ? [{ type: 'Merchant', id: result.id }] : ['Merchant'],
+            invalidatesTags: ['Merchant'],
+        }),
+        getMerchantById: builder.query<
+            IGetMerchantByIdResponse,
+            IGetMerchantRequest
+        >({
+            query: (body) => ({
+                url: `merchant.get`,
+                method: 'POST',
+                body,
+            }),
+            transformResponse: (response: IGetMerchantResponse) => response[0],
+            providesTags: (result) =>
+                result ? [{ type: 'Merchant', id: result.id }] : ['Merchant'],
+        }),
+        getMerchants: builder.query<
+            IGetMerchantResponseWithTotalCount,
+            IPagination
+        >({
+            query: (body) => ({
+                url: `merchant.get`,
+                method: 'POST',
+                body,
+            }),
+            transformResponse: (response: IGetMerchantResponse, meta) => ({
+                data: response,
+                totalCount:
+                    Number(meta?.response?.headers.get('x-total-records')) ?? 0,
+            }),
+            providesTags: ['Merchant'],
+        }),
 
-    updateMerchantFields: builder.mutation<
-      IResponseError | IGetMerchantResponse[number],
-      IUpdateMerchantRequest
-    >({
-      query: (body) => {
-        const filteredBody = {} as typeof body;
-        for (const key in body)
-          if (body[key as keyof typeof body])
-            filteredBody[key as keyof typeof body] =
-              body[key as keyof typeof body];
+        updateMerchantFields: builder.mutation<
+            IGetMerchantResponse[number],
+            IUpdateMerchantRequest
+        >({
+            query: (body) => {
+                const filteredBody = {} as typeof body;
+                for (const key in body)
+                    if (body[key as keyof typeof body])
+                        filteredBody[key as keyof typeof body] =
+                            body[key as keyof typeof body];
 
-        return {
-          url: `merchant.update`,
-          method: 'POST',
-          body: filteredBody,
-        };
-      },
-      invalidatesTags: ['Merchant']
-    }),
+                return {
+                    url: `merchant.update`,
+                    method: 'POST',
+                    body: filteredBody,
+                };
+            },
+            // invalidatesTags: (result) =>
+            //     result ? [{ type: 'Merchant', id: result.id }] : ['Merchant'],
+            invalidatesTags: ['Merchant'],
+        }),
 
-    setWebhook: builder.mutation<void | IResponseError, ISetWebhookRequest>({
-      query: (body) => ({
-        url: `merchant.setWebhook`,
-        method: 'POST',
-        body,
-      }),
+        setWebhook: builder.mutation<void | IResponseError, ISetWebhookRequest>(
+            {
+                query: (body) => ({
+                    url: `merchant.setWebhook`,
+                    method: 'POST',
+                    body,
+                }),
+                invalidatesTags: (result, err, args) => {
+                    return result
+                        ? [{ type: 'Merchant', id: args.merchant_id }]
+                        : ['Merchant'];
+                },
+            }
+        ),
+        deleteMerchant: builder.mutation<
+            void | IResponseError,
+            IDeleteMerchantRequest
+        >({
+            query: (body) => ({
+                url: `merchant.delete`,
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: ['Merchant'],
+            // invalidatesTags: (result, error, args) =>
+            //     result
+            //         ? [{ type: 'Merchant', id: args.merchant_id }]
+            //         : ['Merchant'],
+        }),
+        getWebhookHistory: builder.query<
+            IGetWebhookHistoryResponseWithTotalCount,
+            IMerchantId
+        >({
+            query: (body) => ({
+                url: 'merchant.webhook.get',
+                method: 'POST',
+                body,
+            }),
+            transformResponse(response: IGetWebhookHistoryResponse, meta) {
+                return {
+                    data: response,
+                    totalCount:
+                        Number(
+                            meta?.response?.headers.get('x-total-records')
+                        ) ?? 0,
+                };
+            },
+        }),
+        generateSigningKey: builder.mutation<
+            IGenerateSigningKeyResponse,
+            IMerchantId
+        >({
+            query: (body) => ({
+                url: 'merchant.generateSigningKey',
+                method: 'POST',
+                body,
+            }),
+        }),
+        verifyDomain: builder.mutation<
+            IResponseApiDefault,
+            IVerifyDomainRequest
+        >({
+            query: (body) => ({
+                url: 'merchant.verifyDomain',
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: (result, error, args) =>
+                result
+                    ? [{ type: 'Merchant', id: args.merchant_id }]
+                    : ['Merchant'],
+        }),
+        createMerchantWallet: builder.mutation<
+            IMerchantWallet,
+            ICreateMerchantWalletRequest
+        >({
+            query: (body) => ({
+                url: 'merchant.wallet.create',
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: ['Wallet'],
+        }),
+        getMerchantWallet: builder.query<IMerchantWallet[], IMerchantId>({
+            query: (body) => ({
+                url: 'merchant.wallet.get',
+                method: 'POST',
+                body,
+            }),
+            providesTags: ['Wallet'],
+        }),
+        enableMerchantWallet: builder.mutation<
+            IMerchantWallet,
+            IChangeMerchantWalletStatusRequest
+        >({
+            query: (body) => ({
+                url: 'merchant.wallet.enable',
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: ['Wallet'],
+        }),
+        disableMerchantWallet: builder.mutation<
+            IMerchantWallet,
+            IChangeMerchantWalletStatusRequest
+        >({
+            query: (body) => ({
+                url: 'merchant.wallet.disable',
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: ['Wallet'],
+        }),
+        deleteMerchantWallet: builder.mutation<
+            void,
+            IDeleteMerchantWalletRequest
+        >({
+            query: (body) => ({
+                url: 'merchant.wallet.delete',
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: ['Wallet'],
+        }),
+        uploadLogo: builder.mutation<IMerchant, IUploadLogoRequest>({
+            query: (body) => {
+                const formData = new FormData();
+                formData.append('image', body.image);
+                formData.append('merchant_id', body.merchant_id);
+                return {
+                    url: 'merchant.logo.update',
+                    method: 'POST',
+                    body: formData,
+                };
+            },
+            invalidatesTags: (result, error, args) =>
+                result
+                    ? [{ type: 'Merchant', id: args.merchant_id }]
+                    : ['Merchant'],
+        }),
     }),
-    deleteMerchant: builder.mutation<
-      void | IResponseError,
-      IDeleteMerchantRequest
-    >({
-      query: (body) => ({
-        url: `merchant.delete`,
-        method: 'POST',
-        body,
-      }),
-    }),
-    getWebhookHistory: builder.query<IGetWebhookHistoryResponse, void>({
-      query: (body) => ({
-        url: 'merchant.webhook.get',
-        method: 'POST',
-        body,
-      }),
-    }),
-    verifyDomain: builder.mutation<IResponseApiDefault, IMerchantId>({
-      query: (body) => ({
-        url: 'merchant.verifyDomain',
-        method: 'POST',
-        body,
-      }),
-    }),
-  }),
 });
-
+function createFormData(file: File) {
+    const formData = new FormData();
+    formData.append('file', file);
+    return formData;
+}
 export const {
-  useCreateMerchantMutation,
-  useDeleteMerchantMutation,
-  useSetWebhookMutation,
-  useUpdateMerchantFieldsMutation,
-  useGetMerchantsQuery,
-  useGetWebhookHistoryQuery,
-  useGetMerchantByIdQuery,
-  useVerifyDomainMutation,
+    useCreateMerchantMutation,
+    useDeleteMerchantMutation,
+    useSetWebhookMutation,
+    useUpdateMerchantFieldsMutation,
+    useGetMerchantsQuery,
+    useGetWebhookHistoryQuery,
+    useGetMerchantByIdQuery,
+    useVerifyDomainMutation,
+    useGenerateSigningKeyMutation,
+    useCreateMerchantWalletMutation,
+    useEnableMerchantWalletMutation,
+    useDisableMerchantWalletMutation,
+    useGetMerchantWalletQuery,
+    useUploadLogoMutation,
+    useDeleteMerchantWalletMutation,
 } = merchantApi;

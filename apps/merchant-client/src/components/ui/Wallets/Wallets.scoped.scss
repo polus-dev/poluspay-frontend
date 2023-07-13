@@ -1,0 +1,173 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+.wallets {
+    width: 100%;
+    height: auto;
+    padding: px-to-rem(20) px-to-rem(16);
+    background-color: $color-black-light;
+    border-radius: px-to-rem(12);
+
+    @include breakpoint($screen-sm) {
+        padding: px-to-rem(24) px-to-rem(16);
+    }
+
+    @include breakpoint($screen-md) {
+        padding: px-to-rem(24);
+    }
+
+    &__header {
+        margin-bottom: px-to-rem(16);
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(10);
+
+        @include breakpoint($screen-sm) {
+            margin-bottom: px-to-rem(20);
+        }
+    }
+
+    &__header-title {
+        font-size: px-to-rem(18);
+        font-weight: 500;
+        line-height: 150%;
+    }
+
+    &__header-description {
+        color: $color-white-dark;
+        font-size: px-to-rem(14);
+        font-weight: 300;
+        line-height: 130%;
+
+        @include breakpoint($screen-sm) {
+            font-size: px-to-rem(16);
+            font-weight: 400;
+            line-height: 150%;
+        }
+    }
+
+    &__search {
+        margin-bottom: px-to-rem(16);
+        width: 100%;
+    }
+
+    &__search-icon {
+        width: px-to-rem(16);
+        height: auto;
+    }
+
+    &__tabs {
+        position: relative;
+        margin-bottom: px-to-rem(16);
+        width: 100%;
+        overflow: hidden;
+
+        @include breakpoint($screen-sm) {
+            margin-bottom: px-to-rem(24);
+        }
+
+        @include breakpoint($screen-lg) {
+            margin-bottom: px-to-rem(30);
+        }
+    }
+
+    &__tabs-inner {
+        width: auto;
+        overflow-x: scroll;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    &__connected {
+        margin-bottom: px-to-rem(16);
+        display: flex;
+        flex-wrap: wrap;
+        gap: px-to-rem(12);
+
+        @include breakpoint($screen-sm) {
+            margin-bottom: px-to-rem(24);
+        }
+
+        @include breakpoint($screen-xl) {
+            gap: px-to-rem(16);
+        }
+    }
+
+    &__container {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        border-top: 1px solid $color-grey;
+        border-left: 1px solid $color-grey;
+        border-radius: px-to-rem(6);
+        overflow: hidden;
+    }
+
+    &__container-item {
+        grid-column-start: span 6;
+        grid-column-end: span 6;
+        border-right: 1px solid $color-grey;
+        border-bottom: 1px solid $color-grey;
+
+        &:last-child {
+            border-bottom-right-radius: px-to-rem(6);
+        }
+
+        @include breakpoint($screen-md) {
+            grid-column-start: span 4;
+            grid-column-end: span 4;
+        }
+
+        @include breakpoint($screen-lg) {
+            grid-column-start: span 3;
+            grid-column-end: span 3;
+        }
+
+        @include breakpoint($screen-xl) {
+            grid-column-start: span 4;
+            grid-column-end: span 4;
+        }
+
+        @include breakpoint($screen-xxl) {
+            grid-column-start: span 3;
+            grid-column-end: span 3;
+        }
+
+        &--wide {
+            @include breakpoint($screen-lg) {
+                grid-column-start: span 3;
+                grid-column-end: span 3;
+            }
+        }
+    }
+
+    &__pagination {
+        margin-top: px-to-rem(16);
+        display: flex;
+
+        @include breakpoint($screen-lg) {
+            margin-top: px-to-rem(24);
+            justify-content: flex-end;
+        }
+    }
+
+    &__button {
+        margin-top: px-to-rem(24);
+        display: flex;
+        width: 100%;
+
+        @include breakpoint($screen-md) {
+            justify-content: flex-end;
+        }
+    }
+
+    &__button-item {
+        width: 100%;
+
+        @include breakpoint($screen-md) {
+            max-width: px-to-rem(260);
+        }
+    }
+}

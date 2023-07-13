@@ -1,0 +1,36 @@
+@import '../assets/scss/variables';
+@import '../assets/scss/utils';
+
+.polus-ui {
+    // ...
+    &__pagination {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__pagination-inner {
+        display: flex;
+        flex-direction: row;
+        padding-top: px-to-rem(12);
+    }
+
+    &__pagination-item {
+        color: $color-white;
+        cursor: pointer;
+        font-size: px-to-rem(16);
+        font-weight: 500;
+        padding: 0 px-to-rem(6);
+
+        &--dots {
+            color: $color-grey-light;
+            cursor: default;
+            font-size: px-to-rem(16);
+            padding: 0 px-to-rem(10);
+        }
+
+        &--active {
+            color: $color-orange;
+            cursor: default;
+        }
+    }
+}

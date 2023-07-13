@@ -1,0 +1,129 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+.wallet-item {
+    display: flex;
+    align-items: center;
+    gap: px-to-rem(16);
+    width: auto;
+    height: px-to-rem(52);
+    padding: 0 px-to-rem(8);
+    border: 1px solid $color-grey;
+    border-radius: px-to-rem(12);
+
+    @include breakpoint($screen-sm) {
+        height: px-to-rem(58);
+        padding: 0 px-to-rem(12);
+    }
+
+    @include breakpoint($screen-md) {
+        height: px-to-rem(66);
+        padding: 0 px-to-rem(12) 0 px-to-rem(16);
+    }
+
+    @include breakpoint($screen-xl) {
+        height: px-to-rem(75);
+        padding: 0 px-to-rem(12) 0 px-to-rem(20);
+    }
+
+    &__data {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(8);
+
+        @include breakpoint($screen-sm) {
+            gap: px-to-rem(10);
+        }
+    }
+
+    &__data-image {
+        width: px-to-rem(24);
+        height: px-to-rem(24);
+        border-radius: px-to-rem(6);
+
+        @include breakpoint($screen-sm) {
+            width: px-to-rem(30);
+            height: px-to-rem(30);
+        }
+
+        @include breakpoint($screen-xl) {
+            width: px-to-rem(40);
+            height: px-to-rem(40);
+        }
+    }
+
+    &__data-text {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(2);
+
+        @include breakpoint($screen-sm) {
+            gap: 0;
+        }
+    }
+
+    &__data-text-name {
+        font-size: px-to-rem(14);
+        font-weight: 300;
+        line-height: 130%;
+
+        @include breakpoint($screen-sm) {
+            font-size: px-to-rem(16);
+            font-weight: 400;
+            line-height: 150%;
+        }
+
+        @include breakpoint($screen-xl) {
+            font-size: px-to-rem(18);
+            font-weight: 500;
+        }
+    }
+
+    &__data-text-address {
+        color: $color-white-dark;
+        font-size: px-to-rem(12);
+        font-weight: 300;
+        line-height: 130%;
+
+        @include breakpoint($screen-sm) {
+            font-size: px-to-rem(14);
+        }
+
+        @include breakpoint($screen-xl) {
+            font-size: px-to-rem(16);
+            font-weight: 400;
+            line-height: 150%;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(10);
+        height: px-to-rem(30);
+    }
+
+    &__actions-switch,
+    &__actions-delete {
+        display: flex;
+        align-items: center;
+    }
+
+    &__actions-divider {
+        height: 100%;
+        width: px-to-rem(2);
+        background-color: $color-grey;
+    }
+
+    &__actions-delete-icon {
+        width: px-to-rem(20);
+        height: auto;
+        stroke: $color-white;
+        transition: stroke 0.15s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            stroke: $color-white-dark;
+        }
+    }
+}

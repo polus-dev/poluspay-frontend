@@ -1,0 +1,128 @@
+@import '../assets/scss/variables';
+@import '../assets/scss/utils';
+
+.polus-ui {
+    &__notification {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 100%;
+        transition: transform 0.3s ease-in-out;
+        z-index: 999;
+    }
+
+    &__notification-container {
+        margin: 0 auto;
+        width: 100%;
+        max-width: px-to-rem(1600);
+        padding: 0 px-to-rem(16);
+
+        @include breakpoint($screen-lg) {
+            padding: 0 px-to-rem(40);
+        }
+    }
+
+    &__notification-label {
+        margin-top: px-to-rem(24);
+        display: flex;
+        align-items: center;
+        width: 100%;
+        max-width: px-to-rem(350);
+        height: px-to-rem(64);
+        background-color: $color-grey-dark;
+        border-radius: px-to-rem(12);
+        overflow: hidden;
+        @include shadow(3);
+    }
+
+    &__notification-label-left,
+    &__notification-label-right {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+
+    &__notification-label-right {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    &__notification-label-status {
+        margin-right: px-to-rem(16);
+        width: px-to-rem(12);
+        height: 100%;
+        background-color: $color-green-light;
+
+        &--success {
+            background-color: $color-green-light;
+        }
+
+        &--error {
+            background-color: $color-red;
+        }
+
+        &--warning {
+            background-color: $color-yellow;
+        }
+    }
+
+    &__notification-label-icon {
+        margin-right: px-to-rem(12);
+        width: px-to-rem(32);
+        height: px-to-rem(32);
+        stroke: $color-green;
+
+        &--loading {
+            fill: $color-grey-light;
+            stroke: $color-grey-light;
+        }
+
+        &--success {
+            stroke: $color-green;
+        }
+
+        &--error {
+            stroke: $color-red;
+        }
+
+        &--warning {
+            stroke: $color-yellow;
+            fill: $color-yellow;
+        }
+    }
+
+    &__notification-label-title {
+        font-size: px-to-rem(22);
+        font-weight: 500;
+
+        &--small {
+            font-size: px-to-rem(20);
+        }
+    }
+
+    &__notification-label-description {
+        padding-top: px-to-rem(6);
+        font-size: px-to-rem(14);
+        font-weight: 500;
+        color: $color-grey-light;
+    }
+
+    &__notification-enter {
+        opacity: 0;
+    }
+
+    &__notification-enter-active {
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    &__notification-exit {
+        opacity: 1;
+    }
+
+    &__notification-exit-active {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+}

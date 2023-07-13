@@ -1,0 +1,78 @@
+@import '../assets/scss/variables';
+@import '../assets/scss/utils';
+
+.polus-ui {
+    $root: #{&}__dropdown;
+
+    &__dropdown {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__dropdown-handler {
+        display: flex;
+    }
+
+    &__dropdown-content-wrapper {
+        display: flex;
+        height: 0;
+        position: relative;
+        width: 100%;
+
+        #{$root}--top & {
+            order: -1;
+        }
+
+        #{$root}--bottom & {
+            order: 1;
+        }
+    }
+
+    &__dropdown-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        position: absolute;
+        z-index: 2;
+        color: $color-white;
+        background-color: $color-grey-dark;
+        border-radius: px-to-rem(12);
+        box-shadow: 0 px-to-rem(16) px-to-rem(24) rgba(0, 0, 0, 0.5);
+        overflow: hidden;
+        transition: opacity 0.25s ease-in-out;
+        z-index: 10;
+
+        &:focus {
+            outline: none;
+        }
+
+        &--border {
+            box-sizing: border-box;
+            border: px-to-rem(2) solid $color-grey;
+        }
+
+        #{$root}--top & {
+            bottom: 0;
+        }
+
+        #{$root}--bottom & {
+            top: 0;
+        }
+
+        #{$root}--left & {
+            left: 0;
+            right: auto;
+        }
+
+        #{$root}--right & {
+            right: 0;
+            left: auto;
+        }
+
+        #{$root}--center & {
+            transform: translateX(-50%);
+            left: 50%;
+        }
+    }
+}

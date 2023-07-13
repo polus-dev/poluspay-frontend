@@ -1,0 +1,190 @@
+@import '../../../../../assets/scss/variables';
+@import '../../../../../assets/scss/utils';
+
+.table {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(16);
+        width: auto;
+        overflow-x: scroll;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        @include breakpoint($screen-md) {
+            width: 100%;
+            min-width: none;
+        }
+    }
+
+    $table-sm: px-to-rem(600);
+    $table-md: calc(100% - px-to-rem(100));
+    $table-lg: calc(100% - px-to-rem(120));
+
+    &__row {
+        display: flex;
+        align-items: center;
+        width: auto;
+        min-width: px-to-rem(700);
+        height: px-to-rem(50);
+        padding: 0 px-to-rem(12);
+        font-size: px-to-rem(14);
+        font-weight: 300;
+        line-height: 130%;
+        background-color: $color-black-light;
+        border-radius: px-to-rem(6);
+
+        @include breakpoint($screen-md) {
+            min-width: 100%;
+            height: px-to-rem(65);
+            font-size: px-to-rem(16);
+            font-weight: 400;
+            line-height: 150%;
+        }
+
+        @include breakpoint($screen-lg) {
+            font-size: px-to-rem(18);
+        }
+
+        @include breakpoint($screen-xxl) {
+            padding: 0 px-to-rem(24);
+        }
+
+        &--headline {
+            height: auto;
+            color: $color-grey-light;
+            font-size: px-to-rem(16);
+            font-weight: 400;
+            line-height: 150%;
+            background-color: transparent;
+        }
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(8);
+    }
+
+    &__row-id {
+        display: flex;
+        flex-basis: calc($table-sm * 0.26);
+
+        @include breakpoint($screen-md) {
+            flex-basis: calc($table-md * 0.26);
+        }
+
+        @include breakpoint($screen-lg) {
+            flex-basis: calc($table-lg * 0.26);
+        }
+    }
+
+    &__row-id-text {
+        color: $color-blue-light;
+    }
+
+    &__row-amount {
+        display: flex;
+        flex-basis: calc($table-sm * 0.16);
+
+        @include breakpoint($screen-md) {
+            flex-basis: calc($table-md * 0.16);
+        }
+
+        @include breakpoint($screen-lg) {
+            flex-basis: calc($table-lg * 0.16);
+        }
+    }
+
+    &__row-currency {
+        display: flex;
+        flex-basis: calc($table-sm * 0.16);
+
+        @include breakpoint($screen-md) {
+            flex-basis: calc($table-md * 0.16);
+        }
+
+        @include breakpoint($screen-lg) {
+            flex-basis: calc($table-lg * 0.16);
+        }
+    }
+
+    &__row-date {
+        display: flex;
+        flex-basis: calc($table-sm * 0.22);
+
+        @include breakpoint($screen-md) {
+            flex-basis: calc($table-md * 0.22);
+        }
+
+        @include breakpoint($screen-lg) {
+            flex-basis: calc($table-lg * 0.22);
+        }
+    }
+
+    &__row-hash {
+        display: flex;
+        flex-basis: calc($table-sm * 0.2);
+
+        @include breakpoint($screen-md) {
+            flex-basis: calc($table-md * 0.2);
+        }
+
+        @include breakpoint($screen-lg) {
+            flex-basis: calc($table-lg * 0.2);
+        }
+    }
+
+    &__row-hash-text {
+        color: $color-blue-light;
+    }
+
+    &__row-status {
+        display: flex;
+        flex-basis: px-to-rem(100);
+
+        @include breakpoint($screen-lg) {
+            flex-basis: px-to-rem(120);
+        }
+    }
+
+    &__row-status-text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: px-to-rem(30);
+        color: $color-white;
+        font-size: px-to-rem(14);
+        font-weight: 500;
+        border-radius: px-to-rem(6);
+
+        &--success {
+            background-color: $color-green;
+        }
+
+        &--in_progress {
+            background-color: $color-orange;
+        }
+
+        &--pending {
+            color: $color-grey;
+            background-color: $color-yellow;
+        }
+
+        &--failed {
+            background-color: $color-red;
+        }
+
+        &--expired {
+            background-color: $color-grey;
+        }
+    }
+}

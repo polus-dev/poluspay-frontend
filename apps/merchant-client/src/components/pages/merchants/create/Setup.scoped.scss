@@ -1,0 +1,116 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/utils';
+
+.setup {
+    position: relative;
+    width: 100%;
+
+    &__inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    &__inner-title {
+        margin: 0 auto px-to-rem(24);
+        text-align: center;
+        font-size: px-to-rem(18);
+        font-weight: 500;
+        line-height: 150%;
+    }
+
+    &__inner-block {
+        width: 100%;
+        padding: px-to-rem(16);
+        stroke: $color-white;
+        background-color: $color-black-light;
+        border-radius: px-to-rem(12);
+        // cursor: pointer;
+
+        &:hover {
+            stroke: $color-blue-light;
+        }
+
+        &:not(:last-child) {
+            margin-bottom: px-to-rem(12);
+            // delete this after plugins release
+            cursor: pointer;
+        }
+    }
+
+    &__inner-block-headline {
+        margin-bottom: px-to-rem(8);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__inner-block-headline-title {
+        font-size: px-to-rem(18);
+        font-weight: 500;
+        line-height: 130%;
+    }
+
+    &__inner-block-headline-icon {
+        width: px-to-rem(20);
+        height: auto;
+        stroke: inherit;
+        transition: stroke 0.15s ease-in-out;
+    }
+
+    &__inner-block-headline-label {
+        display: inline-flex;
+        align-items: center;
+        width: auto;
+        height: px-to-rem(22);
+        padding: 0 px-to-rem(12);
+        font-size: px-to-rem(14);
+        font-weight: 500;
+        background-color: $color-purple;
+        border-radius: px-to-rem(8);
+    }
+
+    &__inner-block-description {
+        display: inline;
+        color: $color-white-dark;
+        font-size: px-to-rem(16);
+        font-weight: 400;
+        line-height: 150%;
+
+        &--link {
+            color: $color-blue-light;
+            transition: color 0.15s ease-in-out;
+
+            &:hover {
+                color: $color-blue;
+            }
+        }
+    }
+
+    &__inner-block-tabs {
+        margin-top: px-to-rem(12);
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: px-to-rem(8);
+
+        &__item {
+            display: flex;
+            align-items: center;
+            gap: px-to-rem(6);
+            padding: px-to-rem(6) px-to-rem(12);
+            color: $color-white-dark;
+            font-size: px-to-rem(16);
+            font-weight: 400;
+            line-height: 150%;
+            border: 1px solid $color-grey;
+            border-radius: px-to-rem(8);
+        }
+
+        &__item-icon {
+            width: auto;
+            height: px-to-rem(20);
+            stroke: transparent;
+        }
+    }
+}

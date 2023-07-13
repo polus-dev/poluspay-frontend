@@ -1,0 +1,34 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+.error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: px-to-rem(300);
+    background-color: transparent;
+    border-radius: px-to-rem(12);
+
+    &--background {
+        background-color: $color-black-light;
+    }
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__inner-title {
+        font-family: 'Poppins', sans-serif;
+        font-size: px-to-rem(18);
+        font-weight: 500;
+        line-height: 150%;
+
+        &--large {
+            font-size: px-to-rem(24);
+            font-weight: 600;
+        }
+    }
+}

@@ -1,0 +1,119 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+.form {
+    margin: 0 auto;
+    width: 100%;
+    max-width: px-to-rem(400);
+
+    &__inner {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__inner-title {
+        margin: 0 auto px-to-rem(40);
+        text-align: center;
+        font-size: px-to-rem(42);
+        font-weight: 700;
+        line-height: 140%;
+
+        &--action {
+            margin-bottom: px-to-rem(50);
+            font-size: px-to-rem(24);
+            font-weight: 600;
+            line-height: 150%;
+        }
+    }
+
+    &__inner-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(8);
+    }
+
+    &__inner-buttons-row {
+        display: grid;
+        gap: px-to-rem(8);
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    &__inner-buttons-row-item {
+        grid-column-start: span 1;
+        grid-column-end: span 1;
+    }
+
+    &__inner-buttons-row-item-icon {
+        margin-right: px-to-rem(8);
+        width: px-to-rem(24);
+        height: auto;
+
+        &--google {
+            width: px-to-rem(20);
+            stroke: transparent;
+        }
+    }
+
+    &__inner-item {
+        margin-bottom: px-to-rem(16);
+        width: 100%;
+
+        &:last-child {
+            margin-bottom: px-to-rem(24);
+        }
+    }
+
+    &__inner-item-data {
+        margin-bottom: px-to-rem(8);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: px-to-rem(14);
+        font-weight: 300;
+        line-height: 130%;
+
+        &:not(:first-child) {
+            margin: px-to-rem(8) 0 0;
+        }
+
+        &--disabled {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+    }
+
+    &__inner-item-label {
+        margin: 0;
+
+        &-error {
+            color: $color-red;
+        }
+
+        &--timer {
+            color: $color-white-dark;
+        }
+
+        &--action {
+            color: $color-blue-light;
+            transition: color 0.15s ease-in-out;
+            cursor: pointer;
+
+            &:hover {
+                color: $color-blue;
+            }
+        }
+    }
+
+    &__inner-item-data-error {
+        color: $color-red;
+    }
+
+    &__inner-item-data-timer {
+        color: $color-white-dark;
+    }
+
+    &__inner-item-data-action {
+        color: $color-blue-light;
+        cursor: pointer;
+    }
+}

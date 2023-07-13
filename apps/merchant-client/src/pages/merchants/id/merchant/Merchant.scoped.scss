@@ -1,0 +1,13 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/utils';
+
+.profile {
+    display: flex;
+    flex-direction: column;
+    gap: px-to-rem(16);
+    width: 100%;
+
+    @include breakpoint($screen-sm) {
+        gap: px-to-rem(20);
+    }
+}

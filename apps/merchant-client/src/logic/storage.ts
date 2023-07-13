@@ -1,36 +1,36 @@
 export class StoragePolus {
-    private _data: globalThis.Storage
+    private _data: globalThis.Storage;
 
-    constructor () {
-        this._data = window.localStorage
+    constructor() {
+        this._data = window.localStorage;
     }
 
-    public save (key: string, data: any | string): boolean {
+    public save(key: string, data: any | string): boolean {
         try {
-            this._data.setItem(`polus-${key}`, data)
+            this._data.setItem(`polus-${key}`, data);
         } catch (error) {
-            console.error(error)
-            return false
+            console.error(error);
+            return false;
         }
-        return true
+        return true;
     }
 
-    public get (key: string): any | undefined {
+    public get(key: string): any | undefined {
         try {
-            return this._data.getItem(`polus-${key}`)
+            return this._data.getItem(`polus-${key}`);
         } catch (error) {
-            console.error(error)
-            return false
+            console.error(error);
+            return false;
         }
     }
 
-    public del (key: string): boolean {
+    public del(key: string): boolean {
         try {
-            this._data.removeItem(`polus-${key}`)
+            this._data.removeItem(`polus-${key}`);
         } catch (error) {
-            console.error(error)
-            return false
+            console.error(error);
+            return false;
         }
-        return true
+        return true;
     }
 }

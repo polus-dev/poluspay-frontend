@@ -1,0 +1,105 @@
+@use 'sass:map';
+@use 'sass:color';
+
+@import '../assets/scss/variables';
+@import '../assets/scss/utils';
+
+$tabs-sizes: (
+    'lg': (
+        'padding': px-to-rem(17) px-to-rem(28),
+        'font-size': px-to-rem(18),
+    ),
+    'md': (
+        'padding': px-to-rem(12) px-to-rem(24),
+        'font-size': px-to-rem(18),
+    ),
+    'sm': (
+        'padding': px-to-rem(8) px-to-rem(16),
+        'font-size': px-to-rem(16),
+    ),
+);
+
+.polus-ui {
+    &__tabs {
+        display: inline-flex;
+        flex-direction: column;
+    }
+
+    &__tabs-items {
+        box-sizing: border-box;
+        display: inline-flex;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        overflow-x: scroll;
+        gap: px-to-rem(8);
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            display: flex;
+            flex-wrap: wrap;
+            overflow-x: visible;
+        }
+    }
+
+    &__tabs-item {
+        background-color: $color-black-light;
+        border-radius: px-to-rem(6);
+        border: 1px solid $color-grey;
+        color: $color-white;
+        cursor: pointer;
+        padding: map.get($tabs-sizes, 'md', 'padding');
+        font-size: map.get($tabs-sizes, 'md', 'font-size');
+        line-height: 1;
+        font-weight: 400;
+        user-select: none;
+        white-space: nowrap;
+        transition-property: background-color, border, color;
+        transition-duration: 0.15s;
+        transition-timing-function: ease-in-out;
+
+        &::before {
+            content: attr(text);
+            display: block;
+            font-weight: 400;
+            height: 0;
+            overflow: hidden;
+            visibility: hidden;
+        }
+
+        &:hover:not(#{&}--active):not(#{&}--disabled) {
+            border: 1px solid color.adjust($color-grey, $lightness: 5%);
+        }
+
+        @each $name, $size in $tabs-sizes {
+            &--#{$name} {
+                padding: map.get($size, 'padding');
+                font-size: map.get($size, 'font-size');
+            }
+        }
+
+        &--active {
+            background-color: $color-blue;
+            border: 1px solid $color-blue;
+            cursor: default;
+        }
+
+        &--disabled {
+            color: color.mix($color-white, $color-black-light, 30%);
+            cursor: default;
+        }
+
+        &--disabled#{&}--active {
+            background-color: color.mix($color-blue, $color-black-light, 30%);
+            border: 1px solid color.mix($color-blue, $color-black-light, 30%);
+        }
+    }
+
+    &__tabs-content-inner {
+        color: $color-white;
+        font-size: px-to-rem(18);
+        padding: px-to-rem(16) 0;
+    }
+}

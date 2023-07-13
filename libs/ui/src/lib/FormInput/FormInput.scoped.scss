@@ -1,0 +1,60 @@
+@import '../assets/scss/variables';
+@import '../assets/scss/utils';
+
+.form-input {
+    display: flex;
+    flex-direction: column;
+    gap: px-to-rem(8);
+    width: 100%;
+
+    &__data {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__data-label {
+        display: inline-flex;
+        align-items: center;
+        color: $color-white;
+        font-size: px-to-rem(14);
+        font-weight: 300;
+        line-height: 130%;
+
+        &--sm {
+            // ...
+        }
+
+        &--md {
+            font-size: px-to-rem(16);
+            font-weight: 400;
+            line-height: 150%;
+        }
+
+        &--lg {
+            font-size: px-to-rem(18);
+            font-weight: 400;
+            line-height: 150%;
+        }
+
+        &--error {
+            align-self: flex-end;
+            color: $color-red;
+        }
+
+        &--dark {
+            color: $color-white-dark;
+        }
+    }
+
+    &__data-label-asterisk {
+        color: $color-red;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+    }
+
+    &__element {
+        width: 100%;
+    }
+}

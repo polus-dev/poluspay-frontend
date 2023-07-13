@@ -1,0 +1,40 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+.modal {
+    &__header {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    &__header-text {
+        &--highlight {
+            color: $color-orange;
+        }
+    }
+
+    &__body {
+        width: 100%;
+    }
+
+    &__body-description {
+        margin-bottom: px-to-rem(12);
+        text-align: center;
+        color: $color-white-dark;
+        font-size: px-to-rem(16);
+        font-weight: 400;
+        line-height: 150%;
+    }
+
+    &__body-buttons {
+        margin-top: px-to-rem(16);
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(16);
+    }
+
+    &__body-buttons-item {
+        width: 100%;
+        max-width: calc((100% - px-to-rem(16)) / 2);
+    }
+}

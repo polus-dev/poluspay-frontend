@@ -1,0 +1,79 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+.modal {
+    &__header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: px-to-rem(6);
+        width: 100%;
+    }
+
+    &__header-image {
+        width: px-to-rem(24);
+        height: px-to-rem(24);
+        border-radius: px-to-rem(6);
+    }
+
+    &__body {
+        margin-top: px-to-rem(12);
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__body-form {
+        margin-bottom: px-to-rem(16);
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(8);
+        width: 100%;
+    }
+
+    &__body-form-data {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__body-form-data-label {
+        font-size: px-to-rem(14);
+        font-weight: 300;
+        line-height: 130%;
+
+        &--error {
+            color: $color-red;
+        }
+    }
+
+    &__body-switch {
+        margin-bottom: px-to-rem(24);
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(12);
+    }
+
+    &__body-switch-text {
+        font-size: px-to-rem(14);
+        font-weight: 300;
+        line-height: 130%;
+    }
+
+    &__body-buttons {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(8);
+        width: 100%;
+    }
+
+    &__body-buttons-item {
+        width: calc((100% - px-to-rem(8)) / 2);
+    }
+
+    &__body-buttons-item-icon {
+        margin-left: px-to-rem(8);
+        width: px-to-rem(20);
+        height: auto;
+        transform: rotate(-90deg);
+    }
+}

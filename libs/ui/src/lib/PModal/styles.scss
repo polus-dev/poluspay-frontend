@@ -1,0 +1,100 @@
+@use 'sass:color';
+
+@import '../assets/scss/variables';
+@import '../assets/scss/utils';
+
+.polus-ui {
+    // ...
+
+    &__modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: color.adjust($color-black, $alpha: -0.4);
+        z-index: 10;
+    }
+
+    &__modal-block {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        max-width: px-to-rem(404);
+        width: 100%;
+        background-color: $color-grey-dark;
+        border-radius: px-to-rem(12);
+        transform: translate(-50%, -50%);
+        z-index: 11;
+
+        @media screen and (max-width: $screen-md) {
+            max-width: calc(100% - px-to-rem(16));
+            top: auto;
+            left: px-to-rem(8);
+            right: px-to-rem(8);
+            bottom: px-to-rem(8);
+            transform: none;
+        }
+    }
+
+    &__modal-block-inner {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 px-to-rem(16) px-to-rem(24);
+    }
+
+    &__modal-close {
+        position: absolute;
+        top: px-to-rem(10);
+        right: px-to-rem(10);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: px-to-rem(24);
+        height: px-to-rem(24);
+        color: $color-white-dark;
+        cursor: pointer;
+    }
+
+    &__modal-icon {
+        width: px-to-rem(24);
+        height: auto;
+        stroke: $color-white;
+    }
+
+    &__modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: px-to-rem(44);
+        width: 100%;
+        font-size: px-to-rem(18);
+        font-weight: 500;
+    }
+
+    &__modal-body {
+        width: 100%;
+    }
+
+    &__modal-enter {
+        opacity: 0;
+    }
+
+    &__modal-enter-active {
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+    }
+
+    &__modal-exit {
+        opacity: 1;
+    }
+
+    &__modal-exit-active {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+    }
+}

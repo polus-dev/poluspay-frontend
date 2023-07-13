@@ -1,15 +1,16 @@
-import { Asset_t, Blockchain_t } from '../../types';
+import { IAsset } from '@poluspay-frontend/api';
 
-export type IAssetsResponse = {
-    [key in Asset_t]: {
-        networks: {
-            [key in Blockchain_t]: {
-                is_native: boolean;
-                contract: string;
-                decimals: number;
-                is_seeded_amount: boolean;
-                available_for_accept: boolean;
-            };
+export interface IAssetsResponse {
+    categories: { name: string; value: string[] }[];
+    decimals: {
+        [blockchain: string]: {
+            [asset: string]: number;
         };
     };
-};
+    assets: {
+        category: string[];
+        name: string;
+        meta: IAsset;
+        blockchains: string[];
+    }[];
+}

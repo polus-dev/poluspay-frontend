@@ -1,0 +1,212 @@
+@use 'sass:color';
+
+@import '../../../../../../assets/scss/variables';
+@import '../../../../../../assets/scss/utils';
+
+.form {
+    width: 100%;
+
+    &__title {
+        margin-bottom: px-to-rem(16);
+        font-size: px-to-rem(18);
+        font-weight: 500;
+        line-height: 150%;
+
+        @include breakpoint($screen-lg) {
+            margin-bottom: px-to-rem(20);
+        }
+    }
+
+    &__inner {
+        width: 100%;
+        height: auto;
+        padding: px-to-rem(16);
+        background-color: $color-black-light;
+        border-radius: px-to-rem(12);
+
+        @include breakpoint($screen-sm) {
+            padding: px-to-rem(24) px-to-rem(16);
+        }
+
+        @include breakpoint($screen-lg) {
+            padding: px-to-rem(24);
+        }
+    }
+
+    &__inner-user {
+        margin-bottom: px-to-rem(24);
+        display: flex;
+        align-items: center;
+
+        @include breakpoint($screen-lg) {
+            margin-bottom: px-to-rem(30);
+        }
+
+        &__avatar {
+            margin-right: px-to-rem(12);
+
+            @include breakpoint($screen-lg) {
+                margin-right: px-to-rem(16);
+            }
+        }
+
+        &__data {
+            display: flex;
+            flex-direction: column;
+            gap: px-to-rem(4);
+
+            @include breakpoint($screen-lg) {
+                gap: px-to-rem(8);
+            }
+        }
+
+        &__data-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: px-to-rem(18);
+            font-weight: 500;
+            line-height: 150%;
+        }
+
+        &__data-id {
+            display: flex;
+            align-items: center;
+            gap: px-to-rem(8);
+        }
+
+        &__data-id-value {
+            color: $color-white-dark;
+            font-size: px-to-rem(16);
+            font-weight: 400;
+            line-height: 150%;
+            transition: color 0.15s ease-in-out;
+
+            @include breakpoint($screen-md) {
+                display: none;
+            }
+
+            &--blue {
+                color: $color-blue-light;
+            }
+
+            &--desktop {
+                display: none;
+
+                @include breakpoint($screen-md) {
+                    display: block;
+                }
+            }
+        }
+
+        &__data-id-icon {
+            width: px-to-rem(20);
+            height: auto;
+            stroke: $color-white-dark;
+            transition: stroke 0.15s ease-in-out;
+            cursor: pointer;
+
+            &:hover {
+                stroke: $color-white;
+            }
+        }
+    }
+
+    &__inner-container {
+        margin-bottom: px-to-rem(24);
+        width: 100%;
+
+        &__item {
+            display: flex;
+            flex-direction: column;
+            gap: px-to-rem(8);
+        }
+
+        &__item-label {
+            font-size: px-to-rem(14);
+            font-weight: 300;
+            line-height: 130%;
+        }
+
+        &__item-textarea {
+            resize: none;
+            width: 100%;
+            height: px-to-rem(100);
+            padding: px-to-rem(12);
+            color: $color-white;
+            font-size: px-to-rem(18);
+            font-weight: 400;
+            border: 1px solid $color-grey;
+            background-color: $color-black;
+            border-radius: px-to-rem(10);
+            outline: none;
+            transition: border, color, opacity 0.15s ease-in-out;
+
+            &:hover {
+                border: 1px solid color.adjust($color-grey, $lightness: 5%);
+            }
+
+            &:focus-within {
+                border: 1px solid $color-blue-light;
+            }
+
+            &::placeholder {
+                color: $color-grey-light;
+            }
+        }
+    }
+
+    &__inner-container-topline {
+        margin-bottom: px-to-rem(16);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: px-to-rem(16);
+
+        @include breakpoint($screen-lg) {
+            margin-bottom: px-to-rem(24);
+        }
+
+        & > div {
+            grid-column-start: span 3;
+            grid-column-end: span 3;
+
+            @include breakpoint($screen-lg) {
+                grid-column-start: span 1;
+                grid-column-end: span 1;
+            }
+        }
+    }
+
+    &__inner-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: px-to-rem(24);
+
+        @include breakpoint($screen-lg) {
+            flex-direction: row-reverse;
+            justify-content: space-between;
+        }
+    }
+
+    &__inner-buttons-item {
+        width: 100%;
+
+        @include breakpoint($screen-lg) {
+            max-width: px-to-rem(160);
+        }
+
+        &--custom {
+            display: inline-flex;
+            width: auto;
+            color: $color-red-light;
+            font-size: px-to-rem(18);
+            font-weight: 500;
+            line-height: 130%;
+            transition: color 0.15s ease-in-out;
+            cursor: pointer;
+
+            &:hover {
+                color: $color-red;
+            }
+        }
+    }
+}

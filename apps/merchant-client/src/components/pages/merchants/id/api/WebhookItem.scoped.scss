@@ -1,0 +1,171 @@
+@import '../../../../../assets/scss/variables';
+@import '../../../../../assets/scss/utils';
+
+.webhook {
+    width: auto;
+    min-width: px-to-rem(500);
+    height: auto;
+    padding: px-to-rem(10) px-to-rem(12);
+    color: $color-white;
+    font-size: px-to-rem(14);
+    font-weight: 300;
+    line-height: 130%;
+    background-color: $color-black-light;
+    border-radius: px-to-rem(6);
+    cursor: pointer;
+
+    @include breakpoint($screen-md) {
+        padding: px-to-rem(18) px-to-rem(16);
+        font-size: px-to-rem(18);
+        font-weight: 400;
+        line-height: 150%;
+    }
+
+    @include breakpoint($screen-lg) {
+        padding: px-to-rem(18) px-to-rem(24);
+    }
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        font-size: px-to-rem(14);
+        font-weight: 300;
+        line-height: 130%;
+
+        @include breakpoint($screen-md) {
+            font-size: px-to-rem(18);
+            font-weight: 400;
+            line-height: 150%;
+        }
+    }
+
+    &__inner-id {
+        flex-basis: 35%;
+    }
+
+    &__inner-id-text {
+        // ...
+    }
+
+    &__inner-date {
+        flex-basis: 45%;
+    }
+
+    &__inner-date-text {
+        // ...
+    }
+
+    &__inner-status {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-basis: calc(20% - px-to-rem(24));
+        min-width: px-to-rem(100);
+    }
+
+    &__inner-status-text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: px-to-rem(75);
+        height: px-to-rem(30);
+        font-size: px-to-rem(14);
+        font-weight: 500;
+        line-height: 130%;
+        border-radius: px-to-rem(6);
+
+        &--success {
+            background-color: $color-green;
+        }
+
+        &--error {
+            background-color: $color-red;
+        }
+    }
+
+    &__inner-handler {
+        width: px-to-rem(24);
+        min-width: px-to-rem(24);
+        height: px-to-rem(24);
+    }
+
+    &__inner-handler-icon {
+        width: 100%;
+        height: auto;
+        stroke: $color-white;
+        transform: rotate(-90deg);
+        transition-property: transform, stroke;
+        transition: 0.2s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            stroke: $color-orange;
+        }
+
+        &--active {
+            stroke: $color-orange;
+            transform: rotate(0deg);
+        }
+    }
+
+    &__divider {
+        margin: px-to-rem(16) 0;
+        width: 100%;
+        height: 1px;
+        background-color: $color-grey;
+        cursor: default;
+    }
+
+    &__extended {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        cursor: default;
+    }
+
+    &__extended-item {
+        display: flex;
+        align-items: center;
+
+        &:not(:last-child) {
+            margin-bottom: px-to-rem(10);
+
+            @include breakpoint($screen-md) {
+                margin-bottom: px-to-rem(12);
+            }
+        }
+    }
+
+    &__extended-item-text {
+        width: auto;
+        color: $color-white-dark;
+
+        &--fixed {
+            width: px-to-rem(104);
+
+            @include breakpoint($screen-md) {
+                width: px-to-rem(132);
+            }
+        }
+    }
+
+    &__extended-details {
+        margin-top: px-to-rem(12);
+        width: 100%;
+        height: px-to-rem(80);
+        padding: px-to-rem(16);
+        border: 1px solid $color-grey;
+        background-color: $color-black;
+        border-radius: px-to-rem(12);
+
+        @include breakpoint($screen-md) {
+            margin-top: px-to-rem(16);
+        }
+    }
+
+    &__extended-details-text {
+        // ...
+    }
+}

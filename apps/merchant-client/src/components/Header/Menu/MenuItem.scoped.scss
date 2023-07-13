@@ -1,0 +1,49 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+.menu-item {
+    color: $color-white;
+    font-size: px-to-rem(18);
+    font-weight: 500;
+    line-height: 150%;
+
+    &:not(:last-child) {
+        margin-bottom: px-to-rem(24);
+
+        @include breakpoint($screen-md) {
+            margin-bottom: px-to-rem(32);
+        }
+
+        @include breakpoint($screen-lg) {
+            margin-bottom: 0;
+        }
+    }
+
+    &:hover {
+        color: $color-orange;
+    }
+
+    @include breakpoint($screen-lg) {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        width: auto;
+        font-size: px-to-rem(16);
+        font-weight: 400;
+    }
+
+    &__link {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        height: auto;
+        padding: px-to-rem(4) px-to-rem(6);
+        color: inherit;
+        transition: color 0.2s ease-in-out;
+        cursor: pointer;
+
+        &--active {
+            color: $color-orange;
+        }
+    }
+}
