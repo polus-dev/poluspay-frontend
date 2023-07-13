@@ -102,7 +102,7 @@ export const MerchantInvoicesForm = ({
                     [asset.name]: {
                         amount: data.amount,
                         address: merchantWallets?.find(
-                            (wallet) => wallet.network === el.name
+                            (wallet) => wallet.network === el.label
                         )?.address,
                     },
                 };
