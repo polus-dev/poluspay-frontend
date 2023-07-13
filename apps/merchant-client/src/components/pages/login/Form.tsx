@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { emailRegex, EMAIL_CODE_LENGTH } from 'tools/index';
 
-import { PButton, PInput } from '@poluspay-frontend/ui';
+import { notify, PButton, PInput } from '@poluspay-frontend/ui';
 import { ConnectButton } from '../../ui/ConnectButton/ConnectButton';
 import { ReactComponent as IconMail } from '../../../assets/icons/mail.svg';
 import { ReactComponent as LogoGoogle } from '../../../assets/logos/google.svg';
@@ -55,17 +55,20 @@ export const LoginForm: React.FC = () => {
 
     const handleSubmit = () => {
         if (stage === 2) {
-            // notify({
-            //   title: 'Email sent',
-            //   description: 'Please check your inbox',
-            //   status: 'success',
-            // });
-            console.log('handle email submitting');
+            notify({
+                title: 'Email sent',
+                description: 'Please check your inbox',
+                status: 'success',
+            });
             sendCode({ email });
             setStage(3);
         } else if (stage === 3) {
             sendCode({ email, code });
-            console.log('handle verification code submitting');
+            notify({
+                title: 'Verification',
+                description: 'handle verification code submitting',
+                status: 'success',
+            });
         }
     };
 
