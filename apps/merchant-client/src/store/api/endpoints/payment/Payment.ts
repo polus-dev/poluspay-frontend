@@ -70,5 +70,4 @@ export const {
     useCreatePaymentMutation,
     useGetPaymentByMerchantIdQuery,
     useGetPaymentByPaymentIdQuery,
-    useLazyGetPaymentByMerchantIdQuery,
 } = paymentApi;

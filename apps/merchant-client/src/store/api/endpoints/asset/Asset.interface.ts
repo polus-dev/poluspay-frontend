@@ -7,5 +7,10 @@ export interface IAssetsResponse {
             [asset: string]: number;
         };
     };
-    assets: { category: string[]; name: string; meta: IAsset }[];
+    assets: {
+        category: string[];
+        name: string;
+        meta: IAsset;
+        blockchains: string[];
+    }[];
 }

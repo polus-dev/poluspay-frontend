@@ -10,3 +10,4 @@ export * from './isEVMBlockchain';
 export * from './roundCryptoAmount';
 export * from './formatDate';
 export * from './getExplorer';
+export * from './getAssetUrl';

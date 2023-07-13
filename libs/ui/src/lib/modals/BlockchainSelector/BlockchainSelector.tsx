@@ -38,8 +38,19 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
     const [blockchains, setBlockchains] = useState<BlockchainItem[]>(options);
 
     const handleSelect = (item: BlockchainItem) => {
+        if (multi) {
+            debugger;
+            selected.includes(item)
+                ? setSelected(selected.filter((el) => el !== item))
+                : setSelected([...selected, item]);
+            return;
+        }
         setSelected(item);
     };
+
+    useEffect(() => {
+        setBlockchains(options);
+    }, [options]);
 
     useEffect(() => {
         if (!search) {
@@ -57,17 +68,17 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
     // make close on esc
     //
     const ref = useRef<HTMLDivElement | null>(null);
-    useEffect(() => {
-        const checkIfClickedOutside = (e: MouseEvent) => {
-            if (ref.current && !ref.current.contains(e.target as Node)) {
-                onClose();
-            }
-        };
-        document.addEventListener('click', checkIfClickedOutside);
-        return () => {
-            document.removeEventListener('click', checkIfClickedOutside);
-        };
-    }, [onClose]);
+    // useEffect(() => {
+    //     const checkIfClickedOutside = (e: MouseEvent) => {
+    //         if (ref.current && !ref.current.contains(e.target as Node)) {
+    //             onClose();
+    //         }
+    //     };
+    //     document.addEventListener('click', checkIfClickedOutside);
+    //     return () => {
+    //         document.removeEventListener('click', checkIfClickedOutside);
+    //     };
+    // }, [onClose]);
 
     return ReactDOM.createPortal(
         <>
@@ -103,7 +114,6 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
                                         className="modal__body-container-item"
                                         key={el.id}
                                         onClick={() => {
-                                            console.log('item', el);
                                             handleSelect(el);
                                         }}
                                     >
@@ -122,7 +132,9 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
                                                 'modal__body-container-item__icon':
                                                     true,
                                                 'modal__body-container-item__icon--active':
-                                                    selected === el,
+                                                    multi
+                                                        ? selected.includes(el)
+                                                        : selected === el,
                                             })}
                                         />
                                     </div>

@@ -41,9 +41,9 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
                             {merchant?.domain}
                         </p>
                         <p className="preview__header-data__row-amount">
-                            Total: {watch('amount')}
+                            Total: {watch('amount') || 0}
                             <span className="preview__header-data__row-amount preview__header-data__row-amount--dark">
-                                USDT
+                                {watch('asset')?.toUpperCase() || 'MATIC'}
                             </span>
                         </p>
                     </div>

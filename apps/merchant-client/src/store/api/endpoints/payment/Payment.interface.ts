@@ -33,8 +33,8 @@ export interface ICreatePaymentRequest {
 }
 
 export type IAssets = {
-    [key in Blockchain_t]: {
-        [key in Asset_t]: {
+    [blockchain: string]: {
+        [asset: string]: {
             amount: string | number;
             address: string;
         };

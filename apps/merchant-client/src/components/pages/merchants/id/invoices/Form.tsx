@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useModal } from '../../../../../hooks/useModal';
 
@@ -6,6 +6,7 @@ import {
     FormInput,
     ModalBlockChainSelector,
     ModalCurrencySelector,
+    notify,
     PButton,
 } from '@poluspay-frontend/ui';
 import { ModalPreviewForm } from '../../../../../components/modals/PreviewForm/PreviewForm';
@@ -21,10 +22,18 @@ import {
     UseFormSetValue,
 } from 'react-hook-form';
 import { InvoiceForm } from '../../../../../pages/merchants/id/invoices/hooks/form.interface';
-import { useGetAssetsQuery } from '@poluspay-frontend/merchant-query';
+import {
+    useCreatePaymentMutation,
+    useGetAssetsQuery,
+    useGetMerchantWalletQuery,
+} from '@poluspay-frontend/merchant-query';
+import { getAssetUrl } from '../../../../../../../../tools';
+import { blockchainList } from '../../../../ui/Wallets/wallet-list';
+import { useGetMerchantIdFromParams } from '../../../../../hooks/useGetMerchantId';
+import { useAvailableForMerchantAssets } from '../../../../../hooks/useAvailableForMerchantAssets';
 
 interface Asset {
-    id: number;
+    id: string;
     name: string;
     image: string;
 }
@@ -48,17 +57,74 @@ export const MerchantInvoicesForm = ({
     formState,
     setValue,
 }: MerchantInvoicesFormProps) => {
-    const [amount, setAmount] = useState('');
     const [asset, setAsset] = useState<Asset>();
     const [blockchains, setBlockchains] = useState<Blockchain[]>([]);
-    const [description, setDescription] = useState('');
+    const [options, setOptions] = useState<Blockchain[]>([]);
+    const [tempAssets, setTempAssets] = useState<any[]>([]);
 
     const modalCurrency = useModal();
     const modalBlockchains = useModal();
     const modalPreview = useModal();
-    const { data } = useGetAssetsQuery();
+    const merchantId = useGetMerchantIdFromParams();
+    const { assets: data, availableNetworks } =
+        useAvailableForMerchantAssets(merchantId);
 
-    const submit: SubmitHandler<InvoiceForm> = (data) => {};
+    const { data: merchantWallets } = useGetMerchantWalletQuery({
+        merchant_id: merchantId,
+    });
+
+    const [createInvoice, { isLoading: isInvoiceCreating }] =
+        useCreatePaymentMutation();
+
+    useEffect(() => {
+        if (availableNetworks) {
+            const filtered = blockchainList.filter((el) =>
+                availableNetworks.some((e) => e.label === el.label)
+            );
+            setOptions(filtered);
+        }
+    }, [availableNetworks]);
+
+    const submit: SubmitHandler<InvoiceForm> = async (data) => {
+        try {
+            if (!(asset && blockchains.length)) {
+                notify({
+                    title: 'Error',
+                    description:
+                        'Please select an asset and at least one blockchain',
+                    status: 'error',
+                });
+                return;
+            }
+            const invoiceAssets = {};
+            blockchains.forEach((el) => {
+                invoiceAssets[el.label] = {
+                    [asset.name]: {
+                        amount: data.amount,
+                        address: merchantWallets?.find(
+                            (wallet) => wallet.network === el.name
+                        )?.address,
+                    },
+                };
+            });
+            await createInvoice({
+                merchant_id: merchantId,
+                description: data.description,
+                assets: invoiceAssets,
+            }).unwrap();
+            notify({
+                title: 'Success',
+                description: 'Invoice created successfully',
+                status: 'success',
+            });
+        } catch (error) {
+            notify({
+                title: 'Error',
+                description: error.message,
+                status: 'error',
+            });
+        }
+    };
 
     const removeSelectedBlockchain = (
         event: React.MouseEvent,
@@ -84,49 +150,6 @@ export const MerchantInvoicesForm = ({
 
         setBlockchains(items);
     };
-
-    const blockchainsList = [
-        {
-            id: 1,
-            name: 'polygon',
-            image: 'polygon',
-        },
-        {
-            id: 2,
-            name: 'polygon',
-            image: 'polygon',
-        },
-        {
-            id: 3,
-            name: 'polygon',
-            image: 'polygon',
-        },
-        {
-            id: 4,
-            name: 'polygon',
-            image: 'polygon',
-        },
-        {
-            id: 5,
-            name: 'polygon',
-            image: 'polygon',
-        },
-        {
-            id: 6,
-            name: 'polygon',
-            image: 'polygon',
-        },
-        {
-            id: 7,
-            name: 'polygon',
-            image: 'polygon',
-        },
-        {
-            id: 8,
-            name: 'polygon',
-            image: 'polygon',
-        },
-    ];
 
     return (
         <form onSubmit={handleSubmit(submit)} className="form">
@@ -155,7 +178,7 @@ export const MerchantInvoicesForm = ({
                                 <>
                                     <img
                                         className="form__inner-item-select__inner-image"
-                                        src={`/images/wallets/${asset.image}.png`}
+                                        src={asset.image}
                                         alt={asset.name}
                                     />
                                     <p className="form__inner-item-select__inner-text">
@@ -211,8 +234,6 @@ export const MerchantInvoicesForm = ({
                         {...register('description')}
                         placeholder="Few words about invoice"
                         className="form__inner-item-textarea"
-                        // value={description}
-                        // onInput={() => {}}
                     />
                 </div>
                 <div className="form__inner-buttons">
@@ -234,17 +255,36 @@ export const MerchantInvoicesForm = ({
                     </div>
                 </div>
             </div>
-            <ModalCurrencySelector
-                visible={modalCurrency.visible}
-                onClose={(asset) => handleModalCurrency(asset)}
-            />
-            <ModalBlockChainSelector
-                multi
-                visible={modalBlockchains.visible}
-                options={blockchainsList}
-                onClose={() => modalBlockchains.close()}
-                onApply={(items) => handleModalBlockchains(items)}
-            />
+            {data && availableNetworks && (
+                <>
+                    <ModalCurrencySelector
+                        visible={modalCurrency.visible}
+                        onClose={(asset) => {
+                            handleModalCurrency(asset);
+                            setValue('asset', asset.name);
+                        }}
+                        categories={data.categories.map((el) => el.name)}
+                        assetsForMerchant={data.assets.map((el) => ({
+                            name: el.name,
+                            image: getAssetUrl(
+                                import.meta.env.VITE_REACT_APP_ASSET_URL,
+                                el.name
+                            ),
+                            id: el.name,
+                            subname: el.name,
+                            category: el.category,
+                        }))}
+                    />
+                    <ModalBlockChainSelector
+                        multi
+                        visible={modalBlockchains.visible}
+                        options={options}
+                        setSelected={setBlockchains}
+                        selected={blockchains}
+                        onClose={() => modalBlockchains.close()}
+                    />
+                </>
+            )}
             <ModalPreviewForm
                 visible={modalPreview.visible}
                 onClose={() => modalPreview.close()}

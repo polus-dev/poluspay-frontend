@@ -52,10 +52,14 @@ export const assetApi = createApi({
                         // @ts-ignore
                         const newAsset: (typeof result.assets)[number] = {
                             category: [],
+                            blockchains: Object.keys(assetObj.networks),
                         };
-
-                        for (const assetObjKey in assetObj.categories) {
-                            newAsset.category.push(assetObjKey);
+                        if (assetObj.categories) {
+                            for (const assetObjKey of assetObj.categories) {
+                                newAsset.category.push(assetObjKey);
+                            }
+                        } else {
+                            newAsset.category.push('unknown');
                         }
                         newAsset.name = asset;
                         newAsset.meta = assetObj;
