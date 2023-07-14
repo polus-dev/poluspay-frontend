@@ -18,7 +18,7 @@ export const Loader: React.FC<LoaderProps> = ({
     return (
         <div
             className={classNames({
-                loader: true,
+                'loader': true,
                 'loader--background': hasBackground,
             })}
             style={{
