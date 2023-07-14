@@ -36,10 +36,6 @@ export const useGetPaginatedInvoices = ({
     }, [isAvailableAssetsLoading, isInvoiceLoading]);
 
     useEffect(() => {
-        console.log(invoices);
-    }, [invoices]);
-
-    useEffect(() => {
         if (invoicesResponse && availableAssets) {
             setInvoices(
                 invoicesResponse.data.map((invoice): Invoice => {

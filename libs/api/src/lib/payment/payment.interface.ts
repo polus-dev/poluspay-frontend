@@ -3,7 +3,7 @@ export interface IPayment {
     merchant_id: string;
     description: string;
     pay_link: string;
-    assets: Assets;
+    assets: Asset[];
     evm_fee_address: string;
     status: PaymentStatus;
     transaction?: ITransaction;
@@ -20,12 +20,10 @@ interface ITransaction {
     notification_delivered: boolean;
 }
 
-type Assets = {
-    [blockchain: string]: {
-        [asset: string]: {
-            amount: string;
-            fee: string;
-            address: string;
-        };
-    };
+type Asset = {
+    network: string;
+    name: string;
+    amount: string;
+    fee: string;
+    address: string;
 };

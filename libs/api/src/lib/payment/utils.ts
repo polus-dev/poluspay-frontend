@@ -19,14 +19,20 @@ export const getPaymentAssetInfo = (
 
     // @ts-ignore
     const amountInDecimals: Required<ReturnPaymentAssetInfo> = { asset: {} };
-    blockchains.forEach((blockchain) => {
-        const asset = Object.keys(assets[blockchain])[0];
-        const amount = assets[blockchain][asset].amount;
-        amountInDecimals.asset = {
-            blockchain,
-            amount,
-            asset,
-        };
-    });
+    // blockchains.forEach((blockchain) => {
+    //     const asset = assets[0].name;
+    //     const amount = assets[blockchain][asset].amount;
+    //     amountInDecimals.asset = {
+    //         blockchain,
+    //         amount,
+    //         asset,
+    //     };
+    // });
+    amountInDecimals.asset = {
+        asset: assets[0].name,
+        amount: assets[0].amount,
+        blockchain: assets[0].network,
+    };
+
     return amountInDecimals;
 };

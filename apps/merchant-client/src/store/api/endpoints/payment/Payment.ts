@@ -66,8 +66,5 @@ export const paymentApi = createApi({
     }),
 });
 
-export const {
-    useCreatePaymentMutation,
-    useGetPaymentByMerchantIdQuery,
-    useGetPaymentByPaymentIdQuery,
-} = paymentApi;
+export const { useCreatePaymentMutation, useGetPaymentByMerchantIdQuery } =
+    paymentApi;

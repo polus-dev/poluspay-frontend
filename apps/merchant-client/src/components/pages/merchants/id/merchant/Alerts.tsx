@@ -5,17 +5,14 @@ import { ReactComponent as IconArrow } from '../../../../../assets/icons/arrow.s
 
 import './Alerts.scoped.scss';
 import { useGetMerchantByIdQuery } from '@poluspay-frontend/merchant-query';
+import { useGetMerchantIdFromParams } from '../../../../../hooks/useGetMerchantId';
 
 export const MerchantProfileAlerts: React.FC = () => {
     const navigate = useNavigate();
 
-    const { id: merchantId } = useParams<{ id: string }>();
+    const merchantId = useGetMerchantIdFromParams();
 
-    if (!merchantId) {
-        return <></>;
-    }
-
-    const { data: merchant } = useGetMerchantByIdQuery({
+    const { data: merchant, isError } = useGetMerchantByIdQuery({
         merchant_id: merchantId,
     });
 
