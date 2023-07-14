@@ -64,10 +64,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
     next,
 }) => {
     const tabs = [
-        {
-            id: 'all',
-            text: 'All',
-        },
+        {  id: 'all', text: 'All' },
         { id: 'wallet', text: 'Wallets' },
         { id: 'exchange', text: 'Exchanges' },
         { id: 'blockchain', text: 'Blockchains' },

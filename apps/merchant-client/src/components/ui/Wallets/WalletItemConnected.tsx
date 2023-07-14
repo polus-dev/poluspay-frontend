@@ -5,6 +5,8 @@ import { ReactComponent as IconDelete } from '../../../assets/icons/delete.svg';
 
 import './WalletItemConnected.scoped.scss';
 
+import classNames from 'classnames';
+
 interface WalletItemProps {
     item: WalletItemConnected;
     enabled: boolean;
@@ -24,7 +26,12 @@ export const MerchantWalletItemConnected: React.FC<WalletItemProps> = ({
 
     return (
         <div className="wallet-item">
-            <div className="wallet-item__data">
+            <div
+                className={classNames({
+                    'wallet-item__data': true,
+                    'wallet-item__data--disabled': !enabled
+                })}
+            >
                 <img
                     className="wallet-item__data-image"
                     src={`/images/wallets/${item.image}.png`}

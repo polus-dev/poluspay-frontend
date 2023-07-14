@@ -81,7 +81,7 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
                                             'modal__body-container-upload__handler-icon':
                                                 true,
                                             'modal__body-container-upload__handler-icon--active':
-                                                !image && !previewImage,
+                                                !image || !previewImage || error,
                                         })}
                                     />
                                 </div>
@@ -108,7 +108,6 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
                                 />
                             </div>
                             <div className="modal__body-buttons-item">
-                                {/* disable if image does not match the requirements or image is not uploaded by user */}
                                 <PButton
                                     wide
                                     loading={isUploading}

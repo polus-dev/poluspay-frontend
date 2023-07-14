@@ -34,6 +34,10 @@
         @include breakpoint($screen-sm) {
             gap: px-to-rem(10);
         }
+
+        &--disabled {
+            opacity: .3;
+        }
     }
 
     &__data-image {

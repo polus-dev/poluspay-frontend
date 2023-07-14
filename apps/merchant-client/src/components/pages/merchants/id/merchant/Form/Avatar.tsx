@@ -1,13 +1,10 @@
-import { useState } from 'react';
+import type { LogoStatus } from '../../../../../../store/api/endpoints/merchant/Merchant.interface';
 
 import { ReactComponent as IconUpload } from '../../../../../../assets/icons/upload.svg';
 import { ReactComponent as IconWarning } from '../../../../../../assets/icons/warning.svg';
 import { ReactComponent as IconEdit } from '../../../../../../assets/icons/edit.svg';
 
 import './Avatar.scoped.scss';
-import { LogoStatus } from '../../../../../../store/api/endpoints/merchant/Merchant.interface';
-
-type AvatarState = 'undefined' | 'moderated' | 'uploaded';
 
 interface AvatarProps {
     openModal: () => void;

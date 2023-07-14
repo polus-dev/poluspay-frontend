@@ -1,15 +1,13 @@
-import React from 'react';
+import type { LogoStatus } from '../../../store/api/endpoints/merchant/Merchant.interface';
+
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useCopyText } from '../../../hooks/useCopyText';
 
-import './MerchantItem.scoped.scss';
 import { ReactComponent as IconCopy } from '../../../assets/icons/copy.svg';
-// remove the import below
-import defaultLogo from '../../../images/connect-button.jpg';
-import { LogoStatus } from '../../../store/api/endpoints/merchant/Merchant.interface';
 
-// replace interface and props below with the correct ones
+import './MerchantItem.scoped.scss';
+
 interface IMerchantProps {
     name: string;
     website: string;
@@ -65,32 +63,24 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
         <Link className="merchant-item" to={`/merchants/${id}/merchant`}>
             <div className="merchant-item__inner">
                 <div className="merchant-item__name">
-                    {/* check if avatar is set and
-                    replace src with dynamic one */}
-                    <img
-                        className="merchant-item__name-image"
-                        alt="Merchant avatar"
-                        src={
-                            avatarStatus === 'confirmed' && logo
-                                ? logo
-                                : defaultLogo
-                        }
-                    />
+                    {(avatarStatus === 'confirmed' && logo) && (
+                        <img
+                            className="merchant-item__name-image"
+                            alt="Merchant avatar"
+                            src={logo}
+                        />
+                    )}
                     <p className="merchant-item__name-text">{getShortName()}</p>
                 </div>
                 <div className="merchant-item__nameweb">
                     <div className="merchant-item__nameweb__inner">
-                        {/* check if avatar is set and
-                        replace src with dynamic one */}
-                        <img
-                            className="merchant-item__nameweb__inner-image"
-                            alt="Merchant avatar"
-                            src={
-                                avatarStatus === 'confirmed' && logo
-                                    ? logo
-                                    : defaultLogo
-                            }
-                        />
+                        {(avatarStatus === 'confirmed' && logo) && (
+                            <img
+                                className="merchant-item__nameweb__inner-image"
+                                alt="Merchant avatar"
+                                src={logo}
+                            />
+                        )}
                         <p className="merchant-item__nameweb__inner-text">
                             {getShortName()}
                         </p>
