@@ -40,7 +40,9 @@ export const Header: React.FC = () => {
         );
 
         setMenuScrolled();
-        navigate('/merchants');
+        if (window.location.pathname === '/') {
+            navigate('/merchants');
+        }
     }, []);
 
     return (
