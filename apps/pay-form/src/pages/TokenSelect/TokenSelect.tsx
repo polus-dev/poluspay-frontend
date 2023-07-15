@@ -47,6 +47,7 @@ import { ChainId } from '../../store/api/endpoints/types';
 import { userTokenPairPriceSlice } from '../../store/features/tokenPairPrice/tokenPairPriceSlice';
 import { useTokenPairPrice } from './hooks/useTokenPairPrice';
 import { roundCryptoAmount } from 'tools';
+import { displayMerchantInfo } from '../../utils/getMerchantInfo';
 
 interface MainProps {
     id: string;
@@ -60,7 +61,6 @@ interface MainProps {
 }
 
 const Main: React.FC<MainProps> = memo((props: MainProps) => {
-    /// NEW CODE START
     const {
         error,
         isExpired,
@@ -89,10 +89,8 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
         {
             payment_id: getParameterByName('uuid')!,
         },
-        { pollingInterval: isExpired ? 0 : 1000 }
+        { pollingInterval: isExpired || import.meta.env.DEV ? 0 : 1000 }
     );
-
-    /// NEW CODE END
 
     const isVisibleGuideButton = useAppSelector(
         (state) => state.guide.isVisible
@@ -215,11 +213,19 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
                     <div className="slide-in-bck-center">
                         <div className="domain-block">
                             <div className="domain-amount-block">
+                                {info.merchant.logo && (
+                                    <img
+                                        style={{
+                                            width: '50px',
+                                            height: '50px',
+                                            borderRadius: '50%',
+                                        }}
+                                        src={info.merchant.logo}
+                                        alt="merchant logo"
+                                    />
+                                )}
                                 <span>
-                                    {info.merchant?.domain.replace(
-                                        'https://',
-                                        ''
-                                    )}
+                                    {displayMerchantInfo(info.merchant)}
                                 </span>
                                 <div className="amount-block">
                                     <span>{`${
