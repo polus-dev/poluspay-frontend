@@ -23,6 +23,7 @@ import {
     http,
     parseAbiParameters,
 } from 'viem';
+import { ethers } from 'ethers';
 
 export type Permit2AllowanceType = {
     amount: bigint;
@@ -58,14 +59,11 @@ export class CustomProvider {
         path: Hex,
         amountOut: bigint
     ): Promise<bigint> {
+        const coder = new ethers.utils.AbiCoder();
         const data = ('0x2f80bb1d' +
-            encodeAbiParameters(
-                [
-                    { name: 'path', type: 'bytes' },
-                    { name: 'amountOut', type: 'uint256' },
-                ],
-                [path, amountOut]
-            )) as Hex;
+            coder
+                .encode(['bytes', 'uint256'], [path, amountOut])
+                .replace('0x', '')) as Hex;
 
         const result = await this.publicClient.call({
             // @ts-ignore
@@ -75,10 +73,11 @@ export class CustomProvider {
         if (!result.data) {
             throw new Error('getValueForSwap: result.data is undefined');
         }
-        return decodeAbiParameters(
+        const r = decodeAbiParameters(
             parseAbiParameters('uint256'),
             result.data
         )[0];
+        return r;
     }
 
     get RouterAddress(): Address {

@@ -6,10 +6,11 @@ import { Token } from '../../api/types';
 import { Percent, Token as ERC20 } from '@uniswap/sdk-core';
 import { CustomProvider, WrapAltToken } from '../../../logic/payment';
 import { SwapOptions, SwapRouter } from '@uniswap/universal-router-sdk';
-import { getPathFromCallData, roundCryptoAmount } from '../../../logic/utils';
+import { getPathFromCallData } from '../../../logic/utils';
 import { ThunkConfig } from '../../store';
 import { ITokenPairPriceState } from './tokenPairPriceSlice';
 import { setPathTrade } from '../transaction/transactionSlice';
+import { roundCryptoAmount } from 'tools';
 
 interface IPayload {
     userToken: Token;
@@ -40,6 +41,7 @@ export const tokenPairPriceThunk = createAsyncThunk<
                 ),
             };
         }
+        debugger;
         const currentBlockchain = getState().connection.currentBlockchain;
         if (!currentBlockchain)
             return rejectWithValue('useTokenPrice: No blockchain') as any;

@@ -18,7 +18,7 @@ import optimismLogo from '../../img/optimism.svg';
 import btn from '../../img/btn.jpg';
 import wc from '../../img/wc.svg';
 
-import { getParameterByName, roundCryptoAmount } from '../../logic/utils';
+import { getParameterByName } from '../../logic/utils';
 import { CheatCodeListener } from '../../components/CheatCodeListener';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { ProgressBar } from '../../components/ui/ProgressBar';
@@ -46,6 +46,7 @@ import { useGetPaymentByPaymentIdQuery } from '../../store/api/endpoints/payment
 import { ChainId } from '../../store/api/endpoints/types';
 import { userTokenPairPriceSlice } from '../../store/features/tokenPairPrice/tokenPairPriceSlice';
 import { useTokenPairPrice } from './hooks/useTokenPairPrice';
+import { roundCryptoAmount } from 'tools';
 
 interface MainProps {
     id: string;
