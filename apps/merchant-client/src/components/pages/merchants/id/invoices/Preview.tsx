@@ -30,11 +30,13 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
             })}
         >
             <div className="preview__header">
-                <img
-                    className="preview__header-avatar"
-                    src="/images/polus.png"
-                    alt="Avatar"
-                />
+                {merchant?.logo_status === 'confirmed' && merchant.logo && (
+                    <img
+                        className="preview__header-avatar"
+                        src={merchant.logo}
+                        alt="Avatar"
+                    />
+                )}
                 <div className="preview__header-data">
                     <div className="preview__header-data__row">
                         <p className="preview__header-data__row-domain">
