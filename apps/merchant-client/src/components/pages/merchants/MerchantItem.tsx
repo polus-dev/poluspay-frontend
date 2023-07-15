@@ -7,10 +7,11 @@ import { useCopyText } from '../../../hooks/useCopyText';
 import { ReactComponent as IconCopy } from '../../../assets/icons/copy.svg';
 
 import './MerchantItem.scoped.scss';
+import { makeShortHash } from '../../../../../../tools';
 
 interface IMerchantProps {
     name: string;
-    website: string;
+    website: string | null;
     id: string;
     logo: string | null;
     avatarStatus: LogoStatus;
@@ -28,20 +29,22 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
 
     const getShortName = () => {
         if (name.length > 20 && window.innerWidth > 768)
-            return `${name.slice(0, 18)}...`;
+            return makeShortHash(name, 18, 0);
+        // return `${name.slice(0, 18)}...`;
 
         return window.innerWidth < 768 && name.length > 12
-            ? `${name.slice(0, 8)}...`
+            ? /* `${name.slice(0, 8)}...` */ makeShortHash(name, 12, 0)
             : name;
     };
 
     const getShortId = () => {
         return window.innerWidth > 768
-            ? `${id.slice(0, 6)}...${id.slice(-6)}`
-            : `${id.slice(0, 4)}...${id.slice(-4)}`;
+            ? makeShortHash(id, 6)
+            : makeShortHash(id, 4);
     };
 
     const getShortDomain = () => {
+        if (!website) return 'no website';
         return website.includes('https://')
             ? website.replace('https://', '')
             : website;
@@ -49,8 +52,7 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
 
     const navigateToWebsite = (event: React.MouseEvent): void => {
         event.preventDefault();
-
-        window.open(website, '_blank');
+        if (website) window.open(website, '_blank');
     };
 
     const navigateToInvoice = (event: React.MouseEvent): void => {
@@ -63,7 +65,7 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
         <Link className="merchant-item" to={`/merchants/${id}/merchant`}>
             <div className="merchant-item__inner">
                 <div className="merchant-item__name">
-                    {(avatarStatus === 'confirmed' && logo) && (
+                    {avatarStatus === 'confirmed' && logo && (
                         <img
                             className="merchant-item__name-image"
                             alt="Merchant avatar"
@@ -74,7 +76,7 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
                 </div>
                 <div className="merchant-item__nameweb">
                     <div className="merchant-item__nameweb__inner">
-                        {(avatarStatus === 'confirmed' && logo) && (
+                        {avatarStatus === 'confirmed' && logo && (
                             <img
                                 className="merchant-item__nameweb__inner-image"
                                 alt="Merchant avatar"
