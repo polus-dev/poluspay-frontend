@@ -8,6 +8,7 @@ import { ReactComponent as IconCopy } from '../../../assets/icons/copy.svg';
 
 import './MerchantItem.scoped.scss';
 import { makeShortHash } from '../../../../../../tools';
+import { useRandomId } from '@poluspay-frontend/hooks';
 
 interface IMerchantProps {
     name: string;
@@ -60,6 +61,7 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
 
         navigate(`/merchants/${id}/invoices`);
     };
+    const randomId = useRandomId();
 
     return (
         <Link className="merchant-item" to={`/merchants/${id}/merchant`}>
@@ -80,7 +82,7 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
                             <img
                                 className="merchant-item__nameweb__inner-image"
                                 alt="Merchant avatar"
-                                src={logo}
+                                src={`${logo}?id=${randomId}`}
                             />
                         )}
                         <p className="merchant-item__nameweb__inner-text">

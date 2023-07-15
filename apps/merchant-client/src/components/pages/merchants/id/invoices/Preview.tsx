@@ -8,6 +8,8 @@ import { UseFormWatch } from 'react-hook-form';
 import { InvoiceForm } from '../../../../../pages/merchants/id/invoices/hooks/form.interface';
 import { useGetMerchantIdFromParams } from '../../../../../hooks/useGetMerchantId';
 import { useGetMerchantByIdQuery } from '@poluspay-frontend/merchant-query';
+import { useId, useMemo } from 'react';
+import { useRandomId } from '@poluspay-frontend/hooks';
 
 interface PreviewProps {
     isModal?: boolean;
@@ -18,6 +20,7 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
     isModal,
     watch,
 }) => {
+    const randomId = useRandomId();
     const merchantId = useGetMerchantIdFromParams();
     const { data: merchant } = useGetMerchantByIdQuery({
         merchant_id: merchantId,
@@ -33,7 +36,7 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
                 {merchant?.logo_status === 'confirmed' && merchant.logo && (
                     <img
                         className="preview__header-avatar"
-                        src={merchant.logo}
+                        src={`${merchant.logo}?id=${randomId}`}
                         alt="Avatar"
                     />
                 )}

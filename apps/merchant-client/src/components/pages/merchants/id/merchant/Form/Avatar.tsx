@@ -5,6 +5,7 @@ import { ReactComponent as IconWarning } from '../../../../../../assets/icons/wa
 import { ReactComponent as IconEdit } from '../../../../../../assets/icons/edit.svg';
 
 import './Avatar.scoped.scss';
+import { useRandomId } from '@poluspay-frontend/hooks';
 
 interface AvatarProps {
     openModal: () => void;
@@ -17,6 +18,7 @@ export const MerchantProfileAvatar: React.FC<AvatarProps> = ({
     image,
     avatarStatus,
 }) => {
+    const randomId = useRandomId();
     return (
         <div className="avatar">
             {!avatarStatus && (
@@ -39,7 +41,11 @@ export const MerchantProfileAvatar: React.FC<AvatarProps> = ({
                 <div className="avatar__uploaded" onClick={openModal}>
                     <img
                         className="avatar__uploaded-image"
-                        src={image || '/images/connect-button.jpg'}
+                        src={
+                            image
+                                ? `${image}id=${randomId}`
+                                : '/images/connect-button.jpg'
+                        }
                         alt="Avatar"
                     />
                     <IconEdit className="avatar__uploaded-icon" />

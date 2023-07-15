@@ -48,6 +48,7 @@ import { userTokenPairPriceSlice } from '../../store/features/tokenPairPrice/tok
 import { useTokenPairPrice } from './hooks/useTokenPairPrice';
 import { roundCryptoAmount } from 'tools';
 import { displayMerchantInfo } from '../../utils/getMerchantInfo';
+import { useRandomId } from '@poluspay-frontend/hooks';
 
 interface MainProps {
     id: string;
@@ -204,6 +205,7 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
     if (isExpired) {
         return <StatusComponent status="error" message=" payment expired" />;
     }
+    const randomId = useRandomId();
 
     return (
         <Panel id="render">
@@ -220,7 +222,7 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
                                             height: '50px',
                                             borderRadius: '50%',
                                         }}
-                                        src={info.merchant.logo}
+                                        src={`${info.merchant.logo}id=${randomId}`}
                                         alt="merchant logo"
                                     />
                                 )}
