@@ -43,7 +43,7 @@ export const MerchantProfileAvatar: React.FC<AvatarProps> = ({
                         className="avatar__uploaded-image"
                         src={
                             image
-                                ? `${image}id=${randomId}`
+                                ? `${image}?id=${randomId}`
                                 : '/images/connect-button.jpg'
                         }
                         alt="Avatar"

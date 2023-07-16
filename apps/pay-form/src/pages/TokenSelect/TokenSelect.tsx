@@ -222,7 +222,7 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
                                             height: '50px',
                                             borderRadius: '50%',
                                         }}
-                                        src={`${info.merchant.logo}id=${randomId}`}
+                                        src={`${info.merchant.logo}?id=${randomId}`}
                                         alt="merchant logo"
                                     />
                                 )}
