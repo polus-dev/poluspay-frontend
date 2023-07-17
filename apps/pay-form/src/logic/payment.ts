@@ -167,18 +167,18 @@ export class PaymentHelper extends CustomProvider {
             this.time1
         );
 
-        const valuesAny: PermitSingle = dataForSign.value;
 
         const { domain, types, values } = AllowanceTransfer.getPermitData(
-            valuesAny,
+            dataForSign.value,
             this.PermitAddress,
             ChainId[this.blockchain]
         );
+        debugger
         return {
             domain,
             types,
             message: values,
-            primaryType: 'Mail',
+            primaryType: 'PermitSingle',
         };
     }
 
