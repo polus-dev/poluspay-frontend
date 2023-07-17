@@ -3,6 +3,8 @@ import type { LogoStatus } from '../../../../../../store/api/endpoints/merchant/
 import { ReactComponent as IconUpload } from '../../../../../../assets/icons/upload.svg';
 import { ReactComponent as IconWarning } from '../../../../../../assets/icons/warning.svg';
 import { ReactComponent as IconEdit } from '../../../../../../assets/icons/edit.svg';
+import { ReactComponent as IconTimer } from '../../../../../../assets/icons/timer.svg';
+import { ReactComponent as IconCross } from '../../../../../../assets/icons/cross.svg';
 
 import './Avatar.scoped.scss';
 import { useRandomId } from '@poluspay-frontend/hooks';
@@ -19,6 +21,7 @@ export const MerchantProfileAvatar: React.FC<AvatarProps> = ({
     avatarStatus,
 }) => {
     const randomId = useRandomId();
+
     return (
         <div className="avatar">
             {!avatarStatus && (
@@ -28,31 +31,28 @@ export const MerchantProfileAvatar: React.FC<AvatarProps> = ({
             )}
             {avatarStatus === 'on_moderation' && (
                 <div className="avatar__moderated">
-                    {/*TODO: add moderation image*/}
-                    <img
-                        className="avatar__moderated-image"
-                        src="/images/connect-button.jpg"
-                        alt="Avatar"
-                    />
+                    <IconTimer className="avatar__moderated-image" />
                     <IconWarning className="avatar__moderated-icon" />
                 </div>
             )}
             {avatarStatus === 'confirmed' && (
-                <div className="avatar__uploaded" onClick={openModal}>
-                    <img
-                        className="avatar__uploaded-image"
-                        src={
-                            image
-                                ? `${image}?id=${randomId}`
-                                : '/images/connect-button.jpg'
-                        }
-                        alt="Avatar"
-                    />
-                    <IconEdit className="avatar__uploaded-icon" />
+                <div className="avatar__confirmed" onClick={openModal}>
+                    {image && (
+                        <img
+                            className="avatar__confirmed-image"
+                            src={`${image}?id=${randomId}`}
+                            alt="Avatar"
+                        />
+                    )}
+                    <IconEdit className="avatar__confirmed-icon" />
                 </div>
             )}
-            {/*TODO: add declined status  */}
-            {/*TODO: add declined image*/}
+            {avatarStatus === 'declined' && (
+                <div className="avatar__declined" onClick={openModal}>
+                    <IconCross className="avatar__declined-image" />
+                    <IconUpload className="avatar__declined-icon" />
+                </div>
+            )}
         </div>
     );
 };

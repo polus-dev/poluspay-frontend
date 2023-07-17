@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router';
 
-import { PButton } from '@poluspay-frontend/ui'
+import { PButton } from '@poluspay-frontend/ui';
 
-import './NotFound.scoped.scss'
+import './NotFound.scoped.scss';
 
 export const NotFoundPage: React.FC = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     return (
         <div className="error-page">
@@ -26,12 +26,10 @@ export const NotFoundPage: React.FC = () => {
                 <PButton
                     wide
                     size="lg"
-                    children={
-                        <p>Go back</p>
-                    }
+                    children={<p>Go back</p>}
                     onClick={() => navigate(-1)}
                 />
             </div>
         </div>
-    )
-}
+    );
+};

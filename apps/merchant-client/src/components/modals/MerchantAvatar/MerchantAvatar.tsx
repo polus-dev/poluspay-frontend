@@ -81,7 +81,9 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
                                             'modal__body-container-upload__handler-icon':
                                                 true,
                                             'modal__body-container-upload__handler-icon--active':
-                                                !image || !previewImage || error,
+                                                !image ||
+                                                !previewImage ||
+                                                error,
                                         })}
                                     />
                                 </div>

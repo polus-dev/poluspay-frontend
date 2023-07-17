@@ -29,7 +29,7 @@ export const MerchantWalletItemConnected: React.FC<WalletItemProps> = ({
             <div
                 className={classNames({
                     'wallet-item__data': true,
-                    'wallet-item__data--disabled': !enabled
+                    'wallet-item__data--disabled': !enabled,
                 })}
             >
                 <img

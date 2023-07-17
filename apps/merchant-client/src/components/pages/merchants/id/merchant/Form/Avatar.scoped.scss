@@ -3,7 +3,8 @@
 
 .avatar {
     $moderated: #{&}__moderated;
-    $uploaded: #{&}__uploaded;
+    $confirmed: #{&}__confirmed;
+    $declined: #{&}__declined;
 
     width: px-to-rem(50);
     height: px-to-rem(50);
@@ -41,13 +42,21 @@
     }
 
     &__moderated,
-    &__uploaded {
+    &__confirmed,
+    &__declined {
         position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 100%;
         height: 100%;
+        border-radius: 50%;
     }
 
     &__moderated {
+        border: px-to-rem(2) solid $color-orange;
+        background-color: $color-grey;
+
         &::after {
             content: 'Avatar under moderation';
             position: absolute;
@@ -74,32 +83,53 @@
         }
     }
 
-    &__uploaded {
+    &__confirmed {
         cursor: pointer;
     }
 
-    &__moderated-image,
-    &__uploaded-image {
-        width: 100%;
-        height: 100%;
-        border-radius: px-to-rem(8);
-        transition: opacity 0.2s ease-in-out;
+    &__declined {
+        border: px-to-rem(2) solid $color-red;
+        background-color: $color-grey;
+        cursor: pointer;
     }
 
     &__moderated-image {
+        width: px-to-rem(42);
+        height: auto;
+        stroke: $color-white;
+        fill: $color-white;
+        transition: opacity 0.2s ease-in-out;
+
         #{$moderated}:hover & {
+            opacity: 0.2;
+        }
+    }
+
+    &__confirmed-image {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        transition: opacity 0.2s ease-in-out;
+
+        #{$confirmed}:hover & {
             opacity: 0.5;
         }
     }
 
-    &__uploaded-image {
-        #{$uploaded}:hover & {
-            opacity: 0.5;
+    &__declined-image {
+        width: px-to-rem(42);
+        height: auto;
+        stroke: $color-white;
+        transition: opacity 0.2s ease-in-out;
+
+        #{$declined}:hover & {
+            opacity: 0.2;
         }
     }
 
     &__moderated-icon,
-    &__uploaded-icon {
+    &__confirmed-icon,
+    &__declined-icon {
         position: absolute;
         top: 50%;
         left: 50%;
@@ -122,8 +152,14 @@
         }
     }
 
-    &__uploaded-icon {
-        #{$uploaded}:hover & {
+    &__confirmed-icon {
+        #{$confirmed}:hover & {
+            opacity: 1;
+        }
+    }
+
+    &__declined-icon {
+        #{$declined}:hover & {
             opacity: 1;
         }
     }

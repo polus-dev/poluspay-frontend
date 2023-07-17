@@ -20,7 +20,7 @@ export const ErrorBlock: React.FC<ErrorProps> = ({
     return (
         <div
             className={classNames({
-                'error': true,
+                error: true,
                 'error--background': hasBackground,
             })}
             style={{
