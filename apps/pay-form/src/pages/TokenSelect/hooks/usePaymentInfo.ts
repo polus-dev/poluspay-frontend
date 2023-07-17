@@ -67,15 +67,14 @@ export const usePaymentInfo = (uuid: string | null) => {
     }, [currentBlockchain, info, availableTokens]);
 
     useEffect(() => {
-        setIsLoading(true);
         if (!uuid) {
-            setIsLoading(false);
             setError({
                 message: 'Invalid uuid',
                 code: ResponseApiCode.InvalidUUID,
             });
             return;
         }
+        setIsLoading(true);
         getPaymentInfo({ payment_id: uuid }).then((paymentResponse) => {
             if (paymentResponse.data && !paymentResponse.error) {
                 setExpireAt(paymentResponse.data.expires_at);

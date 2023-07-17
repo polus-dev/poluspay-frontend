@@ -126,6 +126,7 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
         switchNetworkAsync,
     } = useSwitchNetwork();
 
+    const randomId = useRandomId();
     const { data: assets, isLoading: isAssetsLoading } = useGetAssetsQuery();
 
     const [progress, setProgress] = React.useState<number>(0);
@@ -205,7 +206,6 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
     if (isExpired) {
         return <StatusComponent status="error" message=" payment expired" />;
     }
-    const randomId = useRandomId();
 
     return (
         <Panel id="render">
