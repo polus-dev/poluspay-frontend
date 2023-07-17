@@ -23,7 +23,7 @@ type UnparsedJSON = string;
 export interface ICreateMerchantRequest {
     name: string;
     description?: string;
-    domain: string;
+    domain?: string;
     success_redirect_url?: string;
     fail_redirect_url?: string;
 }

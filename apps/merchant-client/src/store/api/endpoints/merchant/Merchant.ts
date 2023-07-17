@@ -249,11 +249,6 @@ export const merchantApi = createApi({
         }),
     }),
 });
-function createFormData(file: File) {
-    const formData = new FormData();
-    formData.append('file', file);
-    return formData;
-}
 export const {
     useCreateMerchantMutation,
     useDeleteMerchantMutation,
