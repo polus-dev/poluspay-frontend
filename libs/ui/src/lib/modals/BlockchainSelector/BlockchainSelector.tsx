@@ -11,16 +11,17 @@ import classNames from 'classnames';
 import './BlockchainSelector.scoped.scss';
 import { BlockchainItem } from '../../../../../../apps/merchant-client/src/components/ui/Wallets/wallet-list';
 import { Stage } from '../../../../../../apps/merchant-client/src/pages/merchants/create/hooks/useMerchantWallets';
+import {useOutsideClose} from "@poluspay-frontend/hooks";
 
 interface ModalProps {
     visible: boolean;
     multi?: boolean;
     hasSearch?: boolean;
     options: BlockchainItem[];
-    next: (a?: Stage) => void;
+    next?: (a?: Stage) => void;
     onClose: () => void;
-    selected?: BlockchainItem;
-    setSelected: (items: BlockchainItem) => void;
+    selected: BlockchainItem | BlockchainItem[];
+    setSelected: (items: BlockchainItem | BlockchainItem[]) => void;
 }
 
 export const ModalBlockChainSelector: React.FC<ModalProps> = ({
@@ -34,12 +35,11 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
     selected,
 }) => {
     const [search, setSearch] = useState('');
-
+  const ref = useOutsideClose(onClose)
     const [blockchains, setBlockchains] = useState<BlockchainItem[]>(options);
 
     const handleSelect = (item: BlockchainItem) => {
-        if (multi) {
-            debugger;
+        if (multi && Array.isArray(selected)) {
             selected.includes(item)
                 ? setSelected(selected.filter((el) => el !== item))
                 : setSelected([...selected, item]);
@@ -64,25 +64,12 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
         }
     }, [search]);
 
-    // make close on click outside
-    // make close on esc
-    //
-    const ref = useRef<HTMLDivElement | null>(null);
-    // useEffect(() => {
-    //     const checkIfClickedOutside = (e: MouseEvent) => {
-    //         if (ref.current && !ref.current.contains(e.target as Node)) {
-    //             onClose();
-    //         }
-    //     };
-    //     document.addEventListener('click', checkIfClickedOutside);
-    //     return () => {
-    //         document.removeEventListener('click', checkIfClickedOutside);
-    //     };
-    // }, [onClose]);
+
 
     return ReactDOM.createPortal(
         <>
             <PModal
+              modalRef={ref}
                 visible={visible}
                 header={
                     <div className="modal__header">
@@ -92,7 +79,7 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
                     </div>
                 }
                 body={
-                    <div ref={ref} className="modal__body">
+                    <div   className="modal__body">
                         {hasSearch && (
                             <div className="modal__body-search">
                                 <PInput
@@ -132,7 +119,7 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
                                                 'modal__body-container-item__icon':
                                                     true,
                                                 'modal__body-container-item__icon--active':
-                                                    multi
+                                                    multi && Array.isArray(selected)
                                                         ? selected.includes(el)
                                                         : selected === el,
                                             })}
@@ -151,7 +138,7 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
                             <PButton
                                 wide
                                 children={<>Next</>}
-                                onClick={() => next()}
+                                onClick={() => next ? next() : onClose()}
                             />
                         </div>
                     </div>
@@ -159,6 +146,6 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
                 onClose={onClose}
             />
         </>,
-        document.body
+        document.querySelector("#modal-root")!
     );
 };

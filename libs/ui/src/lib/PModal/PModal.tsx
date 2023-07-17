@@ -6,7 +6,7 @@ import { ReactComponent as IconCross } from '../assets/icons/cross.svg';
 import './styles.scss';
 
 interface ModalProps {
-    ref?: React.RefObject<HTMLDivElement>;
+    modalRef?: React.RefObject<HTMLDivElement>;
     visible: boolean;
     closable?: boolean;
     tabindex?: number;
@@ -42,7 +42,7 @@ export const PModal: React.FC<ModalProps> = ({ closable = true, ...props }) => {
                 mountOnEnter
                 unmountOnExit
             >
-                <div className="polus-ui polus-ui__modal">
+                <div ref={props.modalRef} className="polus-ui polus-ui__modal">
                     <div className="polus-ui__modal-block">
                         <div className="polus-ui__modal-block-inner">
                             {closable && (

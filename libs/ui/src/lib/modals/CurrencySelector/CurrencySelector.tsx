@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 import ReactDOM from 'react-dom';
 
 import { PInput, PModal, PTabs } from '@poluspay-frontend/ui';
@@ -9,6 +9,9 @@ import classNames from 'classnames';
 
 import './CurrencySelector.scoped.scss';
 import { category } from 'fp-ts';
+import {AssetRepresentation} from "@poluspay-frontend/api";
+import {getAssetUrl} from "../../../../../../tools";
+import {useOutsideClose} from "@poluspay-frontend/hooks";
 
 interface Asset {
     id: string;
@@ -20,9 +23,10 @@ interface Asset {
 
 interface ModalProps {
     visible: boolean;
-    assetsForMerchant: Asset[];
+    assetsForMerchant: AssetRepresentation[];
     categories: string[];
-    onClose: (asset: Asset) => void;
+    onClose: (asset?: AssetRepresentation) => void;
+    assetUrl: string;
 }
 
 export const ModalCurrencySelector: React.FC<ModalProps> = ({
@@ -30,6 +34,7 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
     onClose,
     categories,
     assetsForMerchant,
+    assetUrl
 }) => {
     const [search, setSearch] = useState('');
 
@@ -42,8 +47,9 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
     ];
 
     const [tab, setTab] = useState(tabs[0]);
+    const ref = useOutsideClose(onClose)
 
-    const [selected, setSelected] = useState<Asset>();
+    const [selected, setSelected] = useState<AssetRepresentation>();
     const [assets, setAssets] = useState(assetsForMerchant);
 
     useEffect(() => {
@@ -64,18 +70,20 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
         } else {
             setAssets(
                 assetsForMerchant.filter((asset) =>
-                    asset.category.includes(tab.id)
+                    asset.categories.includes(tab.id)
                 )
             );
         }
     }, [tab, assetsForMerchant]);
 
+
     return ReactDOM.createPortal(
         <>
             <PModal
+              modalRef={ref}
                 visible={visible}
                 header={
-                    <div className="modal__header">
+                    <div  className="modal__header">
                         <p className="modal__header-text">
                             Choose payment currency
                         </p>
@@ -119,7 +127,7 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
                                                     <div className="item__inner">
                                                         <img
                                                             className="item__inner-image"
-                                                            src={asset.image}
+                                                            src={getAssetUrl(assetUrl, asset.name)}
                                                             alt="MATIC"
                                                         />
                                                         <div className="item__inner-text">
@@ -127,7 +135,7 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
                                                                 {asset.name}
                                                             </p>
                                                             <p className="item__inner-text-fullname">
-                                                                {asset.subname}
+                                                                {asset.name}
                                                             </p>
                                                         </div>
                                                     </div>
@@ -153,9 +161,9 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
                         </div>
                     </div>
                 }
-                onClose={() => selected && onClose(selected)}
+                onClose={() => onClose(selected)}
             />
         </>,
-        document.body
+  document.querySelector("#modal-root")!
     );
 };

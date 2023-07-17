@@ -4,6 +4,7 @@ export interface IPayment {
     description: string;
     pay_link: string;
     assets: Asset[];
+    paid_asset?: Asset
     evm_fee_address: string;
     status: PaymentStatus;
     transaction?: ITransaction;
@@ -24,6 +25,9 @@ type Asset = {
     network: string;
     name: string;
     amount: string;
+  amount_decimals: string
     fee: string;
+  fee_decimals: string
     address: string;
 };
+
