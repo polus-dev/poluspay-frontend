@@ -7,24 +7,28 @@ import './Preview.scoped.scss';
 import { UseFormWatch } from 'react-hook-form';
 import { InvoiceForm } from '../../../../../pages/merchants/id/invoices/hooks/form.interface';
 import { useGetMerchantIdFromParams } from '../../../../../hooks/useGetMerchantId';
-import { useGetMerchantByIdQuery } from '@poluspay-frontend/merchant-query';
-import { useId, useMemo } from 'react';
+import {useGetAssetsQuery, useGetMerchantByIdQuery} from '@poluspay-frontend/merchant-query';
 import { useRandomId } from '@poluspay-frontend/hooks';
+import {getAssetUrl} from "../../../../../../../../tools";
 
 interface PreviewProps {
     isModal?: boolean;
     watch: UseFormWatch<InvoiceForm>;
+    assetUrl: string
 }
 
 export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
     isModal,
     watch,
+  assetUrl
 }) => {
     const randomId = useRandomId();
     const merchantId = useGetMerchantIdFromParams();
     const { data: merchant } = useGetMerchantByIdQuery({
         merchant_id: merchantId,
     });
+    const {data: assets} = useGetAssetsQuery();
+    const network = watch('blockchain');
     return (
         <div
             className={classNames({
@@ -48,7 +52,7 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
                         <p className="preview__header-data__row-amount">
                             Total: {watch('amount') || 0}
                             <span className="preview__header-data__row-amount preview__header-data__row-amount--dark">
-                                {watch('asset')?.toUpperCase() || 'MATIC'}
+                                {watch('currency')?.toUpperCase() || 'MATIC'}
                             </span>
                         </p>
                     </div>
@@ -63,26 +67,26 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
             <div className="preview__select">
                 <img
                     className="preview__select-image"
-                    src="/images/wallets/polygon.png"
-                    alt="MATIC"
+                    src={`/images/wallets/${watch("blockchain")}.png`}
+                    alt={watch("blockchain")}
                 />
-                <p className="preview__select-text">Polygon</p>
+                <p className="preview__select-text">{watch("blockchain")}</p>
             </div>
             <div className="preview__assets">
-                {[1, 2, 3, 4, 5, 6].map((el, index) => (
+                {assets?.getAssetsByNetwork(network).slice(0, 6).map((el, index) => (
                     <div
                         className={classNames({
                             'preview__assets-item': true,
                             'preview__assets-item--active': index === 0,
                         })}
-                        key={el}
+                        key={el.contract}
                     >
                         <img
                             className="preview__assets-item-image"
-                            src="/images/wallets/polygon.png"
+                            src={getAssetUrl(assetUrl, el.name)}
                             alt="MATIC"
                         />
-                        <p className="preview__assets-item-name">MATIC</p>
+                        <p className="preview__assets-item-name">{el.name.toUpperCase()}</p>
                     </div>
                 ))}
             </div>

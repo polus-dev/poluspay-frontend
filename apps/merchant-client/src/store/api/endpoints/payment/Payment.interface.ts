@@ -27,7 +27,7 @@ export type Asset_t =
     | 'doge';
 
 export interface ICreatePaymentRequest {
-    description: string;
+    description?: string;
     merchant_id: string;
     assets: Partial<IAssets>;
 }

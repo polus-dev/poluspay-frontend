@@ -72,7 +72,7 @@ export default defineConfig({
         },
     },
   esbuild: {
-    drop: ['debugger', "console"]
+    // drop: ['debugger', "console"]
   },
 
     test: {
