@@ -1,11 +1,11 @@
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router';
 
-import { PButton } from '@poluspay-frontend/ui'
+import { PButton } from '@poluspay-frontend/ui';
 
-import './UnderDevelopment.scoped.scss'
+import './UnderDevelopment.scoped.scss';
 
 export const UnderDevelopmentPage: React.FC = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     return (
         <div className="error-page">
@@ -19,20 +19,18 @@ export const UnderDevelopmentPage: React.FC = () => {
                     This page is currently under development
                 </h6>
                 <p className="error-page__text-description">
-                    As this page becomes available, you can find out
-                    about it in the update digest on the home page
+                    As this page becomes available, you can find out about it in
+                    the update digest on the home page
                 </p>
             </div>
             <div className="error-page__button">
                 <PButton
                     wide
                     size="lg"
-                    children={
-                        <p>Go back</p>
-                    }
+                    children={<p>Go back</p>}
                     onClick={() => navigate(-1)}
                 />
             </div>
         </div>
-    )
-}
+    );
+};
