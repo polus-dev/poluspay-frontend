@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { MerchantWebhookItem } from '../../../../components/pages/merchants/id/api/WebhookItem';
 import { MerchantApiForm } from '../../../../components/pages/merchants/id/api/Form';
-import { PPagination} from '@poluspay-frontend/ui';
+import { PPagination } from '@poluspay-frontend/ui';
 
 import './Webhooks.scoped.scss';
 import { useGetWebhookHistoryQuery } from '../../../../store/api/endpoints';

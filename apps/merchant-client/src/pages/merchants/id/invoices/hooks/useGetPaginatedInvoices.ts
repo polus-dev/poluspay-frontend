@@ -46,7 +46,10 @@ export const useGetPaginatedInvoices = ({
                     if (paymentInfo.asset) {
                         amount = formatUnits(
                             BigInt(paymentInfo.asset.amount),
-                            availableAssets.getAsset(paymentInfo.asset.blockchain, paymentInfo.asset.asset)?.decimals ?? 18
+                            availableAssets.getAsset(
+                                paymentInfo.asset.blockchain,
+                                paymentInfo.asset.asset
+                            )?.decimals ?? 18
                         );
                         currency = paymentInfo.asset.asset;
                     } else {

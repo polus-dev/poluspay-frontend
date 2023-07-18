@@ -1,4 +1,3 @@
-
 import { useModal } from '../../../../../hooks/useModal';
 
 import {
@@ -22,9 +21,12 @@ import {
 import { InvoiceForm } from '../../../../../pages/merchants/id/invoices/hooks/form.interface';
 
 import { getAssetUrl } from '../../../../../../../../tools';
-import {BlockchainItem, blockchainList} from '../../../../ui/Wallets/wallet-list';
+import {
+    BlockchainItem,
+    blockchainList,
+} from '../../../../ui/Wallets/wallet-list';
 import { useGetMerchantIdFromParams } from '../../../../../hooks/useGetMerchantId';
-import {AssetRepresentation} from "@poluspay-frontend/api";
+import { AssetRepresentation } from '@poluspay-frontend/api';
 
 interface Asset {
     id: string;
@@ -46,7 +48,9 @@ interface MerchantInvoicesFormProps {
     selectedAsset: AssetRepresentation;
     setSelectedAsset: React.Dispatch<React.SetStateAction<AssetRepresentation>>;
     selectedNetworks: BlockchainItem[];
-    setSelectedNetworks: React.Dispatch<React.SetStateAction<BlockchainItem[] | BlockchainItem>>;
+    setSelectedNetworks: React.Dispatch<
+        React.SetStateAction<BlockchainItem[] | BlockchainItem>
+    >;
     availableNetworks: BlockchainItem[];
     categories: string[];
 }
@@ -55,13 +59,14 @@ export const MerchantInvoicesForm = ({
     register,
     onSubmit,
     formState,
-  selectedAsset,
-  availableAssets,
-  availableNetworks,
-  setSelectedNetworks,
-  setSelectedAsset, selectedNetworks, categories
+    selectedAsset,
+    availableAssets,
+    availableNetworks,
+    setSelectedNetworks,
+    setSelectedAsset,
+    selectedNetworks,
+    categories,
 }: MerchantInvoicesFormProps) => {
-
     const modalCurrency = useModal();
     const modalBlockchains = useModal();
     const modalPreview = useModal();
@@ -139,7 +144,9 @@ export const MerchantInvoicesForm = ({
                             required: "Amount can't be empty",
                             minLength: 1,
                         })}
-                        label="Amount" placeholder="0" />
+                        label="Amount"
+                        placeholder="0"
+                    />
                 </div>
                 <div className="form__inner-item">
                     <p className="form__inner-item-label">Asset</p>
@@ -152,7 +159,11 @@ export const MerchantInvoicesForm = ({
                                 <>
                                     <img
                                         className="form__inner-item-select__inner-image"
-                                        src={getAssetUrl(import.meta.env.VITE_REACT_APP_ASSET_URL, selectedAsset.name)}
+                                        src={getAssetUrl(
+                                            import.meta.env
+                                                .VITE_REACT_APP_ASSET_URL,
+                                            selectedAsset.name
+                                        )}
                                         alt={selectedAsset.name}
                                     />
                                     <p className="form__inner-item-select__inner-text">
@@ -234,9 +245,8 @@ export const MerchantInvoicesForm = ({
                     <ModalCurrencySelector
                         visible={modalCurrency.visible}
                         onClose={(asset) => {
-                          if (asset)
-                            handleModalCurrency(asset);
-                          else modalCurrency.close();
+                            if (asset) handleModalCurrency(asset);
+                            else modalCurrency.close();
                         }}
                         categories={categories}
                         assetsForMerchant={availableAssets}

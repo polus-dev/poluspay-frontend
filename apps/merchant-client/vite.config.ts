@@ -71,9 +71,9 @@ export default defineConfig({
             ],
         },
     },
-  esbuild: {
-    // drop: ['debugger', "console"]
-  },
+    esbuild: {
+        // drop: ['debugger', "console"]
+    },
 
     test: {
         globals: true,

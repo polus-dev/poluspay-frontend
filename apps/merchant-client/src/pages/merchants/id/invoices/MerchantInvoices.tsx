@@ -11,7 +11,7 @@ import './MerchantInvoices.scoped.scss';
 import { useGetPaginatedInvoices } from './hooks/useGetPaginatedInvoices';
 import { useInvoiceForm } from './hooks/useInvoiceForm';
 import { useGetMerchantIdFromParams } from '../../../../hooks/useGetMerchantId';
-import {useAutoAnimate} from "@formkit/auto-animate/react";
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 export const MerchantInvoicesPage: React.FC = () => {
     const [current, setCurrent] = useState(1);
@@ -27,13 +27,13 @@ export const MerchantInvoicesPage: React.FC = () => {
         selectedNetworks,
         setSelectedNetworks,
         setSelectedAsset,
-      availableCategories,
-      formState,
-      showPreviewForm,
-      merchantIsNotAvailableToCreateInvoice
+        availableCategories,
+        formState,
+        showPreviewForm,
+        merchantIsNotAvailableToCreateInvoice,
     } = useInvoiceForm(merchantId);
 
-    const [ref] = useAutoAnimate({duration: 2000});
+    const [ref] = useAutoAnimate({ duration: 2000 });
 
     const {
         invoices: invoicesPaginated,
@@ -48,30 +48,42 @@ export const MerchantInvoicesPage: React.FC = () => {
         setCurrent(value);
     };
 
-  return (
-        <div  className="invoices">
-          {merchantIsNotAvailableToCreateInvoice ? <ErrorBlock title="connected wallet list empty"/> : (<div className="invoices__inner">
-                <h4 className="invoices__inner-title">Create invoice</h4>
-                <div className="invoices__inner-container">
-                    <div ref={ref} className="invoices__inner-container-form">
-                        <MerchantInvoicesForm
-                            formState={formState}
-                            register={register}
-                            availableAssets={availableMerchantAssets}
-                            availableNetworks={availableAssetNetworks}
-                            categories={availableCategories}
-                            selectedAsset={selectedAsset!}
-                            selectedNetworks={selectedNetworks}
-                            setSelectedAsset={setSelectedAsset}
-                            setSelectedNetworks={setSelectedNetworks}
-                            onSubmit={handleSubmit}
-                        />
-                    </div>
-                   <div className="invoices__inner-container-preview">
-                        <MerchantInvoicesPreview assetUrl={import.meta.env.VITE_REACT_APP_ASSET_URL} watch={watch} />
+    return (
+        <div className="invoices">
+            {merchantIsNotAvailableToCreateInvoice ? (
+                <ErrorBlock title="connected wallet list empty" />
+            ) : (
+                <div className="invoices__inner">
+                    <h4 className="invoices__inner-title">Create invoice</h4>
+                    <div className="invoices__inner-container">
+                        <div
+                            ref={ref}
+                            className="invoices__inner-container-form"
+                        >
+                            <MerchantInvoicesForm
+                                formState={formState}
+                                register={register}
+                                availableAssets={availableMerchantAssets}
+                                availableNetworks={availableAssetNetworks}
+                                categories={availableCategories}
+                                selectedAsset={selectedAsset!}
+                                selectedNetworks={selectedNetworks}
+                                setSelectedAsset={setSelectedAsset}
+                                setSelectedNetworks={setSelectedNetworks}
+                                onSubmit={handleSubmit}
+                            />
+                        </div>
+                        <div className="invoices__inner-container-preview">
+                            <MerchantInvoicesPreview
+                                assetUrl={
+                                    import.meta.env.VITE_REACT_APP_ASSET_URL
+                                }
+                                watch={watch}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div> )}
+            )}
             <div className="invoices__table">
                 <h6 className="invoices__table-title">Invoices</h6>
                 {isLoading ? (
