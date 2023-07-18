@@ -6,7 +6,7 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { authSlice } from './features/auth/authSlice';
 import { routerSlice } from './features/router/routerSlice';
 import { assetApi } from './api/endpoints/asset/Asset';
-import {rtkQueryErrorLogger} from "./middleware/ErrorHandler.middleware";
+import { rtkQueryErrorLogger } from './middleware/ErrorHandler.middleware';
 
 export const store = configureStore({
     reducer: {
@@ -23,7 +23,7 @@ export const store = configureStore({
             userApi.middleware,
             paymentApi.middleware,
             assetApi.middleware,
-            rtkQueryErrorLogger,
+            rtkQueryErrorLogger
         ),
 });
 

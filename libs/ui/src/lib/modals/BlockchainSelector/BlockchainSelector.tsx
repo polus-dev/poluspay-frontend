@@ -69,7 +69,7 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
     return ReactDOM.createPortal(
         <>
             <PModal
-              modalRef={ref}
+                modalRef={ref}
                 visible={visible}
                 header={
                     <div className="modal__header">
@@ -79,7 +79,7 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
                     </div>
                 }
                 body={
-                    <div   className="modal__body">
+                    <div className="modal__body">
                         {hasSearch && (
                             <div className="modal__body-search">
                                 <PInput

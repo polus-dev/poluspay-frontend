@@ -51,7 +51,7 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
             setSigningKey(signing_key);
             notify({ title: 'Success', status: 'success' });
         } catch (error) {
-          console.error(error)
+            console.error(error);
             // notify({ title: 'Error', status: 'error' });
         }
     };
@@ -86,7 +86,7 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
             await Promise.all(promises);
             notify({ title: 'Success', status: 'success' });
         } catch (error) {
-          console.error(error)
+            console.error(error);
         }
     };
 

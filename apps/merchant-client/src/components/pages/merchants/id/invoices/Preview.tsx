@@ -7,28 +7,31 @@ import './Preview.scoped.scss';
 import { UseFormWatch } from 'react-hook-form';
 import { InvoiceForm } from '../../../../../pages/merchants/id/invoices/hooks/form.interface';
 import { useGetMerchantIdFromParams } from '../../../../../hooks/useGetMerchantId';
-import {useGetAssetsQuery, useGetMerchantByIdQuery} from '@poluspay-frontend/merchant-query';
+import {
+    useGetAssetsQuery,
+    useGetMerchantByIdQuery,
+} from '@poluspay-frontend/merchant-query';
 import { useRandomId } from '@poluspay-frontend/hooks';
-import {getAssetUrl} from "../../../../../../../../tools";
-import {useAutoAnimate} from "@formkit/auto-animate/react";
+import { getAssetUrl } from '../../../../../../../../tools';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 interface PreviewProps {
     isModal?: boolean;
     watch: UseFormWatch<InvoiceForm>;
-    assetUrl: string
+    assetUrl: string;
 }
 
 export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
     isModal,
     watch,
-  assetUrl
+    assetUrl,
 }) => {
     const randomId = useRandomId();
     const merchantId = useGetMerchantIdFromParams();
     const { data: merchant } = useGetMerchantByIdQuery({
         merchant_id: merchantId,
     });
-    const {data: assets} = useGetAssetsQuery();
+    const { data: assets } = useGetAssetsQuery();
     const network = watch('blockchain');
     const [ref] = useAutoAnimate();
     return (
@@ -69,28 +72,33 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
             <div className="preview__select">
                 <img
                     className="preview__select-image"
-                    src={`/images/wallets/${network || "polygon"}.png`}
-                    alt={watch("blockchain") || "polygon"}
+                    src={`/images/wallets/${network || 'polygon'}.png`}
+                    alt={watch('blockchain') || 'polygon'}
                 />
-                <p className="preview__select-text">{network || "Polygon"}</p>
+                <p className="preview__select-text">{network || 'Polygon'}</p>
             </div>
             <div ref={ref} className="preview__assets">
-                {assets?.getAssetsByNetwork(network).slice(0, 6).map((el, index) => (
-                    <div
-                        className={classNames({
-                            'preview__assets-item': true,
-                            'preview__assets-item--active': index === 0,
-                        })}
-                        key={el.contract}
-                    >
-                        <img
-                            className="preview__assets-item-image"
-                            src={getAssetUrl(assetUrl, el.name)}
-                            alt={el.name}
-                        />
-                        <p className="preview__assets-item-name">{el.name.toUpperCase()}</p>
-                    </div>
-                ))}
+                {assets
+                    ?.getAssetsByNetwork(network)
+                    .slice(0, 6)
+                    .map((el, index) => (
+                        <div
+                            className={classNames({
+                                'preview__assets-item': true,
+                                'preview__assets-item--active': index === 0,
+                            })}
+                            key={el.contract}
+                        >
+                            <img
+                                className="preview__assets-item-image"
+                                src={getAssetUrl(assetUrl, el.name)}
+                                alt={el.name}
+                            />
+                            <p className="preview__assets-item-name">
+                                {el.name.toUpperCase()}
+                            </p>
+                        </div>
+                    ))}
             </div>
             <div className="preview__timer">
                 The invoice is active for 59:59

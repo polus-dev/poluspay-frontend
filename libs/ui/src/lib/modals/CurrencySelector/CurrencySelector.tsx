@@ -80,7 +80,7 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
     return ReactDOM.createPortal(
         <>
             <PModal
-              modalRef={ref}
+                modalRef={ref}
                 visible={visible}
                 header={
                     <div  className="modal__header">
@@ -119,10 +119,11 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
                                         {assets.length ? (
                                             assets.map((asset) => (
                                                 <div
+                                                    className="modal__list-inner__item item"
+                                                    key={asset.name}
                                                     onClick={() =>
                                                         setSelected(asset)
                                                     }
-                                                    className="modal__list-inner__item item"
                                                 >
                                                     <div className="item__inner">
                                                         <img
@@ -164,6 +165,6 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
                 onClose={() => onClose(selected)}
             />
         </>,
-  document.querySelector("#modal-root")!
+        document.querySelector("#modal-root")!
     );
 };

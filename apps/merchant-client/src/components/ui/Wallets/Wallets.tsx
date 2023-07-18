@@ -129,8 +129,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                 status: 'success',
             });
         } catch (e) {
-          console.error(e)
-
+            console.error(e);
         }
     };
 

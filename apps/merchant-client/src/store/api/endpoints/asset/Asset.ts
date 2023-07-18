@@ -1,4 +1,4 @@
-import {AssetHelper, IAssetsResponseFromApi} from '@poluspay-frontend/api';
+import { AssetHelper, IAssetsResponseFromApi } from '@poluspay-frontend/api';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IAssetsResponse } from './Asset.interface';
 export const assetApi = createApi({
