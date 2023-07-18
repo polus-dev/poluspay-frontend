@@ -23,10 +23,6 @@ export const MerchantDomainPage: React.FC = () => {
         setType(type);
     };
 
-    useEffect(() => {
-        console.log(type);
-    }, [type]);
-
     return (
         <div className="domain">
             <div className="domain__progress">

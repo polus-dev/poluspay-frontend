@@ -129,11 +129,8 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                 status: 'success',
             });
         } catch (e) {
-            notify({
-                title: 'Error',
-                description: "Can't delete wallet",
-                status: 'error',
-            });
+          console.error(e)
+
         }
     };
 

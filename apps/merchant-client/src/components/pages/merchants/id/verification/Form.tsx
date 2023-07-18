@@ -48,7 +48,6 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
             notify({ title: 'Success response', status: 'success' });
             navigate(`/merchants/${merchantId}/merchant`);
         } catch (error) {
-            notify({ title: 'Error response', status: 'error' });
             console.error(error);
         }
 

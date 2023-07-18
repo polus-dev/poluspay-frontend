@@ -67,12 +67,6 @@ export const useMerchantWallets = ({ merchantId }: IProps) => {
                 networks,
             }).unwrap();
         } catch (error) {
-            notify({
-                status: 'error',
-                title: 'Error',
-                description:
-                    'An error has occurred while creating the wallet. Please try again later.',
-            });
             console.error(error);
         } finally {
             setIsCreateMerchantWalletLoading(false);

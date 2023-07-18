@@ -82,7 +82,6 @@ export const useInvoiceForm = (merchantId: string) => {
                     },
                 };
             });
-            debugger
             await createInvoice({
                 merchant_id: merchantId,
                 description: data.description,
@@ -94,12 +93,8 @@ export const useInvoiceForm = (merchantId: string) => {
                 status: 'success',
             });
         } catch (error) {
-          notify({
-                title: 'Error',
-                // @ts-ignore
-                description: error.message,
-                status: 'error',
-            });
+          console.error(error)
+
         }
   };
 

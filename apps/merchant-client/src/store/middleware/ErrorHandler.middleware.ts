@@ -1,12 +1,20 @@
-import { isRejectedWithValue } from '@reduxjs/toolkit'
+import {isRejectedWithValue, PayloadAction} from '@reduxjs/toolkit'
 import type { MiddlewareAPI, Middleware } from '@reduxjs/toolkit'
 import {notify} from "@poluspay-frontend/ui";
+import {IResponseError} from "@poluspay-frontend/api";
+
+interface IPayload {
+  status: number;
+  data: IResponseError
+}
 
 export const rtkQueryErrorLogger: Middleware =
-  (api: MiddlewareAPI) => (next) => (action) => {
+  (api: MiddlewareAPI) => (next) => (action: PayloadAction<IPayload>) => {
     if (isRejectedWithValue(action)) {
       console.warn('We got a rejected action!')
-      notify({status: "error", title: "Error", description: action.error.data.message})
+      debugger
+      if (action.payload.status < 500)
+      notify({status: "error", title: action.payload.data.field || "Error", description: action.payload.data.message})
     }
     return next(action)
   }
