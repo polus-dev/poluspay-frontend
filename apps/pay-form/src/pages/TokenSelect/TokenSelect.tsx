@@ -230,7 +230,7 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
                                     {displayMerchantInfo(info.merchant)}
                                 </span>
                                 <div className="amount-block">
-                                    <span>{`${
+                                    <span>{`Total: ${
                                         merchantToken
                                             ? roundCryptoAmount(
                                                   ethers.utils
