@@ -62,7 +62,6 @@ export const MerchantForm: React.FC<FormProps> = ({
                         labelSize="lg"
                         error={errors.website?.message}
                         reg={register('website', {
-                            required: true,
                             pattern: {
                                 value: /\w+\.\w+/,
                                 message: 'Invalid domain',
