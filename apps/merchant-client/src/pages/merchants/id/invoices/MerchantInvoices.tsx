@@ -67,9 +67,9 @@ export const MerchantInvoicesPage: React.FC = () => {
                             onSubmit={handleSubmit}
                         />
                     </div>
-                  {showPreviewForm && <div className="invoices__inner-container-preview">
+                   <div className="invoices__inner-container-preview">
                         <MerchantInvoicesPreview assetUrl={import.meta.env.VITE_REACT_APP_ASSET_URL} watch={watch} />
-                    </div> }
+                    </div>
                 </div>
             </div> )}
             <div className="invoices__table">

@@ -10,6 +10,7 @@ import { useGetMerchantIdFromParams } from '../../../../../hooks/useGetMerchantI
 import {useGetAssetsQuery, useGetMerchantByIdQuery} from '@poluspay-frontend/merchant-query';
 import { useRandomId } from '@poluspay-frontend/hooks';
 import {getAssetUrl} from "../../../../../../../../tools";
+import {useAutoAnimate} from "@formkit/auto-animate/react";
 
 interface PreviewProps {
     isModal?: boolean;
@@ -29,6 +30,7 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
     });
     const {data: assets} = useGetAssetsQuery();
     const network = watch('blockchain');
+    const [ref] = useAutoAnimate();
     return (
         <div
             className={classNames({
@@ -67,12 +69,12 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
             <div className="preview__select">
                 <img
                     className="preview__select-image"
-                    src={`/images/wallets/${watch("blockchain")}.png`}
-                    alt={watch("blockchain")}
+                    src={`/images/wallets/${network || "polygon"}.png`}
+                    alt={watch("blockchain") || "polygon"}
                 />
-                <p className="preview__select-text">{watch("blockchain")}</p>
+                <p className="preview__select-text">{network || "Polygon"}</p>
             </div>
-            <div className="preview__assets">
+            <div ref={ref} className="preview__assets">
                 {assets?.getAssetsByNetwork(network).slice(0, 6).map((el, index) => (
                     <div
                         className={classNames({
@@ -84,7 +86,7 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
                         <img
                             className="preview__assets-item-image"
                             src={getAssetUrl(assetUrl, el.name)}
-                            alt="MATIC"
+                            alt={el.name}
                         />
                         <p className="preview__assets-item-name">{el.name.toUpperCase()}</p>
                     </div>
