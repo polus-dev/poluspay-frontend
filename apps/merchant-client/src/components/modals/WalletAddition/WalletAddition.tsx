@@ -26,7 +26,7 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
     isLoading,
 }) => {
     const [address, setAddress] = useState('');
-    const [evm, setEvm] = useState(true);
+    const [evm, setEvm] = useState(false);
     const [isValidAddress, setValidAddress] = useState(false);
 
     useEffect(() => {

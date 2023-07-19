@@ -70,46 +70,6 @@ export const MerchantInvoicesForm = ({
     const modalCurrency = useModal();
     const modalBlockchains = useModal();
     const modalPreview = useModal();
-    // const submit: SubmitHandler<InvoiceForm> = async (data) => {
-    //     try {
-    //         if (!(asset && blockchains.length)) {
-    //             notify({
-    //                 title: 'Error',
-    //                 description:
-    //                     'Please select an asset and at least one blockchain',
-    //                 status: 'error',
-    //             });
-    //             return;
-    //         }
-    //         const invoiceAssets = {};
-    //         blockchains.forEach((el) => {
-    //             invoiceAssets[el.label] = {
-    //                 [asset.name]: {
-    //                     amount: data.amount,
-    //                     address: merchantWallets?.find(
-    //                         (wallet) => wallet.network === el.label
-    //                     )?.address,
-    //                 },
-    //             };
-    //         });
-    //         await createInvoice({
-    //             merchant_id: merchantId,
-    //             description: data.description,
-    //             assets: invoiceAssets,
-    //         }).unwrap();
-    //         notify({
-    //             title: 'Success',
-    //             description: 'Invoice created successfully',
-    //             status: 'success',
-    //         });
-    //     } catch (error) {
-    //         notify({
-    //             title: 'Error',
-    //             description: error.message,
-    //             status: 'error',
-    //         });
-    //     }
-    // };
 
     const removeSelectedBlockchain = (
         event: React.MouseEvent,
@@ -128,11 +88,6 @@ export const MerchantInvoicesForm = ({
         setSelectedAsset(asset);
     };
 
-    // const handleModalBlockchains = (items: BlockchainItem) => {
-    //     modalBlockchains.close();
-    //
-    //     setBlockchains(items);
-    // };
 
     return (
         <form onSubmit={onSubmit} className="form">
