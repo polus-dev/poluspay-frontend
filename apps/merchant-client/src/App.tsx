@@ -14,6 +14,7 @@ import { MerchantInvoicesPage } from './pages/merchants/id/invoices/MerchantInvo
 import { NotFoundPage } from './pages/404/NotFound';
 import { UnderDevelopmentPage } from './pages/UnderDevelopment/UnderDevelopment';
 import { GoogleAuth } from './pages/auth/google/Auth';
+import { DashboardPage } from './pages/dashboard/Dashboard';
 
 export default function App() {
     return (

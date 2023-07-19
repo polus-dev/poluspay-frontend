@@ -38,7 +38,7 @@ interface SelectProps {
     errors?: string[];
     prepend?: React.ReactNode;
     append?: React.ReactNode;
-    onInput: (value: SelectOption[]) => void;
+    onChange: (value: SelectOption[]) => void;
     onFocus?: (event: React.FocusEvent) => void;
     onBlur?: (event: React.FocusEvent) => void;
 }
@@ -150,7 +150,7 @@ export const PSelect: React.FC<SelectProps> = ({
 
         const value = props.multi ? props.active.concat(option) : [option];
 
-        props.onInput(value);
+        props.onChange(value);
 
         if (
             (!props.multi && closeOnSelectSingle) ||
@@ -168,7 +168,7 @@ export const PSelect: React.FC<SelectProps> = ({
             .slice(0, index)
             .concat(props.active.slice(index + 1));
 
-        props.onInput(value);
+        props.onChange(value);
     };
 
     const classnames = classNames('polus-ui', 'polus-ui__select', {

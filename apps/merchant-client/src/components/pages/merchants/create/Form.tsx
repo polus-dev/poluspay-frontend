@@ -56,7 +56,6 @@ export const MerchantForm: React.FC<FormProps> = ({
                 </div>
                 <div className="form__item">
                     <FormInput
-                        asterisk
                         placeholder="example.com"
                         label="Merchant's website"
                         labelSize="lg"

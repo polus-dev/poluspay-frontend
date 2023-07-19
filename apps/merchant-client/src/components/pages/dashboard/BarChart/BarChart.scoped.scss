@@ -1,0 +1,36 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/utils';
+
+.bar {
+    width: 100%;
+    padding: px-to-rem(16) px-to-rem(12);
+    background-color: $color-black-light;
+    border-radius: px-to-rem(12);
+
+    @include breakpoint($screen-md) {
+        padding: px-to-rem(20);
+    }
+
+    &__header {
+        margin-bottom: px-to-rem(20);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__header-title {
+        font-size: px-to-rem(20);
+        font-weight: 500;
+        line-height: 150%;
+    }
+
+    &__header-tabs {
+        // ...
+    }
+
+    &__chart {
+        width: 100%;
+        height: auto;
+        max-height: px-to-rem(400);
+    }
+}

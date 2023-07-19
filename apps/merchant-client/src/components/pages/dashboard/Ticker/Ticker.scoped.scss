@@ -1,0 +1,93 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/utils';
+
+.ticker {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: px-to-rem(56);
+    padding: 0 px-to-rem(12);
+    background-color: $color-black-light;
+    border-radius: px-to-rem(12);
+
+    @include breakpoint($screen-sm) {
+        height: px-to-rem(60);
+    }
+
+    @include breakpoint($screen-md) {
+        height: px-to-rem(68);
+    }
+
+    @include breakpoint($screen-lg) {
+        padding: 0 px-to-rem(20);
+        height: px-to-rem(80);
+    }
+
+    &__data {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(8);
+    }
+
+    &__data-image {
+        width: px-to-rem(40);
+        height: px-to-rem(40);
+        border-radius: 50%;
+    }
+
+    &__data-inner {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__data-inner-name {
+        font-size: px-to-rem(16);
+        font-weight: 400;
+        line-height: 150%;
+
+        @include breakpoint($screen-lg) {
+            font-size: px-to-rem(18);
+            font-weight: 500;
+        }
+    }
+
+    &__data-inner-label {
+        color: $color-grey-light;
+        font-size: px-to-rem(14);
+        font-weight: 300;
+        line-height: 130%;
+    }
+
+    &__price {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    &__price-value {
+        font-size: px-to-rem(16);
+        font-weight: 400;
+        line-height: 150%;
+
+        @include breakpoint($screen-lg) {
+            font-size: px-to-rem(18);
+            font-weight: 500;
+        }
+    }
+
+    &__price-shift {
+        color: $color-white-dark;
+        font-size: px-to-rem(14);
+        font-weight: 500;
+        line-height: 130%;
+
+        &--positive {
+            color: $color-green;
+        }
+
+        &__negative {
+            color: $color-red;
+        }
+    }
+}
