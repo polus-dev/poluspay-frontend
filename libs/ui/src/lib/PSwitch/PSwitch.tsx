@@ -37,7 +37,7 @@ export const PSwitch: React.FC<SwitchProps> = (props) => {
                     type="checkbox"
                     role="switch"
                     className="polus-ui__switch-input"
-                    value={isOn}
+                    value={String(isOn)}
                     name={props.name}
                     disabled={props.disabled}
                     tabIndex={props.tabindex}

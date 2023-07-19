@@ -17,7 +17,7 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 interface PreviewProps {
     isModal?: boolean;
-    watch: UseFormWatch<InvoiceForm>;
+    watch?: UseFormWatch<InvoiceForm>;
     assetUrl: string;
 }
 
@@ -32,7 +32,10 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
         merchant_id: merchantId,
     });
     const { data: assets } = useGetAssetsQuery();
-    const network = watch('blockchain');
+    const network = watch?.('blockchain') || "polygon";
+    const currency = watch?.('currency')?.toUpperCase() || 'matic';
+    const description = watch?.('description');
+    const amount = watch?.('amount') || 0;
     const [ref] = useAutoAnimate();
     return (
         <div
@@ -55,15 +58,15 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
                             {merchant?.domain}
                         </p>
                         <p className="preview__header-data__row-amount">
-                            Total: {watch('amount') || 0}
+                            Total: {amount}
                             <span className="preview__header-data__row-amount preview__header-data__row-amount--dark">
-                                {watch('currency')?.toUpperCase() || 'MATIC'}
+                                {currency}
                             </span>
                         </p>
                     </div>
                     <div className="preview__header-data__row">
                         <p className="preview__header-data__row-description">
-                            {watch('description')}
+                            {description}
                         </p>
                     </div>
                 </div>
@@ -72,10 +75,10 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
             <div className="preview__select">
                 <img
                     className="preview__select-image"
-                    src={`/images/wallets/${network || 'polygon'}.png`}
-                    alt={watch('blockchain') || 'polygon'}
+                    src={`/images/wallets/${network}.png`}
+                    alt={network}
                 />
-                <p className="preview__select-text">{network || 'Polygon'}</p>
+                <p className="preview__select-text">{network}</p>
             </div>
             <div ref={ref} className="preview__assets">
                 {assets

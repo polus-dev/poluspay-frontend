@@ -12,7 +12,7 @@ export const projectId = import.meta.env.VITE_REACT_APP_PROJECT_ID;
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
 export const wagmiConfig = createConfig({
     autoConnect: true,
-    connectors: w3mConnectors({ projectId, version: 2, chains }),
+    connectors: w3mConnectors({ projectId, chains }),
     publicClient,
 });
 export const ethereumClient = new EthereumClient(wagmiConfig, []);

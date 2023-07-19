@@ -32,8 +32,8 @@ export const MerchantForm: React.FC<FormProps> = ({
         try {
             const merchant = await createMerchant({
                 name: data.merchantName,
-                domain: data.website,
-                description: data.description,
+                domain: data.website || undefined,
+                description: data.description || undefined,
             }).unwrap();
             setMerchantId(merchant.id);
             changeStage();

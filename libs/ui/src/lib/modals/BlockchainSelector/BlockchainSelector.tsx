@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom';
 import React, { useEffect, useRef, useState } from 'react';
-import type { Blockchain as Label } from 'tools';
 
 import { PModal, PInput, PButton } from '@poluspay-frontend/ui';
 import { ReactComponent as IconSearch } from '../../assets/icons/search.svg';
@@ -13,18 +12,18 @@ import { BlockchainItem } from '../../../../../../apps/merchant-client/src/compo
 import { Stage } from '../../../../../../apps/merchant-client/src/pages/merchants/create/hooks/useMerchantWallets';
 import {useOutsideClose} from "@poluspay-frontend/hooks";
 
-interface ModalProps {
+interface ModalProps<Multi> {
     visible: boolean;
-    multi?: boolean;
+    multi?: Multi;
     hasSearch?: boolean;
     options: BlockchainItem[];
     next?: (a?: Stage) => void;
     onClose: () => void;
-    selected: BlockchainItem | BlockchainItem[];
-    setSelected: (items: BlockchainItem | BlockchainItem[]) => void;
+    selected?: Multi extends true ?  BlockchainItem[] : BlockchainItem;
+    setSelected: (items: Multi extends true ?  BlockchainItem[] : BlockchainItem) => void;
 }
 
-export const ModalBlockChainSelector: React.FC<ModalProps> = ({
+export const ModalBlockChainSelector = <T extends boolean = false>({
     visible,
     multi,
     hasSearch,
@@ -33,7 +32,7 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
     setSelected,
     next,
     selected,
-}) => {
+}: ModalProps<T>) => {
     const [search, setSearch] = useState('');
   const ref = useOutsideClose(onClose)
     const [blockchains, setBlockchains] = useState<BlockchainItem[]>(options);
@@ -41,10 +40,13 @@ export const ModalBlockChainSelector: React.FC<ModalProps> = ({
     const handleSelect = (item: BlockchainItem) => {
         if (multi && Array.isArray(selected)) {
             selected.includes(item)
+              // @ts-ignore
                 ? setSelected(selected.filter((el) => el !== item))
+              // @ts-ignore
                 : setSelected([...selected, item]);
             return;
         }
+      // @ts-ignore
         setSelected(item);
     };
 

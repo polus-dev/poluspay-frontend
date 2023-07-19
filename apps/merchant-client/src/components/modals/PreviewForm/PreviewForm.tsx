@@ -16,7 +16,7 @@ export const ModalPreviewForm: React.FC<ModalProps> = ({
         <>
             <PModal
                 visible={visible}
-                body={<MerchantInvoicesPreview isModal />}
+                body={<MerchantInvoicesPreview assetUrl={import.meta.env.VITE_REACT_APP_ASSET_URL} isModal />}
                 onClose={onClose}
             />
         </>,

@@ -4,18 +4,15 @@ import {
     FormInput,
     ModalBlockChainSelector,
     ModalCurrencySelector,
-    notify,
     PButton,
 } from '@poluspay-frontend/ui';
-import { ModalPreviewForm } from '../../../../../components/modals/PreviewForm/PreviewForm';
+import { ModalPreviewForm } from '../../../../modals/PreviewForm/PreviewForm';
 import { ReactComponent as IconChevron } from '../../../../../assets/icons/chevron.svg';
 import { ReactComponent as IconCross } from '../../../../../assets/icons/cross.svg';
 
 import './Form.scoped.scss';
 import {
     FormState,
-    SubmitHandler,
-    UseFormHandleSubmit,
     UseFormRegister,
 } from 'react-hook-form';
 import { InvoiceForm } from '../../../../../pages/merchants/id/invoices/hooks/form.interface';
@@ -23,9 +20,7 @@ import { InvoiceForm } from '../../../../../pages/merchants/id/invoices/hooks/fo
 import { getAssetUrl } from '../../../../../../../../tools';
 import {
     BlockchainItem,
-    blockchainList,
 } from '../../../../ui/Wallets/wallet-list';
-import { useGetMerchantIdFromParams } from '../../../../../hooks/useGetMerchantId';
 import { AssetRepresentation } from '@poluspay-frontend/api';
 
 interface Asset {
@@ -46,10 +41,10 @@ interface MerchantInvoicesFormProps {
     formState: FormState<InvoiceForm>;
     availableAssets: AssetRepresentation[];
     selectedAsset: AssetRepresentation;
-    setSelectedAsset: React.Dispatch<React.SetStateAction<AssetRepresentation>>;
+    setSelectedAsset: React.Dispatch<React.SetStateAction<AssetRepresentation | null>>;
     selectedNetworks: BlockchainItem[];
     setSelectedNetworks: React.Dispatch<
-        React.SetStateAction<BlockchainItem[] | BlockchainItem>
+        React.SetStateAction<BlockchainItem[]>
     >;
     availableNetworks: BlockchainItem[];
     categories: string[];

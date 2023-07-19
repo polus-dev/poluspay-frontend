@@ -90,16 +90,10 @@ export const merchantApi = createApi({
             IUpdateMerchantRequest
         >({
             query: (body) => {
-                const filteredBody = {} as typeof body;
-                for (const key in body)
-                    if (body[key as keyof typeof body])
-                        filteredBody[key as keyof typeof body] =
-                            body[key as keyof typeof body];
-
                 return {
                     url: `merchant.update`,
                     method: 'POST',
-                    body: filteredBody,
+                    body,
                 };
             },
             // invalidatesTags: (result) =>

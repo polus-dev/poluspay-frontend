@@ -11,8 +11,6 @@ interface IPayload {
 export const rtkQueryErrorLogger: Middleware =
     (api: MiddlewareAPI) => (next) => (action: PayloadAction<IPayload>) => {
         if (isRejectedWithValue(action)) {
-            console.warn('We got a rejected action!');
-            debugger;
             if (action.payload.status < 500)
                 notify({
                     status: 'error',

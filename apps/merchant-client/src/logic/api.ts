@@ -1,11 +1,6 @@
-import axios from 'axios';
 import { StoragePolus } from './storage';
 
-export interface ErrorApiResp {
-    code: number;
-    message: string;
-    field?: string;
-}
+
 
 export interface OtherApiResp {
     code: number;
@@ -88,10 +83,6 @@ export interface PaymentApiREsp {
     created_at: string;
 }
 
-export interface AllApiResp {
-    data: RespApi | ErrorApiResp;
-    code: number;
-}
 
 export interface GenKeyApiResp {
     merchant_id: string;
@@ -139,110 +130,5 @@ export class AuthHelper {
     public logOut() {
         this._storage.del('token');
         this._storage.del('refresh');
-    }
-
-    public async send(
-        type: string,
-        path: string,
-        params: any
-    ): Promise<AllApiResp | ErrorApiResp | undefined> {
-        try {
-            const resp = await axios({
-                url: `${this._url}${type}/${path}`,
-                method: 'post',
-                headers:
-                    type !== 'public'
-                        ? { Authorization: `Bearer ${this._token}` }
-                        : {},
-                data: params,
-            });
-
-            if (resp.data.code && resp.data.code >= 400) {
-                const resFull: AllApiResp = {
-                    data: <ErrorApiResp>resp.data,
-                    code: (<ErrorApiResp>resp.data).code,
-                };
-                return resFull;
-            }
-
-            const res = <RespApi>resp.data;
-
-            const resFull: AllApiResp = {
-                data: res,
-                code: 200,
-            };
-
-            return resFull;
-        } catch (err) {
-            console.error('err axios', err);
-
-            console.log('CODE ', err);
-
-            const errA: any = err; // TODO
-
-            console.log('HEADERS ', errA.response.headers);
-
-            if (errA.response.status === 500) {
-                return {
-                    code: 500,
-                    data: {
-                        code: 500,
-                        message: errA.response.headers['x-request-id'],
-                    },
-                };
-            }
-
-            if (errA.response && errA.response.data) {
-                if ((<ErrorApiResp>errA.response.data).code === 1002) {
-                    // TODO
-                    // this.refreshToken()
-                }
-
-                const resFull: AllApiResp = {
-                    data: <ErrorApiResp>errA.response.data,
-                    code: (<ErrorApiResp>errA.response.data).code,
-                };
-                return resFull;
-            }
-            console.log('Error not found object err');
-
-            return undefined;
-        }
-    }
-
-    public async sendEmailCode(
-        email: string
-    ): Promise<OtherApiResp | ErrorApiResp | undefined> {
-        const res = await this.send('public', 'auth.send_code', { email });
-
-        if (!res) {
-            return undefined;
-        }
-
-        if (res.code !== 200) {
-            return <ErrorApiResp>(<AllApiResp>res).data;
-        }
-
-        return <OtherApiResp>(<AllApiResp>res).data;
-    }
-
-    public async refreshToken(
-        user_id: string,
-        refresh_token: string
-    ): Promise<LoginApiResp | ErrorApiResp | undefined> {
-        const res = await this.send('public', 'auth.refresh_token', {
-            user_id,
-            refresh_token,
-        });
-
-        if (!res) {
-            return undefined;
-        }
-
-        if (res.code !== 200) {
-            return <ErrorApiResp>(<AllApiResp>res).data;
-        }
-
-        return <LoginApiResp>(<AllApiResp>res).data;
     }
 }

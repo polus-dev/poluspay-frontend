@@ -49,7 +49,7 @@ export const MerchantsCreatePage: React.FC = () => {
         setStage(stage + 1);
     };
 
-    const onFinishRegistation = () => {
+    const onFinishRegistration = () => {
         navigator('/merchants');
     };
 
@@ -80,7 +80,7 @@ export const MerchantsCreatePage: React.FC = () => {
                 {type === 'personal' && stage === 2 && (
                     <div className="merchants__inner-wallet">
                         <MerchantWallets
-                            next={onFinishRegistation}
+                            next={onFinishRegistration}
                             isRegistration
                             selectedBlockchain={selectedBlockchain}
                             merchantId={merchantId!}

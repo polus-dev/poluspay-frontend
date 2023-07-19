@@ -75,11 +75,11 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
     });
 
     const [disableMerchantWallet] = useDisableMerchantWalletMutation();
-    const [enableMerchatWallet] = useEnableMerchantWalletMutation();
+    const [enableMerchantWallet] = useEnableMerchantWalletMutation();
     const [deleteMerchantWallet] = useDeleteMerchantWalletMutation();
     const [ref] = useAutoAnimate();
 
-    const [tab, setTab] = useState(tabs[3]);
+    const [tab, setTab] = useState<typeof tabs[number]>(tabs[3]);
 
     const [search, setSearch] = useState('');
 
@@ -133,7 +133,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
         }
     };
 
-    return (
+  return (
         <div className="wallets">
             <div className="wallets__header">
                 <h6 className="wallets__header-title">Add your wallets</h6>
@@ -176,7 +176,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                                 key={el.address + el.network}
                                 onSwitch={(v) => {
                                     if (v) {
-                                        enableMerchatWallet({
+                                        enableMerchantWallet({
                                             merchant_id: merchantId,
                                             network: el.network,
                                         });

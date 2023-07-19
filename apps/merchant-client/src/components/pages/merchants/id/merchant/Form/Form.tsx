@@ -23,6 +23,7 @@ import './Form.scoped.scss';
 import { useParams } from 'react-router-dom';
 import { IMerchantForm } from '../../../Form.interface';
 import { useGetMerchantIdFromParams } from '../../../../../../hooks/useGetMerchantId';
+import {httpsUrlRegex} from "../../../../../../../../../tools";
 
 export const MerchantProfileForm: React.FC = () => {
     const modalDelete = useModal();
@@ -44,10 +45,10 @@ export const MerchantProfileForm: React.FC = () => {
     useEffect(() => {
         if (merchant) {
             reset({
-                website: merchant.domain,
-                description: merchant.description,
+                website: merchant.domain ?? undefined,
+                description: merchant.description ?? undefined,
                 merchantName: merchant.name,
-                brand: merchant.display_name,
+                brand: merchant.display_name ?? undefined,
             });
         }
     }, [merchant]);
@@ -150,10 +151,14 @@ export const MerchantProfileForm: React.FC = () => {
                                 </div>
                                 <div className="form__inner-container__item">
                                     <FormInput
-                                        readonly
                                         label="Website"
                                         placeholder="https://example.com"
-                                        reg={register('website')}
+                                        reg={register('website', {
+                                          pattern: {
+                                            value: httpsUrlRegex,
+                                            message: "Please enter a valid URL"
+                                          }
+                                        })}
                                     />
                                 </div>
                                 <div className="form__inner-container__item">
@@ -171,9 +176,7 @@ export const MerchantProfileForm: React.FC = () => {
                                 <textarea
                                     placeholder="Few words about merchant"
                                     className="form__inner-container__item-textarea"
-                                    {...register('description', {
-                                        required: true,
-                                    })}
+                                    {...register('description')}
                                 />
                             </div>
                         </div>
