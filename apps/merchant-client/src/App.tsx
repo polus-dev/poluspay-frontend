@@ -24,6 +24,9 @@ export default function App() {
                 <Route path="/auth/google" element={<GoogleAuth />} />
                 <Route path="/" element={<Layout />}>
                     <Route index element={<UnderDevelopmentPage />} />
+                    {import.meta.env.DEV && (
+                        <Route path="/dashboard" element={<DashboardPage />} />
+                    )}
                     <Route
                         path="/dashboard"
                         element={<UnderDevelopmentPage />}
