@@ -10,11 +10,10 @@ import { useGetWebhookHistoryQuery } from '../../../../store/api/endpoints';
 import { useParams } from 'react-router-dom';
 import { Loader } from 'apps/merchant-client/src/components/ui/Loader/Loader';
 import { ErrorBlock } from 'apps/merchant-client/src/components/ui/Error/Error';
+import { useGetMerchantIdFromParams } from 'apps/merchant-client/src/hooks/useGetMerchantId';
 
 export const MerchantApiPage: React.FC = () => {
-    const { id: merchantId } = useParams<{ id: string }>();
-
-    if (!merchantId) return null;
+    const merchantId = useGetMerchantIdFromParams();
 
     const { data: webhooks, isLoading: isWebhooksLoading } =
         useGetWebhookHistoryQuery({
