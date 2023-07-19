@@ -7,7 +7,6 @@
     "dependencies": {
         "@ethersproject/providers": "^5.7.2",
         "@formkit/auto-animate": "^0.7.0",
-        "@highlight-run/react": "^3.2.0",
         "@itznevikat/router": "^0.1.0-beta28",
         "@react-buddy/ide-toolbox": "^2.4.0",
         "@reactour/tour": "^3.4.0",

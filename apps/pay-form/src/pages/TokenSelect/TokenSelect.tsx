@@ -44,7 +44,6 @@ import { ethers } from 'ethers';
 import { StatusComponent } from '../../components/StatusComponent';
 import { useGetPaymentByPaymentIdQuery } from '../../store/api/endpoints/payment/Payment';
 import { ChainId } from '../../store/api/endpoints/types';
-import { userTokenPairPriceSlice } from '../../store/features/tokenPairPrice/tokenPairPriceSlice';
 import { useTokenPairPrice } from './hooks/useTokenPairPrice';
 import { roundCryptoAmount } from 'tools';
 import { displayMerchantInfo } from '../../utils/getMerchantInfo';
