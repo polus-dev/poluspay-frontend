@@ -5,9 +5,11 @@ import { ReactComponent as IconChevron } from '../../../../../assets/icons/chevr
 import classNames from 'classnames';
 
 import './WebhookItem.scoped.scss';
+import {makeShortHash} from "../../../../../../../../tools";
 
 export interface WebhookHistoryItem {
-    uuid: string;
+    paymentId: string;
+    webhookId: string;
     date: string;
     status: 200 | 500;
     webhookURL: string;
@@ -25,15 +27,13 @@ export const MerchantWebhookItem: React.FC<WebhookItemProps> = ({ item }) => {
         setOpened(!opened);
     };
 
-    const getShortId = () => {
-        return `${item.uuid.slice(0, 5)}...${item.uuid.slice(-5)}`;
-    };
+
 
     return (
         <div className="webhook" onClick={toggle}>
             <div className="webhook__inner">
                 <div className="webhook__inner-id">
-                    <p className="webhook__inner-id-text">{getShortId()}</p>
+                    <p className="webhook__inner-id-text">{makeShortHash(item.webhookId, 5)}</p>
                 </div>
                 <div className="webhook__inner-date">
                     <p className="webhook__inner-date-text">{item.date}</p>
@@ -77,7 +77,7 @@ export const MerchantWebhookItem: React.FC<WebhookItemProps> = ({ item }) => {
                                 Payment ID:
                             </p>
                             <p className="webhook__extended-item-text">
-                                {item.uuid}
+                                {item.paymentId}
                             </p>
                         </div>
                         {/* replace with the condition if webhook has any details
