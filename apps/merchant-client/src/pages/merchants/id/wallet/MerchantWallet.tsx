@@ -27,7 +27,6 @@ export const MerchantWalletPage: React.FC = () => {
             <div className="wallet">
                 <MerchantWallets
                     next={() => {}}
-                    isRegistration
                     selectedBlockchain={selectedBlockchain}
                     merchantId={merchantId!}
                     selectedWallet={selectedWallets}

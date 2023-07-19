@@ -244,17 +244,21 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                     />
                 </div>
             )}
-            <div className="wallets__button">
-                <div className="wallets__button-item">
-                    <PButton
-                        wide
-                        size="lg"
-                        disabled={buttonDisabled}
-                        children={<>{isRegistration ? 'Save' : 'Next'}</>}
-                        onClick={() => next()}
-                    />
+            {isRegistration && (
+                <div className="wallets__button">
+                    <div className="wallets__button-item">
+                        <PButton
+                            wide
+                            size="lg"
+                            disabled={buttonDisabled}
+                            children={
+                                <p>Finish registration</p>
+                            }
+                            onClick={() => next()}
+                        />
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };
