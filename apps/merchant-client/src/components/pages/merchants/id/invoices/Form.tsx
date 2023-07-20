@@ -11,16 +11,11 @@ import { ReactComponent as IconChevron } from '../../../../../assets/icons/chevr
 import { ReactComponent as IconCross } from '../../../../../assets/icons/cross.svg';
 
 import './Form.scoped.scss';
-import {
-    FormState,
-    UseFormRegister,
-} from 'react-hook-form';
+import { FormState, UseFormRegister } from 'react-hook-form';
 import { InvoiceForm } from '../../../../../pages/merchants/id/invoices/hooks/form.interface';
 
 import { getAssetUrl } from '../../../../../../../../tools';
-import {
-    BlockchainItem,
-} from '../../../../ui/Wallets/wallet-list';
+import { BlockchainItem } from '../../../../ui/Wallets/wallet-list';
 import { AssetRepresentation } from '@poluspay-frontend/api';
 
 interface Asset {
@@ -41,11 +36,11 @@ interface MerchantInvoicesFormProps {
     formState: FormState<InvoiceForm>;
     availableAssets: AssetRepresentation[];
     selectedAsset: AssetRepresentation;
-    setSelectedAsset: React.Dispatch<React.SetStateAction<AssetRepresentation | null>>;
-    selectedNetworks: BlockchainItem[];
-    setSelectedNetworks: React.Dispatch<
-        React.SetStateAction<BlockchainItem[]>
+    setSelectedAsset: React.Dispatch<
+        React.SetStateAction<AssetRepresentation | null>
     >;
+    selectedNetworks: BlockchainItem[];
+    setSelectedNetworks: React.Dispatch<React.SetStateAction<BlockchainItem[]>>;
     availableNetworks: BlockchainItem[];
     categories: string[];
 }
@@ -82,7 +77,6 @@ export const MerchantInvoicesForm = ({
         modalCurrency.close();
         setSelectedAsset(asset);
     };
-
 
     return (
         <form onSubmit={onSubmit} className="form">

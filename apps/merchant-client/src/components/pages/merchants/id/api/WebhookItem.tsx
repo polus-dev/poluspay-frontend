@@ -5,7 +5,7 @@ import { ReactComponent as IconChevron } from '../../../../../assets/icons/chevr
 import classNames from 'classnames';
 
 import './WebhookItem.scoped.scss';
-import {makeShortHash} from "../../../../../../../../tools";
+import { makeShortHash } from '../../../../../../../../tools';
 
 export interface WebhookHistoryItem {
     paymentId: string;
@@ -27,13 +27,13 @@ export const MerchantWebhookItem: React.FC<WebhookItemProps> = ({ item }) => {
         setOpened(!opened);
     };
 
-
-
     return (
         <div className="webhook" onClick={toggle}>
             <div className="webhook__inner">
                 <div className="webhook__inner-id">
-                    <p className="webhook__inner-id-text">{makeShortHash(item.webhookId, 5)}</p>
+                    <p className="webhook__inner-id-text">
+                        {makeShortHash(item.webhookId, 5)}
+                    </p>
                 </div>
                 <div className="webhook__inner-date">
                     <p className="webhook__inner-date-text">{item.date}</p>

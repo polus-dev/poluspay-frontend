@@ -1,7 +1,5 @@
 import { StoragePolus } from './storage';
 
-
-
 export interface OtherApiResp {
     code: number;
 }
@@ -82,7 +80,6 @@ export interface PaymentApiREsp {
     expires_at: string;
     created_at: string;
 }
-
 
 export interface GenKeyApiResp {
     merchant_id: string;

@@ -93,10 +93,29 @@
     }
 
     &__charts-container {
-        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(16);
+
+        @include breakpoint($screen-md) {
+            gap: px-to-rem(20);
+        }
+
+        @include breakpoint($screen-xl) {
+            flex-direction: row;
+            align-items: flex-start;
+            height: px-to-rem(460);
+        }
     }
 
     &__charts-container-item {
+        display: flex;
         width: 100%;
+        height: auto;
+
+        @include breakpoint($screen-xl) {
+            width: calc((100% - px-to-rem(20)) / 2);
+            height: 100%;
+        }
     }
 }

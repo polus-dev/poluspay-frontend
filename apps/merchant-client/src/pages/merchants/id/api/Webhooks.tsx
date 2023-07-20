@@ -67,7 +67,7 @@ export const MerchantApiPage: React.FC = () => {
                                             paymentId: el.payment_id,
                                             webhookURL: el.endpoint,
                                             responseBody: el.response_body,
-                                            webhookId: el.id
+                                            webhookId: el.id,
                                         }}
                                         key={el.id}
                                     />

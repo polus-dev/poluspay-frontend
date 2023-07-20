@@ -1,0 +1,132 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/utils';
+
+.doughnut {
+    width: 100%;
+    padding: px-to-rem(16) px-to-rem(12);
+    background-color: $color-black-light;
+    border-radius: px-to-rem(12);
+
+    @include breakpoint($screen-md) {
+        padding: px-to-rem(20);
+    }
+
+    &__header {
+        margin-bottom: px-to-rem(20);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__header-title {
+        font-size: px-to-rem(16);
+        font-weight: 400;
+        line-height: 150%;
+        letter-spacing: px-to-rem(-0.3);
+
+        @include breakpoint($screen-sm) {
+            font-size: px-to-rem(18);
+            font-weight: 500;
+        }
+
+        @include breakpoint($screen-md) {
+            font-size: px-to-rem(20);
+        }
+    }
+
+    &__header-tabs {
+        // ...
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(30);
+
+        @include breakpoint($screen-md) {
+            flex-direction: row-reverse;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+    }
+
+    &__container-chart {
+        display: flex;
+        width: 100%;
+
+        @include breakpoint($screen-md) {
+            align-self: flex-end;
+            max-width: px-to-rem(358);
+        }
+
+        @include breakpoint($screen-xl) {
+            max-width: px-to-rem(340);
+        }
+
+        @include breakpoint($screen-xxl) {
+            max-width: px-to-rem(358);
+        }
+    }
+
+    &__container-bar {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(20);
+        width: 100%;
+
+        @include breakpoint($screen-md) {
+            max-width: px-to-rem(270);
+        }
+
+        @include breakpoint($screen-lg) {
+            max-width: px-to-rem(380);
+        }
+
+        @include breakpoint($screen-xl) {
+            max-width: px-to-rem(270);
+        }
+
+        @include breakpoint($screen-xxl) {
+            max-width: px-to-rem(290);
+        }
+
+        &__stats {
+            display: flex;
+            flex-direction: column;
+            gap: px-to-rem(2);
+            max-width: px-to-rem(210);
+
+            @include breakpoint($screen-md) {
+                max-width: px-to-rem(220);
+            }
+        }
+
+        &__stats-value {
+            white-space: nowrap;
+            font-family: 'Poppins', sans-serif;
+            font-size: px-to-rem(22);
+            font-weight: 700;
+            line-height: 150%;
+
+            @include breakpoint($screen-md) {
+                font-size: px-to-rem(32);
+                line-height: 140%;
+            }
+        }
+
+        &__stats-description {
+            color: $color-green-light;
+            font-size: px-to-rem(14);
+            font-weight: 300;
+            line-height: 130%;
+
+            @include breakpoint($screen-md) {
+                font-weight: 400;
+            }
+        }
+
+        &__chart {
+            width: 100%;
+        }
+    }
+}
