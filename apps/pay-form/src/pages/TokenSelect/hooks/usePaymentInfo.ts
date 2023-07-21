@@ -11,109 +11,109 @@ import { Asset_t } from '../../../store/api/endpoints/types';
 import { useAvailableTokens } from './useAvailableTokens';
 
 interface IError {
-    message: string;
-    code: ResponseApiCode;
+  message: string;
+  code: ResponseApiCode;
 }
 
 export interface IPaymentInfo {
-    merchant: IGetMerchantByIdResponse;
-    payment: IGetPaymentsResponse;
+  merchant: IGetMerchantByIdResponse;
+  payment: IGetPaymentsResponse;
 }
 
 export const usePaymentInfo = (uuid: string | null) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<IError>();
-    const [getPaymentInfo] = useLazyGetPaymentByPaymentIdQuery();
-    const [getMerchantInfo] = useLazyGetMerchantByIdQuery();
-    const currentBlockchain = useAppSelector(
-        (state) => state.connection.currentBlockchain
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<IError>();
+  const [getPaymentInfo] = useLazyGetPaymentByPaymentIdQuery();
+  const [getMerchantInfo] = useLazyGetMerchantByIdQuery();
+  const currentBlockchain = useAppSelector(
+    (state) => state.connection.currentBlockchain
+  );
+
+  const { availableTokens } = useAvailableTokens();
+  const [merchantToken, setMerchantToken] = useState<Token>();
+
+  const [expireAt, setExpireAt] = useState('');
+  const { isExpired, timer } = useTimer(expireAt);
+
+  const [info, setInfo] = useState<IPaymentInfo>();
+  const [amountInMerchantToken, setAmountInMerchantToken] = useState('0');
+  const [fee, setFee] = useState('0');
+  const [merchantAmount, setMerchantAmount] = useState('0');
+  const [merchantAddress, setMerchantAddress] = useState('');
+
+  useEffect(() => {
+    if (!info || !availableTokens.length || !currentBlockchain) return;
+    // if (!currentBlockchain) throw new Error("usePaymentInfo: No blockchain");
+    const assetKey = info.payment.assets[0].name as Asset_t;
+    const token = availableTokens.find((token) => token.name === assetKey);
+    // const payment =
+    //   info.payment.assets[currentBlockchain][
+    //   Object.keys(info.payment.assets[currentBlockchain])[0] as Asset_t
+    //   ];
+
+    const payment = info.payment.assets.find(
+      (i) => i.network === currentBlockchain
     );
+    if (!payment) throw new Error('usePaymentInfo: Payment not found');
 
-    const { availableTokens } = useAvailableTokens();
-    const [merchantToken, setMerchantToken] = useState<Token>();
+    setAmountInMerchantToken(
+      (BigInt(payment.amount) + BigInt(payment.fee)).toString()
+    );
+    setFee(payment.fee);
+    setMerchantAmount(payment.amount);
+    setMerchantAddress(payment.address);
+    if (!token) throw new Error('usePaymentInfo: Token not found');
+    setMerchantToken(token);
+  }, [currentBlockchain, info, availableTokens]);
 
-    const [expireAt, setExpireAt] = useState('');
-    const { isExpired, timer } = useTimer(expireAt);
-
-    const [info, setInfo] = useState<IPaymentInfo>();
-    const [amountInMerchantToken, setAmountInMerchantToken] = useState('0');
-    const [fee, setFee] = useState('0');
-    const [merchantAmount, setMerchantAmount] = useState('0');
-    const [merchantAddress, setMerchantAddress] = useState('');
-
-    useEffect(() => {
-        if (!info || !availableTokens.length || !currentBlockchain) return;
-        // if (!currentBlockchain) throw new Error("usePaymentInfo: No blockchain");
-        const assetKey = info.payment.assets[0].name as Asset_t;
-        const token = availableTokens.find((token) => token.name === assetKey);
-        // const payment =
-        //   info.payment.assets[currentBlockchain][
-        //   Object.keys(info.payment.assets[currentBlockchain])[0] as Asset_t
-        //   ];
-
-        const payment = info.payment.assets.find(
-            (i) => i.network === currentBlockchain
-        );
-        if (!payment) throw new Error('usePaymentInfo: Payment not found');
-
-        setAmountInMerchantToken(
-            (BigInt(payment.amount) + BigInt(payment.fee)).toString()
-        );
-        setFee(payment.fee);
-        setMerchantAmount(payment.amount);
-        setMerchantAddress(payment.address);
-        if (!token) throw new Error('usePaymentInfo: Token not found');
-        setMerchantToken(token);
-    }, [currentBlockchain, info, availableTokens]);
-
-    useEffect(() => {
-        if (!uuid) {
-            setError({
-                message: 'Invalid uuid',
-                code: ResponseApiCode.InvalidUUID,
+  useEffect(() => {
+    if (!uuid) {
+      setError({
+        message: 'Invalid uuid',
+        code: ResponseApiCode.InvalidUUID,
+      });
+      return;
+    }
+    setIsLoading(true);
+    getPaymentInfo({ payment_id: uuid }).then((paymentResponse) => {
+      if (paymentResponse.data && !paymentResponse.error) {
+        setExpireAt(paymentResponse.data.expires_at);
+        getMerchantInfo({
+          merchant_id: paymentResponse.data.merchant_id,
+        }).then((merchantResponse) => {
+          if (merchantResponse.data && !merchantResponse.error) {
+            setInfo({
+              payment: paymentResponse.data!,
+              merchant: merchantResponse.data,
             });
-            return;
-        }
-        setIsLoading(true);
-        getPaymentInfo({ payment_id: uuid }).then((paymentResponse) => {
-            if (paymentResponse.data && !paymentResponse.error) {
-                setExpireAt(paymentResponse.data.expires_at);
-                getMerchantInfo({
-                    merchant_id: paymentResponse.data.merchant_id,
-                }).then((merchantResponse) => {
-                    if (merchantResponse.data && !merchantResponse.error) {
-                        setInfo({
-                            payment: paymentResponse.data!,
-                            merchant: merchantResponse.data,
-                        });
-                    } else if (merchantResponse.error) {
-                        setError({
-                            message: 'Error load data merchant',
-                            code: 1002,
-                        });
-                    }
-                });
-            } else if (paymentResponse.error) {
-                setError({
-                    message: 'Error load data invoice',
-                    code: 1002,
-                });
-            }
+          } else if (merchantResponse.error) {
+            setError({
+              message: 'Error load data merchant',
+              code: 1002,
+            });
+          }
         });
-        setIsLoading(false);
-    }, [currentBlockchain]);
+      } else if (paymentResponse.error) {
+        setError({
+          message: 'Error load data invoice',
+          code: 1002,
+        });
+      }
+    });
+    setIsLoading(false);
+  }, [currentBlockchain]);
 
-    return {
-        isLoading,
-        error,
-        info,
-        isExpired,
-        timer,
-        merchantToken,
-        amountInMerchantToken,
-        fee,
-        merchantAmount,
-        merchantAddress,
-        expireAt,
-    };
+  return {
+    isLoading,
+    error,
+    info,
+    isExpired,
+    timer,
+    merchantToken,
+    amountInMerchantToken,
+    fee,
+    merchantAmount,
+    merchantAddress,
+    expireAt,
+  };
 };

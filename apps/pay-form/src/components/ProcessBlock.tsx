@@ -29,6 +29,7 @@ export const ProcessBlock = (props: ProcessBlockProps) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    // @ts-ignore
     const abortPromise = dispatch(startPay(props));
     props.setAbortTransaction.current = abortPromise.abort;
   }, []);
@@ -43,6 +44,7 @@ export const ProcessBlock = (props: ProcessBlockProps) => {
           isLoading={stage.status === StageStatus.LOADING}
           isSuccsess={stage.status === StageStatus.SUCCESS}
           isPending={stage.status === StageStatus.PENDING}
+          // @ts-ignore
           onClick={() => dispatch(startPay({ ...props, targetStages: [index] }))}
         />
       ))}

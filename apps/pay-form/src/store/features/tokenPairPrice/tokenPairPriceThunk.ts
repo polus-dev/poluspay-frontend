@@ -15,7 +15,7 @@ import { roundCryptoAmount } from 'tools';
 interface IPayload {
     userToken: Token;
     merchantToken: Token;
-    amountOut: bigint;
+    amountOut: string;
 }
 
 interface ITokenPairPriceReturnType
@@ -41,7 +41,6 @@ export const tokenPairPriceThunk = createAsyncThunk<
                 ),
             };
         }
-        debugger;
         const currentBlockchain = getState().connection.currentBlockchain;
         if (!currentBlockchain)
             return rejectWithValue('useTokenPrice: No blockchain') as any;
@@ -86,7 +85,7 @@ export const tokenPairPriceThunk = createAsyncThunk<
 
         const response2 = await provider.getValueForSwap(
             getPathFromCallData(calldata),
-            payload.amountOut
+            BigInt(payload.amountOut)
         );
         dispatch(
             setPathTrade({

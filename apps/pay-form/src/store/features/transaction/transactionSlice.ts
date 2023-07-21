@@ -1,21 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { startPay } from "./transactionThunk";
-import { PaymentHelper } from "../../../logic/payment";
-import { Token } from "../../api/types";
-import { Permit2Permit } from "@uniswap/universal-router-sdk/dist/utils/permit2";
-import { Blockchain_t } from "../../api/endpoints/types";
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import { startPay } from './transactionThunk';
+import { PaymentHelper } from '../../../logic/payment';
+import { Token } from '../../api/types';
+import { Blockchain_t } from '../../api/endpoints/types';
+import { Permit2Permit } from '../../../logic/uwm/builder';
+import {Address} from "viem";
 
 export interface TransactionState {
-  stages: [IApproveStage, ISignStage, ISendStage];
-  currentStage: StageId;
-  pathTrade: {
-    path: any; // TODO
+    stages: [IApproveStage, ISignStage, ISendStage];
+    currentStage: StageId;
+    pathTrade: {
+        path: any; // TODO
+        amount?: string;
+    };
+    helper?: PaymentHelper;
+    consoleLog?: (message: any, type?: boolean) => void;
     amount?: string;
-  };
-  helper?: PaymentHelper;
-  consoleLog?: (message: any, type?: boolean) => void;
-  amount?: string;
 }
 
 export const enum StageId {
@@ -44,7 +45,7 @@ export interface IPayload {
   consoleLog: (message: any, type?: boolean) => void;
   blockchain: Blockchain_t;
   uuid: string;
-  userAddress: string;
+  userAddress: Address;
   amount: string;
   fee: string;
   merchantAddress: string;
@@ -89,19 +90,26 @@ export const transactionSlice = createSlice({
   initialState,
   reducers: {
     initTransactionState: (state, action: PayloadAction<IPayload>) => {
-      // TODO: refactor
-      state.pathTrade.amount = undefined;
-      state.amount = action.payload.amount;
-      const h = new PaymentHelper(action.payload.blockchain, action.payload.userToken, action.payload.merchantToken, action.payload.userAddress)
-      // @ts-ignore
-      state.helper = h
-      state.consoleLog = action.payload.consoleLog;
-      state.stages[StageId.SEND].uuid = action.payload.uuid;
-      state.stages[StageId.SEND].fee = action.payload.fee;
-      state.stages[StageId.SEND].merchantAddress = action.payload.merchantAddress;
-      state.stages[StageId.SEND].feeAddress = action.payload.feeAddress;
-      state.stages[StageId.SEND].merchantAmount = action.payload.merchantAmount;
-      state.stages[StageId.SEND].expireAt = action.payload.expireAt;
+      if (action.payload.userToken.contract === action.payload.merchantToken.contract) {
+        state.pathTrade.amount = undefined;
+        state.amount = action.payload.amount;
+      }
+        // @ts-ignore
+        state.helper = new PaymentHelper(
+            action.payload.blockchain,
+            action.payload.userToken,
+            action.payload.merchantToken,
+            action.payload.userAddress,
+        );
+        state.consoleLog = action.payload.consoleLog;
+        state.stages[StageId.SEND].uuid = action.payload.uuid;
+        state.stages[StageId.SEND].fee = action.payload.fee;
+        state.stages[StageId.SEND].merchantAddress =
+            action.payload.merchantAddress;
+        state.stages[StageId.SEND].feeAddress = action.payload.feeAddress;
+        state.stages[StageId.SEND].merchantAmount =
+            action.payload.merchantAmount;
+        state.stages[StageId.SEND].expireAt = action.payload.expireAt;
     },
     setStageText: (
       state,

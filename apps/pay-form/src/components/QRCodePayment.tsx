@@ -29,14 +29,14 @@ interface AllType {
 }
 
 const getPaymentAssetInfo = (payment: Payment, blockchain: Blockchain_t) => {
-  const assetName = Object.keys(payment.assets[blockchain])[0] as Asset_t;
-  const paymentInfo = payment.assets[blockchain][assetName];
+  const assetName = payment.assets[0].name;
+  const paymentInfo = payment.assets[0];
   return { assetName, paymentInfo };
 };
 
 interface PaymentState {
   amount: string | number;
-  assetName: Asset_t;
+  assetName: string;
   address: string;
 }
 
@@ -59,13 +59,9 @@ export const QRCodePayment = (props: AllType) => {
     if (availableAssets) {
       const {
         assetName,
-        paymentInfo: { amount: amountInDecimals, address },
+        paymentInfo: { amount_decimals: amount , address },
       } = getPaymentAssetInfo(props.payment, currentBlockchain);
 
-      const amount = ethers.utils.formatUnits(
-        amountInDecimals,
-        availableAssets[assetName][currentBlockchain].decimals
-      );
       setPaymentInfoState({ address, amount, assetName });
     }
   }, [availableAssets]);

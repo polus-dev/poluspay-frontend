@@ -70,7 +70,8 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                     recipient: helper.RouterAddress,
                 };
                 if (signature) {
-                    swapOptions.inputTokenPermit = signature;
+                  // @ts-ignore
+                  swapOptions.inputTokenPermit = signature;
                 }
                 const { calldata } = SwapRouter.swapERC20CallParameters(
                     getState().transaction.pathTrade.path,
@@ -79,7 +80,8 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                 const isContextFromNative = helper.userToken.is_native;
 
                 dispatch(setStageText('Encode transaction'));
-                const encodePayParams: Parameters<typeof encodePay>[0] = {
+              const encodePayParams: Parameters<typeof encodePay>[0] = {
+                    // @ts-ignore
                     uuid: uuid.replaceAll('-', ''),
                     fee,
                     merchantAmount,

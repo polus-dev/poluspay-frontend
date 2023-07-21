@@ -6,10 +6,10 @@ import {
     setStageText,
     StageStatus,
 } from '../transactionSlice';
-import { Permit2Permit } from '@uniswap/universal-router-sdk/dist/utils/permit2';
 
 import { signTypedData } from 'wagmi/actions';
 import { ThunkConfig } from '../../../store';
+import {Permit2Permit} from "../../../../logic/uwm/builder";
 
 export const signThunk = createAsyncThunk<any, void, ThunkConfig>(
     'transaction/signThunk',

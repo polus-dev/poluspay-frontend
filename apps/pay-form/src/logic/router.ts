@@ -218,12 +218,12 @@ export class CustomRouter {
     }
 
     public static amountToCurrencyAmount(
-        amount: BigNumber | string | number | BigInt,
+        amount: BigNumber | string | number | bigint,
         tokenTo: Token
     ): CurrencyAmount<Token> {
         return CurrencyAmount.fromRawAmount(
             tokenTo,
-            JSBI.BigInt(amount)
+            JSBI.BigInt(amount.toString())
             // amountInn.toString()
         )
     }
@@ -254,7 +254,7 @@ export class CustomRouter {
     }
 
     public async getRouter(
-        amountOut: string | number | BigNumber | BigInt,
+        amountOut: string | number | BigNumber | bigint,
         tokenFrom: Token,
         tokenTo: Token
     ): Promise<SwapRoute | null | undefined> { // Promise<undefined | (string | number)[]>

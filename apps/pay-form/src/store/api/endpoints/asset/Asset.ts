@@ -1,29 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react';
-import { IAssets, IAssetsResponse } from './Asset.interface';
-import { TokenImages } from '../../../../img/TokenImages';
+import {createAssetApi} from "@poluspay-frontend/api";
 
-export const assetApi = createApi({
-    reducerPath: 'assetApi' as const,
-    baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_REACT_API_URL + 'public',
-    }),
-    endpoints: (builder) => ({
-        getAssets: builder.query<IAssets, void>({
-            query: () => ({
-                url: `payment.assets.get`,
-                method: 'POST',
-            }),
-            transformResponse: (baseQueryReturnValue: IAssetsResponse) => {
-                // @ts-ignore
-                Object.keys(baseQueryReturnValue).forEach((assetKey) => {
-                    baseQueryReturnValue[assetKey] =
-                        baseQueryReturnValue[assetKey].networks;
-                    baseQueryReturnValue[assetKey].image =
-                        TokenImages[assetKey];
-                });
-                return baseQueryReturnValue;
-            },
-        }),
-    }),
-});
+export const assetApi = createAssetApi(import.meta.env.VITE_REACT_API_URL);
 export const { useGetAssetsQuery } = assetApi;

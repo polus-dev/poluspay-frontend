@@ -40,6 +40,10 @@ import { useAvailableTokens } from './pages/TokenSelect/hooks/useAvailableTokens
 import { Token } from './store/api/types';
 import { ChainForWeb3Modal } from './types/ChainForWeb3Modal';
 import Main from './pages/TokenSelect/TokenSelect';
+import {useModal} from "../../merchant-client/src/hooks/useModal";
+import {useGetAssetsQuery} from "./store/api/endpoints/asset/Asset";
+import {getAssetUrl} from "../../../tools";
+import {PNotifyContainer} from "@poluspay-frontend/ui";
 
 const isDesktop = window.innerWidth >= 800;
 
@@ -51,10 +55,14 @@ export const App: React.FC = () => {
     (state) => state.guide.isVisible
   );
 
+  const modalCurrency = useModal();
+
+  const { data: assets, isLoading: isAssetsLoading } = useGetAssetsQuery();
+
   const { data: paymentInfo } = useGetPaymentByPaymentIdQuery({
     payment_id: getParameterByName('uuid')!,
   });
-  const { availableTokens, isAvailalbeTokensLoading } = useAvailableTokens();
+  const { availableTokens, isAvailableTokensLoading, availableCategories } = useAvailableTokens();
   const currentBlockchain = useAppSelector(
     (state) => state.connection.currentBlockchain
   );
@@ -67,7 +75,6 @@ export const App: React.FC = () => {
   const [snackbar, setSnackbar] = React.useState<any>(null);
 
   const [popout, setPopout] = React.useState<any>(null);
-  const { chain } = useNetwork();
 
   const { open, setDefaultChain } = useWeb3Modal();
 
@@ -232,13 +239,13 @@ export const App: React.FC = () => {
         }
       >
         <Div>
-          {availableTokens.filter((token) => token.type === 'Stable')
+          {availableTokens.filter((token) => token.categories.includes('stablecoin'))
             .length ? (
             <>
               <h3>Stable Coin</h3>
               <CardGrid size="m">
                 {availableTokens
-                  .filter((token) => token.type === 'Stable')
+                  .filter((token) => token.categories.includes('stablecoin'))
                   .map((token, key) => (
                     <Card key={key}>
                       <SimpleCell
@@ -254,7 +261,7 @@ export const App: React.FC = () => {
                         }
                         before={
                           <img
-                            src={token.image}
+                            src={getAssetUrl(import.meta.env.VITE_REACT_APP_ASSET_URL, token.name)}
                             style={{
                               marginRight: '12px',
                             }}
@@ -270,14 +277,14 @@ export const App: React.FC = () => {
             </>
           ) : null}
 
-          {availableTokens.filter((token) => token.type === 'Native')
+          {availableTokens.filter((token) => token.categories.includes('popular'))
             .length ? (
             <>
               {' '}
               <h3>Native Coin</h3>
               <CardGrid size="m">
                 {availableTokens
-                  .filter((token) => token.type === 'Native')
+                  .filter((token) => token.categories.includes('popular'))
                   .map((token, key) => (
                     <Card key={key}>
                       <SimpleCell
@@ -293,7 +300,7 @@ export const App: React.FC = () => {
                         }
                         before={
                           <img
-                            src={token.image}
+                            src={getAssetUrl(import.meta.env.VITE_REACT_APP_ASSET_URL, token.name)}
                             style={{
                               marginRight: '12px',
                             }}
@@ -309,13 +316,13 @@ export const App: React.FC = () => {
             </>
           ) : null}
 
-          {availableTokens.filter((token) => token.type === 'Wrapped')
+          {availableTokens.filter((token) => token.categories.includes('wrap'))
             .length ? (
             <>
               <h3>Wrapped Coin</h3>
               <CardGrid size="m">
                 {availableTokens
-                  .filter((token) => token.type === 'Wrapped')
+                  .filter((token) => token.categories.includes('wrap'))
                   .map((token, key) => (
                     <Card key={key}>
                       <SimpleCell
@@ -331,7 +338,7 @@ export const App: React.FC = () => {
                         }
                         before={
                           <img
-                            src={token.image}
+                            src={getAssetUrl(import.meta.env.VITE_REACT_APP_ASSET_URL, token.name)}
                             style={{
                               marginRight: '12px',
                             }}
@@ -348,13 +355,13 @@ export const App: React.FC = () => {
           ) : null}
 
           {availableTokens.filter(
-            (token) => token.type === 'Other'
+            (token) => token.categories.includes("unknown")
           ) ? (
             <>
               <h3>Other Coin</h3>
               <CardGrid size="m">
                 {availableTokens
-                  .filter((token) => token.type === 'Other')
+                  .filter((token) => token.categories.includes("unknown"))
                   .map((token, key) => (
                     <Card key={key}>
                       <SimpleCell
@@ -370,7 +377,7 @@ export const App: React.FC = () => {
                         }
                         before={
                           <img
-                            src={token.image}
+                            src={getAssetUrl(import.meta.env.VITE_REACT_APP_ASSET_URL, token.name)}
                             style={{
                               marginRight: '12px',
                             }}
@@ -447,6 +454,7 @@ export const App: React.FC = () => {
           onClick={() => setIsOpen(true)}
         />
         {snackbar}
+        <PNotifyContainer ms={2000} />
       </SplitLayout>
     </AppRoot>
   );
