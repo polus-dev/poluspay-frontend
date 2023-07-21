@@ -88,7 +88,7 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
   const { availableTokens, isAvailableTokensLoading, availableCategories } = useAvailableTokens()
 
 
-  const { data: paymentInfo } = useGetPaymentByPaymentIdQuery(
+  const { data: paymentInfo , isError: isGetPaymentInfoError} = useGetPaymentByPaymentIdQuery(
     {
       payment_id: getParameterByName('uuid')!,
     },
@@ -190,7 +190,7 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
     }
   }, [isConnected]);
 
-  if (!getParameterByName('uuid')) {
+  if (!getParameterByName('uuid') || isGetPaymentInfoError) {
     return (
       <StatusComponent status="error" message="payment uuid not found" />
     );

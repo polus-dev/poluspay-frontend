@@ -6,11 +6,11 @@ import {
   WrappedToken,
 } from "../../../store/api/endpoints/types";
 import { useAppSelector } from "../../../store/hooks";
-import { Token } from "../../../store/api/types";
+import {AssetRepresentation} from "@poluspay-frontend/api";
 
 
 export const useAvailableTokens = () => {
-  const [availableTokens, setAvailableTokens] = useState<Token[]>([]);
+  const [availableTokens, setAvailableTokens] = useState<AssetRepresentation[]>([]);
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
 
   const currentBlockchain = useAppSelector(
