@@ -3,8 +3,9 @@ import { IAsset, IAssetsResponseFromApi } from '@poluspay-frontend/api';
 let instance: Helper;
 
 export const AssetHelper = (
-    rawAssets: ConstructorParameters<typeof Helper>[0]
-) => instance || new Helper(rawAssets);
+    rawAssets: ConstructorParameters<typeof Helper>[0],
+    isMerchant = false,
+) => instance || new Helper(rawAssets, isMerchant);
 
 export type AssetRepresentation = {
     name: string;
@@ -23,7 +24,7 @@ interface IAssetHelper {
 
     getAsset(
         network: string,
-        assetName: string
+        assetName: string,
     ): AssetRepresentation | undefined;
 
     getAllNetworks(): string[];
@@ -31,13 +32,16 @@ interface IAssetHelper {
     getAllCategories(): string[];
 }
 
-class Helper implements IAssetHelper {
+export class Helper implements IAssetHelper {
     private sortedByCategory?: ISortedBy;
     private allNetworks?: string[];
     private allCategories?: string[];
     private sortedByNetwork?: ISortedBy;
 
-    constructor(private rawAssets: IAssetsResponseFromApi) {}
+    constructor(
+        private rawAssets: IAssetsResponseFromApi,
+        private isMerchant = false,
+    ) {}
 
     getAllNetworks(): string[] {
         if (this.allNetworks) {
@@ -76,7 +80,7 @@ class Helper implements IAssetHelper {
         return result;
     }
 
-    getAssetsByNetwork(network: string, isMerchant = false): ISortedBy[string] {
+    getAssetsByNetwork(network: string): ISortedBy[string] {
         if (this.sortedByNetwork?.[network]) {
             return this.sortedByNetwork[network];
         } else {
@@ -85,7 +89,7 @@ class Helper implements IAssetHelper {
             for (const assetKey of allAssetsKey) {
                 if (
                     Object.keys(this.rawAssets[assetKey].networks).includes(
-                        network
+                        network,
                     )
                 ) {
                     const currentAsset = this.rawAssets[assetKey];
@@ -101,48 +105,57 @@ class Helper implements IAssetHelper {
                 ...this.sortedByCategory,
                 [network]: filteredAssets,
             };
-            if (isMerchant) {
-              return filteredAssets.filter(asset => asset.available_for_accept);
+            if (this.isMerchant) {
+                return filteredAssets.filter(
+                    (asset) => asset.available_for_accept,
+                );
             } else {
-              return filteredAssets;
+                return filteredAssets;
             }
         }
     }
 
-    getAssetsByNetworks(networks: string[], isMerchant = false): AssetRepresentation[] {
-        const result = [];
+    getAssetsByNetworks(networks: string[]): [AssetRepresentation[], string[]] {
+        let result = [];
         for (const network of networks)
-            result.push(...this.getAssetsByNetwork(network, isMerchant));
-      // TODO: refactor
-        return result.flat().filter((asset, index, self) => self.findIndex((t) => t.name === asset.name) === index);
+            result.push(...this.getAssetsByNetwork(network));
+        // TODO: refactor
+        return [result = result
+            .flat()
+            .filter(
+                (asset, index, self) =>
+                    self.findIndex((t) => t.name === asset.name) === index,
+            ),
+          [...new Set(result.map((e) => e.categories).flat())]
+        ];
     }
 
     getAsset(
         network: string,
         assetName: string,
-        isMerchant = false
     ): AssetRepresentation | undefined {
-        const assets = this.getAssetsByNetwork(network, isMerchant);
+        const assets = this.getAssetsByNetwork(network);
         return assets.find((asset) => asset.name === assetName);
     }
 
-    getAssetsByCategory(network: string, category?: string, isMerchant = false): ISortedBy[string] {
-        const assets = this.getAssetsByNetwork(network, isMerchant);
+    getAssetsByCategory(network: string, category?: string): ISortedBy[string] {
+        const assets = this.getAssetsByNetwork(network);
         if (!category) {
             return assets;
         } else {
             // if (this.sortedByCategory?.[category]) {
             //
             // }
-          const filteredAssets =
-            assets.filter((asset) =>
-              asset.categories.includes(category)
+            const filteredAssets = assets.filter((asset) =>
+                asset.categories.includes(category),
             );
-          if (isMerchant) {
-            return filteredAssets.filter(asset => asset.available_for_accept)
-          } else {
-            return filteredAssets;
-          }
+            if (this.isMerchant) {
+                return filteredAssets.filter(
+                    (asset) => asset.available_for_accept,
+                );
+            } else {
+                return filteredAssets;
+            }
         }
     }
 }

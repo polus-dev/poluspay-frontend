@@ -8,7 +8,6 @@ import { ReactComponent as IconCheckbox } from '../../assets/icons/checkbox-fill
 import classNames from 'classnames';
 
 import './CurrencySelector.scoped.scss';
-import { category } from 'fp-ts';
 import {AssetRepresentation} from "@poluspay-frontend/api";
 import {getAssetUrl} from "../../../../../../tools";
 import {useOutsideClose} from "@poluspay-frontend/hooks";
@@ -23,7 +22,7 @@ interface Asset {
 
 interface ModalProps {
     visible: boolean;
-    assetsForMerchant: AssetRepresentation[];
+    assetsRepresentation: AssetRepresentation[];
     categories: string[];
     onClose: (asset?: AssetRepresentation) => void;
     assetUrl: string;
@@ -33,7 +32,7 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
     visible,
     onClose,
     categories,
-    assetsForMerchant,
+    assetsRepresentation,
     assetUrl
 }) => {
     const [search, setSearch] = useState('');
@@ -50,31 +49,31 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
     const ref = useOutsideClose(onClose)
 
     const [selected, setSelected] = useState<AssetRepresentation>();
-    const [assets, setAssets] = useState(assetsForMerchant);
+    const [assets, setAssets] = useState(assetsRepresentation);
 
     useEffect(() => {
         if (search.length > 0) {
             setAssets(
-                assetsForMerchant.filter((asset) =>
+                assetsRepresentation.filter((asset) =>
                     asset.name.toLowerCase().includes(search.toLowerCase())
                 )
             );
         } else {
-            setAssets(assetsForMerchant);
+            setAssets(assetsRepresentation);
         }
     }, [search]);
 
     useEffect(() => {
         if (tab.id === 'All') {
-            setAssets(assetsForMerchant);
+            setAssets(assetsRepresentation);
         } else {
             setAssets(
-                assetsForMerchant.filter((asset) =>
+                assetsRepresentation.filter((asset) =>
                     asset.categories.includes(tab.id)
                 )
             );
         }
-    }, [tab, assetsForMerchant]);
+    }, [tab, assetsRepresentation]);
 
 
     return ReactDOM.createPortal(

@@ -5,7 +5,7 @@ import { MerchantInvoicesForm } from '../../../../components/pages/merchants/id/
 import { MerchantInvoicesTable } from '../../../../components/pages/merchants/id/invoices/Table';
 import { MerchantInvoicesPreview } from '../../../../components/pages/merchants/id/invoices/Preview';
 import { Loader } from '../../../../components/ui/Loader/Loader';
-import { ErrorBlock } from '../../../../components/ui/Error/Error';
+import { ErrorBlock } from '../../../../../../../libs/ui/src/lib/Error/Error';
 
 import './MerchantInvoices.scoped.scss';
 import { useGetPaginatedInvoices } from './hooks/useGetPaginatedInvoices';

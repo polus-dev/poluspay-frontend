@@ -199,7 +199,7 @@ export const MerchantInvoicesForm = ({
                             else modalCurrency.close();
                         }}
                         categories={categories}
-                        assetsForMerchant={availableAssets}
+                        assetsRepresentation={availableAssets}
                         assetUrl={import.meta.env.VITE_REACT_APP_ASSET_URL}
                     />
                     <ModalBlockChainSelector

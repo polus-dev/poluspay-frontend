@@ -1,4 +1,3 @@
-import type { WebhookHistoryItem } from '../../../../components/pages/merchants/id/api/WebhookItem';
 import { useEffect, useState } from 'react';
 
 import { MerchantWebhookItem } from '../../../../components/pages/merchants/id/api/WebhookItem';
@@ -7,9 +6,8 @@ import { PPagination } from '@poluspay-frontend/ui';
 
 import './Webhooks.scoped.scss';
 import { useGetWebhookHistoryQuery } from '../../../../store/api/endpoints';
-import { useParams } from 'react-router-dom';
 import { Loader } from 'apps/merchant-client/src/components/ui/Loader/Loader';
-import { ErrorBlock } from 'apps/merchant-client/src/components/ui/Error/Error';
+import { ErrorBlock } from '../../../../../../../libs/ui/src/lib/Error/Error';
 import { useGetMerchantIdFromParams } from 'apps/merchant-client/src/hooks/useGetMerchantId';
 
 export const MerchantApiPage: React.FC = () => {

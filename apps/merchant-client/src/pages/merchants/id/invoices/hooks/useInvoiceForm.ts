@@ -53,16 +53,11 @@ export const useInvoiceForm = (merchantId: string) => {
             const availableNetworks = [
                 ...new Set(merchantWallets.map((e) => e.network)),
             ];
-            const availableAssets = assets.getAssetsByNetworks(
+            const [availableAssets, availableCategories] = assets.getAssetsByNetworks(
                 availableNetworks,
-                true
             );
             setAvailableMerchantAssets(availableAssets);
-            setAvailableCategories(
-                Array.from(
-                    new Set(availableAssets.map((e) => e.categories).flat())
-                )
-            );
+            setAvailableCategories(availableCategories);
         }
     }, [merchantWallets, assets]);
 

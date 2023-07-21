@@ -11,7 +11,7 @@ interface ErrorProps {
 }
 
 export const ErrorBlock: React.FC<ErrorProps> = ({
-    title = 'No records found',
+    title = 'fatal error',
     height,
     borderRadius,
     hasBackground = true,
