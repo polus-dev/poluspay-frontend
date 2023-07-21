@@ -32,7 +32,7 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
         merchant_id: merchantId,
     });
     const { data: assets } = useGetAssetsQuery();
-    const network = watch?.('blockchain') || "polygon";
+    const network = watch?.('blockchain') || 'polygon';
     const currency = watch?.('currency')?.toUpperCase() || 'matic';
     const description = watch?.('description');
     const amount = watch?.('amount') || 0;

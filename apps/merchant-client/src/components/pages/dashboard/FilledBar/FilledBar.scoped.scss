@@ -1,0 +1,62 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/utils';
+
+.bar {
+    display: flex;
+    flex-direction: column;
+    gap: px-to-rem(6);
+    width: 100%;
+
+    &__chart {
+        position: relative;
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+        height: px-to-rem(5);
+        background-color: $color-grey;
+        border-radius: px-to-rem(40);
+        overflow: hidden;
+    }
+
+    &__chart-fill {
+        width: 0;
+        height: 100%;
+        border-radius: px-to-rem(40);
+    }
+
+    &__data {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: $color-white;
+        font-size: px-to-rem(16);
+        font-weight: 400;
+        line-height: 150%;
+    }
+
+    &__data-label {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(6);
+        color: inherit;
+        stroke: $color-white;
+        transition: 0.15s ease-in-out;
+        transition-property: color, stroke;
+
+        &--clickable {
+            cursor: pointer;
+
+            &:hover {
+                color: $color-white-dark;
+                stroke: $color-white-dark;
+            }
+        }
+    }
+
+    &__data-label-icon {
+        width: px-to-rem(16);
+        height: auto;
+        stroke: inherit;
+        rotate: -90deg;
+    }
+}

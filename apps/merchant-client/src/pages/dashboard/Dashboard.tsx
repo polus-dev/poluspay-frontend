@@ -9,6 +9,7 @@ import { DashboardStatsBlock } from '../../components/pages/dashboard/StatsBlock
 import { DashboardBarChart } from '../../components/pages/dashboard/BarChart/BarChart';
 
 import './Dashboard.scoped.scss';
+import { DashboardDoughnutChart } from '../../components/pages/dashboard/DoughnutChart/DoughnutChart';
 
 export const DashboardPage: React.FC = () => {
     const options: SelectOption[] = [
@@ -82,6 +83,9 @@ export const DashboardPage: React.FC = () => {
                 <div className="dashboard__charts-container">
                     <div className="dashboard__charts-container-item">
                         <DashboardBarChart />
+                    </div>
+                    <div className="dashboard__charts-container-item">
+                        <DashboardDoughnutChart />
                     </div>
                 </div>
             </div>

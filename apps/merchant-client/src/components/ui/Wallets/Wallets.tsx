@@ -79,7 +79,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
     const [deleteMerchantWallet] = useDeleteMerchantWalletMutation();
     const [ref] = useAutoAnimate();
 
-    const [tab, setTab] = useState<typeof tabs[number]>(tabs[3]);
+    const [tab, setTab] = useState<(typeof tabs)[number]>(tabs[3]);
 
     const [search, setSearch] = useState('');
 
@@ -133,7 +133,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
         }
     };
 
-  return (
+    return (
         <div className="wallets">
             <div className="wallets__header">
                 <h6 className="wallets__header-title">Add your wallets</h6>
@@ -251,9 +251,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                             wide
                             size="lg"
                             disabled={buttonDisabled}
-                            children={
-                                <p>Finish registration</p>
-                            }
+                            children={<p>Finish registration</p>}
                             onClick={() => next()}
                         />
                     </div>

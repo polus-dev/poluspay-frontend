@@ -23,7 +23,7 @@ import './Form.scoped.scss';
 import { useParams } from 'react-router-dom';
 import { IMerchantForm } from '../../../Form.interface';
 import { useGetMerchantIdFromParams } from '../../../../../../hooks/useGetMerchantId';
-import {httpsUrlRegex} from "../../../../../../../../../tools";
+import { httpsUrlRegex } from '../../../../../../../../../tools';
 
 export const MerchantProfileForm: React.FC = () => {
     const modalDelete = useModal();
@@ -154,10 +154,11 @@ export const MerchantProfileForm: React.FC = () => {
                                         label="Website"
                                         placeholder="https://example.com"
                                         reg={register('website', {
-                                          pattern: {
-                                            value: httpsUrlRegex,
-                                            message: "Please enter a valid URL"
-                                          }
+                                            pattern: {
+                                                value: httpsUrlRegex,
+                                                message:
+                                                    'Please enter a valid URL',
+                                            },
                                         })}
                                     />
                                 </div>
