@@ -126,7 +126,9 @@
         }
 
         &__chart {
-            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: px-to-rem(12);
         }
     }
 }

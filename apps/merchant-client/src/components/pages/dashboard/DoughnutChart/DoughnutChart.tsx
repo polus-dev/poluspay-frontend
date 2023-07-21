@@ -1,20 +1,19 @@
+import type { FilledBar } from '../FilledBar/FilledBar';
+
 import { useState } from 'react';
 
-import {
-    Chart as ChartJS,
-    ArcElement,
-    Tooltip,
-    CategoryScale,
-    LinearScale,
-    BarElement,
-} from 'chart.js';
-import { Doughnut, Bar } from 'react-chartjs-2';
+import { useModal } from '../../../../hooks/useModal';
+
+import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
 
 import { PTabs } from '@poluspay-frontend/ui';
+import { DashboardFilledBar } from '../FilledBar/FilledBar';
+import { ModalDashboardCurrencies } from '../../../modals/DashboardCurrencies/DashboardCurrencies';
 
 import './DoughnutChart.scoped.scss';
 
-ChartJS.register(ArcElement, Tooltip, CategoryScale, LinearScale, BarElement);
+ChartJS.register(ArcElement, Tooltip);
 ChartJS.defaults.plugins.legend.display = false;
 
 const doughnutData = {
@@ -24,12 +23,12 @@ const doughnutData = {
             label: 'qwe',
             data: [123, 321, 234, 432, 456, 654],
             backgroundColor: [
+                '#FCAD1E',
                 '#FAF305',
                 '#1B9628',
                 '#A5EAAC',
                 '#39E849',
                 '#FD6438',
-                '#FCAD1E',
             ],
             borderWidth: 0,
             borderRadius: 12,
@@ -44,39 +43,13 @@ const doughnutData = {
     },
 };
 
-const barOptions = {
-    indexAxis: 'y' as const,
-    responsive: true,
-    scales: {
-        x: {
-            ticks: {
-                display: false,
-            },
-        },
-    },
-};
-
-const barData = {
-    labels: ['BNB', 'Ethereum', 'MATIC', 'USDT', 'USDC', 'PLS'],
-    datasets: [
-        {
-            label: 'qwe',
-            data: [123, 321, 234, 432, 456, 654],
-            backgroundColor: [
-                '#FAF305',
-                '#1B9628',
-                '#A5EAAC',
-                '#39E849',
-                '#FD6438',
-                '#FCAD1E',
-            ],
-            barPercentage: 0.2,
-            categoryPercentage: 1,
-            borderRadius: 40,
-            borderSkipped: false,
-        },
-    ],
-};
+const filledConf: FilledBar[] = [
+    { label: 'BNB', value: '$125000', color: '#FCAD1E', fill: 100 },
+    { label: 'Ethereum', value: '$125000', color: '#FAF305', fill: 65 },
+    { label: 'MATIC', value: '$125000', color: '#1B9628', fill: 54 },
+    { label: 'USDT', value: '$125000', color: '#39E849', fill: 32 },
+    { label: 'Other', value: '$125000', color: '#A5EAAC', fill: 12 },
+];
 
 export const DashboardDoughnutChart: React.FC = () => {
     const tabs = [
@@ -86,6 +59,8 @@ export const DashboardDoughnutChart: React.FC = () => {
     ];
 
     const [tab, setTab] = useState(tabs[2]);
+
+    const modal = useModal();
 
     return (
         <div className="doughnut">
@@ -115,10 +90,22 @@ export const DashboardDoughnutChart: React.FC = () => {
                         </p>
                     </div>
                     <div className="doughnut__container-bar__chart">
-                        <Bar options={barOptions} data={barData} />
+                        {filledConf.map((item, index) => (
+                            <div key={item.label}>
+                                <DashboardFilledBar
+                                    item={item}
+                                    clickable={index === filledConf.length - 1}
+                                    onClick={modal.open}
+                                />
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
+            <ModalDashboardCurrencies
+                visible={modal.visible}
+                onClose={modal.close}
+            />
         </div>
     );
 };

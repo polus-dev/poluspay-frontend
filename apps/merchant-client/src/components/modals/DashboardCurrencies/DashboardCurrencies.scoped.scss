@@ -1,0 +1,48 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+.modal {
+    // ...
+
+    &__header {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    &__header-title {
+        width: 100%;
+        text-align: left;
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(24);
+    }
+
+    &__body-container {
+        display: grid;
+        gap: px-to-rem(16) px-to-rem(24);
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    &__body-container-item {
+        grid-column-start: span 2;
+        grid-column-end: span 2;
+
+        @include breakpoint($screen-sm) {
+            grid-column-start: span 1;
+            grid-column-end: span 1;
+        }
+    }
+
+    &__body-pagination {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+    }
+
+    &__body-button {
+        width: 100%;
+    }
+}
