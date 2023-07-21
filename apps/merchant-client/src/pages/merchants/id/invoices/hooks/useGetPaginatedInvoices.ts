@@ -22,7 +22,7 @@ export const useGetPaginatedInvoices = ({
             merchant_id: merchantId,
             limit,
             offset: current * limit - limit,
-        });
+        }, {refetchOnFocus: true});
 
     const { data: availableAssets, isLoading: isAvailableAssetsLoading } =
         useGetAssetsQuery();
