@@ -58,6 +58,7 @@ export const useInvoiceForm = (merchantId: string) => {
             );
             setAvailableMerchantAssets(availableAssets);
             setAvailableCategories(availableCategories);
+            setAvailableAssetNetworks(merchantWallets.map(e => blockchainList.find(b => b.label === e.network)!));
         }
     }, [merchantWallets, assets]);
 
@@ -68,7 +69,7 @@ export const useInvoiceForm = (merchantId: string) => {
                     (e) => blockchainList.find((b) => b.label === e)!
                 )
             );
-            setSelectedNetworks([]);
+            // setSelectedNetworks([]);
             setShowPreviewForm(false);
         }
     }, [selectedAsset]);
@@ -80,6 +81,13 @@ export const useInvoiceForm = (merchantId: string) => {
             setShowPreviewForm(true);
         }
     }, [selectedNetworks, selectedAsset]);
+
+    useEffect(() => {
+      // if (selectedNetworks.length > 0) {
+      //   setAvailableMerchantAssets(assets => assets.filter(asset => asset.networks.includes(selectedNetworks[0].label)));
+      // }
+
+    }, [selectedNetworks])
 
     const submit: SubmitHandler<InvoiceForm> = async (data) => {
         try {
