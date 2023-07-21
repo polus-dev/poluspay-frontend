@@ -24,6 +24,7 @@ import { App } from './App';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { steps } from './guid/steps';
+import {ErrorBoundary} from "@poluspay-frontend/ui";
 
 const chains = [polygon, mainnet, arbitrum, bsc, optimism];
 const projectId = import.meta.env.VITE_REACT_APP_PROJECT_ID;
@@ -33,7 +34,6 @@ const wagmiConfig = createConfig({
     autoConnect: true,
     connectors: w3mConnectors({
         projectId,
-        version: 2,
         chains,
     }),
     publicClient,
@@ -69,6 +69,7 @@ const ConfigProviderFix: any = ConfigProvider;
 const AdaptivityProviderFix: any = AdaptivityProvider;
 
 ReactDOM.render(
+  <ErrorBoundary>
     <Provider store={store}>
         <BrowserRouter basename="/">
             <WagmiConfig config={wagmiConfig}>
@@ -125,6 +126,7 @@ ReactDOM.render(
             </WagmiConfig>
             <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
         </BrowserRouter>
-    </Provider>,
+    </Provider>
+  </ErrorBoundary>,
     document.querySelector('#root')
 );
