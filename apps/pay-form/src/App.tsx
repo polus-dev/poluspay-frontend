@@ -405,6 +405,7 @@ export const App: React.FC = () => {
         modal={modalRoot}
         popout={popout}
         header={
+        <header>
           <PanelHeader
             separator={false}
             before={
@@ -417,6 +418,7 @@ export const App: React.FC = () => {
             }
             className="polus-header"
           />
+        </header>
         }
       >
         <SplitCol

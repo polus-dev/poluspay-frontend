@@ -103,6 +103,9 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
     (state) => state.connection.currentBlockchain,
   );
 
+
+  const modalCurrency = useModal();
+
   const prevBlockchain = useAppSelector(
     (state) => state.connection.prevBlockchain,
   );
@@ -385,7 +388,8 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
                           size="l"
                           className="guid__step--4"
                           stretched
-                          onClick={() => props.setActiveModal("coins")}
+                          // onClick={() => props.setActiveModal("coins")}
+                          onClick={modalCurrency.open}
                           mode={'outline'}
                           before={
                             <img
@@ -573,6 +577,7 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
           props.consoleLog('Cheat code entered', true);
         }}
       />
+      <ModalCurrencySelector visible={modalCurrency.visible} assetsRepresentation={availableTokens} categories={availableCategories} onClose={modalCurrency.close} assetUrl={import.meta.env.VITE_REACT_APP_ASSET_URL} />
     </Panel>
 </>
   );
