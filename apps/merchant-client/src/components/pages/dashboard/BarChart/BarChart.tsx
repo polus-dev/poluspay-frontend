@@ -7,6 +7,7 @@ import {
     BarElement,
     Tooltip,
     Legend,
+    ScriptableContext,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
@@ -32,43 +33,61 @@ const options = {
     },
 };
 
-const labels = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
-];
+const data = () => {
+    return {
+        labels: [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec',
+        ],
+        datasets: [
+            {
+                label: 'turnover',
+                data: [
+                    123, 321, 435, 456, 234, 678, 453, 634, 254, 263, 568, 122,
+                ],
+                barPercentage: 0.8,
+                categoryPercentage: 0.3,
+                backgroundColor: (context: ScriptableContext<'bar'>) => {
+                    const ctx = context.chart.ctx;
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 600);
+                    gradient.addColorStop(0, '#FBE945');
+                    gradient.addColorStop(1, '#B4801B');
 
-const data = {
-    labels,
-    datasets: [
-        {
-            label: 'turnover',
-            data: [123, 321, 435, 456, 234, 678, 453, 634, 254, 263, 568, 122],
-            barPercentage: 0.8,
-            categoryPercentage: 0.3,
-            backgroundColor: '#FBE945',
-            borderRadius: 40,
-            borderSkipped: false,
-        },
-        {
-            label: 'invoices',
-            data: [468, 301, 475, 780, 806, 467, 678, 345, 978, 568, 235, 465],
-            barPercentage: 0.8,
-            categoryPercentage: 0.3,
-            backgroundColor: '#24C190',
-            borderRadius: 40,
-            borderSkipped: false,
-        },
-    ],
+                    return gradient;
+                },
+                borderRadius: 40,
+                borderSkipped: false,
+            },
+            {
+                label: 'invoices',
+                data: [
+                    468, 301, 475, 780, 806, 467, 678, 345, 978, 568, 235, 465,
+                ],
+                barPercentage: 0.8,
+                categoryPercentage: 0.3,
+                backgroundColor: (context: ScriptableContext<'bar'>) => {
+                    const ctx = context.chart.ctx;
+                    const gradient = ctx.createLinearGradient(0, 0, 0, 600);
+                    gradient.addColorStop(0, '#24C190');
+                    gradient.addColorStop(1, '#0E7C3A');
+
+                    return gradient;
+                },
+                borderRadius: 40,
+                borderSkipped: false,
+            },
+        ],
+    };
 };
 
 export const DashboardBarChart: React.FC = () => {
@@ -94,7 +113,7 @@ export const DashboardBarChart: React.FC = () => {
                 </div>
             </div>
             <div className="bar__chart">
-                <Bar options={options} data={data} />
+                <Bar options={options} data={data()} />
             </div>
         </div>
     );

@@ -53,12 +53,15 @@ export const useInvoiceForm = (merchantId: string) => {
             const availableNetworks = [
                 ...new Set(merchantWallets.map((e) => e.network)),
             ];
-            const [availableAssets, availableCategories] = assets.getAssetsByNetworks(
-                availableNetworks,
-            );
+            const [availableAssets, availableCategories] =
+                assets.getAssetsByNetworks(availableNetworks);
             setAvailableMerchantAssets(availableAssets);
             setAvailableCategories(availableCategories);
-            setAvailableAssetNetworks(merchantWallets.map(e => blockchainList.find(b => b.label === e.network)!));
+            setAvailableAssetNetworks(
+                merchantWallets.map(
+                    (e) => blockchainList.find((b) => b.label === e.network)!
+                )
+            );
         }
     }, [merchantWallets, assets]);
 
@@ -83,11 +86,10 @@ export const useInvoiceForm = (merchantId: string) => {
     }, [selectedNetworks, selectedAsset]);
 
     useEffect(() => {
-      // if (selectedNetworks.length > 0) {
-      //   setAvailableMerchantAssets(assets => assets.filter(asset => asset.networks.includes(selectedNetworks[0].label)));
-      // }
-
-    }, [selectedNetworks])
+        // if (selectedNetworks.length > 0) {
+        //   setAvailableMerchantAssets(assets => assets.filter(asset => asset.networks.includes(selectedNetworks[0].label)));
+        // }
+    }, [selectedNetworks]);
 
     const submit: SubmitHandler<InvoiceForm> = async (data) => {
         try {

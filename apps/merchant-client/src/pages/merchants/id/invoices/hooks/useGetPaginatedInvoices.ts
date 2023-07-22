@@ -18,11 +18,14 @@ export const useGetPaginatedInvoices = ({
     const [isLoading, setIsLoading] = useState(false);
     const merchantId = useGetMerchantIdFromParams();
     const { data: invoicesResponse, isFetching: isInvoiceLoading } =
-        useGetPaymentByMerchantIdQuery({
-            merchant_id: merchantId,
-            limit,
-            offset: current * limit - limit,
-        }, {refetchOnFocus: true});
+        useGetPaymentByMerchantIdQuery(
+            {
+                merchant_id: merchantId,
+                limit,
+                offset: current * limit - limit,
+            },
+            { refetchOnFocus: true }
+        );
 
     const { data: availableAssets, isLoading: isAvailableAssetsLoading } =
         useGetAssetsQuery();
