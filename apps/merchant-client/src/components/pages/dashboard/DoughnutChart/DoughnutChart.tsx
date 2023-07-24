@@ -2,7 +2,7 @@ import type { FilledBar } from '../FilledBar/FilledBar';
 
 import { useState } from 'react';
 
-import { useModal } from '../../../../hooks/useModal';
+import { useModal } from '@poluspay-frontend/hooks';
 
 import { Chart as ChartJS, ArcElement, Tooltip } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';

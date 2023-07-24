@@ -4,10 +4,10 @@ import {
     connectedWalletList,
     exchangeList,
     BlockchainItem,
-} from './wallet-list';
+} from '../../../../../../libs/ui/src/lib/modals/BlockchainSelector/wallet-list';
 import { useEffect, useState } from 'react';
 
-import { walletList } from './wallet-list';
+import { walletList } from '../../../../../../libs/ui/src/lib/modals/BlockchainSelector/wallet-list';
 import {
     useDeleteMerchantWalletMutation,
     useDisableMerchantWalletMutation,
@@ -31,7 +31,6 @@ import classNames from 'classnames';
 import './Wallets.scoped.scss';
 import { MerchantWalletItemConnected } from './WalletItemConnected';
 import { shuffleArray } from 'tools';
-import { Stage } from '../../../pages/merchants/create/hooks/useMerchantWallets';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 interface MerchantWalletsProps {
@@ -41,7 +40,7 @@ interface MerchantWalletsProps {
     selectedBlockchain?: BlockchainItem;
     handleSelect: (wallets: Item) => void;
     merchantId: string;
-    next: (a?: Stage) => void;
+    next: (a?: string) => void;
 }
 
 const allArray = [...walletList, ...exchangeList, ...blockchainList];

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useModal } from '../../../hooks/useModal';
+import { useModal } from '@poluspay-frontend/hooks';
 
 import { ModalBlockChainSelector } from '@poluspay-frontend/ui';
 import { MerchantForm } from '../../../components/pages/merchants/create/Form';
@@ -12,7 +12,7 @@ import { ModalWalletAddition } from '../../../components/modals/WalletAddition/W
 
 import './MerchantsCreate.scoped.scss';
 
-import { blockchainList } from '../../../components/ui/Wallets/wallet-list';
+import { blockchainList } from '../../../../../../libs/ui/src/lib/modals/BlockchainSelector/wallet-list';
 import { useMerchantWallets } from './hooks/useMerchantWallets';
 import { isEVMBlockchain } from 'tools';
 

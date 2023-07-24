@@ -5,8 +5,8 @@ import {
     blockchainList,
     exchangeList,
     walletList,
-} from 'apps/merchant-client/src/components/ui/Wallets/wallet-list';
-import { Item } from 'apps/merchant-client/src/components/ui/Wallets/wallet-list';
+} from '../../../../../../../libs/ui/src/lib/modals/BlockchainSelector/wallet-list';
+import { Item } from '../../../../../../../libs/ui/src/lib/modals/BlockchainSelector/wallet-list';
 import { useEffect, useState } from 'react';
 import { Blockchain } from 'tools';
 
@@ -14,7 +14,7 @@ interface IProps {
     merchantId: string | null;
 }
 
-export type Stage = 'blockchainSelect' | 'walletSelect' | 'walletImport';
+// type Stage = 'blockchainSelect' | 'walletSelect' | 'walletImport';
 
 export const useMerchantWallets = ({ merchantId }: IProps) => {
     const [selectedWallet, setSelectedWallet] = useState<Item>();
@@ -26,8 +26,8 @@ export const useMerchantWallets = ({ merchantId }: IProps) => {
         useState(false);
     const [createMerchantWallet] = useCreateMerchantWalletMutation();
 
-    const next = (to?: Stage) => {
-        const doNext = (t: Stage) => {
+    const next = (to?: string) => {
+        const doNext = (t: string) => {
             if (t === 'blockchainSelect') {
                 setModalBlockchainVisible(true);
                 setModalWalletVisible(false);

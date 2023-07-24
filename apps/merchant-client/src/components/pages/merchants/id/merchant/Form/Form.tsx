@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { useModal } from '../../../../../../hooks/useModal';
+import { useModal } from '@poluspay-frontend/hooks';
 import { useCopyText } from '../../../../../../hooks/useCopyText';
 
 import { PButton, FormInput } from '@poluspay-frontend/ui';

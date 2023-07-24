@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 
 import { PInput, PModal, PTabs } from '@poluspay-frontend/ui';
@@ -9,7 +9,7 @@ import classNames from 'classnames';
 
 import './CurrencySelector.scoped.scss';
 import {AssetRepresentation} from "@poluspay-frontend/api";
-import {getAssetUrl} from "../../../../../../tools";
+import {getAssetUrl} from "tools";
 import {useOutsideClose} from "@poluspay-frontend/hooks";
 
 interface Asset {

@@ -39,10 +39,10 @@ import { useAvailableTokens } from './pages/TokenSelect/hooks/useAvailableTokens
 import { Token } from './store/api/types';
 import { ChainForWeb3Modal } from './types/ChainForWeb3Modal';
 import Main from './pages/TokenSelect/TokenSelect';
-import {useModal} from "../../merchant-client/src/hooks/useModal";
 import {useGetAssetsQuery} from "./store/api/endpoints/asset/Asset";
 import {getAssetUrl} from "../../../tools";
 import {PNotifyContainer} from "@poluspay-frontend/ui";
+import {useModal} from "@poluspay-frontend/hooks";
 
 const isDesktop = window.innerWidth >= 800;
 

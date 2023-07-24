@@ -2,7 +2,7 @@ import { MerchantWallets } from '../../../../components/ui/Wallets/Wallets';
 import { useMerchantWallets } from '../../create/hooks/useMerchantWallets';
 import { useGetMerchantIdFromParams } from '../../../../hooks/useGetMerchantId';
 import { ModalBlockChainSelector } from '@poluspay-frontend/ui';
-import { blockchainList } from '../../../../components/ui/Wallets/wallet-list';
+import { blockchainList } from '../../../../../../../libs/ui/src/lib/modals/BlockchainSelector/wallet-list';
 import { ModalWalletAddition } from '../../../../components/modals/WalletAddition/WalletAddition';
 import { isEVMBlockchain } from '../../../../../../../tools';
 

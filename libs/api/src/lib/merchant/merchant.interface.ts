@@ -12,12 +12,14 @@ export interface IMerchant {
   is_domain_confirmed: true;
   is_signing_key_generated: true;
   logo: string;
-  logo_status: string;
+  logo_status: LogoStatus;
   name: string;
   signing_key: string;
   success_redirect_url: string;
   webhook_url: string;
 }
+
+export type LogoStatus = 'on_moderation' | 'declined' | 'confirmed' | null;
 
 export interface IPaymentMerchant
   extends Pick<

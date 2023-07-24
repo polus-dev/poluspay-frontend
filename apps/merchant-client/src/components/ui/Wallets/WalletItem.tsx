@@ -1,4 +1,4 @@
-import type { Item } from './wallet-list';
+import type { Item } from '../../../../../../libs/ui/src/lib/modals/BlockchainSelector/wallet-list';
 
 import { ReactComponent as IconCheckbox } from '../../../assets/icons/checkbox-fill.svg';
 

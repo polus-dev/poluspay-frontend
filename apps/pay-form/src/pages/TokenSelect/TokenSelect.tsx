@@ -49,7 +49,7 @@ import {getAssetUrl, roundCryptoAmount} from 'tools';
 import { displayMerchantInfo } from '../../utils/getMerchantInfo';
 import { useRandomId } from '@poluspay-frontend/hooks';
 import {ModalCurrencySelector, notify} from '@poluspay-frontend/ui';
-import { useModal } from '../../../../merchant-client/src/hooks/useModal';
+import { useModal } from '@poluspay-frontend/hooks';
 
 interface MainProps {
   id: string;

@@ -1,4 +1,4 @@
-import type { WalletItemConnected } from './wallet-list';
+import type { WalletItemConnected } from '../../../../../../libs/ui/src/lib/modals/BlockchainSelector/wallet-list';
 
 import { PSwitch } from '@poluspay-frontend/ui';
 import { ReactComponent as IconDelete } from '../../../assets/icons/delete.svg';

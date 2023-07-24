@@ -8,8 +8,7 @@ import { ReactComponent as IconCheckbox } from '../../assets/icons/checkbox-fill
 import classNames from 'classnames';
 
 import './BlockchainSelector.scoped.scss';
-import { BlockchainItem } from '../../../../../../apps/merchant-client/src/components/ui/Wallets/wallet-list';
-import { Stage } from '../../../../../../apps/merchant-client/src/pages/merchants/create/hooks/useMerchantWallets';
+import { BlockchainItem } from './wallet-list';
 import {useOutsideClose} from "@poluspay-frontend/hooks";
 
 interface ModalProps<Multi> {
@@ -17,7 +16,7 @@ interface ModalProps<Multi> {
     multi?: Multi;
     hasSearch?: boolean;
     options: BlockchainItem[];
-    next?: (a?: Stage) => void;
+    next?: (a?: string) => void;
     onClose: () => void;
     selected?: Multi extends true ?  BlockchainItem[] : BlockchainItem;
     setSelected: (items: Multi extends true ?  BlockchainItem[] : BlockchainItem) => void;

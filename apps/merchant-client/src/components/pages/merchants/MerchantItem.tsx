@@ -1,4 +1,3 @@
-import type { LogoStatus } from '../../../store/api/endpoints/merchant/Merchant.interface';
 
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -9,6 +8,7 @@ import { ReactComponent as IconCopy } from '../../../assets/icons/copy.svg';
 import './MerchantItem.scoped.scss';
 import { makeShortHash } from '../../../../../../tools';
 import { useRandomId } from '@poluspay-frontend/hooks';
+import {LogoStatus} from "@poluspay-frontend/api";
 
 interface IMerchantProps {
     name: string;

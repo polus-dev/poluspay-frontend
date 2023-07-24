@@ -1,8 +1,6 @@
 import type { Blockchain } from 'tools';
 import {IMerchant} from "@poluspay-frontend/api";
 
-export type LogoStatus = 'on_moderation' | 'declined' | 'confirmed' | null;
-
 type UnparsedJSON = string;
 
 export interface ICreateMerchantRequest {

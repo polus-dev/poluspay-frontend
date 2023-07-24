@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 import { ReactComponent as IconWarning } from '../../../../../assets/icons/warning.svg';
 import { ReactComponent as IconArrow } from '../../../../../assets/icons/arrow.svg';
@@ -29,7 +29,7 @@ export const MerchantProfileAlerts: React.FC = () => {
                 </div>
                 <IconArrow className="alerts__item-icon alerts__item-icon--arrow" />
             </div>
-            {merchant?.is_domain_confirmed === false && (
+            {!Boolean(merchant?.is_domain_confirmed) && (
                 <div
                     className="alerts__item"
                     onClick={() => navigate(`/merchants/${merchantId}/domain`)}

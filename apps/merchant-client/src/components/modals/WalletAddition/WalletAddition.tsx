@@ -6,7 +6,7 @@ import { ReactComponent as IconChevron } from '../../../assets/icons/chevron.svg
 
 import './WalletAddition.scoped.scss';
 import { Blockchain, placeHolderForAddress, validateAddress } from 'tools';
-import { BlockchainItem } from '../../ui/Wallets/wallet-list';
+import { BlockchainItem } from '../../../../../../libs/ui/src/lib/modals/BlockchainSelector/wallet-list';
 
 interface ModalProps {
     visible: boolean;
