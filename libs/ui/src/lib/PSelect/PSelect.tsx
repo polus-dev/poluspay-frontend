@@ -19,7 +19,7 @@ export enum SelectMode {
 }
 
 export type SelectOption = {
-    id: number | string;
+    id: string;
     text: string;
     [key: string]: unknown;
 };

@@ -8,6 +8,7 @@ export * from './validateAddress';
 export * from './placeHolderForAddress';
 export * from './isEVMBlockchain';
 export * from './roundCryptoAmount';
-export * from './formatDate';
+export * from './date/formatDate';
 export * from './getExplorer';
 export * from './getAssetUrl';
+export * from './date/getBeginningOfDate'
