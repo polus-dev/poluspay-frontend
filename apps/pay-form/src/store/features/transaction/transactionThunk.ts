@@ -46,12 +46,12 @@ export const startPay = createAsyncThunk<any, IPayload, ThunkConfig>(
                         text: DEFAULT_STAGE_TEXT[error.stageid],
                     })
                 );
-                payload.consoleLog(error.message)
+                // payload.consoleLog(error.message)
               notify({title: error.name , status: "error", description: error.message})
             } else {
-              payload.consoleLog(
-                error instanceof Error ? error.message : 'unknown error'
-              );
+              // payload.consoleLog(
+              //   error instanceof Error ? error.message : 'unknown error'
+              // );
               notify({title: error instanceof Error ? error.name : "unknown", status: "error", description: error instanceof Error ? error.message : undefined})
                 console.error(error);
                 return rejectWithValue(error);

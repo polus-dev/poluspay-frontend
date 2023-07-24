@@ -20,7 +20,6 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Icon24Dismiss, Icon28DoneOutline } from '@vkontakte/icons';
 
-import { useNetwork } from 'wagmi';
 import { useWeb3Modal, Web3Button } from '@web3modal/react';
 
 import '@vkontakte/vkui/dist/vkui.css';

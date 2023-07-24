@@ -418,7 +418,7 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
                     disabled={
                       isTokenPairPriceLoading ||
                       !props.userToken ||
-                      amount === 'Unknown'
+                      amount === 'Unknown' || !currentBlockchain
                     }
                     style={{
                       backgroundImage: `url(${btn})`,
@@ -577,7 +577,11 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
           props.consoleLog('Cheat code entered', true);
         }}
       />
-      <ModalCurrencySelector visible={modalCurrency.visible} assetsRepresentation={availableTokens} categories={availableCategories} onClose={modalCurrency.close} assetUrl={import.meta.env.VITE_REACT_APP_ASSET_URL} />
+      <ModalCurrencySelector visible={modalCurrency.visible} assetsRepresentation={availableTokens} categories={availableCategories} onClose={token => {
+        modalCurrency.close();
+        if (!token) return;
+        props.setUserToken(token)
+      }} assetUrl={import.meta.env.VITE_REACT_APP_ASSET_URL} />
     </Panel>
 </>
   );
