@@ -107,7 +107,7 @@ export const usePaymentInfo = (uuid: string | null) => {
     isLoading,
     error,
     info,
-    isExpired,
+    isExpired: false,
     timer,
     merchantToken,
     amountInMerchantToken,

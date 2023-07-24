@@ -20,7 +20,6 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Icon24Dismiss, Icon28DoneOutline } from '@vkontakte/icons';
 
-import { useNetwork } from 'wagmi';
 import { useWeb3Modal, Web3Button } from '@web3modal/react';
 
 import '@vkontakte/vkui/dist/vkui.css';
@@ -405,6 +404,7 @@ export const App: React.FC = () => {
         modal={modalRoot}
         popout={popout}
         header={
+        <header>
           <PanelHeader
             separator={false}
             before={
@@ -417,6 +417,7 @@ export const App: React.FC = () => {
             }
             className="polus-header"
           />
+        </header>
         }
       >
         <SplitCol

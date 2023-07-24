@@ -61,6 +61,20 @@
     --background_content: var(--polus_grey_1);
 }
 
+/* NEW STYLES */
+.polus-ui p {
+    margin: 0;
+}
+
+.polus-ui * {
+    box-sizing: border-box !important;
+}
+
+.polus-ui__modal {
+    z-index: 100 !important;
+}
+/* NEW STYLES END */
+
 html,
 body {
     margin: 0 !important;
