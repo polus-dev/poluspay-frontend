@@ -1,20 +1,5 @@
-import type { Blockchain, URL } from 'tools';
-export interface IMerchant {
-    id: string;
-    name: string;
-    display_name: string | null;
-    logo: URL | null;
-    logo_status: LogoStatus;
-    description: string | null;
-    domain: string | null;
-    domain_confirmation_code: string;
-    success_redirect_url: string;
-    fail_redirect_url: string;
-    webhook_url: string;
-    is_domain_confirmed: boolean;
-    is_signing_key_generated: boolean;
-    created_at: string;
-}
+import type { Blockchain } from 'tools';
+import {IMerchant} from "@poluspay-frontend/api";
 
 export type LogoStatus = 'on_moderation' | 'declined' | 'confirmed' | null;
 
@@ -103,4 +88,24 @@ export interface IUploadLogoRequest extends IMerchantId {
 
 export interface IDeleteMerchantWalletRequest extends IMerchantId {
     network: string;
+}
+
+export interface IGetMerchantStatisticsRequest extends IMerchantId {
+    from_date: string;
+    to_date: string;
+}
+
+export interface IGetMerchantStatisticsResponse {
+  total_payments: number
+  success_payments: number
+  turnover_detalization: TurnoverDetalization[] | null
+}
+
+export interface TurnoverDetalization extends IMerchantId{
+  network: string
+  asset: string
+  amount: string
+  amount_decimals: string
+  number_of_success_payments: number
+  percent_of_total_success: number
 }

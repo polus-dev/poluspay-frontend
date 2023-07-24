@@ -1,30 +1,29 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-    IResponseError,
-    IPagination,
-    IResponseApiDefault,
+  IResponseError,
+  IPagination,
+  IResponseApiDefault, IMerchant,
 } from '@poluspay-frontend/api';
 import {
-    IChangeMerchantWalletStatusRequest,
-    ICreateMerchantRequest,
-    ICreateMerchantResponse,
-    ICreateMerchantWalletRequest,
-    IDeleteMerchantRequest,
-    IDeleteMerchantWalletRequest,
-    IGenerateSigningKeyResponse,
-    IGetMerchantByIdResponse,
-    IGetMerchantRequest,
-    IGetMerchantResponse,
-    IGetMerchantResponseWithTotalCount,
-    IGetWebhookHistoryResponse,
-    IGetWebhookHistoryResponseWithTotalCount,
-    IMerchant,
-    IMerchantId,
-    IMerchantWallet,
-    ISetWebhookRequest,
-    IUpdateMerchantRequest,
-    IUploadLogoRequest,
-    IVerifyDomainRequest,
+  IChangeMerchantWalletStatusRequest,
+  ICreateMerchantRequest,
+  ICreateMerchantResponse,
+  ICreateMerchantWalletRequest,
+  IDeleteMerchantRequest,
+  IDeleteMerchantWalletRequest,
+  IGenerateSigningKeyResponse,
+  IGetMerchantByIdResponse,
+  IGetMerchantRequest,
+  IGetMerchantResponse,
+  IGetMerchantResponseWithTotalCount, IGetMerchantStatisticsRequest, IGetMerchantStatisticsResponse,
+  IGetWebhookHistoryResponse,
+  IGetWebhookHistoryResponseWithTotalCount,
+  IMerchantId,
+  IMerchantWallet,
+  ISetWebhookRequest,
+  IUpdateMerchantRequest,
+  IUploadLogoRequest,
+  IVerifyDomainRequest,
 } from './Merchant.interface';
 import { RootState } from '../../../store';
 
@@ -241,6 +240,13 @@ export const merchantApi = createApi({
                     ? [{ type: 'Merchant', id: args.merchant_id }]
                     : ['Merchant'],
         }),
+      getMerchantStatistics: builder.query<IGetMerchantStatisticsResponse, IGetMerchantStatisticsRequest>({
+        query: (body) => ({
+          url: 'merchant.statistics.get',
+          method: 'POST',
+          body,
+        }),
+      }),
     }),
 });
 export const {
@@ -259,4 +265,5 @@ export const {
     useGetMerchantWalletQuery,
     useUploadLogoMutation,
     useDeleteMerchantWalletMutation,
+    useGetMerchantStatisticsQuery,
 } = merchantApi;

@@ -1,27 +1,19 @@
-import type { SelectOption } from '@poluspay-frontend/ui';
 import type { StatsBlock } from '../../components/pages/dashboard/StatsBlock/StatsBlock';
 
-import { useState } from 'react';
 
 import { PSelect } from '@poluspay-frontend/ui';
-import { DashboardTicker } from '../../components/pages/dashboard/Ticker/Ticker';
-import { DashboardStatsBlock } from '../../components/pages/dashboard/StatsBlock/StatsBlock';
 import { DashboardBarChart } from '../../components/pages/dashboard/BarChart/BarChart';
 
 import './Dashboard.scoped.scss';
 import { DashboardDoughnutChart } from '../../components/pages/dashboard/DoughnutChart/DoughnutChart';
+import {useMerchantOptions} from "./hooks/useMerchantOptions";
+import {StatsBlockContainer} from "./StatsBlockContainer";
+import {TickersContainer} from "./TickersContainer";
 
 export const DashboardPage: React.FC = () => {
-    const options: SelectOption[] = [
-        { id: 'all', text: 'All merchants' },
-        { id: 'me', text: 'My merchants' },
-        { id: 'his', text: 'His merchants' },
-        { id: 'her', text: 'Her merchants' },
-    ];
+  const {merchantsOptions, selectedMerchant, setSelectedMerchant} = useMerchantOptions();
 
-    const [selected, setSelected] = useState<SelectOption[]>([options[0]]);
-
-    const stats: StatsBlock[] = [
+    const staticsBlock: StatsBlock[] = [
         {
             id: 1,
             value: '429.607$',
@@ -47,37 +39,8 @@ export const DashboardPage: React.FC = () => {
 
     return (
         <div className="dashboard">
-            <div className="dashboard__tickers">
-                {[1, 2, 3].map((el) => (
-                    <div className="dashboard__tickers-item" key={el}>
-                        <DashboardTicker />
-                    </div>
-                ))}
-            </div>
-            <div className="dashboard__stats">
-                <div className="dashboard__stats-header">
-                    <h6 className="dashboard__stats-header-title">
-                        Dashboard total
-                    </h6>
-                    <div className="dashboard__stats-header-select">
-                        <PSelect
-                            options={options}
-                            active={selected}
-                            onChange={(value) => setSelected(value)}
-                        />
-                    </div>
-                </div>
-                <div className="dashboard__stats-container">
-                    {stats.map((el) => (
-                        <div
-                            className="dashboard__stats-container-item"
-                            key={el.id}
-                        >
-                            <DashboardStatsBlock item={el} />
-                        </div>
-                    ))}
-                </div>
-            </div>
+          <TickersContainer />
+          <StatsBlockContainer />
             <div className="dashboard__charts">
                 <h6 className="dashboard__charts-title">Statistics</h6>
                 <div className="dashboard__charts-container">
