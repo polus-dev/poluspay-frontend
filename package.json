@@ -48,6 +48,7 @@
         "react-app-rewired": "^2.2.1",
         "react-chartjs-2": "^5.2.0",
         "react-copy-to-clipboard": "^5.1.0",
+        "react-countup": "^6.4.2",
         "react-dom": "18.2.0",
         "react-hook-form": "^7.45.1",
         "react-inlinesvg": "^3.0.2",
