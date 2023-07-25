@@ -50,6 +50,7 @@ import { displayMerchantInfo } from '../../utils/getMerchantInfo';
 import { useRandomId } from '@poluspay-frontend/hooks';
 import {ModalCurrencySelector, notify} from '@poluspay-frontend/ui';
 import { useModal } from '@poluspay-frontend/hooks';
+import {blockchainList} from "@poluspay-frontend/ui";
 
 interface MainProps {
   id: string;
@@ -298,7 +299,7 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
                       <span>
                         {isSwitchNetworkLoading
                           ? 'Loading'
-                          : currentBlockchain}
+                          : blockchainList.find(e => e.label === currentBlockchain)?.name}
                       </span>
                     </div>
                   ) : (

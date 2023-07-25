@@ -43,6 +43,7 @@ import {useGetAssetsQuery} from "./store/api/endpoints/asset/Asset";
 import {getAssetUrl} from "../../../tools";
 import {PNotifyContainer} from "@poluspay-frontend/ui";
 import {useModal} from "@poluspay-frontend/hooks";
+import {blockchainList} from "@poluspay-frontend/ui";
 
 const isDesktop = window.innerWidth >= 800;
 
@@ -206,7 +207,7 @@ export const App: React.FC = () => {
                         setActiveModal(null);
                       }}
                     >
-                      {chainLocal}
+                      {blockchainList.find(e => e.label === chainLocal)?.name}
                     </SimpleCell>
                   </Card>
                 );
