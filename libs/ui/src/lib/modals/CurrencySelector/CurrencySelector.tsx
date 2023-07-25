@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 
-import { PInput, PModal, PTabs } from '@poluspay-frontend/ui';
+import { PButton, PInput, PModal, PTabs } from '@poluspay-frontend/ui';
 import { ReactComponent as IconSearch } from '../../assets/icons/search.svg';
 import { ReactComponent as IconCheckbox } from '../../assets/icons/checkbox-fill.svg';
 
@@ -158,6 +158,16 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div className="modal__button">
+                            <PButton
+                                wide
+                                disabled={!selected}
+                                children={
+                                    <p>Continue</p>
+                                }
+                                onClick={() => onClose(selected)}
+                            />
                         </div>
                     </div>
                 }

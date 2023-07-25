@@ -122,6 +122,10 @@
             width: 100%;
         }
     }
+
+    &__button {
+        padding-top: px-to-rem(24);
+    }
 }
 
 .item {
