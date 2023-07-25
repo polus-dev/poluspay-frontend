@@ -12,4 +12,3 @@ export * from './date/formatDate';
 export * from './getExplorer';
 export * from './getAssetUrl';
 export * from './date/getBeginningOfDate'
-export * from './capitalizeFirstLetter'
