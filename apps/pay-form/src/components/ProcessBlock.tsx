@@ -21,6 +21,7 @@ interface ProcessBlockProps {
   merchantAddress: string;
   merchantAmount: string;
   expireAt: string;
+  setProgress: (progress: number) => void;
 }
 
 
@@ -29,6 +30,7 @@ export const ProcessBlock = (props: ProcessBlockProps) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    props.setProgress(50);
     // @ts-ignore
     const abortPromise = dispatch(startPay(props));
     props.setAbortTransaction.current = abortPromise.abort;
