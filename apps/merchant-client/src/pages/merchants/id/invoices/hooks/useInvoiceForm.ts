@@ -10,7 +10,7 @@ import { AssetRepresentation } from '@poluspay-frontend/api';
 import {
     BlockchainItem,
     blockchainList,
-} from '../../../../../../../../libs/ui/src/lib/modals/BlockchainSelector/wallet-list';
+} from '../../../../../../../../libs/ui/src/list';
 import { notify } from '@poluspay-frontend/ui';
 
 export const useInvoiceForm = (merchantId: string) => {

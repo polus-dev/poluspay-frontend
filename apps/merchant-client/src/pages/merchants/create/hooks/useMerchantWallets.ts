@@ -4,9 +4,9 @@ import {
     BlockchainItem,
     blockchainList,
     exchangeList,
-    walletList,
-} from '../../../../../../../libs/ui/src/lib/modals/BlockchainSelector/wallet-list';
-import { Item } from '../../../../../../../libs/ui/src/lib/modals/BlockchainSelector/wallet-list';
+    list,
+} from '../../../../../../../libs/ui/src/list';
+import { Item } from '../../../../../../../libs/ui/src/list';
 import { useEffect, useState } from 'react';
 import { Blockchain } from 'tools';
 
@@ -116,7 +116,7 @@ export const useMerchantWallets = ({ merchantId }: IProps) => {
                 });
             }
         } else if (item.type === 'wallet') {
-            const wallet = walletList.find((el) => el.id === item.id);
+            const wallet = list.find((el) => el.id === item.id);
             if (wallet) {
                 handleWalletSelect(wallet);
             } else {

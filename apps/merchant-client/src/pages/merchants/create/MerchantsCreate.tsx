@@ -12,7 +12,7 @@ import { ModalWalletAddition } from '../../../components/modals/WalletAddition/W
 
 import './MerchantsCreate.scoped.scss';
 
-import { blockchainList } from '../../../../../../libs/ui/src/lib/modals/BlockchainSelector/wallet-list';
+import { blockchainList } from '../../../../../../libs/ui/src/list';
 import { useMerchantWallets } from './hooks/useMerchantWallets';
 import { isEVMBlockchain } from 'tools';
 
