@@ -8,7 +8,7 @@ import { ReactComponent as IconCheckbox } from '../../assets/icons/checkbox-fill
 import classNames from 'classnames';
 
 import './BlockchainSelector.scoped.scss';
-import { BlockchainItem } from './wallet-list';
+import { BlockchainItem } from '../../../list';
 import {useOutsideClose} from "@poluspay-frontend/hooks";
 
 interface ModalProps<Multi> {

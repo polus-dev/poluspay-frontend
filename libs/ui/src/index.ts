@@ -12,3 +12,4 @@ export * from './lib/modals/BlockchainSelector/BlockchainSelector';
 export * from './lib/modals/CurrencySelector/CurrencySelector';
 export * from './lib/PNotify/index';
 export * from './ErrorBoundary/ErrorBoundary';
+export * from './list'

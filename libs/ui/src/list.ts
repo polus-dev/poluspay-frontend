@@ -1,4 +1,4 @@
-import { Blockchain } from '../../../../../../tools';
+import { Blockchain } from '../../../tools';
 
 export interface Item {
     id: number;
@@ -17,7 +17,7 @@ export interface WalletItemConnected extends Omit<Item, 'id'> {
     label: Blockchain;
 }
 
-export const walletList: Item[] = [
+export const list: Item[] = [
     {
         id: 2,
         name: '1inch Wallet',
