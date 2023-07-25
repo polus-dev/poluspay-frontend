@@ -20,7 +20,9 @@ export const validateAddress = (
             return WAValidator.validate(address, 'Bitcoin');
         case 'dogecoin':
             return WAValidator.validate(address, 'DogeCoin');
+      case 'ripple':
+        return WAValidator.validate(address, 'Ripple');
         default:
-            return false;
+            return true;
     }
 };
