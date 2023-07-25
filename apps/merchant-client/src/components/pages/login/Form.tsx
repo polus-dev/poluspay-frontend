@@ -41,20 +41,27 @@ export const LoginForm: React.FC = () => {
     const [code, setCode] = useState('');
     const [codeErrors, setCodeErrors] = useState<string[]>([]);
 
-    useEffect(() => {
-        if (code.length > EMAIL_CODE_LENGTH && code.length > 0) {
-            setCodeErrors(['Invalid code']);
-        } else {
-            setCodeErrors([]);
-        }
-    }, [code]);
+    // useEffect(() => {
+    //     if (code.length > EMAIL_CODE_LENGTH && code.length > 0) {
+    //         setCodeErrors(['Invalid code']);
+    //     } else {
+    //         setCodeErrors([]);
+    //     }
+    // }, [code]);
 
     const disabled: boolean =
-        (stage === 2 && (!email.length || emailErrors.length > 0)) ||
+        // (stage === 2 && (!email.length || emailErrors.length > 0)) ||
         (stage === 3 && (!code.length || codeErrors.length > 0));
 
     const handleSubmit = () => {
         if (stage === 2) {
+
+          if (!emailRegex.test(email) && email.length > 0) {
+            setEmailErrors(['Invalid email']);
+            return;
+          } else {
+            setEmailErrors([]);
+          }
             notify({
                 title: 'Email sent',
                 description: 'Please check your inbox',
@@ -153,8 +160,6 @@ export const LoginForm: React.FC = () => {
                                 errors={codeErrors}
                                 onInput={(value) => setCode(value.toString())}
                             />
-                            {/* disabled class needs to be added only when timer !== 00:00
-                            so put the disabled condition below instead of true */}
                             <div
                                 className={classNames('form__inner-item-data', {
                                     'form__inner-item-data--disabled':
