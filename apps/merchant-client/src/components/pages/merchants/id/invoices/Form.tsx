@@ -73,9 +73,10 @@ export const MerchantInvoicesForm = ({
         }
     };
 
-    const handleModalCurrency = (asset: AssetRepresentation) => {
-        modalCurrency.close();
+    const handleModalCurrency = (asset?: AssetRepresentation) => {
+        if (asset)
         setSelectedAsset(asset);
+        modalCurrency.close();
     };
 
     return (
@@ -188,10 +189,7 @@ export const MerchantInvoicesForm = ({
                 <>
                     <ModalCurrencySelector
                         visible={modalCurrency.visible}
-                        onClose={(asset) => {
-                            if (asset) handleModalCurrency(asset);
-                            else modalCurrency.close();
-                        }}
+                        onClose={handleModalCurrency}
                         categories={categories}
                         assetsRepresentation={availableAssets}
                         assetUrl={import.meta.env.VITE_REACT_APP_ASSET_URL}

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import './Table.scoped.scss';
-import { makeShortHash } from 'tools';
+import {capitalizeFirstLetter, makeShortHash} from 'tools';
 
 type InvoiceStatus =
     | 'success'
@@ -65,7 +65,7 @@ export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
                             </div>
                             <div className="table__row-currency">
                                 <p className="table__row-currency-text">
-                                    {el.currency}
+                                    {el.currency.toUpperCase()}
                                 </p>
                             </div>
                             <div className="table__row-hash">
@@ -88,7 +88,7 @@ export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
                                             true,
                                     })}
                                 >
-                                    {el.status}
+                                    {capitalizeFirstLetter(el.status)}
                                 </p>
                             </div>
                         </div>

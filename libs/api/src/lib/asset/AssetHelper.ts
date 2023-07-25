@@ -96,7 +96,7 @@ export class Helper implements IAssetHelper {
                     filteredAssets.push({
                         ...currentAsset.networks[network],
                         name: assetKey,
-                        categories: currentAsset.categories || ['unknown'],
+                        categories: currentAsset.categories || ['All'],
                         networks: Object.keys(currentAsset.networks),
                     });
                 }

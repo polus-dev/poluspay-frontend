@@ -1,4 +1,4 @@
-import { ConnectButton } from '../../../../../components/ui/ConnectButton/ConnectButton';
+import { ConnectButton } from '../../../../ui/ConnectButton/ConnectButton';
 import { ReactComponent as LogoPolusPay } from '../../../../../assets/logos/poluspay.svg';
 
 import classNames from 'classnames';
@@ -12,8 +12,9 @@ import {
     useGetMerchantByIdQuery,
 } from '@poluspay-frontend/merchant-query';
 import { useRandomId } from '@poluspay-frontend/hooks';
-import { getAssetUrl } from '../../../../../../../../tools';
+import {capitalizeFirstLetter, getAssetUrl} from '../../../../../../../../tools';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import {blockchainList} from "@poluspay-frontend/ui";
 
 interface PreviewProps {
     isModal?: boolean;
@@ -60,7 +61,7 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
                         <p className="preview__header-data__row-amount">
                             Total: {amount}
                             <span className="preview__header-data__row-amount preview__header-data__row-amount--dark">
-                                {currency}
+                                {currency.toUpperCase()}
                             </span>
                         </p>
                     </div>
@@ -78,7 +79,7 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
                     src={`/images/wallets/${network}.png`}
                     alt={network}
                 />
-                <p className="preview__select-text">{network}</p>
+                <p className="preview__select-text">{blockchainList.find(e => e.label === network)?.name}</p>
             </div>
             <div ref={ref} className="preview__assets">
                 {assets
