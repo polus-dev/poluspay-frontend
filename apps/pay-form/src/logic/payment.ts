@@ -1,4 +1,4 @@
-import { AllowanceTransfer, PermitSingle } from '@uniswap/permit2-sdk';
+import { AllowanceTransfer } from '@uniswap/permit2-sdk';
 import { erc20ABI } from '@wagmi/core';
 import permit2 from '../permit_abi';
 import { CustomRouter } from './router';
@@ -18,7 +18,6 @@ import {
     PublicClient,
     createPublicClient,
     decodeAbiParameters,
-    encodeAbiParameters,
     getContract,
     http,
     parseAbiParameters,

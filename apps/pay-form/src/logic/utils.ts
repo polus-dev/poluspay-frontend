@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-import { BigNumber, ethers } from 'ethers';
-import { decodeAbiParameters, parseAbiParameters } from 'viem';
+import { ethers } from 'ethers';
 
 export function getParameterByName(
     name: string,
@@ -13,112 +11,7 @@ export function getParameterByName(
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
-export function weiToEthNum(
-    nanoAmount: BigNumber | string | BigInt,
-    decimals: number
-): number {
-    return Number(
-        ethers.utils.formatUnits(BigNumber.from(nanoAmount), decimals)
-    );
-}
 
-export function weiToEth(
-    nanoAmount: BigNumber | string,
-    decimals: number
-): string {
-    // console.log(nanoAmount)
-    const amount = ethers.utils.formatUnits(
-        BigNumber.from(nanoAmount),
-        decimals
-    );
-    let stringAmount = Number(amount).toPrecision(2);
-
-    if (Number(stringAmount) === 0) {
-        stringAmount = Number(amount).toPrecision(3);
-    }
-    if (Number(stringAmount) === 0) {
-        stringAmount = Number(amount).toPrecision(4);
-    }
-    if (Number(stringAmount) === 0) {
-        stringAmount = Number(amount).toPrecision(5);
-    }
-
-    if (Number(stringAmount) === 0) {
-        stringAmount = Number(amount).toFixed(1);
-    }
-    return stringAmount;
-}
-
-export function NtoStr(n1: number | string | BigNumber | Number): string {
-    const n2 = Number(n1.toString());
-
-    let stringAmount = Number(n2).toPrecision(5);
-
-    if (stringAmount[stringAmount.length - 1] === '0') {
-        stringAmount = Number(n2).toPrecision(4);
-    }
-    if (stringAmount[stringAmount.length - 1] === '0') {
-        stringAmount = Number(n2).toPrecision(3);
-    }
-    if (stringAmount[stringAmount.length - 1] === '0') {
-        stringAmount = Number(n2).toPrecision(2);
-    }
-
-    if (Number(stringAmount) === 0) {
-        stringAmount = Number(n2).toFixed(1);
-    }
-    stringAmount = n2.toLocaleString('en', {
-        currency: 'usd',
-        maximumFractionDigits: 7,
-        maximumSignificantDigits: 7,
-    });
-    return stringAmount;
-}
-
-export function ETHToWei(amount: string, desimals: number): BigNumber {
-    return ethers.utils.parseUnits(amount, desimals);
-}
-
-import { parseFixed } from '@ethersproject/bignumber';
-
-/**
- * Convert a stringified fixed-point number to a big number with a custom number of decimals.
- *
- * @remarks
- * - Accepts scientific notation.
- * - Checks are in place to adhere to the numerical constraints of the EVM.
- * - Source: https://github.com/PaulRBerg/evm-bn/blob/main/src/toBn.ts
- */
-export function toBn(x: string, decimals: number = 18): BigNumber {
-    if (x === undefined || typeof x !== 'string') {
-        throw new Error('Input must be a string');
-    }
-
-    if (decimals < 1 || decimals > 77) {
-        throw new Error('Decimals must be between 1 and 77');
-    }
-
-    let xs: string = x;
-
-    // Limit the number of decimals to the value provided.
-    if (xs.includes('.')) {
-        const parts: string[] = xs.split('.');
-        parts[1] = parts[1].slice(0, decimals);
-        xs = parts[0] + '.' + parts[1];
-    }
-
-    // Check if x is a whole number or a fixed-point number with some maximum number of decimals.
-    const digits: number = 78 - decimals;
-    const regexp: RegExp = new RegExp(
-        `^[-+]?(\\d{1,${digits}}|(?=\\d+\\.\\d+)\\d{1,${digits}}\\.\\d{1,${decimals}})$`
-    );
-
-    if (regexp.test(xs)) {
-        return parseFixed(xs, decimals);
-    } else {
-        throw new Error('Unknown format for fixed-point number: ' + x);
-    }
-}
 
 export const getPathFromCallData = (calldata: string) => {
     const coder = new ethers.utils.AbiCoder();

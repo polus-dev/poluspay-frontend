@@ -13,11 +13,6 @@ import { RPCprovider } from "./config"
 
 type PathArray = (string | number)[]
 
-interface IPool {
-    t0: string,
-    t1: string,
-    fee: number
-}
 
 interface valuesSign {
     details: {
