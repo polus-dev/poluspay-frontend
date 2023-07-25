@@ -13,7 +13,7 @@ export const useMerchantOptions = () => {
       const merchantsOptions =
         merchants.data.map((merchant) => ({
           id: merchant.id,
-          text: displayMerchantInfo(merchant)
+          text: merchant.name,
         }))
       setMerchantsOptions(merchantsOptions)
       setSelectedMerchant(merchantsOptions[0])
