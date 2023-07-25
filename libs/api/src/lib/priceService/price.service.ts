@@ -8,17 +8,14 @@ export class PriceService {
     Currency.BTCUSDT,
     Currency.ETHUSDT,
     Currency.BNBUSDT,
-    Currency.SOLUSDT,
+    // Currency.SOLUSDT,
   ];
-  private  _interval = 1000;
+  private  _interval = 30_000;
   private _mainLoopInterval!: NodeJS.Timer;
   private readonly logger = console;
   constructor(
     private priceUrl: string,
-    mode: 'dev' | 'prod' = 'prod',
-  ) {
-    if (mode == 'dev') this._interval = 10000;
-  }
+  ) {}
 
   startMainLoop(callBack: (price: CryptoPrice[]) => void, symbols: Currency[] = this.symbols) {
     const fn = async () => {
