@@ -63,7 +63,7 @@ interface MainProps {
   setUserToken: (t: Token) => void;
 }
 
-const Main: React.FC<MainProps> = memo((props: MainProps) => {
+export const Main: React.FC<MainProps> = (props: MainProps) => {
   const {
     error,
     isExpired,
@@ -461,6 +461,7 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
                   <div>
                     <ProcessBlock
                       id={'all1'}
+                      setProgress={setProgress}
                       consoleLog={props.consoleLog}
                       fee={fee}
                       amount={+fee + +merchantAmount + ''}
@@ -587,6 +588,5 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
     </Panel>
 </>
   );
-});
+};
 /*TODO: refactor*/
-export default Main;

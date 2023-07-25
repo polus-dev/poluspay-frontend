@@ -31,18 +31,16 @@ import { useTour } from '@reactour/tour';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { useGetPaymentByPaymentIdQuery } from './store/api/endpoints/payment/Payment';
 import { getParameterByName } from './logic/utils';
-import { Blockchain_t } from './store/api/endpoints/types';
 import { setView, ViewVariant } from './store/features/view/viewSlice';
 import { setCurrentBlockchain } from './store/features/connection/connectionSlice';
 import { ConsoleLog } from './components/modals/consoleLog.ts';
 import { useAvailableTokens } from './pages/Main/hooks/useAvailableTokens';
 import { Token } from './store/api/types';
 import { ChainForWeb3Modal } from './types/ChainForWeb3Modal';
-import Main from './pages/Main/Main';
+import {Main} from './pages/Main/Main';
 import {useGetAssetsQuery} from "./store/api/endpoints/asset/Asset";
 import {getAssetUrl} from "../../../tools";
 import {PNotifyContainer} from "@poluspay-frontend/ui";
-import {useModal} from "@poluspay-frontend/hooks";
 import {blockchainList} from "@poluspay-frontend/ui";
 
 const isDesktop = window.innerWidth >= 800;
@@ -55,7 +53,6 @@ export const App: React.FC = () => {
     (state) => state.guide.isVisible
   );
 
-  const modalCurrency = useModal();
 
   const { data: assets, isLoading: isAssetsLoading } = useGetAssetsQuery();
 

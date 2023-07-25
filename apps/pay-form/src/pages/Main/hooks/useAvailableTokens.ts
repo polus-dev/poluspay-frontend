@@ -23,7 +23,8 @@ export const useAvailableTokens = () => {
       setAvailableTokens(
         assets.getAssetsByNetwork(currentBlockchain)
       );
-      setAvailableCategories(Array.from(new Set(assets.getAssetsByNetwork(currentBlockchain).map(el => el.categories).flat())))
+      // TODO: make normal categories
+      setAvailableCategories(Array.from(new Set(assets.getAssetsByNetwork(currentBlockchain).map(el => el.categories).flat())).slice(1))
     }
   }, [currentBlockchain, assets]);
   return { availableTokens, isAvailableTokensLoading: isLoading, availableCategories };
