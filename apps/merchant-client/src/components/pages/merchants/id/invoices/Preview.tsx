@@ -12,7 +12,7 @@ import {
     useGetMerchantByIdQuery,
 } from '@poluspay-frontend/merchant-query';
 import { useRandomId } from '@poluspay-frontend/hooks';
-import {capitalizeFirstLetter, getAssetUrl} from '../../../../../../../../tools';
+import { getAssetUrl } from '../../../../../../../../tools';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import {blockchainList} from "@poluspay-frontend/ui";
 
