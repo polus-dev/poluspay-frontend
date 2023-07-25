@@ -53,7 +53,14 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
 
     const navigateToWebsite = (event: React.MouseEvent): void => {
         event.preventDefault();
-        if (website) window.open(website, '_blank');
+        if (website) {
+          if (website.includes('https://')){
+            window.open(website, '_blank');
+          }
+          else {
+            window.open(`https://${website}`, '_blank');
+          }
+        }
     };
 
     const navigateToInvoice = (event: React.MouseEvent): void => {
