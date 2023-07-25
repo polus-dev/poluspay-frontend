@@ -6,6 +6,7 @@ export interface TickerProps {
     name: string;
     fullName: string;
     price: string;
+    image: string;
 }
 export const DashboardTicker = (props: TickerProps) => {
     const getShiftSymbol = (shift: number) => {
@@ -17,11 +18,11 @@ export const DashboardTicker = (props: TickerProps) => {
     return (
         <div className="ticker">
             <div className="ticker__data">
-                {/*<img*/}
-                {/*    className="ticker__data-image"*/}
-                {/*    src="/images/wallets/bitcoin.png"*/}
-                {/*    alt="Asset logo"*/}
-                {/*/>*/}
+                <img
+                    className="ticker__data-image"
+                    src={props.image}
+                    alt="Asset logo"
+                />
                 <div className="ticker__data-inner">
                     <p className="ticker__data-inner-name">{props.name}</p>
                     <p className="ticker__data-inner-label">{props.fullName}</p>

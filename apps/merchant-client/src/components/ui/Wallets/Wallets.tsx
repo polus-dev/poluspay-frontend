@@ -4,10 +4,10 @@ import {
     connectedWalletList,
     exchangeList,
     BlockchainItem,
-} from '../../../../../../libs/ui/src/lib/modals/BlockchainSelector/wallet-list';
+} from '../../../../../../libs/ui/src/list';
 import { useEffect, useState } from 'react';
 
-import { walletList } from '../../../../../../libs/ui/src/lib/modals/BlockchainSelector/wallet-list';
+import { list } from '../../../../../../libs/ui/src/list';
 import {
     useDeleteMerchantWalletMutation,
     useDisableMerchantWalletMutation,
@@ -43,12 +43,12 @@ interface MerchantWalletsProps {
     next: (a?: string) => void;
 }
 
-const allArray = [...walletList, ...exchangeList, ...blockchainList];
+const allArray = [...list, ...exchangeList, ...blockchainList];
 shuffleArray(allArray);
 
 const tabContent = {
     all: allArray,
-    wallet: walletList,
+    wallet: list,
     exchange: exchangeList,
     blockchain: blockchainList,
 };
@@ -87,7 +87,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
     const limit = 24;
     const [currentPage, setCurrentPage] = useState(1);
     const [walletsPaginated, setWalletsPaginated] = useState<Item[]>(
-        walletList.slice(
+        list.slice(
             (currentPage - 1) * limit,
             (currentPage - 1) * limit + limit
         )

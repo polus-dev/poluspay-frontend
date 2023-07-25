@@ -15,7 +15,7 @@ import { FormState, UseFormRegister } from 'react-hook-form';
 import { InvoiceForm } from '../../../../../pages/merchants/id/invoices/hooks/form.interface';
 
 import { getAssetUrl } from '../../../../../../../../tools';
-import { BlockchainItem } from '../../../../../../../../libs/ui/src/lib/modals/BlockchainSelector/wallet-list';
+import { BlockchainItem } from '../../../../../../../../libs/ui/src/list';
 import { AssetRepresentation } from '@poluspay-frontend/api';
 
 interface Asset {
