@@ -514,6 +514,7 @@ const Main: React.FC<MainProps> = memo((props: MainProps) => {
                     style={{
                       backgroundImage: `url(${btn})`,
                     }}
+                    disabled={paymentInfo?.blockchains.length === 1}
                     onClick={() => {
                       abortRef.current();
                       dispatch(

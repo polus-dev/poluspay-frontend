@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import {
   Card,
   CardGrid,
@@ -11,16 +10,11 @@ import { useEffect, useState } from 'react';
 import { QRCode } from 'react-qr-svg';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Icon16CopyOutline } from '@vkontakte/icons';
-import usdtLogo from '../img/usdt.svg';
-import bitcoin from '../img/btc.svg';
-import dogecoin from '../img/Dogecoin.svg';
-import litecoin from '../img/litecoin.svg';
-import bitcoinCash from '../img/bitcoin-cash.svg';
 import { useGetAssetsQuery } from '../store/api/endpoints/asset/Asset';
-import { ethers } from 'ethers';
-import { Asset_t, Blockchain_t } from '../store/api/endpoints/types';
+import { Blockchain_t } from '../store/api/endpoints/types';
 import { useAppSelector } from '../store/hooks';
 import { Payment } from '../store/api/endpoints/payment/Payment.interface';
+import {getAssetUrl} from "../../../../tools";
 
 interface AllType {
   id: string;
@@ -101,19 +95,7 @@ export const QRCodePayment = (props: AllType) => {
         Send ${paymentInfoState.assetName.toUpperCase()}{' '}
         <img
           style={{ height: '25px' }}
-          src={
-            paymentInfoState.assetName === 'usdt'
-              ? usdtLogo
-              : paymentInfoState.assetName === 'btc'
-                ? bitcoin
-                : paymentInfoState.assetName === 'ltc'
-                  ? litecoin
-                  : paymentInfoState.assetName === 'doge'
-                    ? dogecoin
-                    : paymentInfoState.assetName === 'bch'
-                      ? bitcoinCash
-                      : ''
-          }
+          src={getAssetUrl(import.meta.env.VITE_REACT_APP_ASSET_URL, paymentInfoState.assetName)}
         />
       </h2>
       <div

@@ -158,4 +158,11 @@ export class Helper implements IAssetHelper {
             }
         }
     }
+    getQRCodePaymentNetworks(): string[] {
+      const networks = Object.keys(this.rawAssets).map(assetKey => {
+        const asset = this.rawAssets[assetKey];
+        return Object.keys(asset.networks).filter(network => asset.networks[network].is_seeded_amount)
+      })
+      return networks.filter(network => network.length > 0).reduce((acc, val) => [...acc, val[0]]);
+    }
 }

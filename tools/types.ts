@@ -7,6 +7,5 @@ export type Blockchain =
     | 'tron'
     | 'bitcoin-cash'
     | 'bitcoin'
-    | 'dogecoin';
-
-export type URL = string;
+    | 'dogecoin'
+    | 'ripple';

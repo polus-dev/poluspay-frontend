@@ -104,15 +104,9 @@ export const App: React.FC = () => {
   }
 
   useEffect(() => {
-    if (paymentInfo) {
-      const h = (blockchain: Blockchain_t) =>
-        paymentInfo.blockchains.includes(blockchain);
-      if (
-        h('bitcoin') ||
-        h('dogecoin') ||
-        h('litecoin') ||
-        h('tron') ||
-        (h('bitcoin-cash') && paymentInfo.blockchains.length === 1)
+    if (paymentInfo && assets) {
+      if (assets.getQRCodePaymentNetworks().includes(paymentInfo.blockchains[0]) &&
+        (paymentInfo.blockchains.length === 1)
       ) {
         dispatch(setView(ViewVariant.QRCODE));
       }
@@ -125,7 +119,7 @@ export const App: React.FC = () => {
         setDefaultChain(defaultBlockchain);
       }
     }
-  }, [paymentInfo]);
+  }, [paymentInfo, assets]);
 
   const modalRoot = (
     <ModalRoot activeModal={activeModal}>

@@ -270,6 +270,14 @@ export const blockchainList: BlockchainItem[] = [
         label: 'tron',
         evm: false,
     },
+    {
+        id: 40,
+        name: 'Ripple',
+        image: 'ripple',
+        type: 'blockchain',
+        label: 'ripple',
+        evm: false,
+    },
 ];
 
 const address = '0x00000000000000000000000000 ';
@@ -333,8 +341,15 @@ export const connectedWalletList: WalletItemConnected[] = [
     {
         name: 'Tron',
         image: 'tron',
-        address: '',
+        address,
         type: 'blockchain',
         label: 'tron',
+    },
+    {
+        name: 'Ripple',
+        image: 'ripple',
+        type: 'blockchain',
+        label: 'ripple',
+        address,
     },
 ];

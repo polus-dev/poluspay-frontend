@@ -4,7 +4,7 @@ import {TickerProps} from "../../../components/pages/dashboard/Ticker/Ticker";
 import Currency from "../../../../../../libs/api/src/lib/priceService/symbols";
 import {getAssetUrl} from "../../../../../../tools";
 
-const currencyImagesNameMap = {
+const currencyNameMap = {
   [Currency.BTCUSDT]: 'btc',
   [Currency.ETHUSDT]: 'eth',
   [Currency.BNBUSDT]: 'bnb',
@@ -17,7 +17,7 @@ const [tickers, setTickers] = useState<TickerProps[]>()
 
   useEffect(() => {
     const priceService = new PriceService(import.meta.env.VITE_REACT_APP_PRICE_URL);
-    priceService.startMainLoop((prices) => setTickers(prices.map(price => ({shift: price.priceChange, name: price.symbol, fullName: price.symbol, price: Number(price.currentPrice).toFixed(2), shiftPercent: price.priceChangePercent, image: getAssetUrl(import.meta.env.VITE_REACT_APP_ASSET_URL, currencyImagesNameMap[price.symbol])}))));
+    priceService.startMainLoop((prices) => setTickers(prices.map(price => ({shift: price.priceChange, name: currencyNameMap[price.symbol].toUpperCase(), fullName: price.symbol, price: Number(price.currentPrice).toFixed(2), shiftPercent: price.priceChangePercent, image: getAssetUrl(import.meta.env.VITE_REACT_APP_ASSET_URL, currencyNameMap[price.symbol])}))));
     return () => priceService.stopMainLoop();
   }, [])
 
