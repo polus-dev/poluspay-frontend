@@ -28,7 +28,7 @@ interface TableProps {
 
 const openInvoice = (id: string) => {
     window.open(
-        `${import.meta.env.VITE_REACT_APP_PAYFORM_URL}?uuid=${id}`,
+        `${import.meta.env.VITE_PAYFORM_URL}?uuid=${id}`,
         '_blank'
     );
 };

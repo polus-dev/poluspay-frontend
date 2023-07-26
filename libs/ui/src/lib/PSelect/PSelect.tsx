@@ -228,16 +228,15 @@ export const PSelect: React.FC<SelectProps> = ({
                         })}
                     />
                 </div>
-                {props.disabled ||
-                    (props.readonly && (
-                        <div
-                            className={classNames({
-                                'polus-ui__select-overlay': true,
-                                'polus-ui__select-overlay--readonly':
-                                    props.readonly,
-                            })}
-                        />
-                    ))}
+                {(props.disabled || props.readonly) && (
+                    <div
+                        className={classNames({
+                            'polus-ui__select-overlay': true,
+                            'polus-ui__select-overlay--readonly':
+                                props.readonly,
+                        })}
+                    />
+                )}
             </div>
             <div className="polus-ui__select-options-wrapper">
                 {!collapsed && (

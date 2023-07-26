@@ -12,7 +12,7 @@ type IResponseOkOrError = IResponseError;
 export const authApi = createApi({
     reducerPath: 'authApi' as const,
     baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_REACT_APP_BASE_URL + '/auth',
+        baseUrl: import.meta.env.VITE_API_URL + '/auth',
     }),
     endpoints: (builder) => ({
         sendCode: builder.mutation<IResponseOkOrError, IAuthRequestSendCode>({

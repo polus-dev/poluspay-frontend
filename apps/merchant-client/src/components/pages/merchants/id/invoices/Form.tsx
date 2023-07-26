@@ -106,7 +106,7 @@ export const MerchantInvoicesForm = ({
                                         className="form__inner-item-select__inner-image"
                                         src={getAssetUrl(
                                             import.meta.env
-                                                .VITE_REACT_APP_ASSET_URL,
+                                                .VITE_ASSET_URL,
                                             selectedAsset.name
                                         )}
                                         alt={selectedAsset.name}
@@ -192,7 +192,7 @@ export const MerchantInvoicesForm = ({
                         onClose={handleModalCurrency}
                         categories={categories}
                         assetsRepresentation={availableAssets}
-                        assetUrl={import.meta.env.VITE_REACT_APP_ASSET_URL}
+                        assetUrl={import.meta.env.VITE_ASSET_URL}
                     />
                     <ModalBlockChainSelector
                         multi

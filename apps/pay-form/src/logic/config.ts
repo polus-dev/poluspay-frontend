@@ -9,27 +9,27 @@ export interface RPCproviderType {
 export const RPCprovider: RPCproviderType[] = [
   {
     name: "ethereum",
-    url: import.meta.env.VITE_REACT_ETHEREUM_RPC,
+    url: import.meta.env.VITE_ETHEREUM_RPC,
     chainId: ChainId.ethereum,
   },
   {
     name: "bsc",
-    url: import.meta.env.VITE_REACT_BSC_RPC,
+    url: import.meta.env.VITE_BSC_RPC,
     chainId: ChainId.bsc,
   },
   {
     name: "polygon",
-    url: import.meta.env.VITE_REACT_POLYGON_RPC,
+    url: import.meta.env.VITE_POLYGON_RPC,
     chainId: ChainId.polygon,
   },
   {
     name: "arbitrum",
-    url: import.meta.env.VITE_REACT_ARBITRUM_RPC,
+    url: import.meta.env.VITE_ARBITRUM_RPC,
     chainId: ChainId.arbitrum,
   },
   {
     name: "optimism",
-    url: import.meta.env.VITE_REACT_OPTIMISM_RPC,
+    url: import.meta.env.VITE_OPTIMISM_RPC,
     chainId: ChainId.optimism,
   },
 ];

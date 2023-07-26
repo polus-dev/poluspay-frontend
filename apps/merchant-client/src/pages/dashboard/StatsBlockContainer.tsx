@@ -42,8 +42,10 @@ export const StatsBlockContainer = () => {
                 </h6>
                 <div className="dashboard__stats-header-select">
                     <PSelect
+                        placeholder="No merchants"
                         options={merchantsOptions}
                         active={selectedMerchant ? [selectedMerchant] : []}
+                        disabled={!selectedMerchant}
                         onChange={(value) => setSelectedMerchant(value[0])}
                     />
                 </div>

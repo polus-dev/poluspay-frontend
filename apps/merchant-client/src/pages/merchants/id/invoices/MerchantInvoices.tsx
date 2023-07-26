@@ -76,7 +76,7 @@ export const MerchantInvoicesPage: React.FC = () => {
                         <div className="invoices__inner-container-preview">
                             <MerchantInvoicesPreview
                                 assetUrl={
-                                    import.meta.env.VITE_REACT_APP_ASSET_URL
+                                    import.meta.env.VITE_ASSET_URL
                                 }
                                 watch={watch}
                             />

@@ -12,7 +12,7 @@
     "targetDefaults": {
         "build": {
             "dependsOn": ["^build"],
-            "inputs": ["production", "^production"]
+            "inputs": ["production", "^production", {"env": "VITE_API_URL"}]
         },
         "e2e": {
             "inputs": ["default", "^production"]

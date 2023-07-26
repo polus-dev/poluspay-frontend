@@ -7,7 +7,7 @@ import {
 export const merchantApi = createApi({
     reducerPath: 'merchantApi' as const,
     baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_REACT_API_URL + 'public',
+        baseUrl: import.meta.env.VITE_API_URL + 'public',
     }),
     endpoints: (builder) => ({
         getMerchantById: builder.query<

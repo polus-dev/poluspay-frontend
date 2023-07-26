@@ -252,7 +252,7 @@ export const App: React.FC = () => {
                         }
                         before={
                           <img
-                            src={getAssetUrl(import.meta.env.VITE_REACT_APP_ASSET_URL, token.name)}
+                            src={getAssetUrl(import.meta.env.VITE_ASSET_URL, token.name)}
                             style={{
                               marginRight: '12px',
                             }}
@@ -291,7 +291,7 @@ export const App: React.FC = () => {
                         }
                         before={
                           <img
-                            src={getAssetUrl(import.meta.env.VITE_REACT_APP_ASSET_URL, token.name)}
+                            src={getAssetUrl(import.meta.env.VITE_ASSET_URL, token.name)}
                             style={{
                               marginRight: '12px',
                             }}
@@ -329,7 +329,7 @@ export const App: React.FC = () => {
                         }
                         before={
                           <img
-                            src={getAssetUrl(import.meta.env.VITE_REACT_APP_ASSET_URL, token.name)}
+                            src={getAssetUrl(import.meta.env.VITE_ASSET_URL, token.name)}
                             style={{
                               marginRight: '12px',
                             }}
@@ -368,7 +368,7 @@ export const App: React.FC = () => {
                         }
                         before={
                           <img
-                            src={getAssetUrl(import.meta.env.VITE_REACT_APP_ASSET_URL, token.name)}
+                            src={getAssetUrl(import.meta.env.VITE_ASSET_URL, token.name)}
                             style={{
                               marginRight: '12px',
                             }}

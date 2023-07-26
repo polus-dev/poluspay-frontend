@@ -31,23 +31,24 @@ export const LoginForm: React.FC = () => {
     const [emailErrors, setEmailErrors] = useState<string[]>([]);
 
     useEffect(() => {
-        if (!emailRegex.test(email) && email.length > 0) {
-            setEmailErrors(['Invalid email']);
-        } else {
-            setEmailErrors([]);
-        }
+      if (email) setEmailErrors([])
+        // if (!emailRegex.test(email) && email.length > 0) {
+        //     setEmailErrors(['Invalid email']);
+        // } else {
+        //     setEmailErrors([]);
+        // }
     }, [email]);
 
     const [code, setCode] = useState('');
     const [codeErrors, setCodeErrors] = useState<string[]>([]);
 
-    // useEffect(() => {
-    //     if (code.length > EMAIL_CODE_LENGTH && code.length > 0) {
-    //         setCodeErrors(['Invalid code']);
-    //     } else {
-    //         setCodeErrors([]);
-    //     }
-    // }, [code]);
+    useEffect(() => {
+        if (code.length > EMAIL_CODE_LENGTH && code.length > 0) {
+            setCodeErrors(['Invalid code']);
+        } else {
+            setCodeErrors([]);
+        }
+    }, [code]);
 
     const disabled: boolean =
         // (stage === 2 && (!email.length || emailErrors.length > 0)) ||
