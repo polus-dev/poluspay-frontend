@@ -1,6 +1,8 @@
+import type { StatsElement } from '../../components/pages/dashboard/Stats/StatsElement/StatsElement';
+
 import { useEffect, useState } from 'react';
+
 import { useGetMerchantStatisticsQuery } from '@poluspay-frontend/merchant-query';
-import { StatsBlock } from '../../../components/pages/dashboard/StatsBlock/StatsBlock';
 
 interface IUseMerchantStatistics {
     merchantId: string;
@@ -19,7 +21,7 @@ export const useMerchantStatistics = ({
         from_date: fromData,
         to_date: toData,
     });
-    const [staticsBlock, setStaticsBlock] = useState<StatsBlock[]>();
+    const [staticsBlock, setStaticsBlock] = useState<StatsElement[]>();
     useEffect(() => {
         if (statistics) {
             const amountOfProceeds =

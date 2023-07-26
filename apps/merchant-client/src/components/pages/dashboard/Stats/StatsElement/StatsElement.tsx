@@ -1,18 +1,19 @@
-import './StatsBlock.scoped.scss';
 import CountUp from "react-countup";
 
-export interface StatsBlock {
+import './StatsElement.scoped.scss';
+
+export interface StatsElement {
     id: number;
     value: string;
     description: string;
     additional?: string;
 }
 
-interface StatsBlockProps {
-    item: StatsBlock;
+interface StatsElementProps {
+    item: StatsElement;
 }
 
-export const DashboardStatsBlock: React.FC<StatsBlockProps> = ({ item }) => {
+export const DashboardStatsElement: React.FC<StatsElementProps> = ({ item }) => {
     return (
         <div className="stats">
             <div className="stats__header">

@@ -6,79 +6,10 @@
 
     &__tickers {
         margin-bottom: px-to-rem(30);
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: px-to-rem(8);
-
-        @include breakpoint($screen-md) {
-            gap: px-to-rem(12);
-        }
-
-        @include breakpoint($screen-lg) {
-            gap: px-to-rem(16);
-        }
-    }
-
-    &__tickers-item {
-        grid-column-start: span 3;
-        grid-column-end: span 3;
-
-        @include breakpoint($screen-md) {
-            grid-column-start: span 1;
-            grid-column-end: span 1;
-        }
     }
 
     &__stats {
         margin-bottom: px-to-rem(30);
-        width: 100%;
-    }
-
-    &__stats-header {
-        margin-bottom: px-to-rem(20);
-        display: flex;
-        align-items: center;
-        gap: px-to-rem(12);
-
-        @include breakpoint($screen-sm) {
-            gap: px-to-rem(24);
-        }
-    }
-
-    &__stats-header-title {
-        white-space: nowrap;
-        font-size: px-to-rem(18);
-        font-weight: 500;
-        line-height: 150%;
-    }
-
-    &__stats-header-select {
-        width: 100%;
-        max-width: px-to-rem(180);
-    }
-
-    &__stats-container {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: px-to-rem(8);
-
-        @include breakpoint($screen-md) {
-            gap: px-to-rem(12);
-        }
-
-        @include breakpoint($screen-lg) {
-            gap: px-to-rem(20);
-        }
-    }
-
-    &__stats-container-item {
-        grid-column-start: span 2;
-        grid-column-end: span 2;
-
-        @include breakpoint($screen-md) {
-            grid-column-start: span 1;
-            grid-column-end: span 1;
-        }
     }
 
     &__charts {

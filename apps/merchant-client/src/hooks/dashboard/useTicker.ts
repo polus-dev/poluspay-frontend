@@ -1,8 +1,10 @@
-import {useEffect, useState} from "react";
-import {PriceService} from "../../../../../../libs/api/src/lib/priceService/price.service";
-import {TickerProps} from "../../../components/pages/dashboard/Ticker/Ticker";
-import Currency from "../../../../../../libs/api/src/lib/priceService/symbols";
-import {getAssetUrl} from "../../../../../../tools";
+import type { TickerProps } from "../../components/pages/dashboard/Ticker/TickerElement/TickerElement";
+
+import { useEffect, useState } from "react";
+
+import Currency from "../../../../../libs/api/src/lib/priceService/symbols";
+import { PriceService } from "../../../../../libs/api/src/lib/priceService/price.service";
+import { getAssetUrl } from "tools";
 
 const currencyNameMap = {
   [Currency.BTCUSDT]: 'btc',

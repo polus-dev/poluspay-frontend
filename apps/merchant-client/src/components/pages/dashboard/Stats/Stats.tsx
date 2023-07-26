@@ -1,11 +1,12 @@
-import { DashboardStatsBlock } from '../../components/pages/dashboard/StatsBlock/StatsBlock';
-import { useMerchantStatistics } from './hooks/useMerchantStatistics';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { getBeginningOfDate } from 'tools/index';
+import { useMerchantStatistics } from '../../../../hooks/dashboard/useMerchantStatistics';
+import { useMerchantOptions } from '../../../../hooks/dashboard/useMerchantOptions';
 
-import './Dashboard.scoped.scss';
-import { useMerchantOptions } from './hooks/useMerchantOptions';
 import { PSelect } from '@poluspay-frontend/ui';
+import { DashboardStatsElement } from './StatsElement/StatsElement';
+
+import './Stats.scoped.scss';
 
 interface StatsBlockProps {
     merchantId: string;
@@ -20,27 +21,32 @@ const StatsBlock = (props: StatsBlockProps) => {
         fromData: props.fromData,
         toData: props.toData,
     });
+
     return (
-        <div ref={animateRef} className="dashboard__stats-container">
+        <div ref={animateRef} className="stats__container">
             {staticsBlock?.map((el) => (
-                <div className="dashboard__stats-container-item" key={el.id}>
-                    <DashboardStatsBlock item={el} />
+                <div className="stats__container-item" key={el.id}>
+                    <DashboardStatsElement item={el} />
                 </div>
             ))}
         </div>
     );
 };
 
-export const StatsBlockContainer = () => {
-    const { merchantsOptions, selectedMerchant, setSelectedMerchant } =
-        useMerchantOptions();
+export const DashboardStats: React.FC = () => {
+    const {
+        merchantsOptions,
+        selectedMerchant,
+        setSelectedMerchant
+    } = useMerchantOptions();
+
     return (
-        <div className="dashboard__stats">
-            <div className="dashboard__stats-header">
-                <h6 className="dashboard__stats-header-title">
+        <div className="stats">
+            <div className="stats__header">
+                <h6 className="stats__header-title">
                     Dashboard total
                 </h6>
-                <div className="dashboard__stats-header-select">
+                <div className="stats__header-select">
                     <PSelect
                         placeholder="No merchants"
                         options={merchantsOptions}

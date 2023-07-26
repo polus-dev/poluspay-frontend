@@ -1,0 +1,26 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/utils';
+
+.tickers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: px-to-rem(8);
+
+    @include breakpoint($screen-md) {
+        gap: px-to-rem(12);
+    }
+
+    @include breakpoint($screen-lg) {
+        gap: px-to-rem(16);
+    }
+
+    &__item {
+        grid-column-start: span 3;
+        grid-column-end: span 3;
+
+        @include breakpoint($screen-md) {
+            grid-column-start: span 1;
+            grid-column-end: span 1;
+        }
+    }
+}

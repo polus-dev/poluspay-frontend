@@ -1,5 +1,7 @@
 import classNames from 'classnames';
-import './Ticker.scoped.scss';
+
+import './TickerElement.scoped.scss';
+
 export interface TickerProps {
     shift: string;
     shiftPercent: string;
@@ -8,7 +10,10 @@ export interface TickerProps {
     price: string;
     image: string;
 }
-export const DashboardTicker = (props: TickerProps) => {
+
+export const DashboardTickerElement: React.FC<TickerProps> = ({
+    ...props
+}) => {
     const getShiftSymbol = (shift: number) => {
         if (shift === 0) return undefined;
 
