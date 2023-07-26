@@ -4,9 +4,10 @@ import { FormInput, PButton } from '@poluspay-frontend/ui';
 import { ReactComponent as IconCopy } from '../../../../assets/icons/copy.svg';
 
 import './Brand.scoped.scss';
+import { useGetMerchantIdFromParams } from 'apps/merchant-client/src/hooks/useGetMerchantId';
 
 export const MerchantBrandPage: React.FC = () => {
-    const id = '90ca217e-e429-4cbd-bf53-52b44e351e59';
+    const id = useGetMerchantIdFromParams();
 
     const copy = useCopyText();
 
