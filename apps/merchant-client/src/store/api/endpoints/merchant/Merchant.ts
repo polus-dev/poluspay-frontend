@@ -26,13 +26,14 @@ import {
   IVerifyDomainRequest,
 } from './Merchant.interface';
 import { RootState } from '../../../store';
+import {AuthHelper} from "../../../../logic/api";
 
 export const merchantApi = createApi({
     reducerPath: 'merchantApi' as const,
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_URL + 'private',
         prepareHeaders: (headers, { getState }) => {
-            const token = (getState() as RootState).auth.userToken;
+          const token = new AuthHelper().checkAuth()?.token;
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             }
