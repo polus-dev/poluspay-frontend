@@ -515,7 +515,7 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
                     style={{
                       backgroundImage: `url(${btn})`,
                     }}
-                    disabled={paymentInfo?.blockchains.length === 1}
+                    disabled={paymentInfo && assets.getQRCodePaymentNetworks().includes(paymentInfo.blockchains[0]) && paymentInfo?.blockchains.length === 1}
                     onClick={() => {
                       abortRef.current();
                       dispatch(
