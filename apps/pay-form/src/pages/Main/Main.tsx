@@ -340,7 +340,7 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
                             before={
                               <img
                                 src={
-                                  getAssetUrl(import.meta.env.VITE_REACT_APP_ASSET_URL, token.name)
+                                  getAssetUrl(import.meta.env.VITE_ASSET_URL, token.name)
                                 }
                                 className="logo-cur"
                               />
@@ -375,7 +375,7 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
                             before={
                               <img
                                 src={
-                                 getAssetUrl(import.meta.env.VITE_REACT_APP_ASSET_URL, token.name)
+                                 getAssetUrl(import.meta.env.VITE_ASSET_URL, token.name)
                                 }
                                 className="logo-cur"
                               />
@@ -573,7 +573,7 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
         </div>
       )}
       <CheatCodeListener
-        code={import.meta.env.VITE_REACT_APP_CHEAT_CODE}
+        code={import.meta.env.VITE_CHEAT_CODE}
         onCheatCodeEntered={() => {
           setCheatCode(true);
           dispatch(activateConnection());
@@ -584,7 +584,7 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
         modalCurrency.close();
         if (!token) return;
         props.setUserToken(token)
-      }} assetUrl={import.meta.env.VITE_REACT_APP_ASSET_URL} />
+      }} assetUrl={import.meta.env.VITE_ASSET_URL} />
     </Panel>
 </>
   );

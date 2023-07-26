@@ -9,7 +9,7 @@ import { IPayment } from '@poluspay-frontend/api';
 export const paymentApi = createApi({
     reducerPath: 'paymentApi' as const,
     baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_REACT_API_URL + 'public',
+        baseUrl: import.meta.env.VITE_API_URL + 'public',
     }),
     endpoints: (builder) => ({
         getPaymentByPaymentId: builder.query<

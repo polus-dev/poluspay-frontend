@@ -7,7 +7,7 @@ import { configureChains, createConfig } from 'wagmi';
 import { mainnet } from 'wagmi/chains';
 
 const chains = [mainnet];
-export const projectId = import.meta.env.VITE_REACT_APP_PROJECT_ID;
+export const projectId = import.meta.env.VITE_PROJECT_ID;
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
 export const wagmiConfig = createConfig({

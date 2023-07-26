@@ -27,7 +27,7 @@ import { steps } from './guid/steps';
 import {ErrorBoundary} from "@poluspay-frontend/ui";
 
 const chains = [polygon, mainnet, arbitrum, bsc, optimism];
-const projectId = import.meta.env.VITE_REACT_APP_PROJECT_ID;
+const projectId = import.meta.env.VITE_PROJECT_ID;
 
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
 const wagmiConfig = createConfig({
@@ -41,10 +41,10 @@ const wagmiConfig = createConfig({
 
 if (import.meta.env.PROD) {
     Sentry.init({
-        dsn: import.meta.env.VITE_REACT_APP_SENTRY_DSN,
+        dsn: import.meta.env.VITE_PAYFORM_SENTRY_DSN,
         integrations: [
             new Sentry.BrowserTracing({
-                tracePropagationTargets: [import.meta.env.VITE_REACT_API_URL],
+                tracePropagationTargets: [import.meta.env.VITE_API_URL],
             }),
             new Sentry.Replay({ maskAllText: false, blockAllMedia: false }),
         ],

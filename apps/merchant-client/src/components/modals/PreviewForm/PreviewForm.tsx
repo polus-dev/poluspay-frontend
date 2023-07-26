@@ -18,7 +18,7 @@ export const ModalPreviewForm: React.FC<ModalProps> = ({
                 visible={visible}
                 body={
                     <MerchantInvoicesPreview
-                        assetUrl={import.meta.env.VITE_REACT_APP_ASSET_URL}
+                        assetUrl={import.meta.env.VITE_ASSET_URL}
                         isModal
                     />
                 }

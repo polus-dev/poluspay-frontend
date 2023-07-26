@@ -95,7 +95,7 @@ export const QRCodePayment = (props: AllType) => {
         Send ${paymentInfoState.assetName.toUpperCase()}{' '}
         <img
           style={{ height: '25px' }}
-          src={getAssetUrl(import.meta.env.VITE_REACT_APP_ASSET_URL, paymentInfoState.assetName)}
+          src={getAssetUrl(import.meta.env.VITE_ASSET_URL, paymentInfoState.assetName)}
         />
       </h2>
       <div

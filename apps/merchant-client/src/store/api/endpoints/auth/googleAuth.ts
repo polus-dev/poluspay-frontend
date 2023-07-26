@@ -2,7 +2,7 @@ import axios from 'axios';
 import { IAuthResponseLogin } from './Auth.interface';
 import { StoragePolus } from '../../../../logic/storage';
 const apiUrl =
-    import.meta.env.VITE_REACT_APP_BASE_URL + 'public' + '/auth.google';
+    import.meta.env.VITE_API_URL + 'public' + '/auth.google';
 
 interface GoogleRedirectResponse {
     redirect_url: string;

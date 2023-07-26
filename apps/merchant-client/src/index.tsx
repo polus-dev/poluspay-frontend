@@ -15,18 +15,18 @@ if (domNode) {
 
     if (import.meta.env.PROD) {
         Sentry.init({
-            dsn: import.meta.env.VITE_REACT_APP_MERCHANT_SENTRY_DSN,
+            dsn: import.meta.env.VITE_MERCHANT_SENTRY_DSN,
             integrations: [
                 new Sentry.BrowserTracing({
                     tracePropagationTargets: [
-                        import.meta.env.VITE_REACT_API_URL,
+                        import.meta.env.VITE_API_URL,
                     ],
                 }),
                 new Sentry.Replay({
                     maskAllText: false,
                     blockAllMedia: false,
                     networkDetailAllowUrls: [
-                        import.meta.env.VITE_REACT_API_URL,
+                        import.meta.env.VITE_API_URL,
                     ],
                     networkResponseHeaders: ['X-Request-Id'],
                 }),

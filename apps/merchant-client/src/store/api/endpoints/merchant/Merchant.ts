@@ -30,7 +30,7 @@ import { RootState } from '../../../store';
 export const merchantApi = createApi({
     reducerPath: 'merchantApi' as const,
     baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_REACT_APP_BASE_URL + 'private',
+        baseUrl: import.meta.env.VITE_API_URL + 'private',
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).auth.userToken;
             if (token) {
