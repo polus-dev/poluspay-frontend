@@ -9,7 +9,7 @@ export const walletAuthThunk = createAsyncThunk(
     async (address: string, { rejectWithValue }) => {
         try {
             const apiUrl =
-                import.meta.env.VITE_REACT_APP_BASE_URL +
+                import.meta.env.VITE_API_URL +
                 'public' +
                 '/auth.wallet';
             const response = await axios.post<IAuthResponseNonce>(

@@ -13,7 +13,7 @@ import { IResponseError } from '@poluspay-frontend/api';
 export const paymentApi = createApi({
     reducerPath: 'paymentApi' as const,
     baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_REACT_APP_BASE_URL + 'private',
+        baseUrl: import.meta.env.VITE_API_URL + 'private',
         prepareHeaders: (headers) => {
             const token = new AuthHelper().checkAuth()?.token;
             if (token) {
