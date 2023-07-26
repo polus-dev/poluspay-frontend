@@ -1,4 +1,4 @@
-import type { TickerProps } from "../../components/pages/dashboard/Ticker/TickerElement/TickerElement";
+import type { TickerProps } from "../../components/pages/dashboard/Tickers/TickerElement/TickerElement";
 
 import { useEffect, useState } from "react";
 

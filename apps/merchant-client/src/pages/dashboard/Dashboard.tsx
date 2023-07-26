@@ -1,5 +1,5 @@
 import { ErrorBlock } from '../../../../../libs/ui/src/lib/Error/Error';
-import { DashboardTickers } from '../../components/pages/dashboard/Ticker/Tickers';
+import { DashboardTickers } from '../../components/pages/dashboard/Tickers/Tickers';
 import { DashboardStats } from '../../components/pages/dashboard/Stats/Stats';
 import { DashboardBarChart } from '../../components/pages/dashboard/BarChart/BarChart';
 import { DashboardDoughnutChart } from '../../components/pages/dashboard/DoughnutChart/DoughnutChart';
