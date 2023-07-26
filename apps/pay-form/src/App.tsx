@@ -30,7 +30,6 @@ import { QuestionButton } from './components/ui/QuestionButton/QuestionButton';
 import { useTour } from '@reactour/tour';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import { useGetPaymentByPaymentIdQuery } from './store/api/endpoints/payment/Payment';
-import { getParameterByName } from './logic/utils';
 import { setView, ViewVariant } from './store/features/view/viewSlice';
 import { setCurrentBlockchain } from './store/features/connection/connectionSlice';
 import { ConsoleLog } from './components/modals/consoleLog.ts';
@@ -42,6 +41,7 @@ import {useGetAssetsQuery} from "./store/api/endpoints/asset/Asset";
 import {getAssetUrl} from "../../../tools";
 import {PNotifyContainer} from "@poluspay-frontend/ui";
 import {blockchainList} from "@poluspay-frontend/ui";
+import {getParameterByName} from "../../../tools/getParameterByName";
 
 const isDesktop = window.innerWidth >= 800;
 

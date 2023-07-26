@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.key-value-table {
+  width: 100%;
+}
+
+/* Row style */
+.key-value-row {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Key style */
+.key {
+  flex-basis: 40%;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Value style */
+.value {
+  flex-basis: 60%;
+  color: #666;
+}
+
