@@ -1,10 +1,11 @@
-import {useGetMerchantsQuery} from "@poluspay-frontend/merchant-query";
-import {useEffect, useState} from "react";
-import {SelectOption} from "@poluspay-frontend/ui";
-import {displayMerchantInfo} from "../../../../../pay-form/src/utils/getMerchantInfo";
+import { useGetMerchantsQuery } from "@poluspay-frontend/merchant-query";
+import { useEffect, useState } from "react";
+import { SelectOption } from "@poluspay-frontend/ui";
+
+const trimMerchantName = (name: string) => name.length > 15 ? name.slice(0, 12) + '...' : name
 
 export const useMerchantOptions = () => {
-  const {data: merchants} = useGetMerchantsQuery({});
+  const { data: merchants } = useGetMerchantsQuery({});
   const [merchantsOptions, setMerchantsOptions] = useState<SelectOption[]>([])
   const [selectedMerchant, setSelectedMerchant] = useState<SelectOption>()
 
@@ -13,12 +14,12 @@ export const useMerchantOptions = () => {
       const merchantsOptions =
         merchants.data.map((merchant) => ({
           id: merchant.id,
-          text: merchant.name,
+          text: trimMerchantName(merchant.name),
         }))
       setMerchantsOptions(merchantsOptions)
       setSelectedMerchant(merchantsOptions[0])
     }
   }, [merchants])
 
-  return {merchantsOptions, selectedMerchant, setSelectedMerchant}
+  return { merchantsOptions, selectedMerchant, setSelectedMerchant }
 }
