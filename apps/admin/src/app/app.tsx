@@ -37,18 +37,21 @@ export function App() {
   const [error, setError] = useState<string>();
   const [loading, setLoading] = useState(false);
 
-
-
   useEffect(() => {
     const idFromUrl = getParameterByName('id');
     if (idFromUrl && isValidUUID(idFromUrl))
       setId(idFromUrl);
+  }, []);
 
+  useEffect(() => {
     if (id && isValidUUID(id)) {
       setLoading(true);
       setData(undefined);
       setError(undefined);
-      search(id).then(setData).catch(setError).finally(() => setLoading(false));
+      search(id).then((e) => {
+        setData(e)
+        window.history.pushState({}, '', '?id=' + id);
+      }).catch(setError).finally(() => setLoading(false));
     }
   }, [id]);
 
