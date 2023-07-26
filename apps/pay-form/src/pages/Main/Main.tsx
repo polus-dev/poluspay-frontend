@@ -18,7 +18,6 @@ import optimismLogo from '../../img/optimism.svg';
 import btn from '../../img/btn.jpg';
 import wc from '../../img/wc.svg';
 
-import { getParameterByName } from '../../logic/utils';
 import { CheatCodeListener } from '../../components/CheatCodeListener';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { ProgressBar } from '../../components/ui/ProgressBar';
@@ -51,6 +50,7 @@ import { useRandomId } from '@poluspay-frontend/hooks';
 import {ModalCurrencySelector, notify} from '@poluspay-frontend/ui';
 import { useModal } from '@poluspay-frontend/hooks';
 import {blockchainList} from "@poluspay-frontend/ui";
+import {getParameterByName} from "../../../../../tools/getParameterByName";
 
 interface MainProps {
   id: string;
