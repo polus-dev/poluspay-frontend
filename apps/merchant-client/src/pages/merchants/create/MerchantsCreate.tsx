@@ -12,14 +12,14 @@ import { ModalWalletAddition } from '../../../components/modals/WalletAddition/W
 
 import './MerchantsCreate.scoped.scss';
 
-import { blockchainList } from '../../../../../../libs/ui/src/list';
+import { blockchainList } from '@poluspay-frontend/ui';
 import { useMerchantWallets } from './hooks/useMerchantWallets';
 import { isEVMBlockchain } from 'tools';
 
 export const MerchantsCreatePage: React.FC = () => {
     const navigator = useNavigate();
     const [type, setType] = useState<string | null>('personal');
-    const [stage, setStage] = useState(0);
+    const [stage, setStage] = useState(2);
     const [merchantId, setMerchantId] = useState<string | null>(null);
     const {
         modalBlockchainVisible,
@@ -33,6 +33,7 @@ export const MerchantsCreatePage: React.FC = () => {
         onImportWallet,
         isCreateMerchantWalletLoading,
         next,
+      merchantWalletConnected
     } = useMerchantWallets({ merchantId });
 
     const modalBlockchain = useModal();
@@ -86,8 +87,9 @@ export const MerchantsCreatePage: React.FC = () => {
                             merchantId={merchantId!}
                             selectedWallet={selectedWallets}
                             handleSelect={handleSelect}
+                            walletConnected={merchantWalletConnected}
                             buttonDisabled={
-                                !(selectedBlockchain || selectedWallets) ||
+                                !merchantWalletConnected.length||
                                 modalWalletVisible ||
                                 modalBlockchainVisible
                             }
@@ -101,7 +103,7 @@ export const MerchantsCreatePage: React.FC = () => {
                 visible={modalBlockchainVisible}
                 options={blockchainList}
                 selected={selectedBlockchain}
-                onClose={() => onCloseBlockchainModal()}
+                onClose={onCloseBlockchainModal}
                 setSelected={handleBlockchainSelect}
             />
             <ModalWalletAddition

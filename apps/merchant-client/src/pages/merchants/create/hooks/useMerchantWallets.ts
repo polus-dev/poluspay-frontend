@@ -5,8 +5,8 @@ import {
     blockchainList,
     exchangeList,
     list,
-} from '../../../../../../../libs/ui/src/list';
-import { Item } from '../../../../../../../libs/ui/src/list';
+} from '@poluspay-frontend/ui';
+import { Item } from '@poluspay-frontend/ui';
 import { useEffect, useState } from 'react';
 import { Blockchain } from 'tools';
 
@@ -25,6 +25,7 @@ export const useMerchantWallets = ({ merchantId }: IProps) => {
     const [isCreateMerchantWalletLoading, setIsCreateMerchantWalletLoading] =
         useState(false);
     const [createMerchantWallet] = useCreateMerchantWalletMutation();
+    const [merchantWalletConnected, setMerchantWalletConnected] = useState<number[]>([]);
 
     const next = (to?: string) => {
         const doNext = (t: string) => {
@@ -66,8 +67,10 @@ export const useMerchantWallets = ({ merchantId }: IProps) => {
                 address,
                 networks,
             }).unwrap();
+            setMerchantWalletConnected([...merchantWalletConnected, selectedBlockchain.id]);
         } catch (error) {
             console.error(error);
+            setSelectedBlockchain(undefined);
         } finally {
             setIsCreateMerchantWalletLoading(false);
             setModalWalletVisible(false);
@@ -130,11 +133,13 @@ export const useMerchantWallets = ({ merchantId }: IProps) => {
     };
 
     const onCloseWalletModal = () => {
-        if (selectedWallet) setSelectedWallet(undefined);
-        setModalWalletVisible(false);
+          setSelectedWallet(undefined);
+          setSelectedBlockchain(undefined)
+          setModalWalletVisible(false);
     };
 
     const onCloseBlockchainModal = () => {
+      debugger
         if (selectedBlockchain) setSelectedBlockchain(undefined);
         setModalBlockchainVisible(false);
     };
@@ -146,6 +151,11 @@ export const useMerchantWallets = ({ merchantId }: IProps) => {
             next('blockchainSelect');
         }
     }, [selectedWallet, selectedBlockchain]);
+  useEffect(() => {
+    console.log(selectedWallet, selectedBlockchain)
+
+  }, [selectedWallet, selectedBlockchain]);
+
 
     return {
         selectedWallets: selectedWallet,
@@ -159,5 +169,6 @@ export const useMerchantWallets = ({ merchantId }: IProps) => {
         onImportWallet,
         isCreateMerchantWalletLoading,
         next,
+      merchantWalletConnected
     };
 };
