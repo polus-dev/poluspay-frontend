@@ -11,16 +11,19 @@ export const useMerchantOptions = () => {
         []
     );
     const [selectedMerchant, setSelectedMerchant] = useState<SelectOption>();
-    const [merchantsAmount, setMerchantsAmount] = useState<number>();
+    const [merchantsAmount, setMerchantsAmount] = useState(-1);
 
     useEffect(() => {
         if (merchants) {
-            const merchantsOptions = merchants.data.map((merchant) => ({
+            const merchantsOptions = [{text: "All"}, ...merchants.data.map((merchant) => ({
                 id: merchant.id,
                 text: trimMerchantName(merchant.name),
-            }));
+            }))];
             setMerchantsOptions(merchantsOptions);
             setMerchantsAmount(merchants.totalCount);
+            if (merchantsOptions.length > 0) {
+                setSelectedMerchant(merchantsOptions[0]);
+            }
         }
     }, [merchants]);
 
