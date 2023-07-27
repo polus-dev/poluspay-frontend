@@ -32,6 +32,7 @@ export const useMerchantStatistics = ({
             const conversationRate =
                 (successFullPayments / statistics.total_payments) * 100 || 0;
             const averageBill = amountOfProceeds / successFullPayments || 0;
+            debugger
             setStaticsBlock([
                 {
                     id: 1,
@@ -42,7 +43,7 @@ export const useMerchantStatistics = ({
                     id: 2,
                     value: successFullPayments.toString(),
                     description: 'Successful payments',
-                    additional: `${conversationRate}% conversion rate`,
+                    additional: `${conversationRate.toFixed(2)}% conversion rate`,
                 },
                 {
                     id: 3,
