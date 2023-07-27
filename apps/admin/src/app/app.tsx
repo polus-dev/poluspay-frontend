@@ -6,6 +6,7 @@ import {IPayment, IPaymentMerchant} from "@poluspay-frontend/api";
 import {useEffect, useState} from "react";
 import {isValidUUID} from "../../../../tools/date/isValidUUID";
 import {getParameterByName} from "../../../../tools/getParameterByName";
+import {getAssetUrl} from "../../../../tools";
 
 const getPaymentInfo = async (id: string) =>
    axios.post<IPayment>(import.meta.env.VITE_API_URL + 'public' + '/' + 'payment.take', {
@@ -62,10 +63,13 @@ export function App() {
       <PInput align='center' value={id} onInput={setId} />
       {error && <div>{error}</div>}
       {loading && <div>Loading...</div>}
-      {data && 'logo' in data && <img style={{width: '25%', height: '25%'}} src={data.logo} alt="logo" />}
       {data &&
-        <div className='key-value-table'>{
-          Object.keys(data).map((k) => <div className='key-value-row' key={k}><div className="key">{k}</div><div className="value">{String(data[k as keyof typeof data])}</div></div>)}
+        <div className='key-value-table'>
+          {data && 'logo' in data && <div> <img style={{width: '25%', height: '25%'}} src={data.logo} alt="logo" /> </div>}
+          {data && 'assets' in data && <div className="key-value-row"> <img style={{width: '5%', height: '5%', marginRight: '5%'}} src={getAssetUrl(import.meta.env.VITE_ASSET_URL, data.assets[0].name)} alt="logo" />  <div className="value">  {data.assets.map(e => e.network).join(', ')}  </div> </div> }
+          {
+          Object.keys(data).filter(k => k !== 'assets') .map((k) => <div className='key-value-row' key={k}><div className="key">{k}</div><div className="value">{String(data[k as keyof typeof data])}</div></div>)
+          }
       </div>
       }
     </div>);
