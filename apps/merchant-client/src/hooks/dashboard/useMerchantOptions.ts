@@ -8,6 +8,7 @@ export const useMerchantOptions = () => {
   const { data: merchants } = useGetMerchantsQuery({});
   const [merchantsOptions, setMerchantsOptions] = useState<SelectOption[]>([])
   const [selectedMerchant, setSelectedMerchant] = useState<SelectOption>()
+  const [merchantsAmount, setMerchantsAmount] = useState<number>()
 
   useEffect(() => {
     if (merchants) {
@@ -17,9 +18,9 @@ export const useMerchantOptions = () => {
           text: trimMerchantName(merchant.name),
         }))
       setMerchantsOptions(merchantsOptions)
-      setSelectedMerchant(merchantsOptions[0])
+      setMerchantsAmount(merchants.totalCount)
     }
   }, [merchants])
 
-  return { merchantsOptions, selectedMerchant, setSelectedMerchant }
+  return { merchantsOptions, selectedMerchant, setSelectedMerchant, merchantsAmount }
 }

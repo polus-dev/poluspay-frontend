@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useGetMerchantStatisticsQuery } from '@poluspay-frontend/merchant-query';
 
 interface IUseMerchantStatistics {
-    merchantId: string;
+    merchantId?: string;
     fromData: string;
     toData: string;
 }
@@ -15,7 +15,6 @@ export const useMerchantStatistics = ({
     toData,
     fromData,
 }: IUseMerchantStatistics) => {
-    // const {data: statistics} = useGetMerchantStatisticsQuery({merchant_id: "b971ae03-b78c-4b62-823b-59e751691e01", from_date: "2023-06-30T21:00:00.000Z", to_date: "2023-07-24T10:57:00.418Z"});
     const { data: statistics } = useGetMerchantStatisticsQuery({
         merchant_id: merchantId,
         from_date: fromData,

@@ -88,7 +88,7 @@ export interface IDeleteMerchantWalletRequest extends IMerchantId {
     network: string;
 }
 
-export interface IGetMerchantStatisticsRequest extends IMerchantId {
+export interface IGetMerchantStatisticsRequest extends Partial<IMerchantId> {
     from_date: string;
     to_date: string;
 }

@@ -9,7 +9,7 @@ import { DashboardStatsElement } from './StatsElement/StatsElement';
 import './Stats.scoped.scss';
 
 interface StatsBlockProps {
-    merchantId: string;
+    merchantId?: string;
     fromData: string;
     toData: string;
 }
@@ -37,7 +37,8 @@ export const DashboardStats: React.FC = () => {
     const {
         merchantsOptions,
         selectedMerchant,
-        setSelectedMerchant
+        setSelectedMerchant,
+      merchantsAmount
     } = useMerchantOptions();
 
     return (
@@ -48,21 +49,20 @@ export const DashboardStats: React.FC = () => {
                 </h6>
                 <div className="stats__header-select">
                     <PSelect
-                        placeholder="No merchants"
+                        placeholder={merchantsAmount ? `${merchantsAmount} merchant` : "No Merchants"}
                         options={merchantsOptions}
                         active={selectedMerchant ? [selectedMerchant] : []}
-                        disabled={!selectedMerchant}
+                        disabled={!merchantsAmount}
                         onChange={(value) => setSelectedMerchant(value[0])}
                     />
                 </div>
             </div>
-            {selectedMerchant && (
+
                 <StatsBlock
-                    merchantId={selectedMerchant.id}
+                    merchantId={selectedMerchant?.id}
                     toData={new Date().toISOString()}
                     fromData={getBeginningOfDate('month').toISOString()}
                 />
-            )}
         </div>
     );
 };
