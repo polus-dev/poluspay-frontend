@@ -331,7 +331,7 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                     </div>
                     <div className="form__point">
                         <p className="form__point-text">
-                            4. Click
+                            2. Click
                             <span className="form__point-text form__point-text--bald">
                                 &nbsp;Verify
                             </span>
