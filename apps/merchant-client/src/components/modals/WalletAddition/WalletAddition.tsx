@@ -6,7 +6,7 @@ import { ReactComponent as IconChevron } from '../../../assets/icons/chevron.svg
 
 import './WalletAddition.scoped.scss';
 import { Blockchain, placeHolderForAddress, validateAddress } from 'tools';
-import { BlockchainItem } from '../../../../../../libs/ui/src/list';
+import { BlockchainItem } from '@poluspay-frontend/ui';
 
 interface ModalProps {
     visible: boolean;
@@ -59,13 +59,11 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
                 visible={visible}
                 header={
                     <div className="modal__header">
-                        {/* replace src and  name with dynamic ones */}
-                        {/*<img*/}
-                        {/*    className="modal__header-image"*/}
-                        {/*    src={`/images/wallets/${selectedBlockchain?.label}.png`}*/}
-                        {/*    alt="blockchain name"*/}
-                        {/*/>*/}
-                        {/* replace with dynamic */}
+                        <img
+                            className="modal__header-image"
+                            src={`/images/wallets/${selectedBlockchain?.image}.png`}
+                            alt="blockchain name"
+                        />
                         <p className="modal__header-text">
                             Connect{' '}
                             {selectedBlockchain &&
@@ -140,7 +138,11 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
                         </div>
                     </div>
                 }
-                onClose={onClose}
+                onClose={() => {
+                  onClose()
+                  // TOOD: remove after rework of modal
+                  setValidAddress(false)
+                }}
             />
         </>,
         document.body
