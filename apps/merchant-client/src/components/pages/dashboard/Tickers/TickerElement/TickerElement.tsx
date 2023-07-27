@@ -11,9 +11,7 @@ export interface TickerProps {
     image: string;
 }
 
-export const DashboardTickerElement: React.FC<TickerProps> = ({
-    ...props
-}) => {
+export const DashboardTickerElement: React.FC<TickerProps> = ({ ...props }) => {
     const getShiftSymbol = (shift: number) => {
         if (shift === 0) return undefined;
 
@@ -38,8 +36,10 @@ export const DashboardTickerElement: React.FC<TickerProps> = ({
                 <p
                     className={classNames({
                         'ticker__price-shift': true,
-                        'ticker__price-shift--positive': +props.shiftPercent > 0,
-                        'ticker__price-shift--negative': +props.shiftPercent < 0,
+                        'ticker__price-shift--positive':
+                            +props.shiftPercent > 0,
+                        'ticker__price-shift--negative':
+                            +props.shiftPercent < 0,
                     })}
                 >
                     {getShiftSymbol(+props.shiftPercent)}

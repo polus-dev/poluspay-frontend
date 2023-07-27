@@ -1,14 +1,14 @@
-import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { useTicker } from "../../../../hooks/dashboard/useTicker";
+import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { useTicker } from '../../../../hooks/dashboard/useTicker';
 
-import { DashboardTickerElement } from "./TickerElement/TickerElement";
+import { DashboardTickerElement } from './TickerElement/TickerElement';
 
 import './Tickers.scoped.scss';
 
 export const DashboardTickers: React.FC = () => {
     const [animateRef] = useAutoAnimate();
 
-    const {tickers} = useTicker();
+    const { tickers } = useTicker();
 
     return (
         <div ref={animateRef} className="tickers">
@@ -18,5 +18,5 @@ export const DashboardTickers: React.FC = () => {
                 </div>
             ))}
         </div>
-    )
-}
+    );
+};

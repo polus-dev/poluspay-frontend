@@ -1,5 +1,5 @@
 import type { Blockchain } from 'tools';
-import {IMerchant} from "@poluspay-frontend/api";
+import { IMerchant } from '@poluspay-frontend/api';
 
 type UnparsedJSON = string;
 
@@ -94,16 +94,16 @@ export interface IGetMerchantStatisticsRequest extends Partial<IMerchantId> {
 }
 
 export interface IGetMerchantStatisticsResponse {
-  total_payments: number
-  success_payments: number
-  turnover_detalization: TurnoverDetalization[] | null
+    total_payments: number;
+    success_payments: number;
+    turnover_detalization: TurnoverDetalization[] | null;
 }
 
-export interface TurnoverDetalization extends IMerchantId{
-  network: string
-  asset: string
-  amount: string
-  amount_decimals: string
-  number_of_success_payments: number
-  percent_of_total_success: number
+export interface TurnoverDetalization extends IMerchantId {
+    network: string;
+    asset: string;
+    amount: string;
+    amount_decimals: string;
+    number_of_success_payments: number;
+    percent_of_total_success: number;
 }

@@ -20,8 +20,8 @@ export const Menu: React.FC<MenuProps> = ({ onCloseMenu, onToggleMenu }) => {
 
     const items: IMenuItem[] = [
         { id: 1, title: 'Main', path: '/' },
-        { id: 2, title: 'Merchants', path: '/merchants' },
-        { id: 3, title: 'Dashboard', path: '/dashboard' },
+        { id: 2, title: 'Dashboard', path: '/dashboard' },
+        { id: 3, title: 'Merchants', path: '/merchants' },
         { id: 4, title: 'Settings', path: '/settings' },
     ];
 

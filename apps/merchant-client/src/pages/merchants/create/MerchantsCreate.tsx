@@ -33,7 +33,7 @@ export const MerchantsCreatePage: React.FC = () => {
         onImportWallet,
         isCreateMerchantWalletLoading,
         next,
-      merchantWalletConnected
+        merchantWalletConnected,
     } = useMerchantWallets({ merchantId });
 
     const modalBlockchain = useModal();
@@ -89,7 +89,7 @@ export const MerchantsCreatePage: React.FC = () => {
                             handleSelect={handleSelect}
                             walletConnected={merchantWalletConnected}
                             buttonDisabled={
-                                !merchantWalletConnected.length||
+                                !merchantWalletConnected.length ||
                                 modalWalletVisible ||
                                 modalBlockchainVisible
                             }

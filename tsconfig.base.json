@@ -1,39 +1,27 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "ES2021",
-    "module": "esnext",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@poluspay-frontend/api": [
-        "libs/api/src/index.ts"
-      ],
-      "@poluspay-frontend/hooks": [
-        "libs/hooks/src/index.ts"
-      ],
-      "@poluspay-frontend/merchant-query": [
-        "apps/merchant-client/src/store/api/endpoints/index.ts"
-      ],
-      "@poluspay-frontend/ui": [
-        "libs/ui/src/index.ts"
-      ]
-    }
-  },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+    "compileOnSave": false,
+    "compilerOptions": {
+        "rootDir": ".",
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "target": "ES2021",
+        "module": "esnext",
+        "lib": ["es2020", "dom"],
+        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
+        "baseUrl": ".",
+        "paths": {
+            "@poluspay-frontend/api": ["libs/api/src/index.ts"],
+            "@poluspay-frontend/hooks": ["libs/hooks/src/index.ts"],
+            "@poluspay-frontend/merchant-query": [
+                "apps/merchant-client/src/store/api/endpoints/index.ts"
+            ],
+            "@poluspay-frontend/ui": ["libs/ui/src/index.ts"]
+        }
+    },
+    "exclude": ["node_modules", "tmp"]
 }

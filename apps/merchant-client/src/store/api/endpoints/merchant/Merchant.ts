@@ -1,39 +1,42 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  IResponseError,
-  IPagination,
-  IResponseApiDefault, IMerchant,
+    IResponseError,
+    IPagination,
+    IResponseApiDefault,
+    IMerchant,
 } from '@poluspay-frontend/api';
 import {
-  IChangeMerchantWalletStatusRequest,
-  ICreateMerchantRequest,
-  ICreateMerchantResponse,
-  ICreateMerchantWalletRequest,
-  IDeleteMerchantRequest,
-  IDeleteMerchantWalletRequest,
-  IGenerateSigningKeyResponse,
-  IGetMerchantByIdResponse,
-  IGetMerchantRequest,
-  IGetMerchantResponse,
-  IGetMerchantResponseWithTotalCount, IGetMerchantStatisticsRequest, IGetMerchantStatisticsResponse,
-  IGetWebhookHistoryResponse,
-  IGetWebhookHistoryResponseWithTotalCount,
-  IMerchantId,
-  IMerchantWallet,
-  ISetWebhookRequest,
-  IUpdateMerchantRequest,
-  IUploadLogoRequest,
-  IVerifyDomainRequest,
+    IChangeMerchantWalletStatusRequest,
+    ICreateMerchantRequest,
+    ICreateMerchantResponse,
+    ICreateMerchantWalletRequest,
+    IDeleteMerchantRequest,
+    IDeleteMerchantWalletRequest,
+    IGenerateSigningKeyResponse,
+    IGetMerchantByIdResponse,
+    IGetMerchantRequest,
+    IGetMerchantResponse,
+    IGetMerchantResponseWithTotalCount,
+    IGetMerchantStatisticsRequest,
+    IGetMerchantStatisticsResponse,
+    IGetWebhookHistoryResponse,
+    IGetWebhookHistoryResponseWithTotalCount,
+    IMerchantId,
+    IMerchantWallet,
+    ISetWebhookRequest,
+    IUpdateMerchantRequest,
+    IUploadLogoRequest,
+    IVerifyDomainRequest,
 } from './Merchant.interface';
 import { RootState } from '../../../store';
-import {AuthHelper} from "../../../../logic/api";
+import { AuthHelper } from '../../../../logic/api';
 
 export const merchantApi = createApi({
     reducerPath: 'merchantApi' as const,
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_URL + 'private',
         prepareHeaders: (headers, { getState }) => {
-          const token = new AuthHelper().checkAuth()?.token;
+            const token = new AuthHelper().checkAuth()?.token;
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             }
@@ -241,13 +244,16 @@ export const merchantApi = createApi({
                     ? [{ type: 'Merchant', id: args.merchant_id }]
                     : ['Merchant'],
         }),
-      getMerchantStatistics: builder.query<IGetMerchantStatisticsResponse, IGetMerchantStatisticsRequest>({
-        query: (body) => ({
-          url: 'merchant.statistics.get',
-          method: 'POST',
-          body,
+        getMerchantStatistics: builder.query<
+            IGetMerchantStatisticsResponse,
+            IGetMerchantStatisticsRequest
+        >({
+            query: (body) => ({
+                url: 'merchant.statistics.get',
+                method: 'POST',
+                body,
+            }),
         }),
-      }),
     }),
 });
 export const {

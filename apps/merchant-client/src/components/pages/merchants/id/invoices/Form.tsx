@@ -74,8 +74,7 @@ export const MerchantInvoicesForm = ({
     };
 
     const handleModalCurrency = (asset?: AssetRepresentation) => {
-        if (asset)
-        setSelectedAsset(asset);
+        if (asset) setSelectedAsset(asset);
         modalCurrency.close();
     };
 
@@ -105,8 +104,7 @@ export const MerchantInvoicesForm = ({
                                     <img
                                         className="form__inner-item-select__inner-image"
                                         src={getAssetUrl(
-                                            import.meta.env
-                                                .VITE_ASSET_URL,
+                                            import.meta.env.VITE_ASSET_URL,
                                             selectedAsset.name
                                         )}
                                         alt={selectedAsset.name}

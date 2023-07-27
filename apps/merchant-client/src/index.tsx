@@ -18,16 +18,12 @@ if (domNode) {
             dsn: import.meta.env.VITE_MERCHANT_SENTRY_DSN,
             integrations: [
                 new Sentry.BrowserTracing({
-                    tracePropagationTargets: [
-                        import.meta.env.VITE_API_URL,
-                    ],
+                    tracePropagationTargets: [import.meta.env.VITE_API_URL],
                 }),
                 new Sentry.Replay({
                     maskAllText: false,
                     blockAllMedia: false,
-                    networkDetailAllowUrls: [
-                        import.meta.env.VITE_API_URL,
-                    ],
+                    networkDetailAllowUrls: [import.meta.env.VITE_API_URL],
                     networkResponseHeaders: ['X-Request-Id'],
                 }),
             ],

@@ -1,4 +1,4 @@
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { ReactComponent as IconWarning } from '../../../../../assets/icons/warning.svg';
 import { ReactComponent as IconArrow } from '../../../../../assets/icons/arrow.svg';

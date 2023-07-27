@@ -139,9 +139,9 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
                     </div>
                 }
                 onClose={() => {
-                  onClose()
-                  // TOOD: remove after rework of modal
-                  setValidAddress(false)
+                    onClose();
+                    // TOOD: remove after rework of modal
+                    setValidAddress(false);
                 }}
             />
         </>,
