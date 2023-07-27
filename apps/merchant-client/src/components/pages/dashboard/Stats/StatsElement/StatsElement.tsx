@@ -1,5 +1,3 @@
-import CountUp from "react-countup";
-
 import './StatsElement.scoped.scss';
 
 export interface StatsElement {
@@ -17,7 +15,7 @@ export const DashboardStatsElement: React.FC<StatsElementProps> = ({ item }) => 
     return (
         <div className="stats">
             <div className="stats__header">
-                <p className="stats__header-value">{<CountUp end={+item.value} duration={1} />}</p>
+                <p className="stats__header-value">{item.value}</p>
                 {item.additional && (
                     <p className="stats__header-additional">
                         {item.additional}

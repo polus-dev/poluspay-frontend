@@ -4,10 +4,10 @@ import {
     connectedWalletList,
     exchangeList,
     BlockchainItem,
-} from '../../../../../../libs/ui/src/list';
+} from '@poluspay-frontend/ui';
 import { useEffect, useState } from 'react';
 
-import { list } from '../../../../../../libs/ui/src/list';
+import { list } from '@poluspay-frontend/ui';
 import {
     useDeleteMerchantWalletMutation,
     useDisableMerchantWalletMutation,
@@ -41,6 +41,7 @@ interface MerchantWalletsProps {
     handleSelect: (wallets: Item) => void;
     merchantId: string;
     next: (a?: string) => void;
+    walletConnected?: number[]
 }
 
 const allArray = [...list, ...exchangeList, ...blockchainList];
@@ -61,6 +62,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
     selectedBlockchain,
     merchantId,
     next,
+  walletConnected
 }) => {
     const tabs = [
         { id: 'all', text: 'All' },
@@ -207,7 +209,8 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                                   item={el}
                                   selected={
                                       selectedWallet?.id === el.id ||
-                                      selectedBlockchain?.id === el.id
+                                      selectedBlockchain?.id === el.id ||
+                                    Boolean(walletConnected?.includes(el.id))
                                   }
                                   onSelect={() => handleSelect(el)}
                               />

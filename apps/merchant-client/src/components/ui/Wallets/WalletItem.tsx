@@ -1,4 +1,4 @@
-import type { Item } from '../../../../../../libs/ui/src/list';
+import type { Item } from '@poluspay-frontend/ui';
 
 import { ReactComponent as IconCheckbox } from '../../../assets/icons/checkbox-fill.svg';
 

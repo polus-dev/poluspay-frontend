@@ -46,19 +46,20 @@ export const useInvoiceForm = (merchantId: string) => {
 
     useEffect(() => {
         if (merchantWallets && assets) {
-            if (merchantWallets.length === 0) {
+          const availableMerchantWallets = merchantWallets.filter(e => !e.is_disabled);
+            if (merchantWallets.length === 0 || availableMerchantWallets.length === 0) {
                 setMerchantIsNotAvailableToCreateInvoice(true);
                 return;
             }
             const availableNetworks = [
-                ...new Set(merchantWallets.map((e) => e.network)),
+                ...new Set(availableMerchantWallets.map((e) => e.network)),
             ];
             const [availableAssets, availableCategories] =
                 assets.getAssetsByNetworks(availableNetworks);
             setAvailableMerchantAssets(availableAssets);
             setAvailableCategories(availableCategories);
             setAvailableAssetNetworks(
-                merchantWallets.map(
+                availableMerchantWallets.map(
                     (e) => blockchainList.find((b) => b.label === e.network)!
                 )
             );
