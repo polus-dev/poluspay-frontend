@@ -7,6 +7,7 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
+import {notify} from "@poluspay-frontend/ui";
 
 export const useWalletAuth = () => {
     const dispatch = useAppDispatch();
@@ -48,7 +49,8 @@ export const useWalletAuth = () => {
             } else {
                 setButtonText('Connect Wallet');
             }
-            console.error(error);
+            debugger
+          notify({title: 'Email auth error', status: "error", description: (error as any).message });
         }
     }, [address, open, dispatch]);
 

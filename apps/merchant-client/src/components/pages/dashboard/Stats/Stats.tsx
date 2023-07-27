@@ -26,7 +26,7 @@ const StatsBlock = (props: StatsBlockProps) => {
         <div ref={animateRef} className="stats__container">
             {staticsBlock?.map((el) => (
                 <div className="stats__container-item" key={el.id}>
-                    <DashboardStatsElement item={el} />
+                    <DashboardStatsElement  item={el} />
                 </div>
             ))}
         </div>
@@ -48,9 +48,9 @@ export const DashboardStats: React.FC = () => {
                 <div className="stats__header-select">
                     <PSelect
                         placeholder={
-                            merchantsAmount
-                                ? `${merchantsAmount} merchant`
-                                : 'No Merchants'
+                            merchantsAmount < 0
+                                ? `Loading...`
+                                :  merchantsAmount > 0 ? `` : 'No Merchants'
                         }
                         options={merchantsOptions}
                         active={selectedMerchant ? [selectedMerchant] : []}

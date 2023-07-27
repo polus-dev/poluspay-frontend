@@ -6,6 +6,7 @@ import { LoginAbout } from '../../components/pages/login/About';
 import { LoginForm } from '../../components/pages/login/Form';
 
 import './Login.scoped.scss';
+import {PNotifyContainer} from "@poluspay-frontend/ui";
 
 export const LoginPage: React.FC = () => {
     return (
@@ -23,6 +24,7 @@ export const LoginPage: React.FC = () => {
                 </div>
             </WagmiConfig>
             <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+          <PNotifyContainer />
         </>
     );
 };

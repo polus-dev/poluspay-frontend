@@ -6,6 +6,11 @@ export interface StatsElement {
     value: string;
     description: string;
     additional?: string;
+    additionalColor?: {
+        red: boolean;
+        yellow: boolean;
+        green: boolean;
+    };
 }
 
 interface StatsElementProps {
@@ -23,9 +28,9 @@ export const DashboardStatsElement: React.FC<StatsElementProps> = ({
                     <p
                         className={classNames({
                             'stats__header-additional': true,
-                            'stats__header-additional--red': false,
-                            'stats__header-additional--yellow': false,
-                            'stats__header-additional--green': false,
+                            'stats__header-additional--red': item.additionalColor?.red,
+                            'stats__header-additional--yellow': item.additionalColor?.yellow,
+                            'stats__header-additional--green': item.additionalColor?.green,
                         })}
                     >
                         {item.additional}
