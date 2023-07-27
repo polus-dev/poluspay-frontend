@@ -1,5 +1,3 @@
-import CountUp from "react-countup";
-
 import './StatsElement.scoped.scss';
 
 export interface StatsElement {
