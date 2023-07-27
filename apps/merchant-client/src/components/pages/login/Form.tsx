@@ -31,7 +31,7 @@ export const LoginForm: React.FC = () => {
     const [emailErrors, setEmailErrors] = useState<string[]>([]);
 
     useEffect(() => {
-      if (email) setEmailErrors([])
+        if (email) setEmailErrors([]);
         // if (!emailRegex.test(email) && email.length > 0) {
         //     setEmailErrors(['Invalid email']);
         // } else {
@@ -52,17 +52,16 @@ export const LoginForm: React.FC = () => {
 
     const disabled: boolean =
         // (stage === 2 && (!email.length || emailErrors.length > 0)) ||
-        (stage === 3 && (!code.length || codeErrors.length > 0));
+        stage === 3 && (!code.length || codeErrors.length > 0);
 
     const handleSubmit = () => {
         if (stage === 2) {
-
-          if (!emailRegex.test(email) && email.length > 0) {
-            setEmailErrors(['Invalid email']);
-            return;
-          } else {
-            setEmailErrors([]);
-          }
+            if (!emailRegex.test(email) && email.length > 0) {
+                setEmailErrors(['Invalid email']);
+                return;
+            } else {
+                setEmailErrors([]);
+            }
             notify({
                 title: 'Email sent',
                 description: 'Please check your inbox',

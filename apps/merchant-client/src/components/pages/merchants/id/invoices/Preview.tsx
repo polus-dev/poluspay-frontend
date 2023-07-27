@@ -14,7 +14,7 @@ import {
 import { useRandomId } from '@poluspay-frontend/hooks';
 import { getAssetUrl } from '../../../../../../../../tools';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import {blockchainList} from "@poluspay-frontend/ui";
+import { blockchainList } from '@poluspay-frontend/ui';
 
 interface PreviewProps {
     isModal?: boolean;
@@ -79,7 +79,9 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
                     src={`/images/wallets/${network}.png`}
                     alt={network}
                 />
-                <p className="preview__select-text">{blockchainList.find(e => e.label === network)?.name}</p>
+                <p className="preview__select-text">
+                    {blockchainList.find((e) => e.label === network)?.name}
+                </p>
             </div>
             <div ref={ref} className="preview__assets">
                 {assets

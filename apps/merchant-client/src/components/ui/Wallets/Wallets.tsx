@@ -41,7 +41,7 @@ interface MerchantWalletsProps {
     handleSelect: (wallets: Item) => void;
     merchantId: string;
     next: (a?: string) => void;
-    walletConnected?: number[]
+    walletConnected?: number[];
 }
 
 const allArray = [...list, ...exchangeList, ...blockchainList];
@@ -62,7 +62,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
     selectedBlockchain,
     merchantId,
     next,
-  walletConnected
+    walletConnected,
 }) => {
     const tabs = [
         { id: 'all', text: 'All' },
@@ -89,10 +89,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
     const limit = 24;
     const [currentPage, setCurrentPage] = useState(1);
     const [walletsPaginated, setWalletsPaginated] = useState<Item[]>(
-        list.slice(
-            (currentPage - 1) * limit,
-            (currentPage - 1) * limit + limit
-        )
+        list.slice((currentPage - 1) * limit, (currentPage - 1) * limit + limit)
     );
 
     const onPageChange = (value: number) => {
@@ -210,7 +207,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                                   selected={
                                       selectedWallet?.id === el.id ||
                                       selectedBlockchain?.id === el.id ||
-                                    Boolean(walletConnected?.includes(el.id))
+                                      Boolean(walletConnected?.includes(el.id))
                                   }
                                   onSelect={() => handleSelect(el)}
                               />

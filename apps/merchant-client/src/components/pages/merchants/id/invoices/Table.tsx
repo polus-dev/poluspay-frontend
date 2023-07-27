@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import './Table.scoped.scss';
-import {makeShortHash} from 'tools';
+import { makeShortHash } from 'tools';
 
 type InvoiceStatus =
     | 'success'
@@ -27,10 +27,7 @@ interface TableProps {
 }
 
 const openInvoice = (id: string) => {
-    window.open(
-        `${import.meta.env.VITE_PAYFORM_URL}?uuid=${id}`,
-        '_blank'
-    );
+    window.open(`${import.meta.env.VITE_PAYFORM_URL}?uuid=${id}`, '_blank');
 };
 
 export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {

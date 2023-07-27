@@ -1,4 +1,3 @@
-
 import { ReactComponent as IconUpload } from '../../../../../../assets/icons/upload.svg';
 import { ReactComponent as IconWarning } from '../../../../../../assets/icons/warning.svg';
 import { ReactComponent as IconEdit } from '../../../../../../assets/icons/edit.svg';
@@ -7,7 +6,7 @@ import { ReactComponent as IconCross } from '../../../../../../assets/icons/cros
 
 import './Avatar.scoped.scss';
 import { useRandomId } from '@poluspay-frontend/hooks';
-import {LogoStatus} from "@poluspay-frontend/api";
+import { LogoStatus } from '@poluspay-frontend/api';
 
 interface AvatarProps {
     openModal: () => void;

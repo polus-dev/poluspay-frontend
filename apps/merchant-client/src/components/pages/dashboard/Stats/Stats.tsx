@@ -38,18 +38,20 @@ export const DashboardStats: React.FC = () => {
         merchantsOptions,
         selectedMerchant,
         setSelectedMerchant,
-      merchantsAmount
+        merchantsAmount,
     } = useMerchantOptions();
 
     return (
         <div className="stats">
             <div className="stats__header">
-                <h6 className="stats__header-title">
-                    Dashboard total
-                </h6>
+                <h6 className="stats__header-title">Dashboard total</h6>
                 <div className="stats__header-select">
                     <PSelect
-                        placeholder={merchantsAmount ? `${merchantsAmount} merchant` : "No Merchants"}
+                        placeholder={
+                            merchantsAmount
+                                ? `${merchantsAmount} merchant`
+                                : 'No Merchants'
+                        }
                         options={merchantsOptions}
                         active={selectedMerchant ? [selectedMerchant] : []}
                         disabled={!merchantsAmount}
@@ -58,11 +60,11 @@ export const DashboardStats: React.FC = () => {
                 </div>
             </div>
 
-                <StatsBlock
-                    merchantId={selectedMerchant?.id}
-                    toData={new Date().toISOString()}
-                    fromData={getBeginningOfDate('month').toISOString()}
-                />
+            <StatsBlock
+                merchantId={selectedMerchant?.id}
+                toData={new Date().toISOString()}
+                fromData={getBeginningOfDate('month').toISOString()}
+            />
         </div>
     );
 };

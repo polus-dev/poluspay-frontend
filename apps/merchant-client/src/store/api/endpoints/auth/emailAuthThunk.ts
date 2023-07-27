@@ -12,8 +12,7 @@ export const emailAuthThunk = createAsyncThunk(
     'users/emailAuthThunk',
     async (payload: IPayload, { rejectWithValue }) => {
         try {
-            const apiUrl =
-                import.meta.env.VITE_API_URL + 'public' + '/auth';
+            const apiUrl = import.meta.env.VITE_API_URL + 'public' + '/auth';
             if (!payload.code) {
                 const { email } = payload;
                 await axios.post(apiUrl + '.send_code', {

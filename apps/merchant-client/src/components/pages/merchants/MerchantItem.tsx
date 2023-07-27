@@ -1,4 +1,3 @@
-
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useCopyText } from '../../../hooks/useCopyText';
@@ -8,7 +7,7 @@ import { ReactComponent as IconCopy } from '../../../assets/icons/copy.svg';
 import './MerchantItem.scoped.scss';
 import { makeShortHash } from '../../../../../../tools';
 import { useRandomId } from '@poluspay-frontend/hooks';
-import {LogoStatus} from "@poluspay-frontend/api";
+import { LogoStatus } from '@poluspay-frontend/api';
 
 interface IMerchantProps {
     name: string;
@@ -54,12 +53,11 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
     const navigateToWebsite = (event: React.MouseEvent): void => {
         event.preventDefault();
         if (website) {
-          if (website.includes('https://')){
-            window.open(website, '_blank');
-          }
-          else {
-            window.open(`https://${website}`, '_blank');
-          }
+            if (website.includes('https://')) {
+                window.open(website, '_blank');
+            } else {
+                window.open(`https://${website}`, '_blank');
+            }
         }
     };
 

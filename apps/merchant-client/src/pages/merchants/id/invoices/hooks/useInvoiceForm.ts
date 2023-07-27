@@ -46,8 +46,13 @@ export const useInvoiceForm = (merchantId: string) => {
 
     useEffect(() => {
         if (merchantWallets && assets) {
-          const availableMerchantWallets = merchantWallets.filter(e => !e.is_disabled);
-            if (merchantWallets.length === 0 || availableMerchantWallets.length === 0) {
+            const availableMerchantWallets = merchantWallets.filter(
+                (e) => !e.is_disabled
+            );
+            if (
+                merchantWallets.length === 0 ||
+                availableMerchantWallets.length === 0
+            ) {
                 setMerchantIsNotAvailableToCreateInvoice(true);
                 return;
             }

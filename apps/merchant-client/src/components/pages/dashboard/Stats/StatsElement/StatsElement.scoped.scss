@@ -48,9 +48,21 @@
     }
 
     &__header-additional {
-        color: $color-green-light;
+        color: $color-grey-light;
         font-size: px-to-rem(10);
         font-weight: 400;
+
+        &--red {
+            color: $color-red;
+        }
+
+        &--yellow {
+            color: $color-yellow;
+        }
+
+        &--green {
+            color: $color-green-light;
+        }
 
         @include breakpoint($screen-lg) {
             font-size: px-to-rem(12);

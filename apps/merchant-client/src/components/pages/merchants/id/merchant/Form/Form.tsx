@@ -154,12 +154,12 @@ export const MerchantProfileForm: React.FC = () => {
                                         label="Website"
                                         placeholder="https://example.com"
                                         reg={register('website', {
-                                          // required: true,
-                                          // pattern: {
-                                          //     value: httpsUrlRegex,
-                                          //     message:
-                                          //         'Please enter a valid URL',
-                                          // },
+                                            // required: true,
+                                            // pattern: {
+                                            //     value: httpsUrlRegex,
+                                            //     message:
+                                            //         'Please enter a valid URL',
+                                            // },
                                         })}
                                     />
                                 </div>
