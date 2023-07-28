@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 
 export const useTimer = (expiresAt: string) => {
   const [timer, setTimer] = useState("00:00");
@@ -6,6 +6,7 @@ export const useTimer = (expiresAt: string) => {
   const eventTime = new Date(expiresAt).getTime() / 1000;
   const currentTime = Date.now() / 1000;
   let diffTime = eventTime - currentTime - 1;
+  const stop = useRef(() =>{});
   useEffect(() => {
     if (!expiresAt) return;
     if (diffTime <= 0) {
@@ -26,7 +27,8 @@ export const useTimer = (expiresAt: string) => {
       );
       diffTime--;
     }, 1000);
+    stop.current = () => clearInterval(id)
   }, [expiresAt])
 
-  return { timer, isExpired };
+  return { timer, isExpired, stop };
 };

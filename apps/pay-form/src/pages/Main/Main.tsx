@@ -194,9 +194,9 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
     }
   }, [isConnected]);
 
-  if (!getParameterByName('uuid') || isGetPaymentInfoError) {
+  if (!getParameterByName('uuid') || isGetPaymentInfoError || error) {
     return (
-      <StatusComponent status="error" message="payment uuid not found" />
+      <StatusComponent status="error" message={error ? error.message : "payment uuid not found"} />
     );
   } else if (paymentInfo?.status === 'success') {
     return (

@@ -33,7 +33,7 @@ export const usePaymentInfo = (uuid: string | null) => {
   const [merchantToken, setMerchantToken] = useState<Token>();
 
   const [expireAt, setExpireAt] = useState('');
-  const { isExpired, timer } = useTimer(expireAt);
+  const { isExpired, timer , stop} = useTimer(expireAt);
 
   const [info, setInfo] = useState<IPaymentInfo>();
   const [amountInMerchantToken, setAmountInMerchantToken] = useState('0');
@@ -94,9 +94,15 @@ export const usePaymentInfo = (uuid: string | null) => {
           code: 1002,
         });
       }
-    });
+    })
     setIsLoading(false);
   }, [currentBlockchain]);
+
+  useEffect(() => {
+    if (error) {
+      stop.current();
+    }
+  },[error])
 
   return {
     isLoading,
