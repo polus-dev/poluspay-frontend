@@ -33,7 +33,7 @@ export const useMerchantStatistics = ({
                 (successFullPayments / statistics.total_payments) * 100 || 0;
             const averageBill = amountOfProceeds / successFullPayments || 0;
           const isRed = conversationRate < 1;
-          const isYellow = conversationRate <= 10;
+          const isYellow = conversationRate >= 1 && conversationRate <= 10;
           const isGreen = conversationRate > 10;
             setStaticsBlock([
                 {
@@ -45,9 +45,9 @@ export const useMerchantStatistics = ({
                     id: 2,
                     value: successFullPayments.toString(),
                     description: 'Successful payments',
-                    additional: `${conversationRate.toFixed(
+                    additional: successFullPayments ? `${conversationRate.toFixed(
                         2
-                    )}% conversion rate`,
+                    )}% conversion rate` : undefined,
                   additionalColor: {
                       red: isRed,
                       yellow: isYellow,
