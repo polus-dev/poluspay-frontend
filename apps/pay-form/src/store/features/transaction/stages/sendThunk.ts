@@ -116,7 +116,6 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                     to: helper.RouterAddress,
                     data,
                     value,
-                    maxPriorityFeePerGas,
                     maxFeePerGas,
                 });
             } else if (helper.Context === 'polus contract') {
@@ -134,7 +133,6 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                         merchantAmount: merchantAmount,
                         tokenAddress: isNative ? '' : helper.userToken.contract,
                     }),
-                    maxPriorityFeePerGas,
                     maxFeePerGas,
                 });
             } else {
