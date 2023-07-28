@@ -6,7 +6,11 @@ import {
     StageStatus,
 } from '../transactionSlice';
 import { waitForTransaction } from '@wagmi/core';
-import { prepareSendTransaction, sendTransaction } from 'wagmi/actions';
+import {
+    fetchFeeData,
+    prepareSendTransaction,
+    sendTransaction,
+} from 'wagmi/actions';
 import { SwapOptions, SwapRouter } from '@uniswap/universal-router-sdk';
 
 import { Percent } from '@uniswap/sdk-core';
@@ -52,17 +56,23 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                 setStage({
                     status: StageStatus.LOADING,
                     text: 'Calculate fee',
-                })
+                }),
             );
-            // const feeData = await helper.fetchFeeData();
-            //
+            const feeData = await fetchFeeData();
+            const maxPriorityFeePerGas = feeData.maxPriorityFeePerGas
+                ? feeData.maxPriorityFeePerGas
+                : undefined;
+            const maxFeePerGas =
+                maxPriorityFeePerGas && feeData.lastBaseFeePerGas
+                    ? maxPriorityFeePerGas + feeData.lastBaseFeePerGas * 2n
+                    : undefined;
             let preparedTransaction: Awaited<
                 ReturnType<typeof prepareSendTransaction>
             >;
 
             if (helper.Context === 'universal router') {
                 const deadline = Math.round(
-                    new Date(expireAt).getTime() / 1000
+                    new Date(expireAt).getTime() / 1000,
                 );
                 const swapOptions: SwapOptions = {
                     slippageTolerance: new Percent('90', '100'),
@@ -70,17 +80,17 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                     recipient: helper.RouterAddress,
                 };
                 if (signature) {
-                  // @ts-ignore
-                  swapOptions.inputTokenPermit = signature;
+                    // @ts-ignore
+                    swapOptions.inputTokenPermit = signature;
                 }
                 const { calldata } = SwapRouter.swapERC20CallParameters(
                     getState().transaction.pathTrade.path,
-                    swapOptions
+                    swapOptions,
                 );
                 const isContextFromNative = helper.userToken.is_native;
 
                 dispatch(setStageText('Encode transaction'));
-              const encodePayParams: Parameters<typeof encodePay>[0] = {
+                const encodePayParams: Parameters<typeof encodePay>[0] = {
                     // @ts-ignore
                     uuid: uuid.replaceAll('-', ''),
                     fee,
@@ -106,8 +116,8 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                     to: helper.RouterAddress,
                     data,
                     value,
-                    // maxPriorityFeePerGas: feeData.maxPriorityFeePerGas!,
-                    // maxFeePerGas: feeData.maxFeePerGas!,
+                    maxPriorityFeePerGas,
+                    maxFeePerGas,
                 });
             } else if (helper.Context === 'polus contract') {
                 const isNative =
@@ -124,8 +134,8 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                         merchantAmount: merchantAmount,
                         tokenAddress: isNative ? '' : helper.userToken.contract,
                     }),
-                    // maxPriorityFeePerGas: feeData.maxPriorityFeePerGas!,
-                    // maxFeePerGas: feeData.maxFeePerGas!,
+                    maxPriorityFeePerGas,
+                    maxFeePerGas,
                 });
             } else {
                 throw new Error('Unknown context');
@@ -140,10 +150,10 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                 setStage({
                     text: 'Transaction success',
                     status: StageStatus.SUCCESS,
-                })
+                }),
             );
         } catch (error) {
             return rejectWithValue(error);
         }
-    }
+    },
 );
