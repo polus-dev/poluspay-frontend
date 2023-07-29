@@ -3,12 +3,9 @@
 
 .bar {
     width: 100%;
-    padding: px-to-rem(16) px-to-rem(12);
-    background-color: $color-black-light;
-    border-radius: px-to-rem(12);
 
-    @include breakpoint($screen-md) {
-        padding: px-to-rem(20);
+    @include breakpoint($screen-xl) {
+        height: px-to-rem(460);
     }
 
     &__header {
