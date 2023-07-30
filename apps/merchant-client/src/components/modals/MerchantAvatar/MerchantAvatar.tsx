@@ -24,15 +24,28 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
     const [previewImage, setPreviewImage] = useState('');
     const [error, setError] = useState(false);
 
+  useEffect(() => {
+    if (!visible && error) {
+      setError(false);
+    }
+  }, [visible, error]);
+
+
     const validateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setError(false);
         const file = event.target.files?.[0];
-        if (!file) return undefined;
-        if (!file.type.match('image/png')) return undefined;
 
-        const reader = new FileReader();
+        if (!file) return;
+        if (!file.type.match('image/png')) {
+          setError(true)
+          return;
+        }
+
+
+      const reader = new FileReader();
         reader.readAsDataURL(file);
 
+        let isValid = false;
         reader.onload = (e: ProgressEvent<FileReader>) => {
             const img = new Image();
 
@@ -40,12 +53,16 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
                 const width = img.width;
                 const height = img.height;
 
-                if (width !== 500 && height !== 500) setError(true);
+                if (width !== 500 && height !== 500) {
+                  setError(true);
+                  return;
+                }
             };
-
             img.src = e.target?.result as string;
+            isValid = true;
         };
 
+        if (!isValid) return;
         reader.onloadend = () => {
             setPreviewImage(reader.result?.toString() || '');
             setImage(file);
@@ -72,9 +89,7 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
                                     <input
                                         type="file"
                                         className="modal__body-container-upload__handler-input"
-                                        onChange={(event) =>
-                                            validateImage(event)
-                                        }
+                                        onChange={validateImage}
                                     />
                                     <IconUpload
                                         className={classNames({
@@ -92,7 +107,7 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
                                 Upload avatar
                             </p>
                             <p className="modal__body-container-description">
-                                500x500px, .png
+                                500x500px .png
                             </p>
                         </div>
                         {error && (
