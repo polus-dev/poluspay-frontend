@@ -4,10 +4,10 @@
 .login {
     display: flex;
     width: 100%;
-    min-height: 100dvh;
+    min-height: 100vh;
 
     @include breakpoint($screen-lg) {
-        height: 100dvh;
+        height: 100vh;
     }
 
     &__inner {
