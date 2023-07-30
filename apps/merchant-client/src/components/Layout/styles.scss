@@ -7,7 +7,7 @@
     width: 100%;
     max-width: px-to-rem(1280);
     height: 100%;
-    min-height: 100vh;
+    min-height: 100dvh;
     padding: px-to-rem(96) px-to-rem(16) px-to-rem(40);
 
     @include breakpoint($screen-sm) {
