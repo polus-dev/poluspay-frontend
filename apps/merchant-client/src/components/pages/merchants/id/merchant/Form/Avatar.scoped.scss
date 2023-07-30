@@ -94,7 +94,7 @@
     }
 
     &__moderated-image {
-        width: px-to-rem(42);
+        width: px-to-rem(36);
         height: auto;
         stroke: $color-white;
         fill: $color-white;
@@ -117,7 +117,7 @@
     }
 
     &__declined-image {
-        width: px-to-rem(42);
+        width: px-to-rem(36);
         height: auto;
         stroke: $color-white;
         transition: opacity 0.2s ease-in-out;

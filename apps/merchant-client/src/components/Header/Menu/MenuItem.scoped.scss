@@ -2,7 +2,7 @@
 @import '../../../assets/scss/utils';
 
 .menu-item {
-    color: $color-white;
+    color: $color-grey-light;
     font-size: px-to-rem(18);
     font-weight: 500;
     line-height: 150%;
@@ -20,7 +20,7 @@
     }
 
     &:hover {
-        color: $color-orange;
+        color: $color-white;
     }
 
     @include breakpoint($screen-lg) {
@@ -30,6 +30,11 @@
         width: auto;
         font-size: px-to-rem(16);
         font-weight: 400;
+    }
+
+    @include breakpoint($screen-xl) {
+        font-size: px-to-rem(18);
+        font-weight: 500;
     }
 
     &__link {
@@ -43,7 +48,7 @@
         cursor: pointer;
 
         &--active {
-            color: $color-orange;
+            color: $color-white;
         }
     }
 }
