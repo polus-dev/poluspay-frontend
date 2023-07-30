@@ -96,6 +96,14 @@ export const useInvoiceForm = (merchantId: string) => {
 
     const submit: SubmitHandler<InvoiceForm> = async (data) => {
         try {
+          if (formState.errors.description) {
+            notify({
+              title: 'Error',
+              status: 'error',
+              description: formState.errors.description.message
+            });
+            return;
+          }
             if (!selectedAsset) {
                 notify({
                     title: 'Error',
