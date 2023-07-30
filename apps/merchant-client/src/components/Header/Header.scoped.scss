@@ -11,7 +11,7 @@
     border-bottom: px-to-rem(2) solid transparent;
     background-color: transparent;
     backdrop-filter: blur(px-to-rem(10)) brightness(60%);
-    transition: .2s ease-in-out;
+    transition: 0.2s ease-in-out;
     transition-property: background-color, border-color;
     z-index: 10;
 

@@ -9,7 +9,7 @@ import './Dashboard.scoped.scss';
 
 export const DashboardPage: React.FC = () => {
     // change to 'no data found...' when charts will become available
-    const errorTitle = 'Temporarily unavailable'
+    const errorTitle = 'Temporarily unavailable';
 
     const isBarLoading = false;
     const isDoughnutLoading = false;

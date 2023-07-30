@@ -26,14 +26,14 @@ export const Header: React.FC = () => {
     const { logout } = useLogout();
 
     const [menuOpened, setMenuOpened] = useState(false);
-    const [menuScrolled, setMenuScrolled] = useState(false)
+    const [menuScrolled, setMenuScrolled] = useState(false);
 
     const setMenuToScrolled = (): void => {
         if (!elHeader.current) return undefined;
 
         const height = elHeader.current.offsetHeight;
 
-        setMenuScrolled(window.scrollY >= height)
+        setMenuScrolled(window.scrollY >= height);
     };
 
     useEffect(() => {
@@ -46,17 +46,16 @@ export const Header: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        window.location.pathname === '/'
-            && navigate('/merchants')
-    }, [])
+        window.location.pathname === '/' && navigate('/merchants');
+    }, []);
 
     return (
         <header
             ref={elHeader}
             className={classNames({
-                'header': true,
+                header: true,
                 'header--active': menuOpened,
-                'header--scrolled': menuScrolled
+                'header--scrolled': menuScrolled,
             })}
         >
             <div className="header__container">
