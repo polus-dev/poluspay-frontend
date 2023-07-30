@@ -3,15 +3,18 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 import { throttle } from 'lodash-es';
 
+import { useGetMeQuery } from '../../store/api/endpoints/user/User';
+import { makeShortHash } from 'tools';
+import { useLogout } from './hooks/useLogout';
+
 import { Menu } from './Menu/Menu';
 import { Account } from './Account/Account';
 import { ReactComponent as LogoPolus } from '../../assets/logos/poluspay.svg';
 import { ReactComponent as LogoPolusPlanet } from '../../assets/logos/polus-planet.svg';
 
+import classNames from 'classnames';
+
 import './Header.scoped.scss';
-import { useGetMeQuery } from '../../store/api/endpoints/user/User';
-import { makeShortHash } from 'tools';
-import { useLogout } from './hooks/useLogout';
 
 export const Header: React.FC = () => {
     const elHeader = useRef<HTMLElement | null>(null);
@@ -23,30 +26,38 @@ export const Header: React.FC = () => {
     const { logout } = useLogout();
 
     const [menuOpened, setMenuOpened] = useState(false);
-    const isMenuScrolled = useRef(false);
+    const [menuScrolled, setMenuScrolled] = useState(false);
 
-    const setMenuScrolled = (): void => {
+    const setMenuToScrolled = (): void => {
         if (!elHeader.current) return undefined;
 
         const height = elHeader.current.offsetHeight;
 
-        isMenuScrolled.current = window.scrollY >= height;
+        setMenuScrolled(window.scrollY >= height);
     };
 
     useEffect(() => {
         window.addEventListener(
             'scroll',
-            throttle(setMenuScrolled, 200, { trailing: true })
+            throttle(setMenuToScrolled, 200, { trailing: true })
         );
 
-        setMenuScrolled();
-        if (window.location.pathname === '/') {
-            navigate('/merchants');
-        }
+        setMenuToScrolled();
+    }, []);
+
+    useEffect(() => {
+        window.location.pathname === '/' && navigate('/merchants');
     }, []);
 
     return (
-        <header className="header">
+        <header
+            ref={elHeader}
+            className={classNames({
+                header: true,
+                'header--active': menuOpened,
+                'header--scrolled': menuScrolled,
+            })}
+        >
             <div className="header__container">
                 <div className="header__logo">
                     <NavLink to="/">
@@ -55,8 +66,6 @@ export const Header: React.FC = () => {
                     </NavLink>
                 </div>
                 <div className="header__menu">
-                    {/* either get data for account here and pass it as
-                    a props or get it inside the Account component */}
                     <div className="header__menu-account">
                         <Account
                             username={
@@ -75,7 +84,6 @@ export const Header: React.FC = () => {
                         onCloseMenu={() => setMenuOpened(false)}
                     />
                 </div>
-                {/* duplicate of Account (needed for ui) */}
                 <div className="header__account">
                     <Account
                         username={

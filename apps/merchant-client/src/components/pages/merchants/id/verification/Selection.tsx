@@ -43,7 +43,8 @@ export const MerchantDomainSelection: React.FC<DomainSelectionProps> = ({
             id: 4,
             type: 'server',
             title: 'Server response',
-            description: 'Information sent by a web server in response to a request, confirming the processing of the request',
+            description:
+                'Information sent by a web server in response to a request, confirming the processing of the request',
         },
     ];
 

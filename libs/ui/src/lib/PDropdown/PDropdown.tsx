@@ -81,8 +81,10 @@ export const PDropdown: React.FC<DropdownProps> = ({
         const contentWidth = elContent.current.offsetWidth;
         const handlerWidth = elHandler.current.offsetWidth;
         const overflow = contentWidth - handlerWidth;
+
         const leftGap =
             elHandler.current.getBoundingClientRect().left - overflow;
+
         const rightGap =
             window.innerWidth -
             elHandler.current.getBoundingClientRect().right -

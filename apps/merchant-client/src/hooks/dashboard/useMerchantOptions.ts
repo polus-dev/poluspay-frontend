@@ -15,10 +15,13 @@ export const useMerchantOptions = () => {
 
     useEffect(() => {
         if (merchants) {
-            const merchantsOptions = [{text: "All"}, ...merchants.data.map((merchant) => ({
-                id: merchant.id,
-                text: trimMerchantName(merchant.name),
-            }))];
+            const merchantsOptions = [
+                { text: 'All merchants' },
+                ...merchants.data.map((merchant) => ({
+                    id: merchant.id,
+                    text: trimMerchantName(merchant.name),
+                })),
+            ];
             setMerchantsOptions(merchantsOptions);
             setMerchantsAmount(merchants.totalCount);
             if (merchantsOptions.length > 0) {

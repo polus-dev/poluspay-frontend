@@ -40,7 +40,7 @@ export const MerchantApiPage: React.FC = () => {
             {isWebhooksLoading ? (
                 <Loader />
             ) : !webhooks?.data.length ? (
-                <ErrorBlock />
+                <ErrorBlock title="No records found" />
             ) : (
                 <div className="webhooks__inner">
                     <div className="webhooks__inner-table-wrapper">

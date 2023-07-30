@@ -6,7 +6,7 @@ import { emailAuthThunk } from 'apps/merchant-client/src/store/api/endpoints/aut
 import { useTimer } from 'libs/hooks/src/index';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {notify} from "@poluspay-frontend/ui";
+import { notify } from '@poluspay-frontend/ui';
 
 interface IEmailAuth {
     email: string;
@@ -38,7 +38,11 @@ export const useEmailAuth = () => {
                     await dispatch(emailAuthThunk({ code, email })).unwrap();
                 }
             } catch (error) {
-              notify({title: 'Email auth error', status: "error", description: (error as any).message });
+                notify({
+                    title: 'Email auth error',
+                    status: 'error',
+                    description: (error as any).message,
+                });
             }
         },
         [isExpired, dispatch]

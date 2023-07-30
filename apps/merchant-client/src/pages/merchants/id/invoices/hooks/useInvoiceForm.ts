@@ -7,10 +7,7 @@ import {
 } from '@poluspay-frontend/merchant-query';
 import { useEffect, useState } from 'react';
 import { AssetRepresentation } from '@poluspay-frontend/api';
-import {
-    BlockchainItem,
-    blockchainList,
-} from '@poluspay-frontend/ui';
+import { BlockchainItem, blockchainList } from '@poluspay-frontend/ui';
 import { notify } from '@poluspay-frontend/ui';
 
 export const useInvoiceForm = (merchantId: string) => {
