@@ -38,7 +38,7 @@ export const useMerchantStatistics = ({
             setStaticsBlock([
                 {
                     id: 1,
-                    value: `${amountOfProceeds}$`,
+                    value: `${amountOfProceeds.toFixed(2)}$`,
                     description: 'Amount of proceeds',
                 },
                 {
@@ -56,7 +56,7 @@ export const useMerchantStatistics = ({
                 },
                 {
                     id: 3,
-                    value: `${averageBill}$`,
+                    value: `${averageBill.toFixed(2)}$`,
                     description: 'Average bill',
                 },
                 {
