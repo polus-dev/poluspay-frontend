@@ -51,7 +51,7 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
                 const width = img.width;
                 const height = img.height;
 
-                if (width !== 500 && height !== 500) {
+                if (width !== 500 || height !== 500) {
                     setError(true);
                     return;
                 }
@@ -60,8 +60,8 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
             isValid = true;
         };
 
-        if (!isValid) return;
         reader.onloadend = () => {
+          if (!isValid) return;
             setPreviewImage(reader.result?.toString() || '');
             setImage(file);
         };
