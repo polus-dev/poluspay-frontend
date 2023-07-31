@@ -24,12 +24,11 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
     const [previewImage, setPreviewImage] = useState('');
     const [error, setError] = useState(false);
 
-  useEffect(() => {
-    if (!visible && error) {
-      setError(false);
-    }
-  }, [visible, error]);
-
+    useEffect(() => {
+        if (!visible && error) {
+            setError(false);
+        }
+    }, [visible, error]);
 
     const validateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setError(false);
@@ -37,12 +36,11 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
 
         if (!file) return;
         if (!file.type.match('image/png')) {
-          setError(true)
-          return;
+            setError(true);
+            return;
         }
 
-
-      const reader = new FileReader();
+        const reader = new FileReader();
         reader.readAsDataURL(file);
 
         let isValid = false;
@@ -53,17 +51,17 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
                 const width = img.width;
                 const height = img.height;
 
-                if (width !== 500 && height !== 500) {
-                  setError(true);
-                  return;
+                if (width !== 500 || height !== 500) {
+                    setError(true);
+                    return;
                 }
             };
             img.src = e.target?.result as string;
             isValid = true;
         };
 
-        if (!isValid) return;
         reader.onloadend = () => {
+          if (!isValid) return;
             setPreviewImage(reader.result?.toString() || '');
             setImage(file);
         };
