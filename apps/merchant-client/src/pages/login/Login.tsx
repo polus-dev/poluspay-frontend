@@ -2,11 +2,11 @@ import { WagmiConfig } from 'wagmi';
 import { Web3Modal } from '@web3modal/react';
 import { ethereumClient, projectId, wagmiConfig } from '../../utils/Web3Modal';
 
+import { PNotifyContainer } from '@poluspay-frontend/ui';
 import { LoginAbout } from '../../components/pages/login/About';
 import { LoginForm } from '../../components/pages/login/Form';
 
 import './Login.scoped.scss';
-import { PNotifyContainer } from '@poluspay-frontend/ui';
 
 export const LoginPage: React.FC = () => {
     return (

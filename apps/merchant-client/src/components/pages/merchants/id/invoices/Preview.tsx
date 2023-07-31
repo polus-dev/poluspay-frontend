@@ -38,6 +38,7 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
     const description = watch?.('description');
     const amount = watch?.('amount') || 0;
     const [ref] = useAutoAnimate();
+
     return (
         <div
             className={classNames({
@@ -56,7 +57,7 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
                 <div className="preview__header-data">
                     <div className="preview__header-data__row">
                         <p className="preview__header-data__row-domain">
-                            {merchant?.domain}
+                            {merchant?.domain || 'example.com'}
                         </p>
                         <p className="preview__header-data__row-amount">
                             Total: {amount}
@@ -67,7 +68,7 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
                     </div>
                     <div className="preview__header-data__row">
                         <p className="preview__header-data__row-description">
-                            {description}
+                            {description || 'Payment description'}
                         </p>
                     </div>
                 </div>

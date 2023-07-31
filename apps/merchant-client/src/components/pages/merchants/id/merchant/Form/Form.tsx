@@ -207,7 +207,7 @@ export const MerchantProfileForm: React.FC = () => {
                                 </p>
                                 <textarea
                                     placeholder="Few words about merchant"
-                                    className="form__inner-container__item-textarea"
+                                    className="form__inner-container__item-textarea invisible-scroll"
                                     {...register('description')}
                                 />
                             </div>
