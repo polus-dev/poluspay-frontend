@@ -1,14 +1,12 @@
-import { useEffect, useState } from 'react';
+import type { IMerchantForm } from '../../../Form.interface';
+
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useModal } from '@poluspay-frontend/hooks';
 import { useCopyText } from '../../../../../../hooks/useCopyText';
-
-import { PButton, FormInput } from '@poluspay-frontend/ui';
-import { MerchantProfileAvatar } from './Avatar';
-import { ModalMerchantDelete } from '../../../../../modals/MerchantDelete/MerchantDelete';
-import { ModalMerchantAvatar } from '../../../../../modals/MerchantAvatar/MerchantAvatar';
-import { ReactComponent as IconCopy } from '../../../../../../assets/icons/copy.svg';
+import { httpsUrlRegex } from '../../../../../../../../../tools';
+import { useGetMerchantIdFromParams } from '../../../../../../hooks/useGetMerchantId';
 import {
     useDeleteMerchantMutation,
     useGetMerchantByIdQuery,
@@ -16,14 +14,17 @@ import {
     useUploadLogoMutation,
 } from '@poluspay-frontend/merchant-query';
 
+import { PButton, FormInput } from '@poluspay-frontend/ui';
+import { MerchantProfileAvatar } from './Avatar';
+import { ModalMerchantDelete } from '../../../../../modals/MerchantDelete/MerchantDelete';
+import { ModalMerchantAvatar } from '../../../../../modals/MerchantAvatar/MerchantAvatar';
+import { ReactComponent as IconCopy } from '../../../../../../assets/icons/copy.svg';
+
 import classNames from 'classnames';
 
 import './Form.scoped.scss';
-
-import { useParams } from 'react-router-dom';
-import { IMerchantForm } from '../../../Form.interface';
-import { useGetMerchantIdFromParams } from '../../../../../../hooks/useGetMerchantId';
-import { httpsUrlRegex } from '../../../../../../../../../tools';
+import { Loader } from 'apps/merchant-client/src/components/ui/Loader/Loader';
+import { ErrorBlock } from 'libs/ui/src/lib/Error/Error';
 
 export const MerchantProfileForm: React.FC = () => {
     const modalDelete = useModal();
@@ -63,7 +64,6 @@ export const MerchantProfileForm: React.FC = () => {
         // then show the notification about successfull removal
         try {
             await deleteMerchant({ merchant_id: merchantId });
-            console.log('remove merchant');
         } catch (error) {
             console.error(error);
         }
@@ -87,9 +87,9 @@ export const MerchantProfileForm: React.FC = () => {
         <>
             {/*TODO: Refactor*/}
             {isGetMerchantByIdLoading ? (
-                <p>Loading...</p>
+                <Loader />
             ) : !merchant ? (
-                <p>Merchant not found</p>
+                <ErrorBlock title="Merchant not found" />
             ) : (
                 <form onSubmit={handleSubmit(submit)} className="form">
                     <h4 className="form__title">Merchant</h4>
