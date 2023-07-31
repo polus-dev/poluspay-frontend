@@ -64,3 +64,11 @@ ul {
 .no-scroll {
     overflow: hidden;
 }
+
+.invisible-scroll {
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}

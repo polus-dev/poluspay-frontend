@@ -21,6 +21,7 @@
         padding: px-to-rem(16);
         border: 1px solid $color-grey;
         border-radius: px-to-rem(8);
+        overflow: hidden;
     }
 
     &__header-avatar {

@@ -71,7 +71,7 @@ export const MerchantForm: React.FC<FormProps> = ({
                 <div className="form__item">
                     <p className="form__item-label">Description</p>
                     <textarea
-                        className="form__item-textarea"
+                        className="form__item-textarea invisible-scroll"
                         placeholder="Few words about merchant"
                         {...register('description')}
                     />
