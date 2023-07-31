@@ -159,6 +159,11 @@ export const MerchantInvoicesForm = ({
         </div>
         <div className="form__inner-item">
           <p className="form__inner-item-label">Description</p>
+          {formState.errors.description &&
+            <p className="form__inner-item-label" style={{color: 'red'}}>
+            {formState.errors.description.message}
+          </p>
+          }
           <textarea
             {...register('description', { maxLength: {
               message: 'Description is too long',

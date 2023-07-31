@@ -132,7 +132,10 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
                                     disabled={!isValidAddress}
                                     wide
                                     children={<p>Import</p>}
-                                    onClick={() => onImport(address, evm)}
+                                    onClick={ () => {
+                                      onImport(address, evm)
+                                      setValidAddress(false)
+                                    }}
                                 />
                             </div>
                         </div>

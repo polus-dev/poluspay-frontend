@@ -249,7 +249,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                         <PButton
                             wide
                             size="lg"
-                            disabled={buttonDisabled}
+                            disabled={buttonDisabled || !connectedWallets?.length}
                             children={<p>Finish registration</p>}
                             onClick={() => next()}
                         />
