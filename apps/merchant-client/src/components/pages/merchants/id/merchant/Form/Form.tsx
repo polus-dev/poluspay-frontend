@@ -15,6 +15,8 @@ import {
 } from '@poluspay-frontend/merchant-query';
 
 import { PButton, FormInput, notify } from '@poluspay-frontend/ui';
+import { Loader } from '../../../../../ui/Loader/Loader';
+import { ErrorBlock } from '../../../../../../../../../libs/ui/src/lib/Error/Error';
 import { MerchantProfileAvatar } from './Avatar';
 import { ModalMerchantDelete } from '../../../../../modals/MerchantDelete/MerchantDelete';
 import { ModalMerchantAvatar } from '../../../../../modals/MerchantAvatar/MerchantAvatar';
@@ -23,8 +25,6 @@ import { ReactComponent as IconCopy } from '../../../../../../assets/icons/copy.
 import classNames from 'classnames';
 
 import './Form.scoped.scss';
-import { Loader } from 'apps/merchant-client/src/components/ui/Loader/Loader';
-import { ErrorBlock } from 'libs/ui/src/lib/Error/Error';
 
 export const MerchantProfileForm: React.FC = () => {
   const modalDelete = useModal();
