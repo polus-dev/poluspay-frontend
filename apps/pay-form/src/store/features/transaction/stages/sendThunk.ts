@@ -58,14 +58,14 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                     text: 'Calculate fee',
                 }),
             );
-            const feeData = await fetchFeeData();
-            const maxPriorityFeePerGas = feeData.maxPriorityFeePerGas
-                ? feeData.maxPriorityFeePerGas
-                : undefined;
-            const maxFeePerGas =
-                maxPriorityFeePerGas && feeData.lastBaseFeePerGas
-                    ? maxPriorityFeePerGas + feeData.lastBaseFeePerGas * 2n
-                    : undefined;
+            // const feeData = await fetchFeeData();
+            // const maxPriorityFeePerGas = feeData.maxPriorityFeePerGas
+            //     ? feeData.maxPriorityFeePerGas
+            //     : undefined;
+            // const maxFeePerGas =
+            //     maxPriorityFeePerGas && feeData.lastBaseFeePerGas
+            //         ? maxPriorityFeePerGas + feeData.lastBaseFeePerGas * 2n
+            //         : undefined;
             let preparedTransaction: Awaited<
                 ReturnType<typeof prepareSendTransaction>
             >;
@@ -116,7 +116,7 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                     to: helper.RouterAddress,
                     data,
                     value,
-                    maxFeePerGas,
+                    // maxFeePerGas,
                 });
             } else if (helper.Context === 'polus contract') {
                 const isNative =
@@ -133,7 +133,7 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                         merchantAmount: merchantAmount,
                         tokenAddress: isNative ? '' : helper.userToken.contract,
                     }),
-                    maxFeePerGas,
+                    // maxFeePerGas,
                 });
             } else {
                 throw new Error('Unknown context');
