@@ -8,13 +8,13 @@ import { useCopyText } from '../../../../../../hooks/useCopyText';
 import { httpsUrlRegex } from '../../../../../../../../../tools';
 import { useGetMerchantIdFromParams } from '../../../../../../hooks/useGetMerchantId';
 import {
-    useDeleteMerchantMutation,
-    useGetMerchantByIdQuery,
-    useUpdateMerchantFieldsMutation,
-    useUploadLogoMutation,
+  useDeleteMerchantMutation,
+  useGetMerchantByIdQuery,
+  useUpdateMerchantFieldsMutation,
+  useUploadLogoMutation,
 } from '@poluspay-frontend/merchant-query';
 
-import { PButton, FormInput } from '@poluspay-frontend/ui';
+import { PButton, FormInput, notify } from '@poluspay-frontend/ui';
 import { MerchantProfileAvatar } from './Avatar';
 import { ModalMerchantDelete } from '../../../../../modals/MerchantDelete/MerchantDelete';
 import { ModalMerchantAvatar } from '../../../../../modals/MerchantAvatar/MerchantAvatar';
@@ -27,36 +27,36 @@ import { Loader } from 'apps/merchant-client/src/components/ui/Loader/Loader';
 import { ErrorBlock } from 'libs/ui/src/lib/Error/Error';
 
 export const MerchantProfileForm: React.FC = () => {
-    const modalDelete = useModal();
-    const modalAvatar = useModal();
-    const copy = useCopyText();
+  const modalDelete = useModal();
+  const modalAvatar = useModal();
+  const copy = useCopyText();
 
-    const merchantId = useGetMerchantIdFromParams();
+  const merchantId = useGetMerchantIdFromParams();
 
-    const [deleteMerchant, { isLoading: isDeleteMerchantLoading }] =
-        useDeleteMerchantMutation();
-    const [updateMerchantFields, { isLoading: isUpdatingMerchantFields }] =
-        useUpdateMerchantFieldsMutation();
-    const { data: merchant, isLoading: isGetMerchantByIdLoading } =
-        useGetMerchantByIdQuery({ merchant_id: merchantId });
-    const [uploadLogo, { isLoading: isLogoUploading }] =
-        useUploadLogoMutation();
+  const [deleteMerchant, { isLoading: isDeleteMerchantLoading }] =
+    useDeleteMerchantMutation();
+  const [updateMerchantFields, { isLoading: isUpdatingMerchantFields }] =
+    useUpdateMerchantFieldsMutation();
+  const { data: merchant, isLoading: isGetMerchantByIdLoading } =
+    useGetMerchantByIdQuery({ merchant_id: merchantId });
+  const [uploadLogo, { isLoading: isLogoUploading }] =
+    useUploadLogoMutation();
 
-    const { register, handleSubmit, reset } = useForm<IMerchantForm>();
-    useEffect(() => {
-        if (merchant) {
-            reset({
-                website: merchant.domain ?? undefined,
-                description: merchant.description ?? undefined,
-                merchantName: merchant.name,
-                brand: merchant.display_name ?? undefined,
-            });
-        }
-    }, [merchant]);
+  const { register, handleSubmit, reset, formState } = useForm<IMerchantForm>();
+  useEffect(() => {
+    if (merchant) {
+      reset({
+        website: merchant.domain ?? undefined,
+        description: merchant.description ?? undefined,
+        merchantName: merchant.name,
+        brand: merchant.display_name ?? undefined,
+      });
+    }
+  }, [merchant, reset]);
 
-    const getShortMerchantId = () => {
-        return `${merchantId.slice(0, 8)}...${merchantId.slice(-8)}`;
-    };
+  const getShortMerchantId = () => {
+    return `${merchantId.slice(0, 8)}...${merchantId.slice(-8)}`;
+  };
 
     const handleMerchantRemoval = async () => {
         // modal passes this prop only when merchant name entered correctly
@@ -69,19 +69,26 @@ export const MerchantProfileForm: React.FC = () => {
         }
     };
 
-    const submit: SubmitHandler<IMerchantForm> = async (data) => {
-        try {
-            await updateMerchantFields({
-                description: data.description,
-                name: data.merchantName,
-                domain: data.website,
-                merchant_id: merchantId,
-                display_name: data.brand,
-            }).unwrap();
-        } catch (error) {
-            console.error(error);
-        }
-    };
+  const submit: SubmitHandler<IMerchantForm> = async (data) => {
+    try {
+      const body = {
+        description: data.description === merchant?.description || !data.description ? undefined : data.description,
+        name: data.merchantName === merchant?.name || !data.merchantName ? undefined : data.merchantName,
+        domain: !data.website ? null : data.website === merchant?.domain ? undefined : data.website,
+        display_name: !data.brand ? null : data.brand === merchant?.display_name ? undefined : data.brand,
+      };
+      if (Object.keys(body).every(key => !body[key as keyof typeof body])) {
+        notify({ title: 'Nothing to update', status: 'warning' });
+        return;
+      }
+      // TODO: add null to types
+      // @ts-ignore
+      await updateMerchantFields({ ...body, merchant_id: merchantId }).unwrap();
+      notify({ title: 'Merchant updated', status: 'success' });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
     return (
         <>
