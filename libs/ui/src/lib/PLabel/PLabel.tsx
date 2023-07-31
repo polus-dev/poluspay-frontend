@@ -22,7 +22,10 @@ export interface LabelProps {
 
 export const PLabel: React.FC<LabelProps> = ({
     status = 'success',
-    ...props
+    visible,
+    loading,
+    title,
+    description
 }) => {
     const [top, setTop] = useState(0);
     const elHeader = useRef<HTMLElement | null>(null);
@@ -31,13 +34,13 @@ export const PLabel: React.FC<LabelProps> = ({
         if (!elHeader.current) return undefined;
 
         const height = elHeader.current.offsetHeight;
-        const gap = height - window.scrollY;
 
-        gap > 0 ? setTop(gap + 24) : setTop(0);
+        setTop(height + 12)
     };
 
-    const iconClassnames = classNames('polus-ui__notification-label-icon', {
-        [`polus-ui__notification-label-icon--${status}`]: true,
+    const iconClassnames = classNames({
+        'polus-ui__notification-label-icon': true,
+        [`polus-ui__notification-label-icon--${status}`]: true
     });
 
     const iconComponent = () => {
@@ -50,8 +53,7 @@ export const PLabel: React.FC<LabelProps> = ({
         return <IconSuccess className={iconClassnames} />;
     };
 
-    const hasDescription =
-        props.description !== undefined && props.description.length !== 0;
+    const hasDescription = description !== undefined && description.length !== 0;
 
     useEffect(() => {
         elHeader.current = document.querySelector('header');
@@ -63,7 +65,7 @@ export const PLabel: React.FC<LabelProps> = ({
     return (
         <>
             <CSSTransition
-                in={props.visible}
+                in={visible}
                 timeout={300}
                 classNames="polus-ui__notification"
                 mountOnEnter
@@ -77,15 +79,13 @@ export const PLabel: React.FC<LabelProps> = ({
                         >
                             <div className="polus-ui__notification-label-left">
                                 <div
-                                    className={classNames(
-                                        'polus-ui__notification-label-status',
-                                        {
-                                            [`polus-ui__notification-label-status--${status}`]:
-                                                true,
-                                        }
-                                    )}
+                                    className={classNames({
+                                        'polus-ui__notification-label-status': true,
+                                        [`polus-ui__notification-label-status--${status}`]:
+                                            true,
+                                    })}
                                 />
-                                {props.loading ? (
+                                {loading ? (
                                     <IconLoading
                                         className={classNames(
                                             'polus-ui__notification-label-icon',
@@ -98,19 +98,17 @@ export const PLabel: React.FC<LabelProps> = ({
                             </div>
                             <div className="polus-ui__notification-label-right">
                                 <div
-                                    className={classNames(
-                                        'polus-ui__notification-label-title',
-                                        {
-                                            'polus-ui__notification-label-title--small':
-                                                hasDescription,
-                                        }
-                                    )}
+                                    className={classNames({
+                                        'polus-ui__notification-label-title': true,
+                                        'polus-ui__notification-label-title--small':
+                                            hasDescription,
+                                    })}
                                 >
-                                    {props.title}
+                                    {title}
                                 </div>
                                 {hasDescription && (
                                     <div className="polus-ui__notification-label-description">
-                                        {props.description}
+                                        {description}
                                     </div>
                                 )}
                             </div>

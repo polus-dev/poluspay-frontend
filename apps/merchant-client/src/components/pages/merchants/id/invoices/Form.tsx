@@ -4,6 +4,7 @@ import {
     FormInput,
     ModalBlockChainSelector,
     ModalCurrencySelector,
+    notify,
     PButton,
 } from '@poluspay-frontend/ui';
 import { ModalPreviewForm } from '../../../../modals/PreviewForm/PreviewForm';
@@ -88,6 +89,7 @@ export const MerchantInvoicesForm = ({
                             required: "Amount can't be empty",
                             minLength: 1,
                         })}
+                        type="number"
                         label="Amount"
                         placeholder="0"
                     />
@@ -157,11 +159,23 @@ export const MerchantInvoicesForm = ({
                     </div>
                 </div>
                 <div className="form__inner-item">
-                    <p className="form__inner-item-label">Description</p>
+                    <div className="form__inner-item-data">
+                        <p className="form__inner-item-label">Description</p>
+                        {formState.errors.description && (
+                            <p className="form__inner-item-label form__inner-item-label--error">
+                                {formState.errors.description.message}
+                            </p>
+                        )}
+                    </div>
                     <textarea
-                        {...register('description')}
                         placeholder="Few words about invoice"
-                        className="form__inner-item-textarea"
+                        className="form__inner-item-textarea invisible-scroll"
+                        {...register('description', {
+                            maxLength: {
+                                message: 'Description is too long',
+                                value: 100,
+                            },
+                        })}
                     />
                 </div>
                 <div className="form__inner-buttons">

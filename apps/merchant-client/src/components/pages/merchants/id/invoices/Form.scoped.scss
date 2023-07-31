@@ -32,10 +32,20 @@
         }
     }
 
+    &__inner-item-data {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
     &__inner-item-label {
         font-size: px-to-rem(14);
         font-weight: 300;
         line-height: 130%;
+
+        &--error {
+            color: $color-red;
+        }
     }
 
     &__inner-item-select {

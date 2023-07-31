@@ -1,13 +1,15 @@
 import { Outlet } from 'react-router-dom';
 
+import { useRedirectAuth } from '../../hooks/useRedirectAuth';
+
 import { Header } from '../Header/Header';
 import { MerchantMenu } from '../MerchantMenu/MerchantMenu';
+import { PNotifyContainer } from '@poluspay-frontend/ui';
+
+import classNames from 'classnames';
 
 import '../../assets/scss/main.scss';
 import './styles.scss';
-import { useRedirectAuth } from '../../hooks/useRedirectAuth';
-import classNames from 'classnames';
-import { PNotifyContainer } from '@poluspay-frontend/ui';
 
 interface LayoutProps {
     isMerchantPage?: boolean;
