@@ -47,7 +47,7 @@ export const ProcessBlock = (props: ProcessBlockProps) => {
           isSuccsess={stage.status === StageStatus.SUCCESS}
           isPending={stage.status === StageStatus.PENDING}
           // @ts-ignore
-          onClick={() => dispatch(startPay({ ...props, targetStages: [index] }))}
+          onClick={() => dispatch(startPay({ ...props, startStage: [index] }))}
         />
       ))}
     </div>
