@@ -38,7 +38,7 @@ import { Token } from './store/api/types';
 import { ChainForWeb3Modal } from './types/ChainForWeb3Modal';
 import { Main } from './pages/Main/Main';
 import { useGetAssetsQuery } from './store/api/endpoints/asset/Asset';
-import { getAssetUrl } from '../../../tools';
+import {getAssetUrl, isMobileBrowser} from '../../../tools';
 import { PNotifyContainer } from '@poluspay-frontend/ui';
 import { blockchainList } from '@poluspay-frontend/ui';
 import { getParameterByName } from '../../../tools/getParameterByName';
@@ -441,7 +441,7 @@ export const App: React.FC = () => {
                                     <img src={logo} alt="logo" />
                                 </a>
                             }
-                            after={<Web3Button balance="show" />}
+                            after={!isMobileBrowser() ? <Web3Button balance="show" icon="show" label="Polus Pay" avatar="show" /> : null}
                             className="polus-header"
                         />
                     </header>

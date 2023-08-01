@@ -66,6 +66,7 @@ export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
                                 </p>
                             </div>
                             <div className="table__row-hash">
+                                {/* TODO: rewrite to normal link */}
                                 <p style={{cursor: el.hash.link ? "pointer" : "none"}} onClick={() => el.hash.link ? window.open(el.hash.link, "_blank") : undefined} className="table__row-hash-text">
                                     {el.hash.isSettled
                                         ? makeShortHash(el.hash.value, 3)

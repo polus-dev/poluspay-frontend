@@ -140,7 +140,7 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
         if (error) {
             dispatch(setVisibleGuideButton(false));
         }
-        if (currentView === ViewVariant.QRCODE) {
+        if (currentView === ViewVariant.QRCODE || currentView === ViewVariant.PROCESS_BLOCK) {
             dispatch(setVisibleGuideButton(false));
         }
     }, [error, currentView]);

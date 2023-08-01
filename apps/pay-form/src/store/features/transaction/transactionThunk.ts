@@ -16,26 +16,29 @@ import { signThunk } from './stages/signThunk';
 import { sendThunk } from './stages/sendThunk';
 import { ThunkConfig } from '../../store';
 import {notify} from "@poluspay-frontend/ui";
+import {trimEndOfString} from "../../../../../../tools";
 
 const thunks = [approveThunk, signThunk, sendThunk] as const;
+
+
 
 export const startPay = createAsyncThunk<any, IPayload, ThunkConfig>(
     'transaction/pay',
     async (payload, { dispatch, rejectWithValue, signal }) => {
+      const startStagesLoop = async (rangeOfStageIds: {from: number, to: number}) => {
+        for (let stageId = rangeOfStageIds.from; stageId <= rangeOfStageIds.to; stageId++)
+          await dispatch(thunks[stageId]()).unwrap();
+      }
         try {
             signal.addEventListener('abort', () => {
                 return rejectWithValue('Aborted');
             });
-            if (payload.targetStages) {
-                for (const stageId of payload.targetStages) {
-                    await dispatch(thunks[stageId]()).unwrap();
-                    return;
-                }
+            if (payload.startStage) {
+             await startStagesLoop({from: payload.startStage, to: thunks.length - 1})
+            } else {
+              dispatch(initTransactionState(payload));
+                await startStagesLoop({from: 0, to: thunks.length - 1})
             }
-            dispatch(initTransactionState(payload));
-            await dispatch(thunks[0]()).unwrap();
-            await dispatch(thunks[1]()).unwrap();
-            await dispatch(thunks[2]()).unwrap();
             dispatch(setSmartLineStatus(SmartLineStatus.SUCCESS));
         } catch (error) {
             dispatch(setSmartLineStatus(SmartLineStatus.ERROR));
@@ -47,12 +50,12 @@ export const startPay = createAsyncThunk<any, IPayload, ThunkConfig>(
                     })
                 );
                 // payload.consoleLog(error.message)
-              notify({title: error.name , status: "error", description: error.message})
+              notify({title: error.name , status: "error", description: trimEndOfString(error.message, 15)})
             } else {
               // payload.consoleLog(
               //   error instanceof Error ? error.message : 'unknown error'
               // );
-              notify({title: error instanceof Error ? error.name : "unknown", status: "error", description: error instanceof Error ? error.message : undefined})
+                notify({title: error instanceof Error ? error.name : "unknown", status: "error", description: error instanceof Error ? error.message : undefined})
                 console.error(error);
                 return rejectWithValue(error);
             }
