@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
+import _ from "lodash"
 
 import { PButton, PInput, PModal, PTabs } from '@poluspay-frontend/ui';
 import { ReactComponent as IconSearch } from '../../assets/icons/search.svg';
@@ -41,8 +42,9 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
         { id: 'All', text: 'All' },
         ...categories.map((category) => ({
             id: category,
-            text: category,
-        })),
+          // TODO: make with capitalize css
+            text: _.capitalize(category),
+        })).filter(e => e.text !== "All"),
     ];
 
     const [tab, setTab] = useState(tabs[0]);
