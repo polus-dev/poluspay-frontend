@@ -154,7 +154,7 @@ export const QRCodePayment = (props: AllType) => {
               after={
                 <CopyToClipboard
                   text={paymentInfoState.address}
-                  onCopy={() => props.log('Copyed', true)}
+                  onCopy={() => props.log('Copied', true)}
                 >
                   <IconButton
                     hoverMode="opacity"
