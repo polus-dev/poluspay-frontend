@@ -15,14 +15,15 @@ import { NotFoundPage } from './pages/404/NotFound';
 import { UnderDevelopmentPage } from './pages/UnderDevelopment/UnderDevelopment';
 import { GoogleAuth } from './pages/auth/google/Auth';
 import { DashboardPage } from './pages/dashboard/Dashboard';
+import {ProtectedRoute} from "./components/Auth/ProtectedRoute";
 
 export default function App() {
     return (
         <>
             <Routes>
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/auth/google" element={<GoogleAuth />} />
-                <Route path="/" element={<Layout />}>
+                <Route path="/login/google" element={<GoogleAuth />} />
+                <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
                     <Route index element={<UnderDevelopmentPage />} />
                     <Route path="/dashboard" element={<DashboardPage />} />
                     <Route
@@ -38,7 +39,7 @@ export default function App() {
                 </Route>
                 <Route
                     path="/merchants/:id"
-                    element={<Layout isMerchantPage />}
+                    element={<ProtectedRoute> <Layout isMerchantPage /> </ProtectedRoute>}
                 >
                     <Route
                         path="/merchants/:id/merchant"
@@ -63,7 +64,7 @@ export default function App() {
                 </Route>
                 <Route
                     path="/merchants/:id"
-                    element={<Layout isMerchantPage centered />}
+                    element={<ProtectedRoute><Layout isMerchantPage centered /></ProtectedRoute>}
                 >
                     <Route
                         path="/merchants/:id/domain"
