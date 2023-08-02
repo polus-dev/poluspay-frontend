@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom';
 
-import { useRedirectAuth } from '../../hooks/useRedirectAuth';
 
 import { Header } from '../Header/Header';
 import { MerchantMenu } from '../MerchantMenu/MerchantMenu';
@@ -17,7 +16,6 @@ interface LayoutProps {
 }
 
 export const Layout: React.FC<LayoutProps> = ({ isMerchantPage, centered }) => {
-    useRedirectAuth();
     return (
         <>
             <Header />

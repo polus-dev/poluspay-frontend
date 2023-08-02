@@ -15,6 +15,7 @@ import { NotFoundPage } from './pages/404/NotFound';
 import { UnderDevelopmentPage } from './pages/UnderDevelopment/UnderDevelopment';
 import { GoogleAuth } from './pages/auth/google/Auth';
 import { DashboardPage } from './pages/dashboard/Dashboard';
+import {ProtectedRoute} from "./components/Auth/ProtectedRoute";
 import { InternalServerErrorPage } from './pages/500/InternalServer';
 
 export const App: React.FC = () => {
@@ -22,8 +23,8 @@ export const App: React.FC = () => {
         <>
             <Routes>
                 <Route path="/login" element={<LoginPage />} />
-                <Route path="/auth/google" element={<GoogleAuth />} />
-                <Route path="/" element={<Layout />}>
+                <Route path="/login/google" element={<GoogleAuth />} />
+                <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
                     <Route index element={<UnderDevelopmentPage />} />
                     <Route path="/dashboard" element={<DashboardPage />} />
                     <Route
@@ -40,7 +41,7 @@ export const App: React.FC = () => {
                 </Route>
                 <Route
                     path="/merchants/:id"
-                    element={<Layout isMerchantPage />}
+                    element={<ProtectedRoute> <Layout isMerchantPage /> </ProtectedRoute>}
                 >
                     <Route
                         path="/merchants/:id/merchant"
@@ -65,7 +66,7 @@ export const App: React.FC = () => {
                 </Route>
                 <Route
                     path="/merchants/:id"
-                    element={<Layout isMerchantPage centered />}
+                    element={<ProtectedRoute><Layout isMerchantPage centered /></ProtectedRoute>}
                 >
                     <Route
                         path="/merchants/:id/domain"
