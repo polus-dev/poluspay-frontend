@@ -17,6 +17,8 @@ export const rtkQueryErrorLogger: Middleware =
                     title: action.payload.data.field || 'Error',
                     description: action.payload.data.message,
                 });
+            else if (action.payload.status >= 500)
+             window.history.replaceState(null, '', '/500');
         }
         return next(action);
     };
