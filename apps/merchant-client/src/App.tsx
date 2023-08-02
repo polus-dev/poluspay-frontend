@@ -16,8 +16,9 @@ import { UnderDevelopmentPage } from './pages/UnderDevelopment/UnderDevelopment'
 import { GoogleAuth } from './pages/auth/google/Auth';
 import { DashboardPage } from './pages/dashboard/Dashboard';
 import {ProtectedRoute} from "./components/Auth/ProtectedRoute";
+import { InternalServerErrorPage } from './pages/500/InternalServer';
 
-export default function App() {
+export const App: React.FC = () => {
     return (
         <>
             <Routes>
@@ -36,6 +37,7 @@ export default function App() {
                         path="/merchants/create"
                         element={<MerchantsCreatePage />}
                     />
+                    <Route path="/500" element={<InternalServerErrorPage />} />
                 </Route>
                 <Route
                     path="/merchants/:id"
