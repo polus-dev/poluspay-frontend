@@ -15,7 +15,7 @@ import { NotFoundPage } from './pages/404/NotFound';
 import { UnderDevelopmentPage } from './pages/UnderDevelopment/UnderDevelopment';
 import { GoogleAuth } from './pages/auth/google/Auth';
 import { DashboardPage } from './pages/dashboard/Dashboard';
-import {ProtectedRoute} from "./components/Auth/ProtectedRoute";
+import { ProtectedRoute } from './components/Auth/ProtectedRoute';
 import { InternalServerErrorPage } from './pages/500/InternalServer';
 
 export const App: React.FC = () => {
@@ -24,14 +24,24 @@ export const App: React.FC = () => {
             <Routes>
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/login/google" element={<GoogleAuth />} />
-                <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+                <Route
+                    path="/"
+                    element={
+                        <ProtectedRoute>
+                            <Layout />
+                        </ProtectedRoute>
+                    }
+                >
                     <Route index element={<UnderDevelopmentPage />} />
                     <Route path="/dashboard" element={<DashboardPage />} />
                     <Route
                         path="/dashboard"
                         element={<UnderDevelopmentPage />}
                     />
-                    <Route path="/settings" element={<SettingsPage />} />
+                    <Route
+                        path="/settings"
+                        element={<UnderDevelopmentPage />}
+                    />
                     <Route path="/merchants" element={<MerchantsPage />} />
                     <Route
                         path="/merchants/create"
@@ -41,7 +51,12 @@ export const App: React.FC = () => {
                 </Route>
                 <Route
                     path="/merchants/:id"
-                    element={<ProtectedRoute> <Layout isMerchantPage /> </ProtectedRoute>}
+                    element={
+                        <ProtectedRoute>
+                            {' '}
+                            <Layout isMerchantPage />{' '}
+                        </ProtectedRoute>
+                    }
                 >
                     <Route
                         path="/merchants/:id/merchant"
@@ -66,7 +81,11 @@ export const App: React.FC = () => {
                 </Route>
                 <Route
                     path="/merchants/:id"
-                    element={<ProtectedRoute><Layout isMerchantPage centered /></ProtectedRoute>}
+                    element={
+                        <ProtectedRoute>
+                            <Layout isMerchantPage centered />
+                        </ProtectedRoute>
+                    }
                 >
                     <Route
                         path="/merchants/:id/domain"
@@ -83,4 +102,4 @@ export const App: React.FC = () => {
             </Routes>
         </>
     );
-}
+};
