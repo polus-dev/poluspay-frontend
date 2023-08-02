@@ -49,7 +49,6 @@ export const useWalletAuth = () => {
             } else {
                 setButtonText('Connect Wallet');
             }
-            debugger;
             notify({
                 title: 'Email auth error',
                 status: 'error',

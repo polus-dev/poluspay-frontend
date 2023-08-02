@@ -77,7 +77,7 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
             <div className="preview__select">
                 <img
                     className="preview__select-image"
-                    src={blockchainList.find(e => e.label === network)!.image}
+                    src={`/images/wallets/${blockchainList.find(e => e.label === network)!.image}.png`}
                     alt={network}
                 />
                 <p className="preview__select-text">
