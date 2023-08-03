@@ -36,7 +36,7 @@ export const Form: React.FC = () => {
                         <FormHeader />
                     </div>
                     <div className="form__progress">
-                        <ProgressBar value={50} />
+                        <ProgressBar value={70} />
                     </div>
                     {stage === 'default' ? (
                         <>
