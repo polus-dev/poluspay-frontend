@@ -9,35 +9,35 @@
 //     ConfigProvider,
 // } from '@vkontakte/vkui';
 
-// import {
-//     EthereumClient,
-//     w3mConnectors,
-//     w3mProvider,
-// } from '@web3modal/ethereum';
+import {
+    EthereumClient,
+    w3mConnectors,
+    w3mProvider,
+} from '@web3modal/ethereum';
 
-// import { Web3Modal } from '@web3modal/react';
+import { Web3Modal } from '@web3modal/react';
 
-// import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-// import { mainnet, polygon, arbitrum, bsc, optimism } from 'wagmi/chains';
+import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { mainnet, polygon, arbitrum, bsc, optimism } from 'wagmi/chains';
 
 // import { App } from './App';
-// import { Provider } from 'react-redux';
-// import { store } from './store/store';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 // import { steps } from './guid/steps';
 // import {ErrorBoundary} from "@poluspay-frontend/ui";
 
-// const chains = [polygon, mainnet, arbitrum, bsc, optimism];
-// const projectId = import.meta.env.VITE_PROJECT_ID;
+const chains = [polygon, mainnet, arbitrum, bsc, optimism];
+const projectId = import.meta.env.VITE_PROJECT_ID;
 
-// const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
-// const wagmiConfig = createConfig({
-//     autoConnect: true,
-//     connectors: w3mConnectors({
-//         projectId,
-//         chains,
-//     }),
-//     publicClient,
-// });
+const { publicClient } = configureChains(chains, [w3mProvider({ projectId })]);
+const wagmiConfig = createConfig({
+    autoConnect: true,
+    connectors: w3mConnectors({
+        projectId,
+        chains,
+    }),
+    publicClient,
+});
 
 // if (import.meta.env.PROD) {
 //     Sentry.init({
@@ -63,7 +63,7 @@
 // }
 
 // // Web3Modal Ethereum Client
-// const ethereumClient = new EthereumClient(wagmiConfig, chains);
+const ethereumClient = new EthereumClient(wagmiConfig, chains);
 
 // const ConfigProviderFix: any = ConfigProvider;
 // const AdaptivityProviderFix: any = AdaptivityProvider;
@@ -147,7 +147,12 @@ if (domNode) {
     root.render(
         <React.StrictMode>
             <BrowserRouter>
+              <WagmiConfig config={wagmiConfig}>
+                {/*<Provider store={store}>*/}
                 <App />
+                {/*</Provider>*/}
+                <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
+              </WagmiConfig>
             </BrowserRouter>
         </React.StrictMode>
     );

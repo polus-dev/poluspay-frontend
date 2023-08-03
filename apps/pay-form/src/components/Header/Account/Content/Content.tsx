@@ -1,23 +1,29 @@
-import { useCopyText } from '../../../../hooks/useCopyText';
 
-import { ReactComponent as LogoWalletConnect } from '../../../../assets/logos/wallet-connect.svg';
+import  LogoWalletConnect from '../../../../assets/logos/wallet-connect.svg';
 import { ReactComponent as IconCopy } from '../../../../assets/icons/copy.svg';
 import { ReactComponent as IconLogout } from '../../../../assets/icons/logout.svg';
 
 import './Content.scoped.scss';
+import {makeShortHash} from "tools";
+import {useCopyText} from "@poluspay-frontend/hooks";
+import {Address} from "viem";
 
-export const HeaderAccountContent: React.FC = () => {
-    const copy = useCopyText();
+interface HeaderAccountContentProps {
+  address: Address;
+  disconnect: () => void;
+  ensName?: string | null;
+  ensAvatar?: string | null;
+}
 
-    const address = '0x12...1234';
-
-    return (
+export const HeaderAccountContent = ({address, disconnect, ensAvatar, ensName}: HeaderAccountContentProps) => {
+  const copy = useCopyText();
+  return (
         <div className="account-content">
             <div className="account-content__data">
                 <div className="account-content__data-inner">
-                    <LogoWalletConnect className="account-content__data-inner-icon" />
+                    <img  src={ensAvatar ?? LogoWalletConnect}  alt="avatar" className="account-content__data-inner-icon" />
                     <p className="account-content__data-inner-text">
-                        {copy.copied ? 'Copied!' : address}
+                        {copy.copied ? 'Copied!' : ensName ? ensName : makeShortHash(address, 4)}
                     </p>
                 </div>
                 <IconCopy
@@ -26,11 +32,11 @@ export const HeaderAccountContent: React.FC = () => {
                 />
             </div>
             <div className="account-content__divider" />
-            <div className="account-content__button">
+                                                    {/* @ts-ignore */}
+            <div className="account-content__button" onClick={disconnect}>
                 <p className="account-content__button-text">Disconnect</p>
                 <IconLogout
                     className="account-content__button-icon"
-                    onClick={() => console.log('logout')}
                 />
             </div>
         </div>
