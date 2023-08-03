@@ -8,7 +8,7 @@ export const getPathFromCallData = (calldata: string) => {
     ];
     return coder.decode(
         types[1],
-        coder.decode(types[0], Buffer.from(calldata.slice(10), 'hex'))[1][0],
+        coder.decode(types[0], Buffer.from(calldata.slice(10), 'hex'))[1][0]
     )[3];
     // 🤡
 };

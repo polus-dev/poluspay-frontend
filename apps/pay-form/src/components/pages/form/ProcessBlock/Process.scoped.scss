@@ -1,0 +1,13 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/utils';
+
+.process {
+    display: flex;
+    flex-direction: column;
+    gap: px-to-rem(16);
+    width: 100%;
+
+    &__item {
+        width: 100%;
+    }
+}

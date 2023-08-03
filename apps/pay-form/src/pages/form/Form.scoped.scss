@@ -1,0 +1,9 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/utils';
+
+.form-page {
+    position: relative;
+    margin: auto;
+    width: 100%;
+    max-width: px-to-rem(452);
+}

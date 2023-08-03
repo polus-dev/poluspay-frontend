@@ -1,489 +1,506 @@
-import React, { useEffect, useState } from 'react';
+// import React, { useEffect, useState } from 'react';
 
-import {
-    AppRoot,
-    Card,
-    CardGrid,
-    Div,
-    ModalPage,
-    ModalPageHeader,
-    ModalRoot,
-    PanelHeader,
-    PanelHeaderButton,
-    ScreenSpinner,
-    SimpleCell,
-    SplitCol,
-    SplitLayout,
-    View,
-} from '@vkontakte/vkui';
+// import {
+//     AppRoot,
+//     Card,
+//     CardGrid,
+//     Div,
+//     ModalPage,
+//     ModalPageHeader,
+//     ModalRoot,
+//     PanelHeader,
+//     PanelHeaderButton,
+//     ScreenSpinner,
+//     SimpleCell,
+//     SplitCol,
+//     SplitLayout,
+//     View,
+// } from '@vkontakte/vkui';
+// import { Route, Routes } from 'react-router-dom';
+
+// import { Icon24Dismiss, Icon28DoneOutline } from '@vkontakte/icons';
+
+// import { useWeb3Modal, Web3Button } from '@web3modal/react';
+
+// import '@vkontakte/vkui/dist/vkui.css';
+// import './style.css';
+
+// import logo from './img/logo.svg';
+// import { QuestionButton } from './components/ui/QuestionButton/QuestionButton';
+// import { useTour } from '@reactour/tour';
+// import { useAppDispatch, useAppSelector } from './store/hooks';
+// import { useGetPaymentByPaymentIdQuery } from './store/api/endpoints/payment/Payment';
+// import { setView, ViewVariant } from './store/features/view/viewSlice';
+// import { setCurrentBlockchain } from './store/features/connection/connectionSlice';
+// import { ConsoleLog } from './components/modals/consoleLog.ts';
+// import { useAvailableTokens } from './pages/Main/hooks/useAvailableTokens';
+// import { Token } from './store/api/types';
+// import { ChainForWeb3Modal } from './types/ChainForWeb3Modal';
+// import { Main } from './pages/Main/Main';
+// import { useGetAssetsQuery } from './store/api/endpoints/asset/Asset';
+// import { getAssetUrl } from '../../../tools';
+// import { PNotifyContainer } from '@poluspay-frontend/ui';
+// import { blockchainList } from '@poluspay-frontend/ui';
+// import { getParameterByName } from '../../../tools/getParameterByName';
+
+// const isDesktop = window.innerWidth >= 800;
+
+// export const App: React.FC = () => {
+//     const [activeModal, setActiveModal] = React.useState<any>(null);
+//     const { setIsOpen } = useTour();
+//     const dispatch = useAppDispatch();
+//     const isGuideButtonVisible = useAppSelector(
+//         (state) => state.guide.isVisible,
+//     );
+
+//     const { data: assets, isLoading: isAssetsLoading } = useGetAssetsQuery();
+
+//     const { data: paymentInfo } = useGetPaymentByPaymentIdQuery({
+//         payment_id: getParameterByName('uuid')!,
+//     });
+//     const { availableTokens, isAvailableTokensLoading, availableCategories } =
+//         useAvailableTokens();
+//     const currentBlockchain = useAppSelector(
+//         (state) => state.connection.currentBlockchain,
+//     );
+
+//     const [userToken, setUserToken] = useState<Token>();
+
+//     const isActiveConnection = useAppSelector(
+//         (state) => state.connection.isActive,
+//     );
+//     const [snackbar, setSnackbar] = React.useState<any>(null);
+
+//     const [popout, setPopout] = React.useState<any>(null);
+
+//     const { open, setDefaultChain } = useWeb3Modal();
+
+//     const consoleLog = (data: string, type?: boolean) =>
+//         setSnackbar(
+//             <ConsoleLog
+//                 data={data}
+//                 type={type}
+//                 onClose={() => setSnackbar(null)}
+//             />,
+//         );
+
+//     function openPop() {
+//         setPopout(<ScreenSpinner state="loading" />);
+//     }
+
+//     function closePop(type: boolean) {
+//         if (popout) {
+//             if (type)
+//                 setPopout(<ScreenSpinner state="done" aria-label="Success" />);
+//             else setPopout(<ScreenSpinner state="error" aria-label="Error" />);
+
+//             setTimeout(() => {
+//                 setPopout(null);
+//             }, 1000);
+//         }
+//     }
+
+//     useEffect(() => {
+//         if (paymentInfo && assets) {
+//             if (
+//                 assets
+//                     .getQRCodePaymentNetworks()
+//                     .includes(paymentInfo.blockchains[0]) &&
+//                 paymentInfo.blockchains.length === 1
+//             ) {
+//                 dispatch(setView(ViewVariant.QRCODE));
+//             }
+//             dispatch(setCurrentBlockchain(paymentInfo.blockchains[0]));
+
+//             const defaultBlockchain =
+//                 ChainForWeb3Modal[paymentInfo.blockchains[0]];
+
+//             if (defaultBlockchain) {
+//                 setDefaultChain(defaultBlockchain);
+//             }
+//         }
+//     }, [paymentInfo, assets]);
+
+//     const modalRoot = (
+//         <ModalRoot activeModal={activeModal}>
+//             <ModalPage
+//                 id={'network'}
+//                 className="polus"
+//                 onClose={() => setActiveModal(null)}
+//                 dynamicContentHeight
+//                 header={
+//                     <ModalPageHeader
+//                         after={
+//                             !isDesktop && (
+//                                 <PanelHeaderButton
+//                                     onClick={() => setActiveModal(null)}
+//                                 >
+//                                     <Icon24Dismiss />
+//                                 </PanelHeaderButton>
+//                             )
+//                         }
+//                     >
+//                         Select network
+//                     </ModalPageHeader>
+//                 }
+//             >
+//                 <Div>
+//                     <CardGrid size="l">
+//                         {paymentInfo &&
+//                             paymentInfo.blockchains.map((chainLocal, key) => {
+//                                 return (
+//                                     <Card key={key}>
+//                                         <SimpleCell
+//                                             after={
+//                                                 currentBlockchain ===
+//                                                 chainLocal ? (
+//                                                     <Icon28DoneOutline />
+//                                                 ) : null
+//                                             }
+//                                             onClick={() => {
+//                                                 if (
+//                                                     chainLocal === 'bitcoin' ||
+//                                                     chainLocal === 'tron' ||
+//                                                     chainLocal === 'litecoin' ||
+//                                                     chainLocal === 'dogecoin'
+//                                                 ) {
+//                                                     dispatch(
+//                                                         setView(
+//                                                             ViewVariant.QRCODE,
+//                                                         ),
+//                                                     );
+//                                                     dispatch(
+//                                                         setCurrentBlockchain(
+//                                                             chainLocal,
+//                                                         ),
+//                                                     );
+//                                                 } else if (
+//                                                     chainLocal === 'bsc' ||
+//                                                     chainLocal === 'polygon' ||
+//                                                     chainLocal === 'ethereum' ||
+//                                                     chainLocal === 'arbitrum' ||
+//                                                     chainLocal === 'optimism'
+//                                                 ) {
+//                                                     // switchNetwork(ChainId[chainLocal]);
+//                                                     dispatch(
+//                                                         setCurrentBlockchain(
+//                                                             chainLocal,
+//                                                         ),
+//                                                     );
+//                                                     dispatch(
+//                                                         setView(
+//                                                             ViewVariant.EVM,
+//                                                         ),
+//                                                     );
+//                                                     setDefaultChain(
+//                                                         ChainForWeb3Modal[
+//                                                             chainLocal
+//                                                         ],
+//                                                     );
+//                                                 } else {
+//                                                     open();
+//                                                 }
+//                                                 setActiveModal(null);
+//                                             }}
+//                                         >
+//                                             {
+//                                                 blockchainList.find(
+//                                                     (e) =>
+//                                                         e.label === chainLocal,
+//                                                 )?.name
+//                                             }
+//                                         </SimpleCell>
+//                                     </Card>
+//                                 );
+//                             })}
+//                     </CardGrid>
+//                 </Div>
+//             </ModalPage>
+
+//             <ModalPage
+//                 id={'coins'}
+//                 className="polus"
+//                 onClose={() => setActiveModal(null)}
+//                 dynamicContentHeight
+//                 // settlingHeight={100}
+//                 header={
+//                     <ModalPageHeader
+//                         after={
+//                             !isDesktop && (
+//                                 <PanelHeaderButton
+//                                     onClick={() => setActiveModal(null)}
+//                                 >
+//                                     <Icon24Dismiss />
+//                                 </PanelHeaderButton>
+//                             )
+//                         }
+//                     >
+//                         Select Token
+//                     </ModalPageHeader>
+//                 }
+//             >
+//                 <Div>
+//                     {availableTokens.filter((token) =>
+//                         token.categories.includes('stablecoin'),
+//                     ).length ? (
+//                         <>
+//                             <h3>Stable Coin</h3>
+//                             <CardGrid size="m">
+//                                 {availableTokens
+//                                     .filter((token) =>
+//                                         token.categories.includes('stablecoin'),
+//                                     )
+//                                     .map((token, key) => (
+//                                         <Card key={key}>
+//                                             <SimpleCell
+//                                                 onClick={() => {
+//                                                     setUserToken(token);
+//                                                     setActiveModal(null);
+//                                                 }}
+//                                                 after={
+//                                                     userToken?.name ===
+//                                                     token.name ? (
+//                                                         <Icon28DoneOutline />
+//                                                     ) : null
+//                                                 }
+//                                                 before={
+//                                                     <img
+//                                                         src={getAssetUrl(
+//                                                             import.meta.env
+//                                                                 .VITE_ASSET_URL,
+//                                                             token.name,
+//                                                         )}
+//                                                         style={{
+//                                                             marginRight: '12px',
+//                                                         }}
+//                                                         className="logo-cur"
+//                                                     />
+//                                                 }
+//                                             >
+//                                                 {token.name.toUpperCase()}
+//                                             </SimpleCell>
+//                                         </Card>
+//                                     ))}
+//                             </CardGrid>
+//                         </>
+//                     ) : null}
+
+//                     {availableTokens.filter((token) =>
+//                         token.categories.includes('popular'),
+//                     ).length ? (
+//                         <>
+//                             {' '}
+//                             <h3>Native Coin</h3>
+//                             <CardGrid size="m">
+//                                 {availableTokens
+//                                     .filter((token) =>
+//                                         token.categories.includes('popular'),
+//                                     )
+//                                     .map((token, key) => (
+//                                         <Card key={key}>
+//                                             <SimpleCell
+//                                                 onClick={() => {
+//                                                     setUserToken(token);
+//                                                     setActiveModal(null);
+//                                                 }}
+//                                                 after={
+//                                                     userToken?.name ===
+//                                                     token.name ? (
+//                                                         <Icon28DoneOutline />
+//                                                     ) : null
+//                                                 }
+//                                                 before={
+//                                                     <img
+//                                                         src={getAssetUrl(
+//                                                             import.meta.env
+//                                                                 .VITE_ASSET_URL,
+//                                                             token.name,
+//                                                         )}
+//                                                         style={{
+//                                                             marginRight: '12px',
+//                                                         }}
+//                                                         className="logo-cur"
+//                                                     />
+//                                                 }
+//                                             >
+//                                                 {token.name.toUpperCase()}
+//                                             </SimpleCell>
+//                                         </Card>
+//                                     ))}
+//                             </CardGrid>
+//                         </>
+//                     ) : null}
+
+//                     {availableTokens.filter((token) =>
+//                         token.categories.includes('wrap'),
+//                     ).length ? (
+//                         <>
+//                             <h3>Wrapped Coin</h3>
+//                             <CardGrid size="m">
+//                                 {availableTokens
+//                                     .filter((token) =>
+//                                         token.categories.includes('wrap'),
+//                                     )
+//                                     .map((token, key) => (
+//                                         <Card key={key}>
+//                                             <SimpleCell
+//                                                 onClick={() => {
+//                                                     setUserToken(token);
+//                                                     setActiveModal(null);
+//                                                 }}
+//                                                 after={
+//                                                     userToken?.name ===
+//                                                     token.name ? (
+//                                                         <Icon28DoneOutline />
+//                                                     ) : null
+//                                                 }
+//                                                 before={
+//                                                     <img
+//                                                         src={getAssetUrl(
+//                                                             import.meta.env
+//                                                                 .VITE_ASSET_URL,
+//                                                             token.name,
+//                                                         )}
+//                                                         style={{
+//                                                             marginRight: '12px',
+//                                                         }}
+//                                                         className="logo-cur"
+//                                                     />
+//                                                 }
+//                                             >
+//                                                 {token.name.toUpperCase()}
+//                                             </SimpleCell>
+//                                         </Card>
+//                                     ))}
+//                             </CardGrid>
+//                         </>
+//                     ) : null}
+
+//                     {availableTokens.filter((token) =>
+//                         token.categories.includes('unknown'),
+//                     ) ? (
+//                         <>
+//                             <h3>Other Coin</h3>
+//                             <CardGrid size="m">
+//                                 {availableTokens
+//                                     .filter((token) =>
+//                                         token.categories.includes('unknown'),
+//                                     )
+//                                     .map((token, key) => (
+//                                         <Card key={key}>
+//                                             <SimpleCell
+//                                                 onClick={() => {
+//                                                     setUserToken(token);
+//                                                     setActiveModal(null);
+//                                                 }}
+//                                                 after={
+//                                                     userToken?.name ===
+//                                                     token.name ? (
+//                                                         <Icon28DoneOutline />
+//                                                     ) : null
+//                                                 }
+//                                                 before={
+//                                                     <img
+//                                                         src={getAssetUrl(
+//                                                             import.meta.env
+//                                                                 .VITE_ASSET_URL,
+//                                                             token.name,
+//                                                         )}
+//                                                         style={{
+//                                                             marginRight: '12px',
+//                                                         }}
+//                                                         className="logo-cur"
+//                                                     />
+//                                                 }
+//                                             >
+//                                                 {token.name.toUpperCase()}
+//                                             </SimpleCell>
+//                                         </Card>
+//                                     ))}
+//                             </CardGrid>
+//                         </>
+//                     ) : null}
+//                 </Div>
+//             </ModalPage>
+//         </ModalRoot>
+//     );
+
+//     return (
+//         <AppRoot>
+//             <SplitLayout
+//                 className="polus"
+//                 style={{ justifyContent: 'center' }}
+//                 modal={modalRoot}
+//                 popout={popout}
+//                 header={
+//                     <header>
+//                         <PanelHeader
+//                             separator={false}
+//                             before={
+//                                 <a href="https://poluspay.com" target="_blank">
+//                                     <img src={logo} alt="logo" />
+//                                 </a>
+//                             }
+//                             after={<Web3Button balance="show" />}
+//                             className="polus-header"
+//                         />
+//                     </header>
+//                 }
+//             >
+//                 <SplitCol
+//                     animate={false}
+//                     spaced={isDesktop}
+//                     width={isDesktop ? '450px' : '100%'}
+//                     maxWidth={isDesktop ? '450px' : '100%'}
+//                 >
+//                     <div id="main">
+//                         <Routes>
+//                             <Route
+//                                 path="/"
+//                                 element={
+//                                     <View activePanel={'main1'} id="view">
+//                                         <span id="main1">
+//                                             <Main
+//                                                 id="main1"
+//                                                 setActiveModal={setActiveModal}
+//                                                 consoleLog={consoleLog}
+//                                                 isDesktop={isDesktop}
+//                                                 openPop={openPop}
+//                                                 closePop={closePop}
+//                                                 setUserToken={setUserToken}
+//                                                 userToken={userToken}
+//                                             />
+//                                         </span>
+//                                     </View>
+//                                 }
+//                             />
+//                         </Routes>
+//                     </div>
+//                 </SplitCol>
+//                 <QuestionButton
+//                     visible={isGuideButtonVisible}
+//                     onClick={() => setIsOpen(true)}
+//                 />
+//                 {snackbar}
+//                 <PNotifyContainer ms={2000} />
+//             </SplitLayout>
+//         </AppRoot>
+//     );
+// };
+
 import { Route, Routes } from 'react-router-dom';
 
-import { Icon24Dismiss, Icon28DoneOutline } from '@vkontakte/icons';
-
-import { useWeb3Modal, Web3Button } from '@web3modal/react';
-
-import '@vkontakte/vkui/dist/vkui.css';
-import './style.css';
-
-import logo from './img/logo.svg';
-import { QuestionButton } from './components/ui/QuestionButton/QuestionButton';
-import { useTour } from '@reactour/tour';
-import { useAppDispatch, useAppSelector } from './store/hooks';
-import { useGetPaymentByPaymentIdQuery } from './store/api/endpoints/payment/Payment';
-import { setView, ViewVariant } from './store/features/view/viewSlice';
-import { setCurrentBlockchain } from './store/features/connection/connectionSlice';
-import { ConsoleLog } from './components/modals/consoleLog.ts';
-import { useAvailableTokens } from './pages/Main/hooks/useAvailableTokens';
-import { Token } from './store/api/types';
-import { ChainForWeb3Modal } from './types/ChainForWeb3Modal';
-import { Main } from './pages/Main/Main';
-import { useGetAssetsQuery } from './store/api/endpoints/asset/Asset';
-import { getAssetUrl } from '../../../tools';
-import { PNotifyContainer } from '@poluspay-frontend/ui';
-import { blockchainList } from '@poluspay-frontend/ui';
-import { getParameterByName } from '../../../tools/getParameterByName';
-
-const isDesktop = window.innerWidth >= 800;
+import { Layout } from './components/Layout/Layout';
+import { FormPage } from './pages/form/Form';
 
 export const App: React.FC = () => {
-    const [activeModal, setActiveModal] = React.useState<any>(null);
-    const { setIsOpen } = useTour();
-    const dispatch = useAppDispatch();
-    const isGuideButtonVisible = useAppSelector(
-        (state) => state.guide.isVisible,
-    );
-
-    const { data: assets, isLoading: isAssetsLoading } = useGetAssetsQuery();
-
-    const { data: paymentInfo } = useGetPaymentByPaymentIdQuery({
-        payment_id: getParameterByName('uuid')!,
-    });
-    const { availableTokens, isAvailableTokensLoading, availableCategories } =
-        useAvailableTokens();
-    const currentBlockchain = useAppSelector(
-        (state) => state.connection.currentBlockchain,
-    );
-
-    const [userToken, setUserToken] = useState<Token>();
-
-    const isActiveConnection = useAppSelector(
-        (state) => state.connection.isActive,
-    );
-    const [snackbar, setSnackbar] = React.useState<any>(null);
-
-    const [popout, setPopout] = React.useState<any>(null);
-
-    const { open, setDefaultChain } = useWeb3Modal();
-
-    const consoleLog = (data: string, type?: boolean) =>
-        setSnackbar(
-            <ConsoleLog
-                data={data}
-                type={type}
-                onClose={() => setSnackbar(null)}
-            />,
-        );
-
-    function openPop() {
-        setPopout(<ScreenSpinner state="loading" />);
-    }
-
-    function closePop(type: boolean) {
-        if (popout) {
-            if (type)
-                setPopout(<ScreenSpinner state="done" aria-label="Success" />);
-            else setPopout(<ScreenSpinner state="error" aria-label="Error" />);
-
-            setTimeout(() => {
-                setPopout(null);
-            }, 1000);
-        }
-    }
-
-    useEffect(() => {
-        if (paymentInfo && assets) {
-            if (
-                assets
-                    .getQRCodePaymentNetworks()
-                    .includes(paymentInfo.blockchains[0]) &&
-                paymentInfo.blockchains.length === 1
-            ) {
-                dispatch(setView(ViewVariant.QRCODE));
-            }
-            dispatch(setCurrentBlockchain(paymentInfo.blockchains[0]));
-
-            const defaultBlockchain =
-                ChainForWeb3Modal[paymentInfo.blockchains[0]];
-
-            if (defaultBlockchain) {
-                setDefaultChain(defaultBlockchain);
-            }
-        }
-    }, [paymentInfo, assets]);
-
-    const modalRoot = (
-        <ModalRoot activeModal={activeModal}>
-            <ModalPage
-                id={'network'}
-                className="polus"
-                onClose={() => setActiveModal(null)}
-                dynamicContentHeight
-                header={
-                    <ModalPageHeader
-                        after={
-                            !isDesktop && (
-                                <PanelHeaderButton
-                                    onClick={() => setActiveModal(null)}
-                                >
-                                    <Icon24Dismiss />
-                                </PanelHeaderButton>
-                            )
-                        }
-                    >
-                        Select network
-                    </ModalPageHeader>
-                }
-            >
-                <Div>
-                    <CardGrid size="l">
-                        {paymentInfo &&
-                            paymentInfo.blockchains.map((chainLocal, key) => {
-                                return (
-                                    <Card key={key}>
-                                        <SimpleCell
-                                            after={
-                                                currentBlockchain ===
-                                                chainLocal ? (
-                                                    <Icon28DoneOutline />
-                                                ) : null
-                                            }
-                                            onClick={() => {
-                                                if (
-                                                    chainLocal === 'bitcoin' ||
-                                                    chainLocal === 'tron' ||
-                                                    chainLocal === 'litecoin' ||
-                                                    chainLocal === 'dogecoin'
-                                                ) {
-                                                    dispatch(
-                                                        setView(
-                                                            ViewVariant.QRCODE,
-                                                        ),
-                                                    );
-                                                    dispatch(
-                                                        setCurrentBlockchain(
-                                                            chainLocal,
-                                                        ),
-                                                    );
-                                                } else if (
-                                                    chainLocal === 'bsc' ||
-                                                    chainLocal === 'polygon' ||
-                                                    chainLocal === 'ethereum' ||
-                                                    chainLocal === 'arbitrum' ||
-                                                    chainLocal === 'optimism'
-                                                ) {
-                                                    // switchNetwork(ChainId[chainLocal]);
-                                                    dispatch(
-                                                        setCurrentBlockchain(
-                                                            chainLocal,
-                                                        ),
-                                                    );
-                                                    dispatch(
-                                                        setView(
-                                                            ViewVariant.EVM,
-                                                        ),
-                                                    );
-                                                    setDefaultChain(
-                                                        ChainForWeb3Modal[
-                                                            chainLocal
-                                                        ],
-                                                    );
-                                                } else {
-                                                    open();
-                                                }
-                                                setActiveModal(null);
-                                            }}
-                                        >
-                                            {
-                                                blockchainList.find(
-                                                    (e) =>
-                                                        e.label === chainLocal,
-                                                )?.name
-                                            }
-                                        </SimpleCell>
-                                    </Card>
-                                );
-                            })}
-                    </CardGrid>
-                </Div>
-            </ModalPage>
-
-            <ModalPage
-                id={'coins'}
-                className="polus"
-                onClose={() => setActiveModal(null)}
-                dynamicContentHeight
-                // settlingHeight={100}
-                header={
-                    <ModalPageHeader
-                        after={
-                            !isDesktop && (
-                                <PanelHeaderButton
-                                    onClick={() => setActiveModal(null)}
-                                >
-                                    <Icon24Dismiss />
-                                </PanelHeaderButton>
-                            )
-                        }
-                    >
-                        Select Token
-                    </ModalPageHeader>
-                }
-            >
-                <Div>
-                    {availableTokens.filter((token) =>
-                        token.categories.includes('stablecoin'),
-                    ).length ? (
-                        <>
-                            <h3>Stable Coin</h3>
-                            <CardGrid size="m">
-                                {availableTokens
-                                    .filter((token) =>
-                                        token.categories.includes('stablecoin'),
-                                    )
-                                    .map((token, key) => (
-                                        <Card key={key}>
-                                            <SimpleCell
-                                                onClick={() => {
-                                                    setUserToken(token);
-                                                    setActiveModal(null);
-                                                }}
-                                                after={
-                                                    userToken?.name ===
-                                                    token.name ? (
-                                                        <Icon28DoneOutline />
-                                                    ) : null
-                                                }
-                                                before={
-                                                    <img
-                                                        src={getAssetUrl(
-                                                            import.meta.env
-                                                                .VITE_ASSET_URL,
-                                                            token.name,
-                                                        )}
-                                                        style={{
-                                                            marginRight: '12px',
-                                                        }}
-                                                        className="logo-cur"
-                                                    />
-                                                }
-                                            >
-                                                {token.name.toUpperCase()}
-                                            </SimpleCell>
-                                        </Card>
-                                    ))}
-                            </CardGrid>
-                        </>
-                    ) : null}
-
-                    {availableTokens.filter((token) =>
-                        token.categories.includes('popular'),
-                    ).length ? (
-                        <>
-                            {' '}
-                            <h3>Native Coin</h3>
-                            <CardGrid size="m">
-                                {availableTokens
-                                    .filter((token) =>
-                                        token.categories.includes('popular'),
-                                    )
-                                    .map((token, key) => (
-                                        <Card key={key}>
-                                            <SimpleCell
-                                                onClick={() => {
-                                                    setUserToken(token);
-                                                    setActiveModal(null);
-                                                }}
-                                                after={
-                                                    userToken?.name ===
-                                                    token.name ? (
-                                                        <Icon28DoneOutline />
-                                                    ) : null
-                                                }
-                                                before={
-                                                    <img
-                                                        src={getAssetUrl(
-                                                            import.meta.env
-                                                                .VITE_ASSET_URL,
-                                                            token.name,
-                                                        )}
-                                                        style={{
-                                                            marginRight: '12px',
-                                                        }}
-                                                        className="logo-cur"
-                                                    />
-                                                }
-                                            >
-                                                {token.name.toUpperCase()}
-                                            </SimpleCell>
-                                        </Card>
-                                    ))}
-                            </CardGrid>
-                        </>
-                    ) : null}
-
-                    {availableTokens.filter((token) =>
-                        token.categories.includes('wrap'),
-                    ).length ? (
-                        <>
-                            <h3>Wrapped Coin</h3>
-                            <CardGrid size="m">
-                                {availableTokens
-                                    .filter((token) =>
-                                        token.categories.includes('wrap'),
-                                    )
-                                    .map((token, key) => (
-                                        <Card key={key}>
-                                            <SimpleCell
-                                                onClick={() => {
-                                                    setUserToken(token);
-                                                    setActiveModal(null);
-                                                }}
-                                                after={
-                                                    userToken?.name ===
-                                                    token.name ? (
-                                                        <Icon28DoneOutline />
-                                                    ) : null
-                                                }
-                                                before={
-                                                    <img
-                                                        src={getAssetUrl(
-                                                            import.meta.env
-                                                                .VITE_ASSET_URL,
-                                                            token.name,
-                                                        )}
-                                                        style={{
-                                                            marginRight: '12px',
-                                                        }}
-                                                        className="logo-cur"
-                                                    />
-                                                }
-                                            >
-                                                {token.name.toUpperCase()}
-                                            </SimpleCell>
-                                        </Card>
-                                    ))}
-                            </CardGrid>
-                        </>
-                    ) : null}
-
-                    {availableTokens.filter((token) =>
-                        token.categories.includes('unknown'),
-                    ) ? (
-                        <>
-                            <h3>Other Coin</h3>
-                            <CardGrid size="m">
-                                {availableTokens
-                                    .filter((token) =>
-                                        token.categories.includes('unknown'),
-                                    )
-                                    .map((token, key) => (
-                                        <Card key={key}>
-                                            <SimpleCell
-                                                onClick={() => {
-                                                    setUserToken(token);
-                                                    setActiveModal(null);
-                                                }}
-                                                after={
-                                                    userToken?.name ===
-                                                    token.name ? (
-                                                        <Icon28DoneOutline />
-                                                    ) : null
-                                                }
-                                                before={
-                                                    <img
-                                                        src={getAssetUrl(
-                                                            import.meta.env
-                                                                .VITE_ASSET_URL,
-                                                            token.name,
-                                                        )}
-                                                        style={{
-                                                            marginRight: '12px',
-                                                        }}
-                                                        className="logo-cur"
-                                                    />
-                                                }
-                                            >
-                                                {token.name.toUpperCase()}
-                                            </SimpleCell>
-                                        </Card>
-                                    ))}
-                            </CardGrid>
-                        </>
-                    ) : null}
-                </Div>
-            </ModalPage>
-        </ModalRoot>
-    );
-
     return (
-        <AppRoot>
-            <SplitLayout
-                className="polus"
-                style={{ justifyContent: 'center' }}
-                modal={modalRoot}
-                popout={popout}
-                header={
-                    <header>
-                        <PanelHeader
-                            separator={false}
-                            before={
-                                <a href="https://poluspay.com" target="_blank">
-                                    <img src={logo} alt="logo" />
-                                </a>
-                            }
-                            after={<Web3Button balance="show" />}
-                            className="polus-header"
-                        />
-                    </header>
-                }
-            >
-                <SplitCol
-                    animate={false}
-                    spaced={isDesktop}
-                    width={isDesktop ? '450px' : '100%'}
-                    maxWidth={isDesktop ? '450px' : '100%'}
-                >
-                    <div id="main">
-                        <Routes>
-                            <Route
-                                path="/"
-                                element={
-                                    <View activePanel={'main1'} id="view">
-                                        <span id="main1">
-                                            <Main
-                                                id="main1"
-                                                setActiveModal={setActiveModal}
-                                                consoleLog={consoleLog}
-                                                isDesktop={isDesktop}
-                                                openPop={openPop}
-                                                closePop={closePop}
-                                                setUserToken={setUserToken}
-                                                userToken={userToken}
-                                            />
-                                        </span>
-                                    </View>
-                                }
-                            />
-                        </Routes>
-                    </div>
-                </SplitCol>
-                <QuestionButton
-                    visible={isGuideButtonVisible}
-                    onClick={() => setIsOpen(true)}
-                />
-                {snackbar}
-                <PNotifyContainer ms={2000} />
-            </SplitLayout>
-        </AppRoot>
+        <>
+            <Routes>
+                <Route path="/" element={<Layout />}>
+                    <Route path="/" element={<FormPage />} />
+                </Route>
+            </Routes>
+        </>
     );
 };

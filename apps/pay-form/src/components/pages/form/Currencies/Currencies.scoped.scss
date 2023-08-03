@@ -1,0 +1,18 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/utils';
+
+.currencies {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: px-to-rem(6);
+
+    &__item {
+        grid-column-start: span 3;
+        grid-column-end: span 3;
+
+        @include breakpoint($screen-xs) {
+            grid-column-start: span 2;
+            grid-column-end: span 2;
+        }
+    }
+}

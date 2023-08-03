@@ -30,7 +30,7 @@ export const approveThunk = createAsyncThunk<any, void, ThunkConfig>(
         }
 
         try {
-          debugger
+            debugger;
             const checkAndApprove = async (
                 contractType: Parameters<
                     typeof helper.checkAllowanceToUserToken

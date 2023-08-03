@@ -1,5 +1,5 @@
 export const enum WrapStatus {
-  NONE,
-  WRAP,
-  UNWRAP,
+    NONE,
+    WRAP,
+    UNWRAP,
 }

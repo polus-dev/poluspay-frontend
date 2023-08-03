@@ -56,7 +56,7 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                 setStage({
                     status: StageStatus.LOADING,
                     text: 'Calculate fee',
-                }),
+                })
             );
             const feeData = await fetchFeeData();
             const maxPriorityFeePerGas = feeData.maxPriorityFeePerGas
@@ -72,7 +72,7 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
 
             if (helper.Context === 'universal router') {
                 const deadline = Math.round(
-                    new Date(expireAt).getTime() / 1000,
+                    new Date(expireAt).getTime() / 1000
                 );
                 const swapOptions: SwapOptions = {
                     slippageTolerance: new Percent('90', '100'),
@@ -85,7 +85,7 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                 }
                 const { calldata } = SwapRouter.swapERC20CallParameters(
                     getState().transaction.pathTrade.path,
-                    swapOptions,
+                    swapOptions
                 );
                 const isContextFromNative = helper.userToken.is_native;
 
@@ -148,10 +148,10 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                 setStage({
                     text: 'Transaction success',
                     status: StageStatus.SUCCESS,
-                }),
+                })
             );
         } catch (error) {
             return rejectWithValue(error);
         }
-    },
+    }
 );

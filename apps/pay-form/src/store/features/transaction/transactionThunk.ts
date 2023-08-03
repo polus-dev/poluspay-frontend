@@ -15,7 +15,7 @@ import { approveThunk } from './stages/approveThunk';
 import { signThunk } from './stages/signThunk';
 import { sendThunk } from './stages/sendThunk';
 import { ThunkConfig } from '../../store';
-import {notify} from "@poluspay-frontend/ui";
+import { notify } from '@poluspay-frontend/ui';
 
 const thunks = [approveThunk, signThunk, sendThunk] as const;
 
@@ -47,12 +47,21 @@ export const startPay = createAsyncThunk<any, IPayload, ThunkConfig>(
                     })
                 );
                 // payload.consoleLog(error.message)
-              notify({title: error.name , status: "error", description: error.message})
+                notify({
+                    title: error.name,
+                    status: 'error',
+                    description: error.message,
+                });
             } else {
-              // payload.consoleLog(
-              //   error instanceof Error ? error.message : 'unknown error'
-              // );
-              notify({title: error instanceof Error ? error.name : "unknown", status: "error", description: error instanceof Error ? error.message : undefined})
+                // payload.consoleLog(
+                //   error instanceof Error ? error.message : 'unknown error'
+                // );
+                notify({
+                    title: error instanceof Error ? error.name : 'unknown',
+                    status: 'error',
+                    description:
+                        error instanceof Error ? error.message : undefined,
+                });
                 console.error(error);
                 return rejectWithValue(error);
             }

@@ -20,7 +20,7 @@ export function doPayThroughPolusContract({
     feeRecipient,
 }: IPayThroughPolusContract): Hex {
     // const polusContract = new ethers.utils.Interface(PolusContractAbi);
-  // @ts-ignore
+    // @ts-ignore
     uuid = uuid.replaceAll('-', '');
     if (tokenAddress) {
         return encodeFunctionData({

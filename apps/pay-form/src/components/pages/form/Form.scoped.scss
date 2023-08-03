@@ -1,0 +1,69 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+@keyframes default-border {
+    0% {
+        border-color: #5ddcff;
+    }
+    50% {
+        border-color: #3c67e3;
+    }
+    100% {
+        border-color: #4e00c2;
+    }
+}
+
+@keyframes error-border {
+    0% {
+        border-color: $color-red-light;
+    }
+    50% {
+        border-color: $color-red;
+    }
+    100% {
+        border-color: #AE2525;
+    }
+}
+
+.form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: px-to-rem(16);
+    width: 100%;
+    height: auto;
+    padding: px-to-rem(20) px-to-rem(16);
+    background-color: $color-black-light;
+    border-radius: px-to-rem(12);
+
+    @include breakpoint($screen-sm) {
+        padding: px-to-rem(24) px-to-rem(32);
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 1px solid #5ddcff;
+        border-radius: px-to-rem(12);
+        transition: border-color 0.5s ease-in-out;
+        animation: default-border 2.5s ease-in-out alternate infinite;
+        pointer-events: none;
+    }
+
+    &--error {
+        &::before {
+            border-color: $color-red-light;
+            animation: error-border 3.5s ease-in-out alternate infinite;
+        }
+    }
+
+    &__footer {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(10);
+    }
+}
