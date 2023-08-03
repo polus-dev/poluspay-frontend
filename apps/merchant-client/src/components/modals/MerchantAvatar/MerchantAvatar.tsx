@@ -61,7 +61,7 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
         };
 
         reader.onloadend = () => {
-          if (!isValid) return;
+            if (!isValid) return;
             setPreviewImage(reader.result?.toString() || '');
             setImage(file);
         };

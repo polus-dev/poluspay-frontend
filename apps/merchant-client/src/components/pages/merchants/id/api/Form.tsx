@@ -14,7 +14,7 @@ import {
     useGetMerchantByIdQuery,
     useGenerateSigningKeyMutation,
 } from '@poluspay-frontend/merchant-query';
-import { httpUrlRegex, httpsUrlRegex } from 'tools';
+import {httpUrlRegex, httpsUrlRegex, webhookUrlRegex} from 'tools';
 
 interface IMerchantApiFormProps {
     merchantId: string;
@@ -111,7 +111,6 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
                                         />
                                     )
                                 }
-                                onInput={() => {}}
                             />
                         </div>
                         <div className="form__inner-item-container-button">
@@ -136,7 +135,7 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
                         }
                         reg={register('webhookUrl', {
                             pattern: {
-                                value: httpUrlRegex,
+                                value: webhookUrlRegex,
                                 message: 'invalid  WebHook URL',
                             },
                         })}

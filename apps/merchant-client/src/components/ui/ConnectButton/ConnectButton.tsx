@@ -1,26 +1,30 @@
-import { PButton } from '@poluspay-frontend/ui';
 import { ReactComponent as LogoWalletConnect } from '../../../assets/logos/wallet-connect.svg';
+
+import classNames from 'classnames';
 
 import './styles.scss';
 
 interface ConnectButtonProps {
-    onClick?: React.MouseEventHandler;
     text?: string;
+    hasIcon?: boolean;
+    onClick?: () => void;
 }
 
-export const ConnectButton: React.FC<ConnectButtonProps> = (props) => {
+export const ConnectButton: React.FC<ConnectButtonProps> = ({
+    text = 'Connect Wallet',
+    hasIcon = true,
+    onClick,
+}) => {
+    const handleClick = () => {
+        if (!onClick) return undefined;
+
+        onClick();
+    };
+
     return (
-        <PButton
-            wide
-            size="lg"
-            onClick={props.onClick}
-            classname="connect-button"
-            children={
-                <>
-                    <LogoWalletConnect className="connect-button__icon" />
-                    {props.text || 'Connect Wallet'}
-                </>
-            }
-        />
+        <div className="connect-button" onClick={handleClick}>
+            {hasIcon && <LogoWalletConnect className="connect-button__icon" />}
+            {text}
+        </div>
     );
 };

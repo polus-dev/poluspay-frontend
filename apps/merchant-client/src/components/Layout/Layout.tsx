@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom';
 
-
 import { Header } from '../Header/Header';
 import { MerchantMenu } from '../MerchantMenu/MerchantMenu';
 import { PNotifyContainer } from '@poluspay-frontend/ui';

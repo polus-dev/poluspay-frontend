@@ -1,5 +1,5 @@
-import { PButton } from '@poluspay-frontend/ui'
-import './InternalServer.scoped.scss'
+import { PButton } from '@poluspay-frontend/ui';
+import './InternalServer.scoped.scss';
 
 export const InternalServerErrorPage: React.FC = () => {
     return (
@@ -11,9 +11,7 @@ export const InternalServerErrorPage: React.FC = () => {
                     alt="Error image"
                 />
                 <div className="error-page__inner-content">
-                    <h5 className="error-page__inner-content-title">
-                        500
-                    </h5>
+                    <h5 className="error-page__inner-content-title">500</h5>
                     <h6 className="error-page__inner-content-subtitle">
                         Internal Server Error
                     </h6>
@@ -25,13 +23,11 @@ export const InternalServerErrorPage: React.FC = () => {
                             wide
                             size="lg"
                             to="/"
-                            children={
-                                <p>Go home</p>
-                            }
+                            children={<p>Go home</p>}
                         />
                     </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
