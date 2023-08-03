@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import * as Sentry from '@sentry/react';
 import { ErrorBoundary } from '@sentry/react';
-import {AuthGuard} from "./components/Auth/AuthGuard";
+import { AuthGuard } from './components/Auth/AuthGuard';
 const domNode = document.getElementById('root');
 
 if (domNode) {
@@ -38,9 +38,9 @@ if (domNode) {
             <ErrorBoundary>
                 <BrowserRouter>
                     <Provider store={store}>
-                      <AuthGuard>
-                        <App />
-                      </AuthGuard>
+                        <AuthGuard>
+                            <App />
+                        </AuthGuard>
                     </Provider>
                 </BrowserRouter>
             </ErrorBoundary>

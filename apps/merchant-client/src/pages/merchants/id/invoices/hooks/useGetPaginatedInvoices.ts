@@ -4,7 +4,7 @@ import { Invoice } from 'apps/merchant-client/src/components/pages/merchants/id/
 import { useGetMerchantIdFromParams } from 'apps/merchant-client/src/hooks/useGetMerchantId';
 import { useGetAssetsQuery } from 'apps/merchant-client/src/store/api/endpoints/asset/Asset';
 import { useEffect, useState } from 'react';
-import {formatDate, getExplorerLink} from 'tools';
+import { formatDate, getExplorerLink } from 'tools';
 import { formatUnits } from 'viem';
 
 export const useGetPaginatedInvoices = ({
@@ -64,7 +64,14 @@ export const useGetPaginatedInvoices = ({
                         currency,
                         hash: {
                             value: invoice.transaction?.hash ?? '-',
-                            link: invoice.transaction?.network && invoice.transaction?.hash ?  getExplorerLink(invoice.transaction.network, invoice.transaction.hash) : undefined,
+                            link:
+                                invoice.transaction?.network &&
+                                invoice.transaction?.hash
+                                    ? getExplorerLink(
+                                          invoice.transaction.network,
+                                          invoice.transaction.hash
+                                      )
+                                    : undefined,
                             isSettled: Boolean(invoice.transaction?.hash),
                         },
                         date: formatDate(createdAt),

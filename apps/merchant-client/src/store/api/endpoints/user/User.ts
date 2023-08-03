@@ -24,4 +24,4 @@ export const userApi = createApi({
     }),
 });
 
-export const { useGetMeQuery , useLazyGetMeQuery} = userApi;
+export const { useGetMeQuery, useLazyGetMeQuery } = userApi;

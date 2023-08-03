@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import './Table.scoped.scss';
-import {getExplorerLink, makeShortHash} from 'tools';
+import { getExplorerLink, makeShortHash } from 'tools';
 
 type InvoiceStatus =
     | 'success'
@@ -67,7 +67,22 @@ export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
                             </div>
                             <div className="table__row-hash">
                                 {/* TODO: rewrite to normal link */}
-                                <p style={{cursor: el.hash.link ? "pointer" : "none"}} onClick={() => el.hash.link ? window.open(el.hash.link, "_blank") : undefined} className="table__row-hash-text">
+                                <p
+                                    style={{
+                                        cursor: el.hash.link
+                                            ? 'pointer'
+                                            : 'none',
+                                    }}
+                                    onClick={() =>
+                                        el.hash.link
+                                            ? window.open(
+                                                  el.hash.link,
+                                                  '_blank'
+                                              )
+                                            : undefined
+                                    }
+                                    className="table__row-hash-text"
+                                >
                                     {el.hash.isSettled
                                         ? makeShortHash(el.hash.value, 3)
                                         : el.hash.value}

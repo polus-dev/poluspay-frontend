@@ -74,7 +74,7 @@ export const LoginForm: React.FC = () => {
                     title: 'Verification',
                     description: 'handle verification code submitting',
                     status: 'success',
-                }),
+                })
             );
         }
     };
@@ -86,8 +86,8 @@ export const LoginForm: React.FC = () => {
                     <h1 className="form__inner-title">Login</h1>
                     <div className="form__inner-buttons">
                         <ConnectButton
-                            onClick={connectWallet}
                             text={buttonText}
+                            onClick={connectWallet}
                         />
                         <div className="form__inner-buttons-row">
                             <PButton
