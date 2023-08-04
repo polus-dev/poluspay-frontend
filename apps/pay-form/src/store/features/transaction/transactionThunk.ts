@@ -16,7 +16,6 @@ import { signThunk } from './stages/signThunk';
 import { sendThunk } from './stages/sendThunk';
 import { ThunkConfig } from '../../store';
 import {notify} from "@poluspay-frontend/ui";
-import {trimEndOfString} from "../../../../../../tools";
 
 const thunks = [approveThunk, signThunk, sendThunk] as const;
 
@@ -50,7 +49,7 @@ export const startPay = createAsyncThunk<any, IPayload, ThunkConfig>(
                     })
                 );
                 // payload.consoleLog(error.message)
-              notify({title: error.name , status: "error", description: trimEndOfString(error.message, 15)})
+              notify({title: error.name , status: "error", description: error.message })
             } else {
               // payload.consoleLog(
               //   error instanceof Error ? error.message : 'unknown error'
