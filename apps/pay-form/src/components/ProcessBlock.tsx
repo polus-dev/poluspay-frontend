@@ -1,3 +1,4 @@
+import{getAccount} from "wagmi/actions"
 import { StageStatus } from "../store/features/transaction/transactionSlice";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { Stage } from "./Stage";
@@ -5,6 +6,7 @@ import { useEffect } from "react";
 import { startPay } from "../store/features/transaction/transactionThunk";
 import { Token } from "../store/api/types";
 import { Blockchain_t } from "../store/api/endpoints/types";
+import {setIsMetamask} from "../store/features/connection/connectionSlice";
 
 interface ProcessBlockProps {
   id: string
@@ -30,6 +32,11 @@ export const ProcessBlock = (props: ProcessBlockProps) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    const walletName = getAccount().connector?.name;
+    if (walletName) {
+      dispatch(setIsMetamask(walletName === "MetaMask"));
+    }
+
     props.setProgress(50);
     // @ts-ignore
     const abortPromise = dispatch(startPay(props));
