@@ -7,6 +7,7 @@ import { PSelect } from '@poluspay-frontend/ui';
 import { DashboardStatsElement } from './StatsElement/StatsElement';
 
 import './Stats.scoped.scss';
+import {useMemo, useRef} from "react";
 
 interface StatsBlockProps {
     merchantId?: string;
@@ -41,6 +42,8 @@ export const DashboardStats: React.FC = () => {
         merchantsAmount,
     } = useMerchantOptions();
 
+    const toDate  = useRef(new Date().toISOString());
+
     return (
         <div className="stats">
             <div className="stats__header">
@@ -64,7 +67,7 @@ export const DashboardStats: React.FC = () => {
 
             <StatsBlock
                 merchantId={selectedMerchant?.id}
-                toData={new Date().toISOString()}
+                toData={toDate.current}
                 fromData={getBeginningOfDate('month').toISOString()}
             />
         </div>
