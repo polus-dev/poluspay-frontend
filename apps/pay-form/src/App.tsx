@@ -28,12 +28,12 @@
 // import logo from './img/logo.svg';
 // import { QuestionButton } from './components/ui/QuestionButton/QuestionButton';
 // import { useTour } from '@reactour/tour';
-// import { useAppDispatch, useAppSelector } from './store/hooks';
+// import { useAppDispatch, useAppSelector } from './store/s';
 // import { useGetPaymentByPaymentIdQuery } from './store/api/endpoints/payment/Payment';
 // import { setView, ViewVariant } from './store/features/view/viewSlice';
 // import { setCurrentBlockchain } from './store/features/connection/connectionSlice';
 // import { ConsoleLog } from './components/modals/consoleLog.ts';
-// import { useAvailableTokens } from './pages/Main/hooks/useAvailableTokens';
+// import { useAvailableTokens } from './pages/Main/s/useAvailableTokens';
 // import { Token } from './store/api/types';
 // import { ChainForWeb3Modal } from './types/ChainForWeb3Modal';
 // import { Main } from './pages/Main/Main';
@@ -498,7 +498,9 @@ export const App: React.FC = () => {
         <>
             <Routes>
                 <Route path="/" element={<Layout />}>
-                    <Route path="/" element={<FormPage />} />
+                    <Route index element={<FormPage errorMessages="url path is empty" />} />
+                  <Route path="/id/:id" element={<FormPage />} />
+                  <Route path="*" element={<FormPage errorMessages="invalid path" />} />
                 </Route>
             </Routes>
         </>

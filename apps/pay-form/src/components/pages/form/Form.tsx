@@ -15,11 +15,19 @@ import { FormError } from './Error/Error';
 import classNames from 'classnames';
 
 import './Form.scoped.scss';
+import {usePaymentInfo} from "../../../hooks/usePaymentInfo";
+import {formatUnits} from "viem";
+import {roundCryptoAmount} from "../../../../../../tools";
 
-type FormStage = 'default' | 'native' | 'process';
+type FormStage = 'EVM' | 'QRCode' | 'ProcessBlock' | 'Loading';
 
-export const Form: React.FC = () => {
-    const [stage, setStage] = useState<FormStage>('default');
+interface IFormProps {
+  id: string;
+}
+
+export const Form = ({id}: IFormProps) => {
+    const [stage, setStage] = useState<FormStage>('EVM');
+    const {isLoading, info, merchantToken, amountInMerchantToken } = usePaymentInfo(id)
 
     const ok = true;
 
@@ -30,15 +38,15 @@ export const Form: React.FC = () => {
                 'form--error': !ok,
             })}
         >
-            {ok ? (
+            {info && merchantToken ? (
                 <>
                     <div className="form__header">
-                        <FormHeader />
+                        <FormHeader merchant={info.merchant}  payment={{description: info.payment.description, amount: roundCryptoAmount(formatUnits(BigInt(amountInMerchantToken), merchantToken.decimals)), currency: merchantToken.name.toUpperCase()}} />
                     </div>
                     <div className="form__progress">
                         <ProgressBar value={70} />
                     </div>
-                    {stage === 'default' ? (
+                    {stage === 'EVM' ? (
                         <>
                             <div className="form__select">
                                 <FormSelect
@@ -50,10 +58,10 @@ export const Form: React.FC = () => {
                                 <FormCurrencies />
                             </div>
                             <div className="form__timer">
-                                <FormTimer />
+                                <FormTimer expiresAt={info.payment.expires_at} />
                             </div>
                         </>
-                    ) : stage === 'native' ? (
+                    ) : stage === 'QRCode' ? (
                         <>
                             <div className="form__native">
                                 <FormNativePayment />
@@ -63,11 +71,11 @@ export const Form: React.FC = () => {
                             </div>
                         </>
                     ) : (
-                        stage === 'process' && (
+                        stage === 'ProcessBlock' ? (
                             <div className="form__process">
                                 <FormProcessBlock />
                             </div>
-                        )
+                        ) : <h1>Loading...</h1>
                     )}
                     <div className="form__footer">
                         <div className="form__footer-button">

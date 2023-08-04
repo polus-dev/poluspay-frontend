@@ -148,9 +148,9 @@ if (domNode) {
         <React.StrictMode>
             <BrowserRouter>
               <WagmiConfig config={wagmiConfig}>
-                {/*<Provider store={store}>*/}
+                <Provider store={store}>
                 <App />
-                {/*</Provider>*/}
+                </Provider>
                 <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
               </WagmiConfig>
             </BrowserRouter>

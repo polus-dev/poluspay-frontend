@@ -1,39 +1,49 @@
 import { ReactComponent as IconVerified } from '../../../../assets/icons/verified.svg';
 
 import './Header.scoped.scss';
+import {IPaymentMerchant} from "@poluspay-frontend/api";
+import {displayMerchantInfo} from "../../../../utils/displayMerchantInfo";
 
-export const FormHeader: React.FC = () => {
-    const brandConfirmed = true;
 
+interface FormHeaderProps {
+    merchant: IPaymentMerchant
+    payment: {
+        description: string
+        amount: string,
+        currency: string,
+    }
+}
+
+export const FormHeader= (props: FormHeaderProps) => {
     return (
         <div className="header">
-            <div className="header__avatar">
+            {props.merchant.logo && <div className="header__avatar">
                 <img
                     className="header__avatar-image"
-                    src="/images/polygon.png"
+                    src={props.merchant.logo}
                     alt="Merchant avatar"
                 />
-            </div>
+            </div> }
             <div className="header__data">
                 <div className="header__data-topline">
-                    {brandConfirmed ? (
+                    {props.merchant.verified_at ? (
                         <div className="header__data-topline-brand">
-                            Brand name
+                            {displayMerchantInfo(props.merchant)}
                             <IconVerified className="header__data-topline-brand-icon" />
                         </div>
                     ) : (
                         <p className="header__data-topline-website">
-                            example.com
+                            {displayMerchantInfo(props.merchant)}
                         </p>
                     )}
                     <p className="header__data-topline-value">
                         Total:&nbsp;
                         <span className="header__data-topline-value header__data-topline-value--highlight">
-                            123.123 USDT
+                            {props.payment.amount} {props.payment.currency}
                         </span>
                     </p>
                 </div>
-                <p className="header__data-description">Payment description</p>
+                <p className="header__data-description">{props.payment.description}</p>
             </div>
         </div>
     );

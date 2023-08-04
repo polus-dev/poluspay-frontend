@@ -19,7 +19,7 @@ import btn from '../../img/btn.jpg';
 import wc from '../../img/wc.svg';
 
 import { CheatCodeListener } from '../../components/CheatCodeListener';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/s';
 import { ProgressBar } from '../../components/ui/ProgressBar';
 import {
     setSmartLineStatus,
@@ -34,8 +34,8 @@ import { useTour } from '@reactour/tour';
 import { setVisibleGuideButton } from '../../store/features/guide/guideSlice';
 import { ViewVariant, setView } from '../../store/features/view/viewSlice';
 import { useGetAssetsQuery } from '../../store/api/endpoints/asset/Asset';
-import { usePaymentInfo } from './hooks/usePaymentInfo';
-import { useAvailableTokens } from './hooks/useAvailableTokens';
+import { usePaymentInfo } from '../../../hooks/usePaymentInfo';
+import { useAvailableTokens } from '../../../hooks/useAvailableTokens';
 import { Token } from '../../store/api/types';
 import { QRCodePayment } from '../../components/QRCodePayment';
 import { ProcessBlock } from '../../components/ProcessBlock';
@@ -43,7 +43,7 @@ import { ethers } from 'ethers';
 import { StatusComponent } from '../../components/StatusComponent';
 import { useGetPaymentByPaymentIdQuery } from '../../store/api/endpoints/payment/Payment';
 import { ChainId } from '../../store/api/endpoints/types';
-import { useTokenPairPrice } from './hooks/useTokenPairPrice';
+import { useTokenPairPrice } from '../../../hooks/useTokenPairPrice';
 import { getAssetUrl, roundCryptoAmount } from 'tools';
 import { displayMerchantInfo } from '../../utils/getMerchantInfo';
 import { useRandomId } from '@poluspay-frontend/hooks';

@@ -7,7 +7,7 @@ interface FormErrorProps {
 }
 
 export const FormError: React.FC<FormErrorProps> = ({
-    message = 'Invalid UUID',
+    message = 'Something went wrong',
 }) => {
     return (
         <div className="error">
