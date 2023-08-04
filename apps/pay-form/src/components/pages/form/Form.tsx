@@ -18,18 +18,30 @@ import './Form.scoped.scss';
 import {usePaymentInfo} from "../../../hooks/usePaymentInfo";
 import {formatUnits} from "viem";
 import {roundCryptoAmount} from "../../../../../../tools";
+import {SelectSubPage} from "../../../pages/subPages/SelectSubPage";
+import {QRCodeSubPage} from "../../../pages/subPages/QRCodeSubPage";
+import {ProcessBlock} from "../../../pages/subPages/ProcessBlock";
 
-type FormStage = 'EVM' | 'QRCode' | 'ProcessBlock' | 'Loading';
+type FormStage = 'Select' | 'QRCode' | 'ProcessBlock';
 
 interface IFormProps {
   id: string;
 }
 
+
+const MockHeaderData  = {
+    description: "desc",
+    amount: '1',
+    currency: 'usdt' ,
+}
+
+
 export const Form = ({id}: IFormProps) => {
-    const [stage, setStage] = useState<FormStage>('EVM');
-    const {isLoading, info, merchantToken, amountInMerchantToken } = usePaymentInfo(id)
+    const [stage, setStage] = useState<FormStage>('Select');
+    // const {isLoading, info, merchantToken, amountInMerchantToken } = usePaymentInfo(id)
 
     const ok = true;
+    const isLoading = false
 
     return (
         <div
@@ -38,44 +50,21 @@ export const Form = ({id}: IFormProps) => {
                 'form--error': !ok,
             })}
         >
-            {info && merchantToken ? (
+            {!isLoading ? (
                 <>
                     <div className="form__header">
-                        <FormHeader merchant={info.merchant}  payment={{description: info.payment.description, amount: roundCryptoAmount(formatUnits(BigInt(amountInMerchantToken), merchantToken.decimals)), currency: merchantToken.name.toUpperCase()}} />
+                        {/*<FormHeader merchant={info.merchant}  payment={{description: info.payment.description, amount: roundCryptoAmount(formatUnits(BigInt(amountInMerchantToken), merchantToken.decimals)), currency: merchantToken.name.toUpperCase()}} />*/}
+                        <FormHeader   payment={{...MockHeaderData}} />
                     </div>
                     <div className="form__progress">
                         <ProgressBar value={70} />
                     </div>
-                    {stage === 'EVM' ? (
-                        <>
-                            <div className="form__select">
-                                <FormSelect
-                                    item={{ image: '', text: '' }}
-                                    onClick={() => console.log('open modal')}
-                                />
-                            </div>
-                            <div className="form__currencies">
-                                <FormCurrencies />
-                            </div>
-                            <div className="form__timer">
-                                <FormTimer expiresAt={info.payment.expires_at} />
-                            </div>
-                        </>
+                    {stage === 'Select' ? (
+                        <SelectSubPage />
                     ) : stage === 'QRCode' ? (
-                        <>
-                            <div className="form__native">
-                                <FormNativePayment />
-                            </div>
-                            <div className="form__warning">
-                                <FormWarning name="dai" amount={123123123} />
-                            </div>
-                        </>
+                        <QRCodeSubPage />
                     ) : (
-                        stage === 'ProcessBlock' ? (
-                            <div className="form__process">
-                                <FormProcessBlock />
-                            </div>
-                        ) : <h1>Loading...</h1>
+                        <ProcessBlock />
                     )}
                     <div className="form__footer">
                         <div className="form__footer-button">
@@ -90,7 +79,7 @@ export const Form = ({id}: IFormProps) => {
                     {/* add modals currency & blockchain selector */}
                 </>
             ) : (
-                <FormError />
+                <h1>loading</h1>
             )}
         </div>
     );

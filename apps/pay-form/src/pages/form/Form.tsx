@@ -1,21 +1,22 @@
-import { Form } from '../../components/pages/form/Form';
-
 import './Form.scoped.scss';
-import {FormError} from "../../components/pages/form/Error/Error";
-import {useParams} from "react-router";
-import {isValidUUID} from "../../../../../tools/isValidUUID";
+import classNames from "classnames";
 
 interface IFormPageProps {
-    errorMessages?: string;
-    uuid?: string;
+    children?: React.ReactNode
+    isError?: boolean;
 }
 
 export const FormPage= (props: IFormPageProps) => {
-    const {id} = useParams<{id: string}>();
-    const isValidId = isValidUUID(id!);
     return (
         <div className="form-page">
-            {props.errorMessages || !isValidId ? <FormError  message={props.errorMessages || 'invalid uuid'} /> : <Form id={id!} /> }
+            <div
+                className={classNames({
+                    form: true,
+                    'form--error': props.isError,
+                })}
+            >
+            {props.children}
+            </div>
         </div>
     );
 };

@@ -492,15 +492,18 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Layout } from './components/Layout/Layout';
 import { FormPage } from './pages/form/Form';
+import {ErrorFormPage} from "./pages/ErrorFormPage";
+import React from "react";
+import {MainPage} from "./pages/Main";
 
 export const App: React.FC = () => {
     return (
         <>
             <Routes>
                 <Route path="/" element={<Layout />}>
-                    <Route index element={<FormPage errorMessages="url path is empty" />} />
-                  <Route path="/id/:id" element={<FormPage />} />
-                  <Route path="*" element={<FormPage errorMessages="invalid path" />} />
+                    <Route index element={<ErrorFormPage message="url path is empty"/>} />
+                  <Route path="/id/:id" element={<MainPage />} />
+                  <Route path="*" element={<ErrorFormPage message="invalid url path"/>} />
                 </Route>
             </Routes>
         </>
