@@ -43,6 +43,7 @@ export const useEmailAuth = () => {
                     status: 'error',
                     description: (error as any).message,
                 });
+                return Promise.reject({ error });
             }
         },
         [isExpired, dispatch]
