@@ -24,7 +24,10 @@ interface AllType {
 
 const getPaymentAssetInfo = (payment: Payment, blockchain: Blockchain_t) => {
   const assetName = payment.assets[0].name;
-  const paymentInfo = payment.assets[0];
+  const paymentInfo = payment.assets.find(e => e.network === blockchain)
+  if (!paymentInfo) {
+    throw new Error('Payment info is not defined');
+  }
   return { assetName, paymentInfo };
 };
 
