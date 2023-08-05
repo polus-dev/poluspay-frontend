@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import {expiresInfo} from "../../../../tools/date/isExpired";
+import { expiresInfo } from '../../../../tools/date/isExpired';
 
 export const useTimer = (expiresAt: string) => {
     const [timer, setTimer] = useState('00:00');
     useEffect(() => {
-        let {diffTime} = expiresInfo(expiresAt);
+        let { diffTime } = expiresInfo(expiresAt);
         const id = setInterval(() => {
             if (diffTime <= 0) {
                 clearInterval(id);
@@ -21,7 +21,7 @@ export const useTimer = (expiresAt: string) => {
             diffTime--;
         }, 1000);
 
-        return () => clearInterval(id)
+        return () => clearInterval(id);
     }, []);
 
     return { timer };

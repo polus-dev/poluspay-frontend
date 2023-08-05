@@ -1,12 +1,12 @@
 import './Form.scoped.scss';
-import classNames from "classnames";
+import classNames from 'classnames';
 
 interface IFormPageProps {
-    children?: React.ReactNode
+    children?: React.ReactNode;
     isError?: boolean;
 }
 
-export const FormPage= (props: IFormPageProps) => {
+export const FormPage = (props: IFormPageProps) => {
     return (
         <div className="form-page">
             <div
@@ -15,7 +15,7 @@ export const FormPage= (props: IFormPageProps) => {
                     'form--error': props.isError,
                 })}
             >
-            {props.children}
+                {props.children}
             </div>
         </div>
     );

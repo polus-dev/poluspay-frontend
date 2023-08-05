@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useTimer } from './useTimer';
-import {IGetMerchantByIdResponse} from "../store/api/endpoints/merchant/Merchant.interface";
-import {IGetPaymentsResponse} from "../store/api/endpoints/payment/Payment.interface";
-import {useLazyGetPaymentByPaymentIdQuery} from "../store/api/endpoints/payment/Payment";
-import {useLazyGetMerchantByIdQuery} from "../store/api/endpoints/merchant/Merchant";
-import {useAppDispatch, useAppSelector} from "../store/hooks";
-import {useAvailableTokens} from "./useAvailableTokens";
+import { IGetMerchantByIdResponse } from '../store/api/endpoints/merchant/Merchant.interface';
+import { IGetPaymentsResponse } from '../store/api/endpoints/payment/Payment.interface';
+import { useLazyGetPaymentByPaymentIdQuery } from '../store/api/endpoints/payment/Payment';
+import { useLazyGetMerchantByIdQuery } from '../store/api/endpoints/merchant/Merchant';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { useAvailableTokens } from './useAvailableTokens';
 import { Token } from '../store/api/types';
-import {Asset_t, Blockchain_t} from "../store/api/endpoints/types";
-import {ResponseApiCode} from "../store/api/responseApiCode";
-import {setCurrentBlockchain} from "../store/features/connection/connectionSlice";
+import { Asset_t, Blockchain_t } from '../store/api/endpoints/types';
+import { ResponseApiCode } from '../store/api/responseApiCode';
+import { setCurrentBlockchain } from '../store/features/connection/connectionSlice';
 
 interface IError {
     message: string;
@@ -37,7 +37,7 @@ export const usePaymentInfo = (id: string) => {
     const [expireAt, setExpireAt] = useState('');
 
     const [info, setInfo] = useState<IPaymentInfo>();
-    console.log(availableTokens)
+    console.log(availableTokens);
     const [amountInMerchantToken, setAmountInMerchantToken] = useState('0');
     const [fee, setFee] = useState('0');
     const [merchantAmount, setMerchantAmount] = useState('0');
@@ -48,10 +48,10 @@ export const usePaymentInfo = (id: string) => {
         const assetKey = info.payment.assets[0].name as Asset_t;
         const token = availableTokens.find((token) => token.name === assetKey);
 
-        const payment = currentBlockchain ? info.payment.assets.find(
-            (i) => i.network === currentBlockchain
-        ) : info.payment.assets[0];
-        console.log(info)
+        const payment = currentBlockchain
+            ? info.payment.assets.find((i) => i.network === currentBlockchain)
+            : info.payment.assets[0];
+        console.log(info);
         if (!payment) throw new Error('usePaymentInfo: Payment not found');
 
         setAmountInMerchantToken(
@@ -77,7 +77,13 @@ export const usePaymentInfo = (id: string) => {
                             payment: paymentResponse.data!,
                             merchant: merchantResponse.data,
                         });
-                            if (!currentBlockchain)  dispatch(setCurrentBlockchain(paymentResponse.data!.assets[0].network as Blockchain_t))
+                        if (!currentBlockchain)
+                            dispatch(
+                                setCurrentBlockchain(
+                                    paymentResponse.data!.assets[0]
+                                        .network as Blockchain_t
+                                )
+                            );
                     } else if (merchantResponse.error) {
                         setError({
                             message: 'Error load data merchant',
@@ -94,7 +100,6 @@ export const usePaymentInfo = (id: string) => {
         });
         setIsLoading(false);
     }, [currentBlockchain]);
-
 
     return {
         isLoading,

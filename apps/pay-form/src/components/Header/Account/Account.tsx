@@ -4,16 +4,16 @@ import { ReactComponent as LogoWalletConnect } from '../../../assets/logos/walle
 import { ReactComponent as IconChevron } from '../../../assets/icons/chevron.svg';
 
 import './Account.scoped.scss';
-import {useAccount, useDisconnect, useEnsAvatar, useEnsName} from "wagmi";
-import {useWeb3Modal} from "@web3modal/react";
-import {makeShortHash} from "../../../../../../tools";
+import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi';
+import { useWeb3Modal } from '@web3modal/react';
+import { makeShortHash } from '../../../../../../tools';
 
 export const HeaderAccount: React.FC = () => {
-  const {isConnected, address, connector} = useAccount();
-  const {disconnect} = useDisconnect();
-  const { data: ensName } = useEnsName({ address })
-  const { data: ensAvatar } = useEnsAvatar({ name: ensName })
-  const {open, isOpen} = useWeb3Modal();
+    const { isConnected, address, connector } = useAccount();
+    const { disconnect } = useDisconnect();
+    const { data: ensName } = useEnsName({ address });
+    const { data: ensAvatar } = useEnsAvatar({ name: ensName });
+    const { open, isOpen } = useWeb3Modal();
 
     return (
         <div className="account">
@@ -44,7 +44,7 @@ export const HeaderAccount: React.FC = () => {
                                 <div className="account__dropdown-handler__inner">
                                     <LogoWalletConnect className="account__dropdown-handler__inner-icon" />
                                     <p className="account__dropdown-handler__inner-text">
-                                      {makeShortHash(address!, 4)}
+                                        {makeShortHash(address!, 4)}
                                     </p>
                                 </div>
                                 <IconChevron className="account__dropdown-handler__icon" />
@@ -52,7 +52,16 @@ export const HeaderAccount: React.FC = () => {
                         }
                         content={
                             <div className="account__dropdown-content">
-                              {address && connector && <HeaderAccountContent {...{address, disconnect, ensName, ensAvatar}} />}
+                                {address && connector && (
+                                    <HeaderAccountContent
+                                        {...{
+                                            address,
+                                            disconnect,
+                                            ensName,
+                                            ensAvatar,
+                                        }}
+                                    />
+                                )}
                             </div>
                         }
                     />

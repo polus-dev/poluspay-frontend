@@ -1,5 +1,5 @@
-import {FormNativePayment} from "../../components/pages/form/Native/Native";
-import {FormWarning} from "../../components/pages/form/Warning/Warning";
+import { FormNativePayment } from '../../components/pages/form/Native/Native';
+import { FormWarning } from '../../components/pages/form/Warning/Warning';
 
 export const QRCodeSubPage = () => {
     return (
@@ -11,5 +11,5 @@ export const QRCodeSubPage = () => {
                 <FormWarning name="dai" amount={123123123} />
             </div>
         </>
-    )
-}
+    );
+};

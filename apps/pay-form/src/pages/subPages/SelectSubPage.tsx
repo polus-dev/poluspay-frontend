@@ -1,10 +1,9 @@
-import {FormSelect} from "../../components/pages/form/Select/Select";
-import {FormCurrencies} from "../../components/pages/form/Currencies/Currencies";
-import {FormTimer} from "../../components/pages/form/Timer/Timer";
+import { FormSelect } from '../../components/pages/form/Select/Select';
+import { FormCurrencies } from '../../components/pages/form/Currencies/Currencies';
+import { FormTimer } from '../../components/pages/form/Timer/Timer';
 
 export const SelectSubPage = () => {
     return (
-
         <>
             <div className="form__select">
                 <FormSelect
@@ -19,5 +18,5 @@ export const SelectSubPage = () => {
                 {/*<FormTimer expiresAt={info.payment.expires_at} />*/}
             </div>
         </>
-    )
-}
+    );
+};

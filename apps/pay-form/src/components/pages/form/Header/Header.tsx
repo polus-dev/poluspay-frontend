@@ -1,20 +1,19 @@
 import { ReactComponent as IconVerified } from '../../../../assets/icons/verified.svg';
 
 import './Header.scoped.scss';
-import {IPaymentMerchant} from "@poluspay-frontend/api";
-import {displayMerchantInfo} from "../../../../utils/displayMerchantInfo";
-
+import { IPaymentMerchant } from '@poluspay-frontend/api';
+import { displayMerchantInfo } from '../../../../utils/displayMerchantInfo';
 
 interface FormHeaderProps {
     // merchant: IPaymentMerchant
     payment: {
-        description: string
-        amount: string,
-        currency: string,
-    }
+        description: string;
+        amount: string;
+        currency: string;
+    };
 }
 
-export const FormHeader= (props: FormHeaderProps) => {
+export const FormHeader = (props: FormHeaderProps) => {
     return (
         <div className="header">
             {/*{props.merchant.logo && <div className="header__avatar">*/}
@@ -43,7 +42,9 @@ export const FormHeader= (props: FormHeaderProps) => {
                         </span>
                     </p>
                 </div>
-                <p className="header__data-description">{props.payment.description}</p>
+                <p className="header__data-description">
+                    {props.payment.description}
+                </p>
             </div>
         </div>
     );

@@ -15,33 +15,31 @@ import { FormError } from './Error/Error';
 import classNames from 'classnames';
 
 import './Form.scoped.scss';
-import {usePaymentInfo} from "../../../hooks/usePaymentInfo";
-import {formatUnits} from "viem";
-import {roundCryptoAmount} from "../../../../../../tools";
-import {SelectSubPage} from "../../../pages/subPages/SelectSubPage";
-import {QRCodeSubPage} from "../../../pages/subPages/QRCodeSubPage";
-import {ProcessBlock} from "../../../pages/subPages/ProcessBlock";
+import { usePaymentInfo } from '../../../hooks/usePaymentInfo';
+import { formatUnits } from 'viem';
+import { roundCryptoAmount } from '../../../../../../tools';
+import { SelectSubPage } from '../../../pages/subPages/SelectSubPage';
+import { QRCodeSubPage } from '../../../pages/subPages/QRCodeSubPage';
+import { ProcessBlock } from '../../../pages/subPages/ProcessBlock';
 
 type FormStage = 'Select' | 'QRCode' | 'ProcessBlock';
 
 interface IFormProps {
-  id: string;
+    id: string;
 }
 
-
-const MockHeaderData  = {
-    description: "desc",
+const MockHeaderData = {
+    description: 'desc',
     amount: '1',
-    currency: 'usdt' ,
-}
+    currency: 'usdt',
+};
 
-
-export const Form = ({id}: IFormProps) => {
+export const Form = ({ id }: IFormProps) => {
     const [stage, setStage] = useState<FormStage>('Select');
     // const {isLoading, info, merchantToken, amountInMerchantToken } = usePaymentInfo(id)
 
     const ok = true;
-    const isLoading = false
+    const isLoading = false;
 
     return (
         <div
@@ -54,7 +52,7 @@ export const Form = ({id}: IFormProps) => {
                 <>
                     <div className="form__header">
                         {/*<FormHeader merchant={info.merchant}  payment={{description: info.payment.description, amount: roundCryptoAmount(formatUnits(BigInt(amountInMerchantToken), merchantToken.decimals)), currency: merchantToken.name.toUpperCase()}} />*/}
-                        <FormHeader   payment={{...MockHeaderData}} />
+                        <FormHeader payment={{ ...MockHeaderData }} />
                     </div>
                     <div className="form__progress">
                         <ProgressBar value={70} />

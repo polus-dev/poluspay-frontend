@@ -147,12 +147,15 @@ if (domNode) {
     root.render(
         <React.StrictMode>
             <BrowserRouter>
-              <WagmiConfig config={wagmiConfig}>
-                <Provider store={store}>
-                <App />
-                </Provider>
-                <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
-              </WagmiConfig>
+                <WagmiConfig config={wagmiConfig}>
+                    <Provider store={store}>
+                        <App />
+                    </Provider>
+                    <Web3Modal
+                        projectId={projectId}
+                        ethereumClient={ethereumClient}
+                    />
+                </WagmiConfig>
             </BrowserRouter>
         </React.StrictMode>
     );

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { AssetRepresentation } from '@poluspay-frontend/api';
-import {useAppSelector} from "../store/hooks";
-import {useGetAssetsQuery} from "@poluspay-frontend/merchant-query";
+import { useAppSelector } from '../store/hooks';
+import { useGetAssetsQuery } from '@poluspay-frontend/merchant-query';
 
 export const useAvailableTokens = () => {
     const [availableTokens, setAvailableTokens] = useState<
