@@ -3,8 +3,9 @@ import { ReactComponent as IconCheckmark } from '../../../../../assets/icons/che
 import { ReactComponent as IconCross } from '../../../../../assets/icons/cross.svg';
 import { ReactComponent as IconRefresh } from '../../../../../assets/icons/refresh.svg';
 
-import './ProcessItem.scoped.scss';
 import classNames from 'classnames';
+
+import './ProcessItem.scoped.scss';
 
 export type InvoiceStatus = 'pending' | 'loading' | 'success' | 'failure';
 

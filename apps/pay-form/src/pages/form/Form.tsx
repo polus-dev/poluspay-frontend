@@ -5,11 +5,11 @@ import { Loader } from '@poluspay-frontend/ui';
 import { Form } from '../../components/pages/form/Form';
 import { FormError } from '../../components/pages/form/states/Error/Error';
 import { FormProcessing } from '../../components/pages/form/states/Processing/Processing';
+import { FormSuccess } from '../../components/pages/form/states/Success/Success';
 
 import classNames from 'classnames';
 
 import './Form.scoped.scss';
-import { FormSuccess } from '../../components/pages/form/states/Success/Success';
 
 type FormStatus = 'default' | 'loading' | 'success' | 'in_progress';
 

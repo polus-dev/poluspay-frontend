@@ -1,6 +1,7 @@
-import './Native.scoped.scss';
 import { FormQRCode } from './QRCode/QRCode';
 import { FormWarning } from './Warning/Warning';
+
+import './Native.scoped.scss';
 
 export const FormNativePayment: React.FC = () => {
     return (

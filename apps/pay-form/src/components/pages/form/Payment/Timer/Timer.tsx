@@ -1,9 +1,11 @@
-import './Timer.scoped.scss';
 import { useTimer } from '../../../../../hooks/useTimer';
+
+import './Timer.scoped.scss';
 
 interface IFormTimerProps {
     expiresAt: string;
 }
+
 export const FormTimer: React.FC<IFormTimerProps> = ({ expiresAt }) => {
     const { timer } = useTimer(expiresAt);
 

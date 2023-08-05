@@ -1,8 +1,9 @@
+import { IPaymentMerchant } from '@poluspay-frontend/api';
+import { displayMerchantInfo } from '../../../../utils/displayMerchantInfo';
+
 import { ReactComponent as IconVerified } from '../../../../assets/icons/verified.svg';
 
 import './Header.scoped.scss';
-import { IPaymentMerchant } from '@poluspay-frontend/api';
-import { displayMerchantInfo } from '../../../../utils/displayMerchantInfo';
 
 interface FormHeaderProps {
     // merchant: IPaymentMerchant

@@ -1,19 +1,18 @@
 import { useState } from 'react';
 
+import { usePaymentInfo } from '../../../hooks/usePaymentInfo';
+import { formatUnits } from 'viem';
+import { roundCryptoAmount } from '../../../../../../tools';
+
 import { ProgressBar } from '../../ui/ProgressBar/ProgressBar';
 import { FormButton } from './Button/Button';
 import { FormHeader } from './Header/Header';
 import { FormFooter } from './Footer/Footer';
 import { FormNativePayment } from './Native/Native';
 import { FormProcessBlock } from './ProcessBlock/Process';
-
-import classNames from 'classnames';
+import { FormPayment } from './Payment/Payment';
 
 import './Form.scoped.scss';
-import { usePaymentInfo } from '../../../hooks/usePaymentInfo';
-import { formatUnits } from 'viem';
-import { roundCryptoAmount } from '../../../../../../tools';
-import { FormPayment } from './Payment/Payment';
 
 type FormStage = 'configuration' | 'native' | 'processing';
 
@@ -28,7 +27,7 @@ const MockHeaderData = {
 };
 
 export const Form: React.FC<IFormProps> = ({ id }) => {
-    const [stage, setStage] = useState<FormStage>('configuration');
+    const [stage, setStage] = useState<FormStage>('native');
     // const {isLoading, info, merchantToken, amountInMerchantToken } = usePaymentInfo(id)
 
     return (
