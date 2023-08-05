@@ -1,4 +1,4 @@
-import { ReactComponent as IconError } from '../../../../assets/icons/error.svg';
+import { ReactComponent as IconError } from '../../../../../assets/icons/error.svg';
 
 import './Error.scoped.scss';
 

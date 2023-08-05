@@ -3,24 +3,21 @@
 @import '../../../../../assets/scss/variables';
 @import '../../../../../assets/scss/utils';
 
-.currency {
+.select {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
     height: px-to-rem(44);
+    padding: 0 px-to-rem(12);
     border: 1px solid $color-grey;
-    border-radius: px-to-rem(8);
+    background-color: $color-black;
+    border-radius: px-to-rem(10);
     transition: border-color 0.15s ease-in-out;
-    cursor: default;
+    cursor: pointer;
 
-    &:hover:not(#{&}--active) {
+    &:hover {
         border-color: color.adjust($color-grey, $lightness: 10%);
-        cursor: pointer;
-    }
-
-    &--active {
-        border-color: $color-blue-light;
     }
 
     &__inner {
@@ -36,13 +33,13 @@
     }
 
     &__inner-text {
-        text-transform: uppercase;
-        font-size: px-to-rem(14);
-        font-weight: 400;
+        font-size: px-to-rem(16);
+        font-weight: 500;
+    }
 
-        @include breakpoint($screen-sm) {
-            font-size: px-to-rem(16);
-            font-weight: 500;
-        }
+    &__icon {
+        stroke: $color-white-dark;
+        width: px-to-rem(16);
+        height: auto;
     }
 }

@@ -1,0 +1,48 @@
+@use 'sass:color';
+
+@import '../../../../../../assets/scss/variables';
+@import '../../../../../../assets/scss/utils';
+
+.currency {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: px-to-rem(44);
+    border: 1px solid $color-grey;
+    border-radius: px-to-rem(8);
+    transition: border-color 0.15s ease-in-out;
+    cursor: default;
+
+    &:hover:not(#{&}--active) {
+        border-color: color.adjust($color-grey, $lightness: 10%);
+        cursor: pointer;
+    }
+
+    &--active {
+        border-color: $color-blue-light;
+    }
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(6);
+    }
+
+    &__inner-image {
+        width: px-to-rem(24);
+        height: px-to-rem(24);
+        border-radius: 50%;
+    }
+
+    &__inner-text {
+        text-transform: uppercase;
+        font-size: px-to-rem(14);
+        font-weight: 400;
+
+        @include breakpoint($screen-sm) {
+            font-size: px-to-rem(16);
+            font-weight: 500;
+        }
+    }
+}

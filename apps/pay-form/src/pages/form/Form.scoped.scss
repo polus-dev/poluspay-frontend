@@ -1,9 +1,102 @@
 @import '../../assets/scss/variables';
 @import '../../assets/scss/utils';
 
+@keyframes default-border {
+    0% {
+        border-color: #5ddcff;
+    }
+    50% {
+        border-color: #3c67e3;
+    }
+    100% {
+        border-color: #4e00c2;
+    }
+}
+
+@keyframes error-border {
+    0% {
+        border-color: $color-red-light;
+    }
+    50% {
+        border-color: $color-red;
+    }
+    100% {
+        border-color: #ae2525;
+    }
+}
+
+@keyframes success-border {
+    0% {
+        border-color: #0e7c12;
+    }
+    50% {
+        border-color: $color-green;
+    }
+    100% {
+        border-color: $color-green-light;
+    }
+}
+
+@keyframes proccessing-border {
+    0% {
+        border-color: #fe955a;
+    }
+    50% {
+        border-color: $color-yellow;
+    }
+    100% {
+        border-color: #ffe385;
+    }
+}
+
 .form-page {
     position: relative;
     margin: auto;
     width: 100%;
     max-width: px-to-rem(452);
+
+    &__form {
+        position: relative;
+        width: 100%;
+        height: auto;
+        background-color: $color-black-light;
+        border-radius: px-to-rem(12);
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: px-to-rem(2) solid #5ddcff;
+            border-radius: px-to-rem(12);
+            transition: border-color 0.5s ease-in-out;
+            animation: default-border 2.5s ease-in-out alternate infinite;
+            pointer-events: none;
+        }
+
+        &--error {
+            &::before {
+                border-color: $color-red-light;
+                animation: error-border 3.5s ease-in-out alternate infinite;
+            }
+        }
+
+        &--success {
+            &::before {
+                border-color: #0e7c12;
+                animation: success-border 3.5s ease-in-out alternate infinite;
+            }
+        }
+
+        &--loading,
+        &--in_progress {
+            &::before {
+                border-color: #fe955a;
+                animation: proccessing-border 3.5s ease-in-out alternate
+                    infinite;
+            }
+        }
+    }
 }

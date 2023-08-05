@@ -83,6 +83,7 @@
     &__data-topline-value {
         display: inline;
         white-space: nowrap;
+        text-transform: uppercase;
         color: $color-grey-light;
         font-size: px-to-rem(14);
         font-weight: 400;

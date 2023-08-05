@@ -488,13 +488,11 @@
 //     );
 // };
 
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Layout } from './components/Layout/Layout';
 import { FormPage } from './pages/form/Form';
-import { ErrorFormPage } from './pages/ErrorFormPage';
-import React from 'react';
-import { MainPage } from './pages/Main';
 
 export const App: React.FC = () => {
     return (
@@ -503,12 +501,14 @@ export const App: React.FC = () => {
                 <Route path="/" element={<Layout />}>
                     <Route
                         index
-                        element={<ErrorFormPage message="url path is empty" />}
+                        element={
+                            <FormPage error errorMessage="No UUID found" />
+                        }
                     />
-                    <Route path="/id/:id" element={<MainPage />} />
+                    <Route path="/id/:id" element={<FormPage />} />
                     <Route
                         path="*"
-                        element={<ErrorFormPage message="invalid url path" />}
+                        element={<FormPage error errorMessage="Invalid UUID" />}
                     />
                 </Route>
             </Routes>

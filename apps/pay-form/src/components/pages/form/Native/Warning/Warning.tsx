@@ -1,4 +1,4 @@
-import { ReactComponent as IconWarning } from '../../../../assets/icons/warning.svg';
+import { ReactComponent as IconWarning } from '../../../../../assets/icons/warning.svg';
 
 import './Warning.scoped.scss';
 

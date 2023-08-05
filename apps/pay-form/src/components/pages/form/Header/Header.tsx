@@ -13,7 +13,7 @@ interface FormHeaderProps {
     };
 }
 
-export const FormHeader = (props: FormHeaderProps) => {
+export const FormHeader: React.FC<FormHeaderProps> = ({ ...props }) => {
     return (
         <div className="header">
             {/*{props.merchant.logo && <div className="header__avatar">*/}

@@ -1,0 +1,93 @@
+@import '../../../../../assets/scss/variables';
+@import '../../../../../assets/scss/utils';
+
+.native {
+    display: flex;
+    flex-direction: column;
+
+    &__title {
+        margin-bottom: px-to-rem(16);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: px-to-rem(8);
+
+        @include breakpoint($screen-sm) {
+            display: none;
+        }
+
+        &--desktop {
+            display: none;
+
+            @include breakpoint($screen-sm) {
+                margin-bottom: 0;
+                display: flex;
+                justify-content: flex-start;
+            }
+        }
+    }
+
+    &__title-text {
+        white-space: nowrap;
+        font-size: px-to-rem(18);
+        font-weight: 500;
+        line-height: 150%;
+
+        @include breakpoint($screen-sm) {
+            font-size: px-to-rem(20);
+        }
+    }
+
+    &__title-image {
+        width: px-to-rem(20);
+        height: px-to-rem(20);
+        border-radius: 50%;
+    }
+
+    &__inner {
+        display: flex;
+        align-items: flex-end;
+        gap: px-to-rem(10);
+    }
+
+    &__qrcode {
+        width: auto;
+        min-width: px-to-rem(150);
+        padding: px-to-rem(16);
+        background-color: #fff;
+        border-radius: px-to-rem(12);
+
+        @include breakpoint($screen-sm) {
+            min-width: px-to-rem(192);
+        }
+    }
+
+    &__qrcode-image {
+        width: 100%;
+        height: auto;
+    }
+
+    &__data {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(12);
+    }
+
+    &__data-container {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(10);
+    }
+
+    &__data-container-input-icon {
+        width: px-to-rem(20);
+        height: auto;
+        stroke: $color-white-dark;
+        transition: stroke 0.15s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            stroke: $color-white;
+        }
+    }
+}

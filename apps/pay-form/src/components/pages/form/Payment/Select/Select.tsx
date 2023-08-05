@@ -1,4 +1,4 @@
-import { ReactComponent as IconChevron } from '../../../../assets/icons/chevron.svg';
+import { ReactComponent as IconChevron } from '../../../../../assets/icons/chevron.svg';
 
 import './Select.scoped.scss';
 
