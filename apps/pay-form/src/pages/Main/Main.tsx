@@ -202,6 +202,12 @@ export const Main: React.FC<MainProps> = (props: MainProps) => {
             />
         );
     } else if (paymentInfo?.status === 'success') {
+      if (info?.merchant.success_redirect_url) {
+        notify({title: 'Back to merchant', loading: true})
+        setTimeout(() => {
+          window.location.href = info?.merchant.success_redirect_url;
+        }, 2000)
+      }
         return (
             <StatusComponent status="succsess" message="payment successful" />
         );
