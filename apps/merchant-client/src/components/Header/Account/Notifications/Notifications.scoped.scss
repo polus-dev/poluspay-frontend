@@ -1,0 +1,25 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/utils';
+
+.notifications {
+    // ...
+
+    &__handler {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: px-to-rem(6);
+        width: px-to-rem(44);
+        height: px-to-rem(44);
+        border: px-to-rem(2) solid $color-grey;
+        background-color: $color-grey-dark;
+        border-radius: px-to-rem(12);
+        cursor: pointer;
+    }
+
+    &__handler-icon {
+        width: px-to-rem(24);
+        height: auto;
+        stroke: $color-white;
+    }
+}

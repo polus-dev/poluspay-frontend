@@ -14,7 +14,7 @@ import {
     useGetMerchantByIdQuery,
     useGenerateSigningKeyMutation,
 } from '@poluspay-frontend/merchant-query';
-import {httpUrlRegex, httpsUrlRegex, webhookUrlRegex} from 'tools';
+import { httpUrlRegex, httpsUrlRegex, webhookUrlRegex } from 'tools';
 
 interface IMerchantApiFormProps {
     merchantId: string;
@@ -58,9 +58,10 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
 
     useEffect(() => {
         if (merchant) {
-            const { fail_redirect_url, success_redirect_url } = merchant;
+            const { fail_redirect_url, success_redirect_url, webhook_url} = merchant;
             setValue('failRedirectUrl', fail_redirect_url);
             setValue('successRedirectUrl', success_redirect_url);
+            setValue("webhookUrl",  webhook_url)
         }
     }, [merchant]);
     const submit: SubmitHandler<IApiForm> = async (data) => {

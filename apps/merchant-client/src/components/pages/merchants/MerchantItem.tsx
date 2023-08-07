@@ -1,13 +1,14 @@
+import type { LogoStatus } from '@poluspay-frontend/api';
+
 import { Link, useNavigate } from 'react-router-dom';
 
+import { useRandomId } from '@poluspay-frontend/hooks';
 import { useCopyText } from '../../../hooks/useCopyText';
+import { makeShortHash } from '../../../../../../tools';
 
 import { ReactComponent as IconCopy } from '../../../assets/icons/copy.svg';
 
 import './MerchantItem.scoped.scss';
-import { makeShortHash } from '../../../../../../tools';
-import { useRandomId } from '@poluspay-frontend/hooks';
-import { LogoStatus } from '@poluspay-frontend/api';
 
 interface IMerchantProps {
     name: string;
@@ -28,13 +29,11 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
     const copy = useCopyText();
 
     const getShortName = () => {
-        if (name.length > 20 && window.innerWidth > 768)
-            return makeShortHash(name, 18, 0);
-        // return `${name.slice(0, 18)}...`;
-
-        return window.innerWidth < 768 && name.length > 12
-            ? /* `${name.slice(0, 8)}...` */ makeShortHash(name, 12, 0)
-            : name;
+        if (window.innerWidth > 768) {
+            return name.length > 20 ? makeShortHash(name, 9, 9) : name;
+        } else {
+            return name.length > 12 ? makeShortHash(name, 6, 6) : name;
+        }
     };
 
     const getShortId = () => {

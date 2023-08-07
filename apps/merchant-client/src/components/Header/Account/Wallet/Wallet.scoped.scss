@@ -1,0 +1,45 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/utils';
+
+.wallet {
+    // ...
+
+    &__handler {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: px-to-rem(6);
+        width: px-to-rem(66);
+        height: px-to-rem(44);
+        border: px-to-rem(2) solid $color-grey;
+        background-color: $color-grey-dark;
+        border-radius: px-to-rem(12);
+        cursor: pointer;
+
+        @include breakpoint($screen-md) {
+            width: px-to-rem(70);
+        }
+    }
+
+    &__handler-icon {
+        width: px-to-rem(24);
+        height: auto;
+        fill: $color-white;
+        stroke: $color-white;
+
+        &--arrow {
+            width: px-to-rem(12);
+            fill: transparent;
+
+            @include breakpoint($screen-md) {
+                width: px-to-rem(16);
+            }
+        }
+    }
+
+    &__content {
+        width: px-to-rem(300);
+        min-width: px-to-rem(300);
+        height: px-to-rem(500);
+    }
+}
