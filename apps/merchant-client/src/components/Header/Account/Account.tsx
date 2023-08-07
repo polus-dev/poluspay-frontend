@@ -1,82 +1,24 @@
-import { PDropdown } from '@poluspay-frontend/ui';
-import { ReactComponent as IconChevron } from '../../../assets/icons/chevron.svg';
-import { ReactComponent as IconWallet } from '../../../assets/icons/wallet.svg';
-import { ReactComponent as IconLogout } from '../../../assets/icons/logout.svg';
+import type { IAccountUserProps } from './User/User';
+
+import { AccountNotifications } from './Notifications/Notifications';
+import { AccountWallet } from './Wallet/Wallet';
+import { AccountUser } from './User/User';
 
 import './Account.scoped.scss';
 
-interface IAccountProps {
-    username: string;
-    logout: () => void;
-}
+interface AccountProps extends IAccountUserProps {}
 
-export const Account: React.FC<IAccountProps> = (props) => {
-    const email = props.username;
-
-    const getShortEmail = () => {
-        return window.innerWidth < 480 ? `${email.slice(0, 6)}...` : email;
-    };
-
+export const Account: React.FC<AccountProps> = ({ username, onLogout }) => {
     return (
         <div className="account">
-            <div className="account__inner">
-                <div className="account__wallet">
-                    <PDropdown
-                        border
-                        align={window.innerWidth > 768 ? 'right' : 'center'}
-                        gap={12}
-                        minWidth={300}
-                        maxWidth={300}
-                        padding={[0, 0]}
-                        closeOnClickOutside={false}
-                        handler={
-                            <div className="account__wallet-handler">
-                                <IconWallet className="account__wallet-handler-icon" />
-                                <IconChevron className="account__wallet-handler-icon account__wallet-handler-icon--arrow" />
-                            </div>
-                        }
-                        content={
-                            <div className="account__wallet-content">
-                                <iframe
-                                    src="https://wallet.poluspay.com"
-                                    width={300}
-                                    height={500}
-                                    frameBorder="0"
-                                />
-                            </div>
-                        }
-                    />
-                </div>
-                <div className="account__user">
-                    <PDropdown
-                        border
-                        gap={12}
-                        align="right"
-                        handler={
-                            <div className="account__user-handler">
-                                <p className="account__user-handler-text">
-                                    {getShortEmail()}
-                                </p>
-                                <IconChevron className="account__user-handler-icon" />
-                            </div>
-                        }
-                        content={
-                            <div className="account__user-content">
-                                <p className="account__user-content-text">
-                                    {email}
-                                </p>
-                                <div className="account__user-content-divider" />
-                                <div
-                                    className="account__user-content-button"
-                                    onClick={props.logout}
-                                >
-                                    Log out
-                                    <IconLogout className="account__user-content-button-icon" />
-                                </div>
-                            </div>
-                        }
-                    />
-                </div>
+            {/* <div className="account__notifications">
+                <AccountNotifications />
+            </div> */}
+            <div className="account__wallet">
+                <AccountWallet />
+            </div>
+            <div className="account__user">
+                <AccountUser username={username} onLogout={onLogout} />
             </div>
         </div>
     );

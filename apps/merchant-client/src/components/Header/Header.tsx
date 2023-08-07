@@ -76,7 +76,7 @@ export const Header: React.FC = () => {
                                           makeShortHash(data.address, 6, 4)) ||
                                       'unknown user'
                             }
-                            logout={logout}
+                            onLogout={logout}
                         />
                     </div>
                     <Menu
@@ -94,7 +94,7 @@ export const Header: React.FC = () => {
                                       makeShortHash(data.address, 6, 4)) ||
                                   'unknown user'
                         }
-                        logout={logout}
+                        onLogout={logout}
                     />
                 </div>
             </div>
