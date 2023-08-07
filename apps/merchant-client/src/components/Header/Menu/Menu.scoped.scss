@@ -46,13 +46,13 @@ $header-height: 76;
             margin: 0;
             flex-direction: row;
             align-items: center;
-            gap: px-to-rem(36);
+            gap: px-to-rem(24);
             height: 100%;
             padding: 0;
         }
 
         @include breakpoint($screen-xl) {
-            gap: px-to-rem(56);
+            gap: px-to-rem(48);
         }
     }
 
@@ -77,8 +77,12 @@ $header-height: 76;
     }
 
     &__button-handler-icon {
-        width: px-to-rem(28);
+        width: px-to-rem(24);
         height: auto;
         fill: $color-white;
+
+        @include breakpoint($screen-xs) {
+            width: px-to-rem(28);
+        }
     }
 }

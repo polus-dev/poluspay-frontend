@@ -14,7 +14,7 @@ import {
     useGetMerchantByIdQuery,
     useGenerateSigningKeyMutation,
 } from '@poluspay-frontend/merchant-query';
-import {httpUrlRegex, httpsUrlRegex, webhookUrlRegex} from 'tools';
+import { httpUrlRegex, httpsUrlRegex, webhookUrlRegex } from 'tools';
 
 interface IMerchantApiFormProps {
     merchantId: string;
