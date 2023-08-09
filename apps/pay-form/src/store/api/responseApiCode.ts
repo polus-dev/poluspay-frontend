@@ -29,7 +29,7 @@ export const enum ResponseApiCode {
     BadMerchantNameLength = 3001,
     BadMerchantDescriptionLength = 3002,
     BadMerchantNameAlreadyExists = 3003,
-    BadMerchantDoesntExists =3004,
+    BadMerchantDoesntExists = 3004,
     BadMerchantDomainAlreadyVerified = 3005,
     BadMerchantDomainCheckNotAvailable = 3006,
     BadMerchantDomainVerificationTxtNotFound = 3007,
@@ -48,7 +48,6 @@ export const enum ResponseApiCode {
     BadURL = 4004,
     NothingToUpdate = 4005,
 
-
     // Self code
-    InvalidUUID = 6001
+    InvalidUUID = 6001,
 }

@@ -1,0 +1,35 @@
+$browser-context: 16;
+
+@function px-to-rem($size: 16) {
+    @if $size == 0 {
+        @return 0;
+    } @else {
+        @return calc($size / $browser-context * 1rem);
+    }
+}
+
+@function px-to-em($size: 16) {
+    @if $size == 0 {
+        @return 0;
+    } @else {
+        @return calc($size / $browser-context * 1em);
+    }
+}
+
+@mixin breakpoint($min-width) {
+    @media screen and (min-width: $min-width) {
+        @content;
+    }
+}
+
+@mixin shadow($level) {
+    @if $level == 1 {
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+    } @else if $level == 2 {
+        box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.5);
+    } @else if $level == 3 {
+        box-shadow: 0px 16px 24px rgba(0, 0, 0, 0.5);
+    } @else {
+        @error "Unknown level #{$level}.";
+    }
+}

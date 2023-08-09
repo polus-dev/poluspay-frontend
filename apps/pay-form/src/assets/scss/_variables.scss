@@ -1,0 +1,73 @@
+@use 'sass:map';
+
+// Colors
+$colors: () !default;
+$colors: map.deep-merge(
+    (
+        'white': (
+            'base': #ededf4,
+            'dark': #bdbdc7,
+        ),
+        'black': (
+            'base': #09080c,
+            'light': #131315,
+        ),
+        'grey': (
+            'base': #2d2d37,
+            'dark': #18181e,
+            'light': #8c8c97,
+        ),
+        'blue': (
+            'base': #1850ac,
+            'dark': #113a7e,
+            'light': #246ce2,
+        ),
+        'red': (
+            'base': #e64646,
+            'light': #c85b5b,
+        ),
+        'purple': (
+            'base': #8c5bd8,
+            'light': #c8aff0,
+        ),
+        'green': (
+            'base': #0e7c3a,
+            'light': #20a466,
+        ),
+        'orange': (
+            'base': #f16b16,
+        ),
+        'yellow': (
+            'base': #fed85a,
+        ),
+    ),
+    $colors
+);
+
+$color-white: map.get($colors, 'white', 'base') !default;
+$color-white-dark: map.get($colors, 'white', 'dark') !default;
+$color-black: map.get($colors, 'black', 'base') !default;
+$color-black-light: map.get($colors, 'black', 'light') !default;
+$color-grey: map.get($colors, 'grey', 'base') !default;
+$color-grey-dark: map.get($colors, 'grey', 'dark') !default;
+$color-grey-light: map.get($colors, 'grey', 'light') !default;
+$color-blue: map.get($colors, 'blue', 'base') !default;
+$color-blue-dark: map.get($colors, 'blue', 'dark') !default;
+$color-blue-light: map.get($colors, 'blue', 'light') !default;
+$color-red: map.get($colors, 'red', 'base') !default;
+$color-red-light: map.get($colors, 'red', 'light') !default;
+$color-purple: map.get($colors, 'purple', 'base') !default;
+$color-purple-light: map.get($colors, 'purple', 'light') !default;
+$color-green: map.get($colors, 'green', 'base') !default;
+$color-green-light: map.get($colors, 'green', 'light') !default;
+$color-orange: map.get($colors, 'orange', 'base') !default;
+$color-yellow: map.get($colors, 'yellow', 'base') !default;
+
+// Screen Media
+$screen-xxs: 320px;
+$screen-xs: 375px;
+$screen-sm: 480px;
+$screen-md: 768px;
+$screen-lg: 1024px;
+$screen-xl: 1440px;
+$screen-xxl: 1920px;

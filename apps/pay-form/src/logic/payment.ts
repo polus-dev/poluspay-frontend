@@ -1,6 +1,6 @@
 import { AllowanceTransfer } from '@uniswap/permit2-sdk';
 import { erc20ABI } from '@wagmi/core';
-import permit2 from '../permit_abi';
+import permit2 from '../abi/permit_abi';
 import { CustomRouter } from './router';
 import { Blockchain_t, ChainId } from '../store/api/endpoints/types';
 import { Token as ERC20, WETH9 } from '@uniswap/sdk-core';
@@ -166,13 +166,12 @@ export class PaymentHelper extends CustomProvider {
             this.time1
         );
 
-
         const { domain, types, values } = AllowanceTransfer.getPermitData(
             dataForSign.value,
             this.PermitAddress,
             ChainId[this.blockchain]
         );
-        debugger
+        debugger;
         return {
             domain,
             types,

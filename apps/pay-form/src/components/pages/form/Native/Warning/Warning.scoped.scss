@@ -1,0 +1,40 @@
+@import '../../../../../assets/scss/variables';
+@import '../../../../../assets/scss/utils';
+
+.warning {
+    width: 100%;
+    padding: px-to-rem(10);
+    background-color: $color-grey;
+    border-radius: px-to-rem(8);
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(6);
+    }
+
+    &__inner-icon {
+        width: px-to-rem(24);
+        min-width: px-to-rem(24);
+        height: auto;
+        stroke: $color-yellow;
+        fill: $color-yellow;
+
+        @include breakpoint($screen-sm) {
+            width: px-to-rem(32);
+            min-width: px-to-rem(32);
+        }
+    }
+
+    &__inner-text {
+        color: $color-yellow;
+        font-size: px-to-rem(12);
+        font-weight: 400;
+        line-height: 130%;
+
+        @include breakpoint($screen-sm) {
+            font-size: px-to-rem(14);
+            font-weight: 300;
+        }
+    }
+}

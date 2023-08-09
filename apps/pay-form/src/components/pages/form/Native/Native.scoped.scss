@@ -1,0 +1,16 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/utils';
+
+.native {
+    display: flex;
+    flex-direction: column;
+    gap: px-to-rem(16);
+
+    &__qrcode {
+        // ...
+    }
+
+    &__warning {
+        // ...
+    }
+}

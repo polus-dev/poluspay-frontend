@@ -9,7 +9,7 @@ import {
 
 import { signTypedData } from 'wagmi/actions';
 import { ThunkConfig } from '../../../store';
-import {Permit2Permit} from "../../../../logic/uwm/builder";
+import { Permit2Permit } from '../../../../logic/uwm/builder';
 
 export const signThunk = createAsyncThunk<any, void, ThunkConfig>(
     'transaction/signThunk',

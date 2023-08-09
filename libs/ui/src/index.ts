@@ -8,6 +8,8 @@ export * from './lib/PSelect/PSelect';
 export * from './lib/PTabs/PTabs';
 export * from './lib/PSwitch/PSwitch';
 export * from './lib/FormInput/FormInput';
+export * from './lib/Error/Error';
+export * from './lib/Loader/Loader';
 export * from './lib/modals/BlockchainSelector/BlockchainSelector';
 export * from './lib/modals/CurrencySelector/CurrencySelector';
 export * from './lib/PNotify/index';
