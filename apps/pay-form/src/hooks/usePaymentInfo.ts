@@ -10,6 +10,7 @@ import { Token } from '../store/api/types';
 import { Asset_t, Blockchain_t } from '../store/api/endpoints/types';
 import { ResponseApiCode } from '../store/api/responseApiCode';
 import { setCurrentBlockchain } from '../store/features/connection/connectionSlice';
+import {useLazyGetAssetsQuery} from "../store/api/endpoints/asset/Asset";
 
 interface IError {
     message: string;
@@ -37,7 +38,6 @@ export const usePaymentInfo = (id: string) => {
     const [expireAt, setExpireAt] = useState('');
 
     const [info, setInfo] = useState<IPaymentInfo>();
-    console.log(availableTokens);
     const [amountInMerchantToken, setAmountInMerchantToken] = useState('0');
     const [fee, setFee] = useState('0');
     const [merchantAmount, setMerchantAmount] = useState('0');
@@ -51,7 +51,6 @@ export const usePaymentInfo = (id: string) => {
         const payment = currentBlockchain
             ? info.payment.assets.find((i) => i.network === currentBlockchain)
             : info.payment.assets[0];
-        console.log(info);
         if (!payment) throw new Error('usePaymentInfo: Payment not found');
 
         setAmountInMerchantToken(

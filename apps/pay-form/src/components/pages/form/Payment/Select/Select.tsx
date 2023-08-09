@@ -19,10 +19,10 @@ export const FormSelect: React.FC<FormSelectProps> = ({ item, onClick }) => {
             <div className="select__inner">
                 <img
                     className="select__inner-image"
-                    src="/images/polygon.png"
+                    src={`/images/${item.image}.png`}
                     alt="Polygon"
                 />
-                <p className="select__inner-text">Polygon</p>
+                <p className="select__inner-text">{item.text}</p>
             </div>
             <IconChevron className="select__icon" />
         </div>

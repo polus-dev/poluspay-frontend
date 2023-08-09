@@ -15,7 +15,6 @@ export interface TransactionState {
         amount?: string;
     };
     helper?: PaymentHelper;
-    consoleLog?: (message: any, type?: boolean) => void;
     amount?: string;
 }
 
@@ -40,7 +39,6 @@ interface ISendStage extends IStage {
 export interface IPayload {
     userToken: Token;
     merchantToken: Token;
-    consoleLog: (message: any, type?: boolean) => void;
     blockchain: Blockchain_t;
     uuid: string;
     userAddress: Address;
@@ -102,7 +100,6 @@ export const transactionSlice = createSlice({
                 action.payload.merchantToken,
                 action.payload.userAddress
             );
-            state.consoleLog = action.payload.consoleLog;
             state.stages[StageId.SEND].uuid = action.payload.uuid;
             state.stages[StageId.SEND].fee = action.payload.fee;
             state.stages[StageId.SEND].merchantAddress =

@@ -10,6 +10,9 @@ import { FormSuccess } from '../../components/pages/form/states/Success/Success'
 import classNames from 'classnames';
 
 import './Form.scoped.scss';
+import {usePaymentInfo} from "../../hooks/usePaymentInfo";
+import {useGetAssetsQuery} from "../../store/api/endpoints/asset/Asset";
+import {useAvailableTokens} from "../../hooks/useAvailableTokens";
 
 type FormStatus = 'default' | 'loading' | 'success' | 'in_progress';
 
@@ -20,6 +23,12 @@ interface IFormPageProps {
 
 export const FormPage: React.FC<IFormPageProps> = ({ error, errorMessage }) => {
     const { id } = useParams<{ id: string }>();
+    const {error: paymentError, isLoading: isPaymentInfoLoading, ...payment } = usePaymentInfo(id!);
+    // TODO: rewrite prefetching
+    const {data: assets, isLoading: isAssetsInfoLoading} = useGetAssetsQuery();
+
+    const { availableTokens, isAvailableTokensLoading, availableCategories } =
+    useAvailableTokens();
 
     const [status, setStatus] = useState<FormStatus>('default');
 
@@ -32,16 +41,16 @@ export const FormPage: React.FC<IFormPageProps> = ({ error, errorMessage }) => {
                     [`form-page__form--${status}`]: status !== 'default',
                 })}
             >
-                {error ? (
-                    <FormError message={errorMessage} />
-                ) : status === 'default' ? (
-                    <Form id={id!} />
-                ) : status === 'loading' ? (
+                {error || paymentError ? (
+                    <FormError message={errorMessage || paymentError?.message} />
+                ) : payment.info?.payment.status === "pending" ? (
+                    <Form availableCategories={availableCategories} availableTokens={availableTokens} assets={assets} id={id!} {...payment} />
+                ) : isPaymentInfoLoading || isAssetsInfoLoading || isAvailableTokensLoading ? (
                     <Loader height={280} />
-                ) : status === 'success' ? (
+                ) : payment.info?.payment.status === "success" ? (
                     <FormSuccess />
                 ) : (
-                    status === 'in_progress' && <FormProcessing />
+                    payment.info?.payment.status === "in_progress" && <FormProcessing />
                 )}
             </div>
         </div>

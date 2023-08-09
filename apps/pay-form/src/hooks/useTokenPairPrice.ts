@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { Token } from '../../../store/api/types';
-import { tokenPairPriceThunk } from '../../../store/features/tokenPairPrice/tokenPairPriceThunk';
-import { useAppDispatch, useAppSelector } from '../../../store/s';
+import {Token} from "../store/api/types"
+import {useAppDispatch, useAppSelector} from "../store/hooks";
+import {tokenPairPriceThunk} from "../store/features/tokenPairPrice/tokenPairPriceThunk";
 
 export const useTokenPairPrice = (
     userToken: Token | undefined,

@@ -4,19 +4,21 @@ import classNames from 'classnames';
 
 import './Button.scoped.scss';
 
-interface FormButtonProps {
-    text?: string;
-    hasIcon?: boolean;
-    disabled?: boolean;
+type ButtonText = 'Connect Wallet' | `Pay ≈ ${string} ${string}` | 'Cancel' |'Loading...';
+
+interface FormButtonProps<T extends string> {
+    text: T;
+    hasIcon?: T extends 'Connect Wallet' ? true : false;
+    disabled?: boolean
     onClick: () => void;
 }
 
-export const FormButton: React.FC<FormButtonProps> = ({
+export const FormButton =  <T extends ButtonText>({
     text,
-    hasIcon = true,
+    hasIcon,
     disabled,
     onClick,
-}) => {
+}: FormButtonProps<T>) => {
     const handleClick = () => {
         if (disabled) return undefined;
 
@@ -31,8 +33,8 @@ export const FormButton: React.FC<FormButtonProps> = ({
             })}
             onClick={handleClick}
         >
-            {hasIcon && <LogoWalletConnect className="form-button__icon" />}
-            {text || 'Connect Wallet'}
+            {hasIcon || text === "Connect Wallet" && <LogoWalletConnect className="form-button__icon" />}
+            {text}
         </div>
     );
 };

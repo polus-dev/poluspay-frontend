@@ -1,16 +1,17 @@
-import { ReactComponent as IconLoading } from '../../../../../assets/icons/loading.svg';
-import { ReactComponent as IconCheckmark } from '../../../../../assets/icons/checkmark.svg';
-import { ReactComponent as IconCross } from '../../../../../assets/icons/cross.svg';
-import { ReactComponent as IconRefresh } from '../../../../../assets/icons/refresh.svg';
+import {ReactComponent as IconLoading} from '../../../../../assets/icons/loading.svg';
+import {ReactComponent as IconCheckmark} from '../../../../../assets/icons/checkmark.svg';
+import {ReactComponent as IconCross} from '../../../../../assets/icons/cross.svg';
+import {ReactComponent as IconRefresh} from '../../../../../assets/icons/refresh.svg';
 
 import classNames from 'classnames';
 
 import './ProcessItem.scoped.scss';
+import {StageStatus} from "../../../../../store/features/transaction/transactionSlice";
 
 export type InvoiceStatus = 'pending' | 'loading' | 'success' | 'failure';
 
 interface ProcessItemProps {
-    status: InvoiceStatus;
+    status: StageStatus;
     text: string;
     onRetry: () => void;
 }
@@ -24,24 +25,24 @@ export const ProcessBlockItem: React.FC<ProcessItemProps> = ({
         <div
             className={classNames({
                 item: true,
-                'item--pending': status === 'pending',
+                'item--pending': status === StageStatus.PENDING,
             })}
         >
             <div className="item__inner">
                 <>
-                    {status === 'loading' ? (
+                    {status === StageStatus.LOADING ? (
                         <IconLoading className="item__inner-icon item__inner-icon--loading" />
-                    ) : status === 'success' ? (
+                    ) :  status === StageStatus.SUCCESS ? (
                         <IconCheckmark className="item__inner-icon item__inner-icon--success" />
                     ) : (
-                        status === 'failure' && (
+                        status === StageStatus.FAILURE && (
                             <IconCross className="item__inner-icon item__inner-icon--failure" />
                         )
                     )}
                 </>
                 <p className="item__inner-text">{text}</p>
             </div>
-            {status === 'failure' && (
+            {status === StageStatus.FAILURE && (
                 <IconRefresh className="item__icon" onClick={onRetry} />
             )}
         </div>

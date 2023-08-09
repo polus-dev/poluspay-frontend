@@ -28,9 +28,10 @@ export const connectionSlice = createSlice({
         },
         setCurrentBlockchain: (
             state,
-            action: PayloadAction<Blockchain_t | null>
+            action: PayloadAction<string | null>
         ) => {
             state.prevBlockchain = state.currentBlockchain;
+            // @ts-ignore
             state.currentBlockchain = action.payload;
         },
     },

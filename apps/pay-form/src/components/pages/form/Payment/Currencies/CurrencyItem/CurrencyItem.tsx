@@ -4,9 +4,11 @@ import './CurrencyItem.scoped.scss';
 
 interface CurrencyItemProps {
     active: boolean;
+    image: string;
+    name: string;
 }
 
-export const FormCurrencyItem: React.FC<CurrencyItemProps> = ({ active }) => {
+export const FormCurrencyItem: React.FC<CurrencyItemProps> = ({ active, name, image}) => {
     return (
         <div
             className={classNames({
@@ -17,10 +19,10 @@ export const FormCurrencyItem: React.FC<CurrencyItemProps> = ({ active }) => {
             <div className="currency__inner">
                 <img
                     className="currency__inner-image"
-                    src="/images/polygon.png"
-                    alt="MATIC"
+                    src={image}
+                    alt={name}
                 />
-                <p className="currency__inner-text">MATIC</p>
+                <p className="currency__inner-text">{name}</p>
             </div>
         </div>
     );
