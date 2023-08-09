@@ -5,7 +5,7 @@ import { ReactComponent as IconVerified } from '../../../../assets/icons/verifie
 
 import './Header.scoped.scss';
 
-interface FormHeaderProps {
+export interface FormHeaderProps {
     merchant: IPaymentMerchant
     payment: {
         description: string;

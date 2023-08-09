@@ -48,7 +48,6 @@ export function encodePay({
     feeRecipient,
     universalRouterAddress,
 }: IEncodeTransfer): IReturnType {
-    // assertAmount(amoun);
     if (!tokenAddress) tokenAddress = NULL_ADDRESS;
     const data = txData.slice(10);
     let path: string | undefined;
@@ -107,13 +106,13 @@ export function encodePay({
         merchantAmount
     );
 
-    const commisionTransfer = encodeTransfer(tokenAddress, feeRecipient, fee);
+    const commissionTransfer = encodeTransfer(tokenAddress, feeRecipient, fee);
 
     const uuid_encoded = coder.encode(
         ['uint256', 'bytes'],
         ['0x' + uuid, '0x00']
     );
-    inputs.push(...[merchantTransfer, commisionTransfer, uuid_encoded]);
+    inputs.push(...[merchantTransfer, commissionTransfer, uuid_encoded]);
     const out = coder
         .encode(types, [commands, inputs, deadline])
         .replace('0x', '');

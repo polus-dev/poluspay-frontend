@@ -41,7 +41,6 @@ export const tokenPairPriceThunk = createAsyncThunk<
                 ),
             };
         }
-        debugger
         const currentBlockchain = getState().connection.currentBlockchain;
         if (!currentBlockchain)
             return rejectWithValue('useTokenPrice: No blockchain') as any;

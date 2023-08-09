@@ -32,7 +32,7 @@ export const usePaymentInfo = (id: string) => {
         (state) => state.connection.currentBlockchain
     );
 
-    const { availableTokens } = useAvailableTokens();
+    const { availableTokens ,} = useAvailableTokens();
     const [merchantToken, setMerchantToken] = useState<Token>();
 
     const [expireAt, setExpireAt] = useState('');
@@ -61,6 +61,7 @@ export const usePaymentInfo = (id: string) => {
         setMerchantAddress(payment.address);
         if (!token) throw new Error('usePaymentInfo: Token not found');
         setMerchantToken(token);
+      setIsLoading(false);
     }, [currentBlockchain, info, availableTokens]);
 
     useEffect(() => {
@@ -97,7 +98,6 @@ export const usePaymentInfo = (id: string) => {
                 });
             }
         });
-        setIsLoading(false);
     }, [currentBlockchain]);
 
     return {

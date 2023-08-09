@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { useParams } from 'react-router';
 
 import { Loader } from '@poluspay-frontend/ui';
@@ -13,6 +13,8 @@ import './Form.scoped.scss';
 import {usePaymentInfo} from "../../hooks/usePaymentInfo";
 import {useGetAssetsQuery} from "../../store/api/endpoints/asset/Asset";
 import {useAvailableTokens} from "../../hooks/useAvailableTokens";
+import {roundCryptoAmount} from "../../../../../tools";
+import {formatUnits} from "viem";
 
 type FormStatus = 'default' | 'loading' | 'success' | 'in_progress';
 
@@ -48,7 +50,15 @@ export const FormPage: React.FC<IFormPageProps> = ({ error, errorMessage }) => {
                 ) : isPaymentInfoLoading || isAssetsInfoLoading || isAvailableTokensLoading ? (
                     <Loader height={280} />
                 ) : payment.info?.payment.status === "success" ? (
-                    <FormSuccess />
+                    <FormSuccess
+                      merchant={payment.info.merchant}
+                      payment={{
+                        description: payment.info.payment.description,
+                        amount: roundCryptoAmount(formatUnits(BigInt(payment.amountInMerchantToken),
+                          payment.merchantToken!.decimals)),
+                        currency: payment.merchantToken!.name.toUpperCase()
+                      }}
+                    />
                 ) : (
                     payment.info?.payment.status === "in_progress" && <FormProcessing />
                 )}

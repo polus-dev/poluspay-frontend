@@ -4,7 +4,7 @@ import './Warning.scoped.scss';
 
 interface WarningProps {
     name: string;
-    amount: number;
+    amount: string;
 }
 
 export const FormWarning: React.FC<WarningProps> = ({ name, amount }) => {

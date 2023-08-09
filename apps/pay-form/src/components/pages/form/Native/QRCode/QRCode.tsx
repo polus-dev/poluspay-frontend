@@ -6,42 +6,49 @@ import { ReactComponent as IconCopy } from '../../../../../assets/icons/copy.svg
 
 import './QRCode.scoped.scss';
 
-export const FormQRCode: React.FC = () => {
+interface QRCodeProps {
+  assetName: string;
+  assetImage: string;
+  amount: string
+  address: string
+  blockchain: string;
+}
+
+export const FormQRCode =  (props: QRCodeProps ) => {
     const copyAmount = useCopyText();
     const copyAddress = useCopyText();
-
     return (
         <div className="native">
             <div className="native__title">
-                <h6 className="native__title-text">Send MATIC</h6>
+                <h6 className="native__title-text">Send ${props.assetName}</h6>
                 <img
                     className="native__title-image"
-                    src="/images/polygon.png"
-                    alt="MATIC"
+                    src={props.assetImage}
+                    alt={props.assetName}
                 />
             </div>
             <div className="native__inner">
                 <div className="native__qrcode">
-                    <QRCodeSVG className="native__qrcode-image" value="qwe" />
+                    <QRCodeSVG className="native__qrcode-image" value={`${props.blockchain}:${props.address}?value=${props.amount}`}   />
                 </div>
                 <div className="native__data">
                     {/* duplicate of title for desktops */}
                     <div className="native__title native__title--desktop">
-                        <h6 className="native__title-text">Send MATIC</h6>
+                        <h6 className="native__title-text">Send {props.assetName}</h6>
                         <img
                             className="native__title-image"
-                            src="/images/polygon.png"
-                            alt="MATIC"
+                            src={props.assetImage}
+                            alt={props.assetName}
                         />
                     </div>
                     <div className="native__data-container">
                         <FormInput
-                            label="Amount"
-                            value={copyAmount.copied ? 'Copied!' : '123213123'}
+                            label="Wallet"
+                            value={copyAmount.copied ? 'Copied!' : props.address}
                             append={
                                 <IconCopy
                                     className="native__data-container-input-icon"
-                                    onClick={() => copyAmount.copy('123213123')}
+                                    onClick={() => copyAmount.copy(props.address)}
                                 />
                             }
                         />
@@ -50,13 +57,13 @@ export const FormQRCode: React.FC = () => {
                             value={
                                 copyAddress.copied
                                     ? 'Copied!'
-                                    : 'qweqewewqsgsfgawrf'
+                                    : props.amount
                             }
                             append={
                                 <IconCopy
                                     className="native__data-container-input-icon"
                                     onClick={() =>
-                                        copyAddress.copy('qweqewewqsgsfgawrf')
+                                        copyAddress.copy(props.amount)
                                     }
                                 />
                             }

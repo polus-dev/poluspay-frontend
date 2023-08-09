@@ -6,7 +6,9 @@ import * as path from 'path';
 import svgr from 'vite-plugin-svgr';
 import { reactScopedCssPlugin } from 'rollup-plugin-react-scoped-css';
 
-export default defineConfig({
+// @ts-ignore
+export default defineConfig(({mode}) => {
+  return {
     cacheDir: '../../node_modules/.vite/pay-form',
     server: {
         port: 4200,
@@ -72,7 +74,7 @@ export default defineConfig({
     //  ],
     // },
     esbuild: {
-        // drop: ['debugger', "console"]
+        drop: mode === "production" ? ['debugger', "console"] : []
     },
     test: {
         globals: true,
@@ -82,4 +84,4 @@ export default defineConfig({
         environment: 'jsdom',
         include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     },
-});
+}});
