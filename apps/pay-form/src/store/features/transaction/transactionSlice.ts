@@ -48,7 +48,7 @@ export interface IPayload {
     feeAddress: string;
     merchantAmount: string;
     expireAt: string;
-    targetStages?: StageId[];
+    startStage?: number;
 }
 
 export const enum StageStatus {
@@ -142,7 +142,7 @@ export const transactionSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(startPay.pending, (state, action) => {
-                if (action.meta.arg.targetStages) return;
+                if (action.meta.arg.startStage) return;
                 state.currentStage = initialState.currentStage;
                 state.stages = initialState.stages;
             })

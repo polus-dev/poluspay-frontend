@@ -48,7 +48,7 @@ export const Form = (props: IFormProps) => {
             abortPayment.current?.();
             setStage('EVM');
         } else if (stage === 'EVM') {
-            paymentCb.current = startStageIndex =>  dispatch(startPay({...props, uuid: props.id, userToken, blockchain: currentBlockchain!, userAddress: address!, amount: (BigInt(props.fee) + BigInt(props.merchantAmount)).toString(), feeAddress: props.info!.payment.evm_fee_address, merchantToken: props.merchantToken!, targetStages: [startStageIndex!]})).abort;
+            paymentCb.current = startStageIndex =>  dispatch(startPay({...props, uuid: props.id, userToken, blockchain: currentBlockchain!, userAddress: address!, amount: (BigInt(props.fee) + BigInt(props.merchantAmount)).toString(), feeAddress: props.info!.payment.evm_fee_address, merchantToken: props.merchantToken!, startStage: startStageIndex!})).abort;
             abortPayment.current = dispatch(startPay({...props, uuid: props.id, userToken, blockchain: currentBlockchain!, userAddress: address!, amount: (BigInt(props.fee) + BigInt(props.merchantAmount)).toString(), feeAddress: props.info!.payment.evm_fee_address, merchantToken: props.merchantToken!})).abort;
             setStage('ProcessBlock');
         }
