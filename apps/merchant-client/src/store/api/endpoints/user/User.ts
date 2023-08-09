@@ -1,5 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IUserEntity } from './User.interface';
+import {
+    IGetNotificationsRequest,
+    IGetNotificationsResponse,
+    IUserEntity,
+} from './User.interface';
 import { AuthHelper } from 'apps/merchant-client/src/logic/api';
 
 export const userApi = createApi({
@@ -21,7 +25,18 @@ export const userApi = createApi({
                 method: 'POST',
             }),
         }),
+        getNotifications: builder.query<
+            IGetNotificationsResponse,
+            IGetNotificationsRequest
+        >({
+            query: (body) => ({
+                url: 'user.notifications.get',
+                method: 'POST',
+                body,
+            }),
+        }),
     }),
 });
 
-export const { useGetMeQuery, useLazyGetMeQuery } = userApi;
+export const { useGetMeQuery, useLazyGetMeQuery, useGetNotificationsQuery } =
+    userApi;

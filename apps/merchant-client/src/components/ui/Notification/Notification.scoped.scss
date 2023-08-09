@@ -1,0 +1,106 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+.notification {
+    width: 100%;
+
+    $readed: #{&}__inner--readed;
+
+    &__inner {
+        display: flex;
+        gap: px-to-rem(12);
+        width: 100%;
+        padding: px-to-rem(8) px-to-rem(12);
+        background-color: $color-black-light;
+        border-radius: px-to-rem(12);
+        transition: background-color 0.15s ease-in-out;
+
+        &:hover:not(#{&}--readed) {
+            background-color: $color-grey-dark;
+            cursor: pointer;
+        }
+
+        &--readed {
+            background-color: $color-black;
+        }
+    }
+
+    &__inner-status {
+        display: flex;
+        align-self: stretch;
+        width: px-to-rem(6);
+        border-radius: px-to-rem(6);
+        transition: background-color 0.15s ease-in-out;
+
+        #{$readed} & {
+            background-color: $color-grey;
+        }
+
+        &--low {
+            background-color: $color-green-light;
+        }
+
+        &--medium {
+            background-color: $color-yellow;
+        }
+
+        &--critical {
+            background-color: $color-red;
+        }
+    }
+
+    &__inner-data {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(12);
+        width: 100%;
+
+        &__container {
+            display: flex;
+            flex-direction: column;
+            gap: px-to-rem(8);
+        }
+
+        &__container-merchant {
+            color: $color-grey-light;
+            font-size: px-to-rem(16);
+            font-weight: 400;
+            line-height: 150%;
+        }
+
+        &__container-title {
+            font-size: px-to-rem(20);
+            font-weight: 500;
+            line-height: 150%;
+            transition: color 0.15s ease-in-out;
+
+            #{$readed} & {
+                color: $color-white-dark;
+            }
+        }
+
+        &__container-description {
+            color: $color-white-dark;
+            font-size: px-to-rem(18);
+            font-weight: 400;
+            line-height: 150%;
+            transition: color 0.15s ease-in-out;
+
+            #{$readed} & {
+                color: $color-grey-light;
+            }
+        }
+
+        &__date {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        &__date-text {
+            color: $color-grey-light;
+            font-size: px-to-rem(18);
+            font-weight: 400;
+            line-height: 150%;
+        }
+    }
+}
