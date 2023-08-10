@@ -11,9 +11,11 @@ interface AccountProps extends IAccountUserProps {}
 export const Account: React.FC<AccountProps> = ({ username, onLogout }) => {
     return (
         <div className="account">
-            {/* <div className="account__notifications">
-                <AccountNotifications />
-            </div> */}
+            {/* {import.meta.env.DEV && (
+                <div className="account__notifications">
+                    <AccountNotifications />
+                </div>
+            )} */}
             <div className="account__wallet">
                 <AccountWallet />
             </div>

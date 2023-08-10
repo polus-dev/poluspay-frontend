@@ -1,7 +1,5 @@
 import { ReactComponent as LogoWalletConnect } from '../../../assets/logos/wallet-connect.svg';
 
-import classNames from 'classnames';
-
 import './styles.scss';
 
 interface ConnectButtonProps {

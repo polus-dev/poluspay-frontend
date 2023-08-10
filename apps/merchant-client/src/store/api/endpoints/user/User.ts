@@ -1,10 +1,13 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {
+import type {
     IGetNotificationsRequest,
     IGetNotificationsResponse,
+    INotification,
     IUserEntity,
 } from './User.interface';
-import { AuthHelper } from 'apps/merchant-client/src/logic/api';
+
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { io } from "socket.io-client";
+import { AuthHelper } from '../../../../logic/api';
 
 export const userApi = createApi({
     reducerPath: 'userApi' as const,
@@ -34,9 +37,48 @@ export const userApi = createApi({
                 method: 'POST',
                 body,
             }),
+            async onCacheEntryAdded (arg, {
+                updateCachedData,
+                cacheDataLoaded,
+                cacheEntryRemoved
+            }) {
+                const domain = import.meta.env.VITE_API_URL.replace(/^https?:\/\//, '')
+                const url = `wss://${domain}/ws/notifications`
+
+                console.log(url)
+
+                const token = new AuthHelper().checkAuth()?.token;
+
+                const socket = io(url, {
+                    extraHeaders: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+
+                try {
+                    await cacheDataLoaded
+
+                    socket.on('notification', (notification: INotification) => {
+                        if (!notification) return undefined
+
+                        updateCachedData((draft) => {
+                            draft.notifications.unshift(notification)
+                        })
+                    })
+                } catch (err) {
+                    console.log(err)
+                }
+
+                await cacheEntryRemoved
+
+                socket.close()
+            }
         }),
     }),
 });
 
-export const { useGetMeQuery, useLazyGetMeQuery, useGetNotificationsQuery } =
-    userApi;
+export const {
+    useGetMeQuery,
+    useLazyGetMeQuery,
+    useGetNotificationsQuery
+} = userApi;
