@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import { Layout } from './components/Layout/Layout';
 import { FormPage } from './pages/form/Form';
+import { OfflineSalesPage } from './pages/offline-sales/OfflineSales';
 
 export const App: React.FC = () => {
     return (
@@ -16,6 +17,9 @@ export const App: React.FC = () => {
                         }
                     />
                     <Route path="/id/:id" element={<FormPage />} />
+                    {import.meta.env.DEV && (
+                        <Route path="/offlinesales/:id" element={<OfflineSalesPage />} />
+                    )}
                     <Route
                         path="*"
                         element={<FormPage error errorMessage="Invalid UUID" />}
