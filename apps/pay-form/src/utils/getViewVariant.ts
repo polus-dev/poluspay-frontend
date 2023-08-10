@@ -1,3 +1,1 @@
-export const getViewVariant = (currentBlockchain: string) => {
-
-}
+export const getViewVariant = (currentBlockchain: string) => {};

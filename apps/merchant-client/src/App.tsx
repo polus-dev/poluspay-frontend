@@ -53,8 +53,7 @@ export const App: React.FC = () => {
                     path="/merchants/:id"
                     element={
                         <ProtectedRoute>
-                            {' '}
-                            <Layout isMerchantPage />{' '}
+                            <Layout isMerchantPage />
                         </ProtectedRoute>
                     }
                 >

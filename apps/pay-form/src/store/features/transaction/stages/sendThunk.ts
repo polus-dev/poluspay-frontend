@@ -17,11 +17,11 @@ import { Percent } from '@uniswap/sdk-core';
 import { encodePay } from '../../../../logic/transactionEncode/transactionEncode';
 import { doPayThroughPolusContract } from '../../../../logic/transactionEncode/doPayThroughPolusContract';
 import { ThunkConfig } from '../../../store';
-import {CustomRouter} from "../../../../logic/router";
-import {ChainId} from "../../../api/endpoints/types";
-import {CustomProvider, WrapAltToken} from "../../../../logic/payment";
-import {Token as ERC20} from "@uniswap/sdk-core";
-import {getPathFromCallData} from "../../../../logic/utils";
+import { CustomRouter } from '../../../../logic/router';
+import { ChainId } from '../../../api/endpoints/types';
+import { CustomProvider, WrapAltToken } from '../../../../logic/payment';
+import { Token as ERC20 } from '@uniswap/sdk-core';
+import { getPathFromCallData } from '../../../../logic/utils';
 export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
     'transaction/sendThunk',
     async (_, { getState, dispatch, rejectWithValue }) => {
@@ -61,12 +61,8 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                 setStage({
                     status: StageStatus.LOADING,
                     text: 'Calculate fee',
-                }),
+                })
             );
-
-
-
-
 
             // const feeData = await fetchFeeData();
             // const maxPriorityFeePerGas = feeData.maxPriorityFeePerGas
@@ -81,70 +77,65 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
             >;
 
             if (helper.Context === 'universal router') {
+                const currentBlockchain =
+                    getState().connection.currentBlockchain;
+                if (!currentBlockchain)
+                    return rejectWithValue(
+                        'useTokenPrice: No blockchain'
+                    ) as any;
 
-
-
-
-              const currentBlockchain = getState().connection.currentBlockchain;
-              if (!currentBlockchain)
-                return rejectWithValue('useTokenPrice: No blockchain') as any;
-
-              const router = new CustomRouter(ChainId[currentBlockchain]);
-              const tokenA = helper.userToken.is_native
-                ? WrapAltToken.wrap(ChainId[currentBlockchain])
-                : new ERC20(
-                  ChainId[currentBlockchain],
-                  helper.userToken.contract,
-                  helper.userToken.decimals
+                const router = new CustomRouter(ChainId[currentBlockchain]);
+                const tokenA = helper.userToken.is_native
+                    ? WrapAltToken.wrap(ChainId[currentBlockchain])
+                    : new ERC20(
+                          ChainId[currentBlockchain],
+                          helper.userToken.contract,
+                          helper.userToken.decimals
+                      );
+                const tokenB = helper.merchantToken.is_native
+                    ? WrapAltToken.wrap(ChainId[currentBlockchain])
+                    : new ERC20(
+                          ChainId[currentBlockchain],
+                          helper.merchantToken.contract,
+                          helper.merchantToken.decimals
+                      );
+                const amountOut = BigInt(fee) + BigInt(merchantAmount);
+                const response1 = await router.getRouter(
+                    amountOut,
+                    tokenA,
+                    tokenB
                 );
-              const tokenB = helper.merchantToken.is_native
-                ? WrapAltToken.wrap(ChainId[currentBlockchain])
-                : new ERC20(
-                  ChainId[currentBlockchain],
-                  helper.merchantToken.contract,
-                  helper.merchantToken.decimals
+
+                if (!response1) {
+                    return rejectWithValue('No response from router');
+                }
+
+                const provider = new CustomProvider(currentBlockchain);
+
+                const deadline = Math.round(
+                    new Date(expireAt).getTime() / 1000
                 );
-              const amountOut =
-                BigInt(fee) + BigInt(merchantAmount);
-              const response1 = await router.getRouter(
-                amountOut,
-                tokenA,
-                tokenB
-              );
+                const swapOptions: SwapOptions = {
+                    slippageTolerance: new Percent('90', '100'),
+                    deadlineOrPreviousBlockhash: deadline.toString(),
+                    recipient: provider.RouterAddress,
+                };
 
-              if (!response1) {
-                return rejectWithValue('No response from router');
-              }
+                if (signature) {
+                    // @ts-ignore
+                    swapOptions.inputTokenPermit = signature;
+                }
 
-              const provider = new CustomProvider(currentBlockchain);
+                const { calldata } = SwapRouter.swapERC20CallParameters(
+                    response1.trade,
+                    swapOptions
+                );
 
-              const deadline = Math.round(
-                  new Date(expireAt).getTime() / 1000,
-              );
-              const swapOptions: SwapOptions = {
-                slippageTolerance: new Percent('90', '100'),
-                deadlineOrPreviousBlockhash: deadline.toString(),
-                recipient: provider.RouterAddress,
-              };
-
-              if (signature) {
-                  // @ts-ignore
-                  swapOptions.inputTokenPermit = signature;
-              }
-
-              const { calldata } = SwapRouter.swapERC20CallParameters(
-                response1.trade,
-                swapOptions
-              );
-
-              const response2 = await provider.getValueForSwap(
-                getPathFromCallData(calldata),
-                amountOut
-              );
-              const sendAmount = response2.toString();
-
-
-
+                const response2 = await provider.getValueForSwap(
+                    getPathFromCallData(calldata),
+                    amountOut
+                );
+                const sendAmount = response2.toString();
 
                 // const deadline = Math.round(
                 //     new Date(expireAt).getTime() / 1000,
@@ -199,7 +190,11 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                     helper.merchantToken.is_native;
                 preparedTransaction = await prepareSendTransaction({
                     to: helper.PolusAddress,
-                    value: BigInt(helper.userToken.is_native ? getState().transaction.amount! : 0),
+                    value: BigInt(
+                        helper.userToken.is_native
+                            ? getState().transaction.amount!
+                            : 0
+                    ),
                     data: doPayThroughPolusContract({
                         uuid: uuid,
                         feeRecipient: feeAddress,
@@ -223,10 +218,10 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                 setStage({
                     text: 'Transaction success',
                     status: StageStatus.SUCCESS,
-                }),
+                })
             );
         } catch (error) {
             return rejectWithValue(error);
         }
-    },
+    }
 );

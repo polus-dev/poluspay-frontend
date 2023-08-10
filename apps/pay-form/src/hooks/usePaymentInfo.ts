@@ -10,7 +10,7 @@ import { Token } from '../store/api/types';
 import { Asset_t, Blockchain_t } from '../store/api/endpoints/types';
 import { ResponseApiCode } from '../store/api/responseApiCode';
 import { setCurrentBlockchain } from '../store/features/connection/connectionSlice';
-import {useLazyGetAssetsQuery} from "../store/api/endpoints/asset/Asset";
+import { useLazyGetAssetsQuery } from '../store/api/endpoints/asset/Asset';
 
 interface IError {
     message: string;
@@ -32,7 +32,7 @@ export const usePaymentInfo = (id: string) => {
         (state) => state.connection.currentBlockchain
     );
 
-    const { availableTokens ,} = useAvailableTokens();
+    const { availableTokens } = useAvailableTokens();
     const [merchantToken, setMerchantToken] = useState<Token>();
 
     const [expireAt, setExpireAt] = useState('');
@@ -61,7 +61,7 @@ export const usePaymentInfo = (id: string) => {
         setMerchantAddress(payment.address);
         if (!token) throw new Error('usePaymentInfo: Token not found');
         setMerchantToken(token);
-      setIsLoading(false);
+        setIsLoading(false);
     }, [currentBlockchain, info, availableTokens]);
 
     useEffect(() => {

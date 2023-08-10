@@ -6,7 +6,7 @@ import { ReactComponent as IconVerified } from '../../../../assets/icons/verifie
 import './Header.scoped.scss';
 
 export interface FormHeaderProps {
-    merchant: IPaymentMerchant
+    merchant: IPaymentMerchant;
     payment: {
         description: string;
         amount: string;
@@ -17,13 +17,15 @@ export interface FormHeaderProps {
 export const FormHeader: React.FC<FormHeaderProps> = ({ ...props }) => {
     return (
         <div className="header">
-            {props.merchant.logo && <div className="header__avatar">
-                <img
-                    className="header__avatar-image"
-                    src={props.merchant.logo}
-                    alt="Merchant avatar"
-                />
-            </div> }
+            {props.merchant.logo && (
+                <div className="header__avatar">
+                    <img
+                        className="header__avatar-image"
+                        src={props.merchant.logo}
+                        alt="Merchant avatar"
+                    />
+                </div>
+            )}
             <div className="header__data">
                 <div className="header__data-topline">
                     {props.merchant.verified_at ? (

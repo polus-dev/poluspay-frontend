@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Blockchain_t } from '../../api/endpoints/types';
-import {getAccount} from "wagmi/actions"
+import { getAccount } from 'wagmi/actions';
 
 export interface ConnectionState {
     isActive: boolean;
@@ -27,17 +27,14 @@ export const connectionSlice = createSlice({
         deactivateConnection: (state) => {
             state.isActive = false;
         },
-        setCurrentBlockchain: (
-            state,
-            action: PayloadAction<string | null>
-        ) => {
+        setCurrentBlockchain: (state, action: PayloadAction<string | null>) => {
             state.prevBlockchain = state.currentBlockchain;
             // @ts-ignore
             state.currentBlockchain = action.payload;
         },
         setIsMetamask: (state, action: PayloadAction<boolean>) => {
             state.isMetamask = action.payload;
-        }
+        },
     },
 });
 

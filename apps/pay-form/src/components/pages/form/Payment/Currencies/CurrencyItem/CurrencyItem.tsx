@@ -8,7 +8,11 @@ interface CurrencyItemProps {
     name: string;
 }
 
-export const FormCurrencyItem: React.FC<CurrencyItemProps> = ({ active, name, image}) => {
+export const FormCurrencyItem: React.FC<CurrencyItemProps> = ({
+    active,
+    name,
+    image,
+}) => {
     return (
         <div
             className={classNames({
@@ -17,11 +21,7 @@ export const FormCurrencyItem: React.FC<CurrencyItemProps> = ({ active, name, im
             })}
         >
             <div className="currency__inner">
-                <img
-                    className="currency__inner-image"
-                    src={image}
-                    alt={name}
-                />
+                <img className="currency__inner-image" src={image} alt={name} />
                 <p className="currency__inner-text">{name}</p>
             </div>
         </div>

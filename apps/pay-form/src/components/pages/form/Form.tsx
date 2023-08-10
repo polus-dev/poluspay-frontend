@@ -1,60 +1,78 @@
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import {usePaymentInfo} from '../../../hooks/usePaymentInfo';
-import {formatUnits} from 'viem';
-import {roundCryptoAmount} from '../../../../../../tools';
+import { usePaymentInfo } from '../../../hooks/usePaymentInfo';
+import { formatUnits } from 'viem';
+import { roundCryptoAmount } from '../../../../../../tools';
 
-import {ProgressBar} from '../../ui/ProgressBar/ProgressBar';
-import {FormButton} from './Button/Button';
-import {FormHeader} from './Header/Header';
-import {FormFooter} from './Footer/Footer';
-import {FormNativePayment as QRCodePayment} from './Native/Native';
-import {FormProcessBlock} from './ProcessBlock/Process';
-import {FormPayment} from './Payment/Payment';
+import { ProgressBar } from '../../ui/ProgressBar/ProgressBar';
+import { FormButton } from './Button/Button';
+import { FormHeader } from './Header/Header';
+import { FormFooter } from './Footer/Footer';
+import { FormNativePayment as QRCodePayment } from './Native/Native';
+import { FormProcessBlock } from './ProcessBlock/Process';
+import { FormPayment } from './Payment/Payment';
 
 import './Form.scoped.scss';
-import {AssetRepresentation, Helper} from "@poluspay-frontend/api";
-import {useTokenPairPrice} from "../../../hooks/useTokenPairPrice";
-import {useAccount} from "wagmi";
-import {useWeb3Modal} from "@web3modal/react";
-import {startPay} from "../../../store/features/transaction/transactionThunk";
-import {useAppDispatch, useAppSelector} from "../../../store/hooks";
+import { AssetRepresentation, Helper } from '@poluspay-frontend/api';
+import { useTokenPairPrice } from '../../../hooks/useTokenPairPrice';
+import { useAccount } from 'wagmi';
+import { useWeb3Modal } from '@web3modal/react';
+import { startPay } from '../../../store/features/transaction/transactionThunk';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 type FormStage = 'EVM' | 'QRCode' | 'ProcessBlock';
 
 // make recursive required
-interface IFormProps extends Required<Omit<ReturnType<typeof usePaymentInfo>, "isLoading" | "error">> {
+interface IFormProps
+    extends Required<
+        Omit<ReturnType<typeof usePaymentInfo>, 'isLoading' | 'error'>
+    > {
     id: string;
-    assets?: Helper
+    assets?: Helper;
     availableTokens?: AssetRepresentation[];
     availableCategories?: string[];
 }
 
-
 export const Form = (props: IFormProps) => {
     const dispatch = useAppDispatch();
     const [stage, setStage] = useState<FormStage>('EVM');
-    const {isConnected, address} = useAccount();
-    const [userToken, setUserToken] = useState(props.availableTokens![0])
-    const {amount, isLoading, assetName} = useTokenPairPrice(userToken, props.merchantToken, props.amountInMerchantToken)
-    const {open} = useWeb3Modal();
+    const { isConnected, address } = useAccount();
+    const [userToken, setUserToken] = useState(props.availableTokens![0]);
+    const { amount, isLoading, assetName } = useTokenPairPrice(
+        userToken,
+        props.merchantToken,
+        props.amountInMerchantToken
+    );
+    const { open } = useWeb3Modal();
     const abortPayment = useRef<() => void>();
     const paymentCb = useRef<(startStageIndex?: number) => () => void>();
-    const currentBlockchain = useAppSelector(state => state.connection.currentBlockchain)
-  useEffect(() => {
-    if (props.info && props.info.payment.blockchains.length === 1 && props.assets?.getQRCodePaymentNetworks().includes(props.info.payment.blockchains[0])) {
-      setStage('QRCode')
-    }
-  }, [props.info]);
+    const currentBlockchain = useAppSelector(
+        (state) => state.connection.currentBlockchain
+    );
+    useEffect(() => {
+        if (
+            props.info &&
+            props.info.payment.blockchains.length === 1 &&
+            props.assets
+                ?.getQRCodePaymentNetworks()
+                .includes(props.info.payment.blockchains[0])
+        ) {
+            setStage('QRCode');
+        }
+    }, [props.info]);
 
     useEffect(() => {
-      if (props.assets?.getQRCodePaymentNetworks().includes(currentBlockchain!)) {
-        setStage('QRCode')
-        console.log(2)
-      } else {
-        setStage('EVM')
-      }
-    }, [currentBlockchain])
+        if (
+            props.assets
+                ?.getQRCodePaymentNetworks()
+                .includes(currentBlockchain!)
+        ) {
+            setStage('QRCode');
+            console.log(2);
+        } else {
+            setStage('EVM');
+        }
+    }, [currentBlockchain]);
     const onButtonClick = () => {
         if (!isConnected) {
             open();
@@ -62,14 +80,52 @@ export const Form = (props: IFormProps) => {
             abortPayment.current?.();
             setStage('EVM');
         } else if (stage === 'EVM') {
-            paymentCb.current = startStageIndex =>  dispatch(startPay({...props, uuid: props.id, userToken, blockchain: currentBlockchain!, userAddress: address!, amount: (BigInt(props.fee) + BigInt(props.merchantAmount)).toString(), feeAddress: props.info!.payment.evm_fee_address, merchantToken: props.merchantToken!, startStage: startStageIndex!})).abort;
-            abortPayment.current = dispatch(startPay({...props, uuid: props.id, userToken, blockchain: currentBlockchain!, userAddress: address!, amount: (BigInt(props.fee) + BigInt(props.merchantAmount)).toString(), feeAddress: props.info!.payment.evm_fee_address, merchantToken: props.merchantToken!})).abort;
+            paymentCb.current = (startStageIndex) =>
+                dispatch(
+                    startPay({
+                        ...props,
+                        uuid: props.id,
+                        userToken,
+                        blockchain: currentBlockchain!,
+                        userAddress: address!,
+                        amount: (
+                            BigInt(props.fee) + BigInt(props.merchantAmount)
+                        ).toString(),
+                        feeAddress: props.info!.payment.evm_fee_address,
+                        merchantToken: props.merchantToken!,
+                        startStage: startStageIndex!,
+                    })
+                ).abort;
+            abortPayment.current = dispatch(
+                startPay({
+                    ...props,
+                    uuid: props.id,
+                    userToken,
+                    blockchain: currentBlockchain!,
+                    userAddress: address!,
+                    amount: (
+                        BigInt(props.fee) + BigInt(props.merchantAmount)
+                    ).toString(),
+                    feeAddress: props.info!.payment.evm_fee_address,
+                    merchantToken: props.merchantToken!,
+                })
+            ).abort;
             setStage('ProcessBlock');
-        } else if (stage === 'QRCode' &&  props.info && props.info.payment.blockchains.length > 1) {
+        } else if (
+            stage === 'QRCode' &&
+            props.info &&
+            props.info.payment.blockchains.length > 1
+        ) {
             setStage('EVM');
         }
-    }
-    if (!props.info || !props.merchantToken || !props.assets || !props.availableTokens || !props.availableCategories) {
+    };
+    if (
+        !props.info ||
+        !props.merchantToken ||
+        !props.assets ||
+        !props.availableTokens ||
+        !props.availableCategories
+    ) {
         return null;
     }
 
@@ -80,35 +136,63 @@ export const Form = (props: IFormProps) => {
                     merchant={props.info.merchant}
                     payment={{
                         description: props.info.payment.description,
-                        amount: roundCryptoAmount(formatUnits(BigInt(props.amountInMerchantToken),
-                            props.merchantToken.decimals)),
-                        currency: props.merchantToken.name.toUpperCase()
+                        amount: roundCryptoAmount(
+                            formatUnits(
+                                BigInt(props.amountInMerchantToken),
+                                props.merchantToken.decimals
+                            )
+                        ),
+                        currency: props.merchantToken.name.toUpperCase(),
                     }}
                 />
             </div>
             <div className="form__progress">
-                <ProgressBar value={70}/>
+                <ProgressBar value={70} />
             </div>
             {stage === 'EVM' ? (
-                <FormPayment paymentAvailableBlockchains={props.info.payment.blockchains}
-                             availableTokens={props.availableTokens} availableCategories={props.availableCategories}
-                             expireAt={props.expireAt}
-                             setUserToken={setUserToken}
-                             userToken={userToken}
+                <FormPayment
+                    paymentAvailableBlockchains={props.info.payment.blockchains}
+                    availableTokens={props.availableTokens}
+                    availableCategories={props.availableCategories}
+                    expireAt={props.expireAt}
+                    setUserToken={setUserToken}
+                    userToken={userToken}
                 />
             ) : stage === 'QRCode' ? (
-                <QRCodePayment currentBlockchain={currentBlockchain!} availableTokens={props.availableTokens}  payment={props.info.payment}/>
+                <QRCodePayment
+                    currentBlockchain={currentBlockchain!}
+                    availableTokens={props.availableTokens}
+                    payment={props.info.payment}
+                />
             ) : (
-                <FormProcessBlock onRetry={paymentCb.current!}/>
+                <FormProcessBlock onRetry={paymentCb.current!} />
             )}
             <div className="form__footer">
-              {!(props.info.payment.blockchains.length === 1 && props.assets.getQRCodePaymentNetworks().includes(currentBlockchain!)) && <div className="form__footer-button">
-                    <FormButton
-                        text={stage === "EVM" && isConnected && !isLoading ? `Pay ≈ ${amount} ${userToken.name.toUpperCase()}` : stage === "ProcessBlock" || stage === "QRCode" ? "Cancel" : isLoading && isConnected ? "Loading..." : "Connect Wallet"}
-                        disabled={isLoading && isConnected} onClick={onButtonClick}/>
-                </div> }
+                {!(
+                    props.info.payment.blockchains.length === 1 &&
+                    props.assets
+                        .getQRCodePaymentNetworks()
+                        .includes(currentBlockchain!)
+                ) && (
+                    <div className="form__footer-button">
+                        <FormButton
+                            text={
+                                stage === 'EVM' && isConnected && !isLoading
+                                    ? `Pay ≈ ${amount} ${userToken.name.toUpperCase()}`
+                                    : stage === 'ProcessBlock' ||
+                                      stage === 'QRCode'
+                                    ? 'Cancel'
+                                    : isLoading && isConnected
+                                    ? 'Loading...'
+                                    : 'Connect Wallet'
+                            }
+                            disabled={isLoading && isConnected}
+                            onClick={onButtonClick}
+                        />
+                    </div>
+                )}
                 <div className="form__footer-inner">
-                    <FormFooter/>
+                    <FormFooter />
                 </div>
             </div>
         </div>
