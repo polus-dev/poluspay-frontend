@@ -37,7 +37,7 @@ export const FormPage: React.FC<IFormPageProps> = ({ error, errorMessage }) => {
         useAvailableTokens();
 
     const status = useAppSelector(state => state.smartLine.smartLineStatus)
-    const expiredMessage  = payment.expireAt < new Date().toISOString() ? "Payment is expired" : undefined
+    const expiredMessage  = payment.expireAt < new Date().toISOString() && payment.info?.payment.status !== 'success' ? "Payment is expired" : undefined
     return (
         <div className="form-page">
             <div
