@@ -68,7 +68,6 @@ export const startPay = createAsyncThunk<any, IPayload, ThunkConfig>(
                     description:
                         error instanceof Error ? error.message : undefined,
                 });
-                console.error(error);
                 return rejectWithValue(error);
             }
         }

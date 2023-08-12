@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
-import { Loader, PNotifyContainer } from '@poluspay-frontend/ui';
+import {Loader} from '@poluspay-frontend/ui';
 import { Form } from '../../components/pages/form/Form';
 import { FormError } from '../../components/pages/form/states/Error/Error';
 import { FormProcessing } from '../../components/pages/form/states/Processing/Processing';
@@ -15,8 +14,8 @@ import { useGetAssetsQuery } from '../../store/api/endpoints/asset/Asset';
 import { useAvailableTokens } from '../../hooks/useAvailableTokens';
 import { roundCryptoAmount } from '../../../../../tools';
 import { formatUnits } from 'viem';
-
-type FormStatus = 'default' | 'loading' | 'success' | 'in_progress';
+import {useAppSelector} from "../../store/hooks";
+import {SmartLineStatus} from "../../store/features/smartLine/smartLineSlice";
 
 interface IFormPageProps {
     error?: boolean;
@@ -37,20 +36,20 @@ export const FormPage: React.FC<IFormPageProps> = ({ error, errorMessage }) => {
     const { availableTokens, isAvailableTokensLoading, availableCategories } =
         useAvailableTokens();
 
-    const [status, setStatus] = useState<FormStatus>('default');
-
+    const status = useAppSelector(state => state.smartLine.smartLineStatus)
+    const expiredMessage  = payment.expireAt < new Date().toISOString() ? "Payment is expired" : undefined
     return (
         <div className="form-page">
             <div
                 className={classNames({
                     'form-page__form': true,
-                    'form-page__form--error': error,
-                    [`form-page__form--${status}`]: status !== 'default',
+                    'form-page__form--error': error || status === SmartLineStatus.ERROR,
+                    [`form-page__form--${status}`]: status !== SmartLineStatus.DEFAULT,
                 })}
             >
-                {error || paymentError ? (
+                {error || paymentError || expiredMessage  ? (
                     <FormError
-                        message={errorMessage || paymentError?.message}
+                        message={errorMessage || paymentError?.message || expiredMessage}
                     />
                 ) : payment.info?.payment.status === 'pending' ? (
                     <Form
@@ -84,7 +83,6 @@ export const FormPage: React.FC<IFormPageProps> = ({ error, errorMessage }) => {
                     )
                 )}
             </div>
-            <PNotifyContainer />
         </div>
     );
 };
