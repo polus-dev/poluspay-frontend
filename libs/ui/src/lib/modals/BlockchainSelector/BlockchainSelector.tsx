@@ -20,6 +20,7 @@ interface ModalProps<Multi> {
     onClose: () => void;
     selected?: Multi extends true ?  BlockchainItem[] : BlockchainItem;
     setSelected: (items: Multi extends true ?  BlockchainItem[] : BlockchainItem) => void;
+    isPayForm?: boolean
 }
 
 export const ModalBlockChainSelector = <T extends boolean = false>({
@@ -31,6 +32,7 @@ export const ModalBlockChainSelector = <T extends boolean = false>({
     setSelected,
     next,
     selected,
+  isPayForm
 }: ModalProps<T>) => {
     const [search, setSearch] = useState('');
   const ref = useOutsideClose(onClose)
@@ -108,7 +110,7 @@ export const ModalBlockChainSelector = <T extends boolean = false>({
                                         <div className="modal__body-container-item__inner">
                                             <img
                                                 className="modal__body-container-item__inner-image"
-                                                src={`/images/wallets/${el.image}.png`}
+                                                src={`/${isPayForm ? "images" : "images/wallets"}/${el.image}.png`}
                                                 alt={el.name}
                                             />
                                             <p className="modal__body-container-item__inner-name">
