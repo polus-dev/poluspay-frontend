@@ -24,12 +24,11 @@ export const FormNativePayment = (props: IFormNativePaymentProps) => {
         props.payment,
         props.currentBlockchain
     );
-
     return (
         <div className="native">
             <div className="native__qrcode">
                 <FormQRCode
-                    amount={paymentInfo.amount}
+                    amount={paymentInfo.amount_decimals}
                     address={paymentInfo.address}
                     assetName={paymentInfo.name}
                     assetImage={getAssetUrl(

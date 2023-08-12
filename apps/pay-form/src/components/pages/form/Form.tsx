@@ -1,24 +1,31 @@
-import { useEffect, useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 
-import { usePaymentInfo } from '../../../hooks/usePaymentInfo';
-import { formatUnits } from 'viem';
-import { roundCryptoAmount } from '../../../../../../tools';
+import {usePaymentInfo} from '../../../hooks/usePaymentInfo';
+import {formatUnits} from 'viem';
+import {roundCryptoAmount} from '../../../../../../tools';
 
-import { ProgressBar } from '../../ui/ProgressBar/ProgressBar';
-import { FormButton } from './Button/Button';
-import { FormHeader } from './Header/Header';
-import { FormFooter } from './Footer/Footer';
-import { FormNativePayment as QRCodePayment } from './Native/Native';
-import { FormProcessBlock } from './ProcessBlock/Process';
-import { FormPayment } from './Payment/Payment';
+import {ProgressBar} from '../../ui/ProgressBar/ProgressBar';
+import {FormButton} from './Button/Button';
+import {FormHeader} from './Header/Header';
+import {FormFooter} from './Footer/Footer';
+import {FormNativePayment as QRCodePayment} from './Native/Native';
+import {FormProcessBlock} from './ProcessBlock/Process';
+import {FormPayment} from './Payment/Payment';
 
 import './Form.scoped.scss';
-import { AssetRepresentation, Helper } from '@poluspay-frontend/api';
-import { useTokenPairPrice } from '../../../hooks/useTokenPairPrice';
-import { useAccount } from 'wagmi';
-import { useWeb3Modal } from '@web3modal/react';
-import { startPay } from '../../../store/features/transaction/transactionThunk';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import {AssetRepresentation, Helper} from '@poluspay-frontend/api';
+import {useTokenPairPrice} from '../../../hooks/useTokenPairPrice';
+import {useAccount} from 'wagmi';
+import {useWeb3Modal} from '@web3modal/react';
+import {startPay} from '../../../store/features/transaction/transactionThunk';
+import {useAppDispatch, useAppSelector} from '../../../store/hooks';
+import {setCurrentBlockchain} from "../../../store/features/connection/connectionSlice";
+import {
+  ProgressBarAction,
+  setProgressBar,
+  setSmartLineStatus,
+  SmartLineStatus
+} from "../../../store/features/smartLine/smartLineSlice";
 
 type FormStage = 'EVM' | 'QRCode' | 'ProcessBlock';
 
@@ -43,12 +50,22 @@ export const Form = (props: IFormProps) => {
         props.merchantToken,
         props.amountInMerchantToken
     );
+    const progressBarValue = useAppSelector(state => state.smartLine.progressBar)
     const { open } = useWeb3Modal();
     const abortPayment = useRef<() => void>();
     const paymentCb = useRef<(startStageIndex?: number) => () => void>();
     const currentBlockchain = useAppSelector(
         (state) => state.connection.currentBlockchain
     );
+
+  useEffect(() => {
+    if (isConnected && !progressBarValue) {
+      console.log(progressBarValue)
+      dispatch(setProgressBar(ProgressBarAction.INC))
+    }
+    else if (!isConnected && progressBarValue)
+      dispatch(setProgressBar(ProgressBarAction.DEC))
+  }, [isConnected, progressBarValue]);
     useEffect(() => {
         if (
             props.info &&
@@ -57,6 +74,7 @@ export const Form = (props: IFormProps) => {
                 ?.getQRCodePaymentNetworks()
                 .includes(props.info.payment.blockchains[0])
         ) {
+
             setStage('QRCode');
         }
     }, [props.info]);
@@ -74,11 +92,19 @@ export const Form = (props: IFormProps) => {
         }
     }, [currentBlockchain]);
     const onButtonClick = () => {
-        if (!isConnected) {
+      if (
+        stage === 'QRCode' &&
+        props.info &&
+        props.info.payment.blockchains.length > 1
+      ) {
+        setStage('EVM');
+        dispatch(setCurrentBlockchain(props.info.payment.blockchains[0]));
+      } else if (!isConnected) {
             open();
         } else if (stage === 'ProcessBlock') {
             abortPayment.current?.();
             setStage('EVM');
+            dispatch(setSmartLineStatus(SmartLineStatus.DEFAULT))
         } else if (stage === 'EVM') {
             paymentCb.current = (startStageIndex) =>
                 dispatch(
@@ -111,12 +137,6 @@ export const Form = (props: IFormProps) => {
                 })
             ).abort;
             setStage('ProcessBlock');
-        } else if (
-            stage === 'QRCode' &&
-            props.info &&
-            props.info.payment.blockchains.length > 1
-        ) {
-            setStage('EVM');
         }
     };
     if (
@@ -147,7 +167,7 @@ export const Form = (props: IFormProps) => {
                 />
             </div>
             <div className="form__progress">
-                <ProgressBar value={70} />
+                <ProgressBar value={progressBarValue} />
             </div>
             {stage === 'EVM' ? (
                 <FormPayment

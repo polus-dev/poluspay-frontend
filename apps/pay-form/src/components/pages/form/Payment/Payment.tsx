@@ -12,7 +12,6 @@ import {
 import React from 'react';
 import { AssetRepresentation } from '@poluspay-frontend/api';
 import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
-import { block } from '@itznevikat/router';
 import { setCurrentBlockchain } from '../../../../store/features/connection/connectionSlice';
 
 interface FormPaymentProps {
@@ -57,6 +56,7 @@ export const FormPayment = (props: FormPaymentProps) => {
             </div>
 
             <ModalBlockChainSelector
+               isPayForm
                 visible={modalBlockchains.visible}
                 options={blockchainList.filter((e) =>
                     props.paymentAvailableBlockchains.includes(e.label)

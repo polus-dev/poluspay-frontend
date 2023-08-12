@@ -38,7 +38,7 @@ export const FormCurrencies = (props: FormCurrenciesProps) => {
                     import.meta.env.VITE_ASSET_URL,
                     props.availableTokens[0].name
                 )}
-                active={props.userToken === props.availableTokens[0]}
+                active={props.userToken.contract === props.availableTokens[0].contract}
                 onClick={() => props.setUserToken(props.availableTokens[0])}
             />
             {props.availableTokens.slice(1, 5).map((token) => (
@@ -49,22 +49,14 @@ export const FormCurrencies = (props: FormCurrenciesProps) => {
                         token.name
                     )}
                     key={token.contract}
-                    active={props.userToken === token}
+                    active={props.userToken.contract === token.contract}
                     onClick={() => props.setUserToken(token)}
                 />
             ))}
             {props.availableTokens.length > 5 && (
-                // <div className="currencies__item">
-                //   <div className="currency currency--more">
-                //     <div className="currency__inner">
-                //       <p  className="currency__inner-text">More</p>
-                //     </div>
-                //   </div>
-                // </div>
-
                 <Currency
                     name={'More'}
-                    image={''}
+                    image="/images/OTHER.png"
                     active={false}
                     onClick={props.openModal}
                 />

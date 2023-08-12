@@ -10,7 +10,6 @@ import { Token } from '../store/api/types';
 import { Asset_t, Blockchain_t } from '../store/api/endpoints/types';
 import { ResponseApiCode } from '../store/api/responseApiCode';
 import { setCurrentBlockchain } from '../store/features/connection/connectionSlice';
-import { useLazyGetAssetsQuery } from '../store/api/endpoints/asset/Asset';
 
 interface IError {
     message: string;
@@ -26,8 +25,8 @@ export const usePaymentInfo = (id: string) => {
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<IError>();
-    const [getPaymentInfo] = useLazyGetPaymentByPaymentIdQuery();
-    const [getMerchantInfo] = useLazyGetMerchantByIdQuery();
+    const [getPaymentInfo] = useLazyGetPaymentByPaymentIdQuery({refetchOnFocus: true});
+    const [getMerchantInfo] = useLazyGetMerchantByIdQuery({refetchOnFocus: true});
     const currentBlockchain = useAppSelector(
         (state) => state.connection.currentBlockchain
     );
@@ -80,8 +79,7 @@ export const usePaymentInfo = (id: string) => {
                         if (!currentBlockchain)
                             dispatch(
                                 setCurrentBlockchain(
-                                    paymentResponse.data!.assets[0]
-                                        .network as Blockchain_t
+                                    paymentResponse.data!.blockchains[0] as Blockchain_t
                                 )
                             );
                     } else if (merchantResponse.error) {
