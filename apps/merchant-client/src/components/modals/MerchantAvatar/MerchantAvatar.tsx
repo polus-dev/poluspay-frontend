@@ -34,8 +34,7 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
         setError(false);
         const file = event.target.files?.[0];
 
-        if (!file) return;
-        if (!file.type.match('image/png')) {
+        if (!file || !file.type.match('image/png')) {
             setError(true);
             return;
         }
@@ -43,10 +42,10 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
         const reader = new FileReader();
         reader.readAsDataURL(file);
 
-        let isValid = false;
         reader.onload = (e: ProgressEvent<FileReader>) => {
             const img = new Image();
 
+            img.src = e.target?.result as string;
             img.onload = () => {
                 const width = img.width;
                 const height = img.height;
@@ -55,15 +54,9 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
                     setError(true);
                     return;
                 }
+              setPreviewImage(reader.result?.toString() || '');
+              setImage(file);
             };
-            img.src = e.target?.result as string;
-            isValid = true;
-        };
-
-        reader.onloadend = () => {
-            if (!isValid) return;
-            setPreviewImage(reader.result?.toString() || '');
-            setImage(file);
         };
     };
 
