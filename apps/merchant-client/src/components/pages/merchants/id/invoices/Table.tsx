@@ -12,6 +12,7 @@ type InvoiceStatus =
 export interface Invoice {
     id: string;
     amount: string;
+    payLink: string;
     currency: string;
     hash: {
         value: string;
@@ -26,9 +27,6 @@ interface TableProps {
     invoices: Invoice[];
 }
 
-const openInvoice = (id: string) => {
-    window.open(`${import.meta.env.VITE_PAYFORM_URL}?uuid=${id}`, '_blank');
-};
 
 export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
     return (
@@ -49,7 +47,7 @@ export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
                                 {/* TODO: refactor styles */}
                                 <p
                                     style={{ cursor: 'pointer' }}
-                                    onClick={() => openInvoice(el.id)}
+                                    onClick={() => window.open(el.payLink, "_blank")}
                                     className="table__row-id-text"
                                 >
                                     {makeShortHash(el.id, 5)}
