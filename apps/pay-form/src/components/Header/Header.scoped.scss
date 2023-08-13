@@ -1,0 +1,75 @@
+@import '../../assets/scss/variables';
+@import '../../assets/scss/utils';
+
+.header {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: px-to-rem(76);
+    padding: 0 px-to-rem(16);
+    border-bottom: px-to-rem(2) solid $color-grey;
+    background-color: $color-black-light;
+    z-index: 10;
+
+    @include breakpoint($screen-md) {
+        padding: 0 px-to-rem(30);
+    }
+
+    @include breakpoint($screen-lg) {
+        padding: 0 px-to-rem(40);
+    }
+
+    &__container {
+        position: relative;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        max-width: px-to-rem(1200);
+        height: 100%;
+
+        @include breakpoint($screen-xl) {
+            max-width: px-to-rem(1520);
+        }
+    }
+
+    &__logo {
+        display: flex;
+        align-items: center;
+    }
+
+    &__logo-image {
+        width: px-to-rem(40);
+        height: auto;
+
+        @include breakpoint($screen-md) {
+            display: none;
+        }
+
+        &--desktop {
+            display: none;
+
+            @include breakpoint($screen-md) {
+                display: block;
+                width: px-to-rem(200);
+            }
+
+            @include breakpoint($screen-lg) {
+                width: px-to-rem(180);
+            }
+
+            @include breakpoint($screen-xl) {
+                width: px-to-rem(200);
+            }
+        }
+    }
+
+    &__account {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        max-width: px-to-rem(220);
+    }
+}

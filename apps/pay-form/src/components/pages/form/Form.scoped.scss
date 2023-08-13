@@ -1,0 +1,22 @@
+@import '../../../assets/scss/variables';
+@import '../../../assets/scss/utils';
+
+.form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: px-to-rem(16);
+    width: 100%;
+    height: auto;
+    padding: px-to-rem(20) px-to-rem(16);
+
+    @include breakpoint($screen-sm) {
+        padding: px-to-rem(24) px-to-rem(32);
+    }
+
+    &__footer {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(10);
+    }
+}

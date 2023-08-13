@@ -60,6 +60,7 @@ export const useGetPaginatedInvoices = ({
                     }
                     return {
                         id: invoice.id,
+                        payLink: invoice.pay_link,
                         amount,
                         currency,
                         hash: {

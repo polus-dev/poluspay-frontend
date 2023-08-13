@@ -1,0 +1,20 @@
+@import '../../../../../assets/scss/variables';
+@import '../../../../../assets/scss/utils';
+
+.timer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    &__text {
+        text-align: center;
+        color: $color-grey-light;
+        font-size: px-to-rem(14);
+        font-weight: 400;
+        line-height: 150%;
+
+        @include breakpoint($screen-sm) {
+            font-size: px-to-rem(16);
+        }
+    }
+}

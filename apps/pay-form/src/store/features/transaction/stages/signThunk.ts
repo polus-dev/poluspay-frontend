@@ -9,7 +9,11 @@ import {
 
 import { signTypedData } from 'wagmi/actions';
 import { ThunkConfig } from '../../../store';
-import {Permit2Permit} from "../../../../logic/uwm/builder";
+import { Permit2Permit } from '../../../../logic/uwm/builder';
+import {
+    ProgressBarAction,
+    setProgressBar,
+} from '../../smartLine/smartLineSlice';
 
 export const signThunk = createAsyncThunk<any, void, ThunkConfig>(
     'transaction/signThunk',
@@ -17,7 +21,6 @@ export const signThunk = createAsyncThunk<any, void, ThunkConfig>(
         const currentStage = () => getState().transaction.currentStage;
         const isMetamask = getState().connection.isMetamask;
         const sendAmount =
-            getState().transaction.pathTrade.amount ||
             getState().transaction.amount;
 
         const helper = getState().transaction.helper;
@@ -78,6 +81,7 @@ export const signThunk = createAsyncThunk<any, void, ThunkConfig>(
                 );
             }
             dispatch(nextStage());
+            dispatch(setProgressBar(ProgressBarAction.INC));
         } catch (error) {
             return rejectWithValue(error);
         }

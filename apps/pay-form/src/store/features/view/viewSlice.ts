@@ -1,28 +1,28 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 
 export const enum ViewVariant {
-  EVM,
-  PROCESS_BLOCK,
-  QRCODE,
+    EVM,
+    PROCESS_BLOCK,
+    QRCODE,
 }
 
 export interface ViewState {
-  currentView: ViewVariant;
+    currentView: ViewVariant;
 }
 
 const initialState: ViewState = {
-  currentView: ViewVariant.EVM,
+    currentView: ViewVariant.EVM,
 };
 
 export const viewSlice = createSlice({
-  name: "view" as const,
-  initialState,
-  reducers: {
-    setView(state, action: PayloadAction<ViewVariant>) {
-      state.currentView = action.payload;
+    name: 'view' as const,
+    initialState,
+    reducers: {
+        setView(state, action: PayloadAction<ViewVariant>) {
+            state.currentView = action.payload;
+        },
     },
-  },
 });
 
 export const { setView } = viewSlice.actions;

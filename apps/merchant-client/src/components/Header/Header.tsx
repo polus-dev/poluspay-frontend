@@ -19,11 +19,11 @@ import './Header.scoped.scss';
 export const Header: React.FC = () => {
     const elHeader = useRef<HTMLElement | null>(null);
 
+    const navigate = useNavigate();
+    const { logout } = useLogout();
     const { data, isLoading } = useGetMeQuery(undefined, {
         refetchOnMountOrArgChange: true,
     });
-    const navigate = useNavigate();
-    const { logout } = useLogout();
 
     const [menuOpened, setMenuOpened] = useState(false);
     const [menuScrolled, setMenuScrolled] = useState(false);

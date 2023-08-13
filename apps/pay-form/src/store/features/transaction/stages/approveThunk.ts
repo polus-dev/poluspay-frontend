@@ -3,7 +3,6 @@ import {
     nextStage,
     setStage,
     setStageText,
-    StageId,
     StageStatus,
 } from '../transactionSlice';
 import { erc20ABI, waitForTransaction } from '@wagmi/core';
@@ -12,7 +11,10 @@ import { prepareWriteContract, writeContract } from 'wagmi/actions';
 import { TransactionError } from '../TransactionError';
 import { ThunkConfig } from '../../../store';
 import { MAX_UINT256 } from '../../../../../../../tools';
-import { waitForTransactionReceipt } from 'viem/public';
+import {
+    ProgressBarAction,
+    setProgressBar,
+} from '../../smartLine/smartLineSlice';
 
 export const approveThunk = createAsyncThunk<any, void, ThunkConfig>(
     'transaction/approveThunk',
@@ -20,7 +22,6 @@ export const approveThunk = createAsyncThunk<any, void, ThunkConfig>(
         const currentStage = () => getState().transaction.currentStage;
         const isMetamask = getState().connection.isMetamask;
         const sendAmount =
-            getState().transaction.pathTrade.amount ||
             getState().transaction.amount;
 
         const helper = getState().transaction.helper;
@@ -30,7 +31,7 @@ export const approveThunk = createAsyncThunk<any, void, ThunkConfig>(
         }
 
         try {
-          debugger
+            debugger;
             const checkAndApprove = async (
                 contractType: Parameters<
                     typeof helper.checkAllowanceToUserToken
@@ -107,25 +108,9 @@ export const approveThunk = createAsyncThunk<any, void, ThunkConfig>(
                 })
             );
             dispatch(nextStage());
+            dispatch(setProgressBar(ProgressBarAction.INC));
         } catch (error) {
             return rejectWithValue(error);
-            // if (error instanceof TransactionError) {
-            //   dispatch(
-            //     setStage({
-            //       text: error.message,
-            //       status: StageStatus.FAILURE,
-            //     })
-            //   );
-            // } else {
-            //   dispatch(
-            //     setStage({
-            //       text: "Transaction failed",
-            //       status: StageStatus.FAILURE,
-            //     })
-            //   );
-            // }
-            //
-            throw error;
         }
     }
 );

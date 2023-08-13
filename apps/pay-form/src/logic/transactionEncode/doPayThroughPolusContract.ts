@@ -1,6 +1,6 @@
 import { IEncodeTransfer } from './types/IEncodeTransfer';
 import { Address, encodeFunctionData } from 'viem';
-import polusAbi from '../../polus_abi';
+import polusAbi from '../../abi/polus_abi';
 import { Hex } from 'viem';
 interface IPayThroughPolusContract
     extends Omit<
@@ -20,7 +20,7 @@ export function doPayThroughPolusContract({
     feeRecipient,
 }: IPayThroughPolusContract): Hex {
     // const polusContract = new ethers.utils.Interface(PolusContractAbi);
-  // @ts-ignore
+    // @ts-ignore
     uuid = uuid.replaceAll('-', '');
     if (tokenAddress) {
         return encodeFunctionData({

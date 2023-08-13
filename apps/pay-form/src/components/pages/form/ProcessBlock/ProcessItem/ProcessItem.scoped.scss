@@ -1,0 +1,56 @@
+@import '../../../../../assets/scss/variables';
+@import '../../../../../assets/scss/utils';
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    &--pending {
+        color: $color-grey;
+    }
+
+    &__inner {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(8);
+    }
+
+    &__inner-icon {
+        width: px-to-rem(24);
+        height: auto;
+
+        &--loading {
+            fill: $color-grey-light;
+            stroke: $color-grey-light;
+        }
+
+        &--success {
+            stroke: $color-green;
+        }
+
+        &--failure {
+            stroke: $color-red;
+        }
+    }
+
+    &__inner-text {
+        color: inherit;
+        font-size: px-to-rem(16);
+        font-weight: 400;
+        line-height: 150%;
+    }
+
+    &__icon {
+        width: px-to-rem(24);
+        height: auto;
+        stroke: $color-grey-light;
+        transition: stroke 0.15s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+            stroke: $color-white-dark;
+        }
+    }
+}

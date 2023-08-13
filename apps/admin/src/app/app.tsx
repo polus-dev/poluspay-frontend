@@ -4,7 +4,7 @@ import {PInput} from "@poluspay-frontend/ui";
 import axios from "axios";
 import {IPayment, IPaymentMerchant} from "@poluspay-frontend/api";
 import {useEffect, useState} from "react";
-import {isValidUUID} from "../../../../tools/date/isValidUUID";
+import {isValidUUID} from "../../../../tools/isValidUUID";
 import {getParameterByName} from "../../../../tools/getParameterByName";
 import {getAssetUrl} from "../../../../tools";
 

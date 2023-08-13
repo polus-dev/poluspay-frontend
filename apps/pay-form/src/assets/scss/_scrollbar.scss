@@ -1,0 +1,33 @@
+@import './variables';
+@import './utils';
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: $color-blue $color-black-light;
+
+    &::-webkit-scrollbar {
+        width: px-to-rem(8);
+    }
+
+    &::-webkit-scrollbar-track {
+        border-radius: 0;
+        background-color: $color-black-light;
+        border: px-to-rem(4) solid $color-black-light;
+
+        &:hover,
+        &:active {
+            background-color: $color-black-light;
+        }
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: px-to-rem(8);
+        background-color: $color-blue;
+        border: px-to-rem(4) solid $color-blue;
+
+        &:hover,
+        &:active {
+            background-color: $color-blue;
+        }
+    }
+}

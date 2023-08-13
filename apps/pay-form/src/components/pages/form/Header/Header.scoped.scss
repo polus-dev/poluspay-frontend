@@ -1,0 +1,114 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/utils';
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    gap: px-to-rem(8);
+    width: 100%;
+    height: auto;
+    padding: px-to-rem(8);
+    border: 1px solid $color-grey;
+    background-color: $color-black-light;
+    border-radius: px-to-rem(8);
+
+    @include breakpoint($screen-sm) {
+        padding: px-to-rem(16) px-to-rem(12);
+    }
+
+    &__avatar {
+        width: px-to-rem(28);
+        min-width: px-to-rem(28);
+        height: px-to-rem(28);
+
+        @include breakpoint($screen-sm) {
+            width: px-to-rem(44);
+            min-width: px-to-rem(44);
+            height: px-to-rem(44);
+        }
+    }
+
+    &__avatar-image {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+    }
+
+    &__data {
+        display: flex;
+        flex-direction: column;
+        gap: px-to-rem(8);
+        width: 100%;
+    }
+
+    &__data-topline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__data-topline-brand {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(6);
+        white-space: nowrap;
+        font-size: px-to-rem(14);
+        font-weight: 400;
+        line-height: 150%;
+
+        @include breakpoint($screen-sm) {
+            font-size: px-to-rem(16);
+        }
+    }
+
+    &__data-topline-brand-icon {
+        width: px-to-rem(20);
+        height: auto;
+
+        @include breakpoint($screen-sm) {
+            width: px-to-rem(22);
+        }
+    }
+
+    &__data-topline-website {
+        font-size: px-to-rem(14);
+        font-weight: 400;
+        line-height: 150%;
+
+        @include breakpoint($screen-sm) {
+            font-size: px-to-rem(16);
+        }
+    }
+
+    &__data-topline-value {
+        display: inline;
+        white-space: nowrap;
+        text-transform: uppercase;
+        color: $color-grey-light;
+        font-size: px-to-rem(14);
+        font-weight: 400;
+        line-height: 150%;
+        letter-spacing: px-to-rem(-0.33);
+
+        &--highlight {
+            padding-left: px-to-rem(4);
+            color: $color-white;
+            font-weight: 500;
+        }
+
+        @include breakpoint($screen-sm) {
+            font-size: px-to-rem(18);
+        }
+    }
+
+    &__data-description {
+        color: $color-white-dark;
+        font-size: px-to-rem(12);
+        font-weight: 300;
+        line-height: 130%;
+
+        @include breakpoint($screen-sm) {
+            font-size: px-to-rem(14);
+        }
+    }
+}
