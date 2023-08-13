@@ -10,10 +10,6 @@ import { Address } from 'viem';
 export interface TransactionState {
     stages: [IApproveStage, ISignStage, ISendStage];
     currentStage: StageId;
-    pathTrade: {
-        path: any; // TODO
-        amount?: string;
-    };
     helper?: PaymentHelper;
     amount?: string;
 }
@@ -76,9 +72,6 @@ const initialState: TransactionState = {
         { status: StageStatus.PENDING, statusText: DEFAULT_STAGE_TEXT[2] },
     ],
     currentStage: 0,
-    pathTrade: {
-        path: '',
-    },
 };
 
 export const transactionSlice = createSlice({
@@ -86,13 +79,6 @@ export const transactionSlice = createSlice({
     initialState,
     reducers: {
         initTransactionState: (state, action: PayloadAction<IPayload>) => {
-            if (
-                action.payload.userToken.contract ===
-                action.payload.merchantToken.contract
-            ) {
-                state.pathTrade.amount = undefined;
-                state.amount = action.payload.amount;
-            }
             // @ts-ignore
             state.helper = new PaymentHelper(
                 action.payload.blockchain,
@@ -128,16 +114,12 @@ export const transactionSlice = createSlice({
         nextStage: (state) => {
             state.currentStage += 1;
         },
-        setPathTrade: (
-            state,
-            action: PayloadAction<{ path: any; amount: string }>
-        ) => {
-            state.pathTrade = action.payload;
-        },
-
         setPermitSignature: (state, action: PayloadAction<Permit2Permit>) => {
             state.stages[StageId.SEND].signature = action.payload;
         },
+      setAmount: (state, action: PayloadAction<string>) => {
+          state.amount = action.payload
+      }
     },
     extraReducers: (builder) => {
         builder
@@ -163,8 +145,8 @@ export const {
     setStageStatus,
     setStage,
     nextStage,
-    setPathTrade,
     setPermitSignature,
     initTransactionState,
+    setAmount
 } = transactionSlice.actions;
 export default transactionSlice.reducer;

@@ -22,7 +22,6 @@ export const approveThunk = createAsyncThunk<any, void, ThunkConfig>(
         const currentStage = () => getState().transaction.currentStage;
         const isMetamask = getState().connection.isMetamask;
         const sendAmount =
-            getState().transaction.pathTrade.amount ||
             getState().transaction.amount;
 
         const helper = getState().transaction.helper;

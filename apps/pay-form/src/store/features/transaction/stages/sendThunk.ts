@@ -31,7 +31,6 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
     async (_, { getState, dispatch, rejectWithValue }) => {
         const currentStage = () => getState().transaction.currentStage;
         const sendAmount =
-            getState().transaction.pathTrade.amount ||
             getState().transaction.amount;
 
         const {
