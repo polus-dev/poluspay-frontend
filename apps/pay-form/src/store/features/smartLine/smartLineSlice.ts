@@ -4,7 +4,7 @@ const PROGRESS_BAR_STEP = 25;
 export const enum SmartLineStatus {
     DEFAULT = 'default',
     SUCCESS = 'success',
-    ERROR = 'smart-line-error-color',
+    ERROR = 'error',
     LOADING = 'loading',
     IN_PROGRESS = 'in_progress',
 }

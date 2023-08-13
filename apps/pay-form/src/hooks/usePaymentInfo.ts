@@ -92,6 +92,7 @@ export const usePaymentInfo = (id: string) => {
                             message: 'Error load data merchant',
                             code: 1002,
                         });
+                        setIsLoading(false)
                     }
                 });
             } else if (paymentResponse.error) {
@@ -99,6 +100,7 @@ export const usePaymentInfo = (id: string) => {
                     message: 'Error load data invoice',
                     code: 1002,
                 });
+                setIsLoading(false)
             }
         });
     }, [currentBlockchain]);
