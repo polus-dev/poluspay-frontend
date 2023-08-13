@@ -1,8 +1,14 @@
-import { ReactComponent as IconLoading } from '../assets/icons/loading.svg';
+import {ReactComponent as IconLoading} from '../assets/icons/loading.svg';
 
 import classNames from 'classnames';
 
 import './Loader.scoped.scss';
+import {useAppDispatch} from "../../../../../apps/pay-form/src/store/hooks";
+import {useEffect} from "react";
+import {
+  setSmartLineStatus,
+  SmartLineStatus
+} from "../../../../../apps/pay-form/src/store/features/smartLine/smartLineSlice";
 
 interface LoaderProps {
     height?: number;
@@ -15,6 +21,11 @@ export const Loader: React.FC<LoaderProps> = ({
     borderRadius,
     hasBackground,
 }) => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(setSmartLineStatus(SmartLineStatus.LOADING))
+  }, []);
+
     return (
         <div
             className={classNames({

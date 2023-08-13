@@ -55,7 +55,11 @@ export const FormPage: React.FC<IFormPageProps> = ({ error, errorMessage }) => {
                         status !== SmartLineStatus.DEFAULT,
                 })}
             >
-                {error || paymentError || expiredMessage ? (
+                { isPaymentInfoLoading ||
+                isAssetsInfoLoading ||
+                isAvailableTokensLoading ? (
+                  <Loader height={280} />
+                )  :  error || paymentError || expiredMessage ? (
                     <FormError
                         message={
                             errorMessage ||
@@ -71,10 +75,6 @@ export const FormPage: React.FC<IFormPageProps> = ({ error, errorMessage }) => {
                         id={id!}
                         {...payment}
                     />
-                ) : isPaymentInfoLoading ||
-                  isAssetsInfoLoading ||
-                  isAvailableTokensLoading ? (
-                    <Loader height={280} />
                 ) : payment.info?.payment.status === 'success' ? (
                     <FormSuccess
                         merchant={payment.info.merchant}
