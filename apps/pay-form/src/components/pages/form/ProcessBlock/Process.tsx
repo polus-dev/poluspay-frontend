@@ -1,9 +1,8 @@
-import type { InvoiceStatus } from './ProcessItem/ProcessItem';
+import { useAppSelector } from '../../../../store/hooks';
 
 import { ProcessBlockItem } from './ProcessItem/ProcessItem';
 
 import './Process.scoped.scss';
-import { useAppSelector } from '../../../../store/hooks';
 
 interface ProcessBlockProps {
     onRetry: (startStage: number) => void;

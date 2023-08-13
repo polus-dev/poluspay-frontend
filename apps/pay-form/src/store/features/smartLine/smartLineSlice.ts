@@ -5,13 +5,13 @@ export const enum SmartLineStatus {
     DEFAULT = 'default',
     SUCCESS = 'success',
     ERROR = 'smart-line-error-color',
-    LOADING = "loading",
+    LOADING = 'loading',
     IN_PROGRESS = 'in_progress',
 }
 
-export const  enum ProgressBarAction  {
-  INC,
-  DEC,
+export const enum ProgressBarAction {
+    INC,
+    DEC,
 }
 
 export interface SmartLineState {
@@ -32,15 +32,21 @@ export const counterSlice = createSlice({
             state.smartLineStatus = action.payload;
         },
         setProgressBar: (state, action: PayloadAction<ProgressBarAction>) => {
-            if (action.payload === ProgressBarAction.INC && state.progressBar < 100) {
+            if (
+                action.payload === ProgressBarAction.INC &&
+                state.progressBar < 100
+            ) {
                 state.progressBar += PROGRESS_BAR_STEP;
-            } else if (action.payload === ProgressBarAction.DEC && state.progressBar > 0) {
+            } else if (
+                action.payload === ProgressBarAction.DEC &&
+                state.progressBar > 0
+            ) {
                 state.progressBar -= PROGRESS_BAR_STEP;
             }
         },
     },
 });
 
-export const { setSmartLineStatus , setProgressBar} = counterSlice.actions;
+export const { setSmartLineStatus, setProgressBar } = counterSlice.actions;
 
 export default counterSlice.reducer;

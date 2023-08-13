@@ -1,12 +1,20 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
-import {nextStage, setStage, setStageText, StageStatus,} from '../transactionSlice';
-import {erc20ABI, waitForTransaction} from '@wagmi/core';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import {
+    nextStage,
+    setStage,
+    setStageText,
+    StageStatus,
+} from '../transactionSlice';
+import { erc20ABI, waitForTransaction } from '@wagmi/core';
 
-import {prepareWriteContract, writeContract} from 'wagmi/actions';
-import {TransactionError} from '../TransactionError';
-import {ThunkConfig} from '../../../store';
-import {MAX_UINT256} from '../../../../../../../tools';
-import {ProgressBarAction, setProgressBar} from "../../smartLine/smartLineSlice";
+import { prepareWriteContract, writeContract } from 'wagmi/actions';
+import { TransactionError } from '../TransactionError';
+import { ThunkConfig } from '../../../store';
+import { MAX_UINT256 } from '../../../../../../../tools';
+import {
+    ProgressBarAction,
+    setProgressBar,
+} from '../../smartLine/smartLineSlice';
 
 export const approveThunk = createAsyncThunk<any, void, ThunkConfig>(
     'transaction/approveThunk',
@@ -101,7 +109,7 @@ export const approveThunk = createAsyncThunk<any, void, ThunkConfig>(
                 })
             );
             dispatch(nextStage());
-            dispatch(setProgressBar(ProgressBarAction.INC))
+            dispatch(setProgressBar(ProgressBarAction.INC));
         } catch (error) {
             return rejectWithValue(error);
         }

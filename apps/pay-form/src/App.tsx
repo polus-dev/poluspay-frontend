@@ -18,7 +18,10 @@ export const App: React.FC = () => {
                     />
                     <Route path="/id/:id" element={<FormPage />} />
                     {import.meta.env.DEV && (
-                        <Route path="/offlinesales/:id" element={<OfflineSalesPage />} />
+                        <Route
+                            path="/offlinesales/:id"
+                            element={<OfflineSalesPage />}
+                        />
                     )}
                     <Route
                         path="*"

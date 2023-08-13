@@ -22,16 +22,16 @@ export const paymentApi = createApi({
                 body,
             }),
             transformResponse: (response: IPayment) => {
-              const blockchains = response.assets.map(
-                (item) => item.network
-              ) as Blockchain_t[];
-              // move tron to the end of the array to be the last blockchain
-              // TODO: remove this in future
-              const  index = blockchains.findIndex(item => item === "tron");
-              if (index > -1) {
-                blockchains.splice(index, 1);
-                blockchains.push("tron");
-              }
+                const blockchains = response.assets.map(
+                    (item) => item.network
+                ) as Blockchain_t[];
+                // move tron to the end of the array to be the last blockchain
+                // TODO: remove this in future
+                const index = blockchains.findIndex((item) => item === 'tron');
+                if (index > -1) {
+                    blockchains.splice(index, 1);
+                    blockchains.push('tron');
+                }
                 return {
                     ...response,
                     blockchains,

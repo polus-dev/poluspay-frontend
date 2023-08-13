@@ -1,10 +1,13 @@
+import type { FormHeaderProps } from '../../Header/Header';
+
 import { FormFooter } from '../../Footer/Footer';
-import { FormHeader, FormHeaderProps } from '../../Header/Header';
-import { ReactComponent as IconCheckmark } from '../../../../../assets/icons/checkmark.svg';
+import { FormHeader } from '../../Header/Header';
+import { ReactComponent as IconCheckmarkRound } from '../../../../../assets/icons/checkmark-round.svg';
 
 import './Success.scoped.scss';
 
 interface FormSuccessProps extends FormHeaderProps {}
+
 export const FormSuccess = (props: FormSuccessProps) => {
     return (
         <div className="success">
@@ -12,7 +15,7 @@ export const FormSuccess = (props: FormSuccessProps) => {
                 <FormHeader {...props} />
             </div>
             <div className="success__content">
-                <IconCheckmark className="success__content-icon" />
+                <IconCheckmarkRound className="success__content-icon" />
                 <p className="success__content-text">The invoice is paid</p>
             </div>
             <div className="success__footer">

@@ -1,10 +1,13 @@
+import type { Payment } from '../../../../store/api/endpoints/payment/Payment.interface';
+
+import { AssetRepresentation } from '@poluspay-frontend/api';
+import { getAssetUrl } from '../../../../../../../tools';
+
 import { FormQRCode } from './QRCode/QRCode';
 import { FormWarning } from './Warning/Warning';
 
 import './Native.scoped.scss';
-import { Payment } from '../../../../store/api/endpoints/payment/Payment.interface';
-import { AssetRepresentation } from '@poluspay-frontend/api';
-import { getAssetUrl } from '../../../../../../../tools';
+
 interface IFormNativePaymentProps {
     payment: Payment;
     availableTokens: AssetRepresentation[];
@@ -19,11 +22,13 @@ const getPaymentAssetInfo = (payment: Payment, blockchain: string) => {
     }
     return { assetName, paymentInfo };
 };
+
 export const FormNativePayment = (props: IFormNativePaymentProps) => {
     const { paymentInfo, assetName } = getPaymentAssetInfo(
         props.payment,
         props.currentBlockchain
     );
+
     return (
         <div className="native">
             <div className="native__qrcode">

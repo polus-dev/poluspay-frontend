@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { Header } from '../Header/Header';
 
 import './Layout.scoped.scss';
-import {PNotifyContainer} from "@poluspay-frontend/ui";
+import { PNotifyContainer } from '@poluspay-frontend/ui';
 
 export const Layout: React.FC = () => {
     return (
@@ -11,7 +11,7 @@ export const Layout: React.FC = () => {
             <Header />
             <div className="content">
                 <Outlet />
-              <PNotifyContainer />
+                <PNotifyContainer />
             </div>
         </>
     );

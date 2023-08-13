@@ -1,18 +1,19 @@
-import { FormCurrencies } from './Currencies/Currencies';
-import { FormSelect } from './Select/Select';
-import { FormTimer } from './Timer/Timer';
+import { AssetRepresentation } from '@poluspay-frontend/api';
+import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
+import { setCurrentBlockchain } from '../../../../store/features/connection/connectionSlice';
 
-import './Payment.scoped.scss';
 import { useModal } from '@poluspay-frontend/hooks';
+
 import {
     blockchainList,
     ModalBlockChainSelector,
     ModalCurrencySelector,
 } from '@poluspay-frontend/ui';
-import React from 'react';
-import { AssetRepresentation } from '@poluspay-frontend/api';
-import { useAppDispatch, useAppSelector } from '../../../../store/hooks';
-import { setCurrentBlockchain } from '../../../../store/features/connection/connectionSlice';
+import { FormCurrencies } from './Currencies/Currencies';
+import { FormSelect } from './Select/Select';
+import { FormTimer } from './Timer/Timer';
+
+import './Payment.scoped.scss';
 
 interface FormPaymentProps {
     expireAt: string;
@@ -33,6 +34,7 @@ export const FormPayment = (props: FormPaymentProps) => {
     const item =
         blockchainList.find((e) => e.label === currentBlockchain) ||
         blockchainList[0];
+
     return (
         <>
             <div className="payment">
@@ -54,9 +56,8 @@ export const FormPayment = (props: FormPaymentProps) => {
                     <FormTimer expiresAt={props.expireAt} />
                 </div>
             </div>
-
             <ModalBlockChainSelector
-               isPayForm
+                isPayForm
                 visible={modalBlockchains.visible}
                 options={blockchainList.filter((e) =>
                     props.paymentAvailableBlockchains.includes(e.label)
@@ -67,7 +68,6 @@ export const FormPayment = (props: FormPaymentProps) => {
                 )}
                 onClose={() => modalBlockchains.close()}
             />
-
             <ModalCurrencySelector
                 visible={modalCurrency.visible}
                 assetsRepresentation={props.availableTokens}

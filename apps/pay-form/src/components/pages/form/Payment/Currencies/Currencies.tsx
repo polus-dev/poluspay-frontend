@@ -1,14 +1,22 @@
-import { FormCurrencyItem } from './CurrencyItem/CurrencyItem';
-
-import './Currencies.scoped.scss';
 import { AssetRepresentation } from '@poluspay-frontend/api';
 import { getAssetUrl } from '../../../../../../../../tools';
 
+import { FormCurrencyItem } from './CurrencyItem/CurrencyItem';
+
+import './Currencies.scoped.scss';
+
 interface FormCurrencyItemProps {
     active: boolean;
-    onClick: () => void;
     name: string;
     image: string;
+    onClick: () => void;
+}
+
+interface FormCurrenciesProps {
+    availableTokens: AssetRepresentation[];
+    userToken: AssetRepresentation;
+    setUserToken: (token: AssetRepresentation) => void;
+    openModal: () => void;
 }
 
 const Currency = (props: FormCurrencyItemProps) => {
@@ -23,12 +31,6 @@ const Currency = (props: FormCurrencyItemProps) => {
     );
 };
 
-interface FormCurrenciesProps {
-    availableTokens: AssetRepresentation[];
-    setUserToken: (token: AssetRepresentation) => void;
-    userToken: AssetRepresentation;
-    openModal: () => void;
-}
 export const FormCurrencies = (props: FormCurrenciesProps) => {
     return (
         <div className="currencies">
@@ -38,7 +40,10 @@ export const FormCurrencies = (props: FormCurrenciesProps) => {
                     import.meta.env.VITE_ASSET_URL,
                     props.availableTokens[0].name
                 )}
-                active={props.userToken.contract === props.availableTokens[0].contract}
+                active={
+                    props.userToken.contract ===
+                    props.availableTokens[0].contract
+                }
                 onClick={() => props.setUserToken(props.availableTokens[0])}
             />
             {props.availableTokens.slice(1, 5).map((token) => (

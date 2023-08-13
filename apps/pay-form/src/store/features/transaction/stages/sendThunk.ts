@@ -22,7 +22,10 @@ import { ChainId } from '../../../api/endpoints/types';
 import { CustomProvider, WrapAltToken } from '../../../../logic/payment';
 import { Token as ERC20 } from '@uniswap/sdk-core';
 import { getPathFromCallData } from '../../../../logic/utils';
-import {ProgressBarAction, setProgressBar} from "../../smartLine/smartLineSlice";
+import {
+    ProgressBarAction,
+    setProgressBar,
+} from '../../smartLine/smartLineSlice';
 export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
     'transaction/sendThunk',
     async (_, { getState, dispatch, rejectWithValue }) => {
@@ -221,7 +224,7 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                     status: StageStatus.SUCCESS,
                 })
             );
-          dispatch(setProgressBar(ProgressBarAction.INC))
+            dispatch(setProgressBar(ProgressBarAction.INC));
         } catch (error) {
             return rejectWithValue(error);
         }

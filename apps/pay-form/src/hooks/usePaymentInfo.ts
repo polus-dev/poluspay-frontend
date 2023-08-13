@@ -25,8 +25,12 @@ export const usePaymentInfo = (id: string) => {
     const dispatch = useAppDispatch();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<IError>();
-    const [getPaymentInfo] = useLazyGetPaymentByPaymentIdQuery({refetchOnFocus: true});
-    const [getMerchantInfo] = useLazyGetMerchantByIdQuery({refetchOnFocus: true});
+    const [getPaymentInfo] = useLazyGetPaymentByPaymentIdQuery({
+        refetchOnFocus: true,
+    });
+    const [getMerchantInfo] = useLazyGetMerchantByIdQuery({
+        refetchOnFocus: true,
+    });
     const currentBlockchain = useAppSelector(
         (state) => state.connection.currentBlockchain
     );
@@ -79,7 +83,8 @@ export const usePaymentInfo = (id: string) => {
                         if (!currentBlockchain)
                             dispatch(
                                 setCurrentBlockchain(
-                                    paymentResponse.data!.blockchains[0] as Blockchain_t
+                                    paymentResponse.data!
+                                        .blockchains[0] as Blockchain_t
                                 )
                             );
                     } else if (merchantResponse.error) {
