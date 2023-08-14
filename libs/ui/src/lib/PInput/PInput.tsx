@@ -114,6 +114,7 @@ export const PInput: React.FC<InputProps> = ({
                 type={type}
                 value={props.value}
                 disabled={props.disabled}
+                step="any"
                 readOnly={props.readonly}
                 placeholder={props.placeholder}
                 autoFocus={props.autofocus}
