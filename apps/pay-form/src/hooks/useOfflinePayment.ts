@@ -1,8 +1,7 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { notify } from '@poluspay-frontend/ui';
-import { io } from 'socket.io-client';
-import { useEffect } from 'react';
 
 interface IGetOfflinePaymentIdResponse {
     payment_id: string;
@@ -15,22 +14,25 @@ export const useOfflinePayment = (merchantId: string) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const socket = io(url);
+        const socket = new WebSocket(url)
 
-        socket.on('message', (response: IGetOfflinePaymentIdResponse) => {
-            if (!response) return undefined;
+        socket.onmessage = (event) => {
+            if (!event.data) return undefined
 
-            socket.close();
+            const parsed: IGetOfflinePaymentIdResponse = JSON.parse(event.data)
+
+            socket.close()
 
             notify({
-                title: 'Redirecting to payment...',
+                title: 'Redirecting...',
+                description: 'Payment created by merchant',
                 status: 'warning',
                 loading: true,
             });
 
             setTimeout(() => {
-                navigate(`/id/${response.payment_id}`);
-            }, 2000);
-        });
+                navigate(`/id/${parsed.payment_id}`);
+            }, 2500);
+        }
     }, []);
 };
