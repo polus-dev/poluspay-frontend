@@ -9,7 +9,7 @@ interface IGetOfflinePaymentIdResponse {
 
 export const useOfflinePayment = (merchantId: string) => {
     const domain = import.meta.env.VITE_API_URL.replace(/^https?:\/\//, '');
-    const url = `wss://${domain}/ws/offline/${merchantId}`;
+    const url = `wss://${domain}ws/offline/${merchantId}`;
 
     const navigate = useNavigate();
 
