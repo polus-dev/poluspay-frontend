@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import './MerchantMenu.scoped.scss';
 import { useGetMerchantIdFromParams } from '../../hooks/useGetMerchantId';
 import { useGetMerchantByIdQuery } from '@poluspay-frontend/merchant-query';
+import {trimEndOfString} from "../../../../../tools";
 
 interface MenuItem {
     id: number;
@@ -55,7 +56,7 @@ export const MerchantMenu: React.FC = () => {
                                 ? 'Loading...'
                                 : isError
                                 ? 'Error'
-                                : merchant?.name}
+                                : trimEndOfString(merchant!.name, 15)}
                         </p>
                     </div>
                     <div className="menu__container-divider" />
