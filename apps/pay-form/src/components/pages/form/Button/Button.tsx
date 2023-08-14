@@ -8,6 +8,7 @@ type ButtonText =
     | 'Connect Wallet'
     | `Pay ≈ ${string} ${string}`
     | 'Cancel'
+    | 'Back to store'
     | 'Loading...';
 
 interface FormButtonProps<T extends string> {

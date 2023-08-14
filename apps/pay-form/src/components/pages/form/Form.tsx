@@ -26,6 +26,8 @@ import {
     setSmartLineStatus,
     SmartLineStatus,
 } from '../../../store/features/smartLine/smartLineSlice';
+import {StageStatus} from "../../../store/features/transaction/transactionSlice";
+import {redirectToMerchantSite} from "../../../utils/redirectToMerchantSite";
 
 type FormStage = 'EVM' | 'QRCode' | 'ProcessBlock';
 
@@ -59,6 +61,13 @@ export const Form = (props: IFormProps) => {
     const currentBlockchain = useAppSelector(
         (state) => state.connection.currentBlockchain
     );
+    const isSuccessTransaction = useAppSelector(state =>
+      state.transaction.stages[2].status === StageStatus.SUCCESS
+    )
+
+  const isFailedTransaction = useAppSelector(state =>
+    state.transaction.stages[2].status === StageStatus.FAILURE
+  )
 
     useEffect(() => {
         if (isConnected && !progressBarValue) {
@@ -92,7 +101,10 @@ export const Form = (props: IFormProps) => {
         }
     }, [currentBlockchain]);
     const onButtonClick = () => {
-        if (
+      if (isSuccessTransaction || isFailedTransaction) {
+        const {success_redirect_url,fail_redirect_url, domain} = props.info!.merchant;
+        redirectToMerchantSite(isSuccessTransaction && success_redirect_url ? success_redirect_url : isFailedTransaction && fail_redirect_url ?  fail_redirect_url : domain)
+      } else if (
             stage === 'QRCode' &&
             props.info &&
             props.info.payment.blockchains.length > 1
@@ -196,7 +208,7 @@ export const Form = (props: IFormProps) => {
                 ) && (
                     <div className="form__footer-button">
                         <FormButton
-                            text={
+                            text={ isSuccessTransaction || isFailedTransaction ? "Back to store" :
                                 stage === 'EVM' && isConnected && !isLoading
                                     ? `Pay ≈ ${amount} ${userToken.name.toUpperCase()}`
                                     : stage === 'ProcessBlock' ||
