@@ -20,6 +20,7 @@ export const MerchantForm: React.FC<FormProps> = ({
         register,
         handleSubmit,
         formState: { isValid, errors },
+        setValue,
     } = useForm<Omit<IMerchantForm, 'brand'>>();
     const [createMerchant, { isLoading: isCreatingMerchantLoading }] =
         useCreateMerchantMutation();
@@ -29,15 +30,17 @@ export const MerchantForm: React.FC<FormProps> = ({
     const submit: SubmitHandler<Omit<IMerchantForm, 'brand'>> = async (
         data
     ) => {
+      const domain = data.website ? data.website.replace(/(^\w+:|^)\/\//, '') : undefined;
+      if (domain)
+        setValue("website", domain)
         try {
             const merchant = await createMerchant({
                 name: data.merchantName,
-                domain: data.website || undefined,
+                domain,
                 description: data.description || undefined,
             }).unwrap();
             setMerchantId(merchant.id);
             changeStage();
-            // navigate(`/merchants/${merchant.id}/merchant`);
         } catch (error) {
             console.error(error);
         }
