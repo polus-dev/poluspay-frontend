@@ -30,9 +30,10 @@ export const MerchantForm: React.FC<FormProps> = ({
     const submit: SubmitHandler<Omit<IMerchantForm, 'brand'>> = async (
         data
     ) => {
-      const domain = data.website ? data.website.replace(/(^\w+:|^)\/\//, '') : undefined;
-      if (domain)
-        setValue("website", domain)
+        const domain = data.website
+            ? data.website.replace(/(^\w+:|^)\/\//, '')
+            : undefined;
+        if (domain) setValue('website', domain);
         try {
             const merchant = await createMerchant({
                 name: data.merchantName,

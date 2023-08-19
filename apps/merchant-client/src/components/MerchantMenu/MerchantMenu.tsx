@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import './MerchantMenu.scoped.scss';
 import { useGetMerchantIdFromParams } from '../../hooks/useGetMerchantId';
 import { useGetMerchantByIdQuery } from '@poluspay-frontend/merchant-query';
-import {trimEndOfString} from "../../../../../tools";
+import { trimEndOfString } from '../../../../../tools';
 
 interface MenuItem {
     id: number;

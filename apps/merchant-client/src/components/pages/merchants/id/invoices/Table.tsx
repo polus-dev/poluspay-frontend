@@ -27,7 +27,6 @@ interface TableProps {
     invoices: Invoice[];
 }
 
-
 export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
     return (
         <div className="table">
@@ -47,7 +46,9 @@ export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
                                 {/* TODO: refactor styles */}
                                 <p
                                     style={{ cursor: 'pointer' }}
-                                    onClick={() => window.open(el.payLink, "_blank")}
+                                    onClick={() =>
+                                        window.open(el.payLink, '_blank')
+                                    }
                                     className="table__row-id-text"
                                 >
                                     {makeShortHash(el.id, 5)}

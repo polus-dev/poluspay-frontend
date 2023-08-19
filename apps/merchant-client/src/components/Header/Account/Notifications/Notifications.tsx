@@ -1,4 +1,5 @@
-import { useGetNotificationsQuery } from '@poluspay-frontend/merchant-query';
+import { useEffect, useState } from 'react';
+import { useNotifications } from '../../../../store/api/hooks/useNotifications';
 
 import { PDropdown } from '@poluspay-frontend/ui';
 import { ErrorBlock } from 'libs/ui/src/lib/Error/Error';
@@ -9,7 +10,17 @@ import { ReactComponent as IconNotification } from '../../../../assets/icons/not
 import './Notifications.scoped.scss';
 
 export const AccountNotifications: React.FC = () => {
-    const { data, isLoading, isError } = useGetNotificationsQuery({});
+    const store = useNotifications();
+
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        store.getNotifications()
+          .catch(() => setError(true))
+          .finally(() => setLoading(false));
+    }, []);
 
     return (
         <div className="notifications">
@@ -34,16 +45,21 @@ export const AccountNotifications: React.FC = () => {
                         </div>
                         <div className="notifications__content-placeholder" />
                         <div className="notifications__content-inner">
-                            {isLoading ? (
+                            {loading ? (
                                 <Loader height={220} />
-                            ) : isError || data?.total_count == 0 ? (
+                            ) : error || !store.notifications?.length ? (
                                 <ErrorBlock
                                     title="No notifications found"
                                     height={220}
                                 />
                             ) : (
-                                data?.notifications.map((el) => (
-                                    <NotificationItem item={el} key={el.id} />
+                                store.notifications.map((el) => (
+                                    <NotificationItem
+                                        item={el}
+                                        onClick={(id) =>
+                                            store.handleNotificationRead(id)
+                                        }
+                                    />
                                 ))
                             )}
                         </div>
