@@ -1,12 +1,7 @@
-import type {
-    IGetNotificationsRequest,
-    IGetNotificationsResponse,
-    INotification,
-    IUserEntity,
-} from './User.interface';
+import type { IUserEntity } from './User.interface';
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { io } from "socket.io-client";
+import { io } from 'socket.io-client';
 import { AuthHelper } from '../../../../logic/api';
 
 export const userApi = createApi({
@@ -28,57 +23,7 @@ export const userApi = createApi({
                 method: 'POST',
             }),
         }),
-        getNotifications: builder.query<
-            IGetNotificationsResponse,
-            IGetNotificationsRequest
-        >({
-            query: (body) => ({
-                url: 'user.notifications.get',
-                method: 'POST',
-                body,
-            }),
-            async onCacheEntryAdded (arg, {
-                updateCachedData,
-                cacheDataLoaded,
-                cacheEntryRemoved
-            }) {
-                const domain = import.meta.env.VITE_API_URL.replace(/^https?:\/\//, '')
-                const url = `wss://${domain}/ws/notifications`
-
-                console.log(url)
-
-                const token = new AuthHelper().checkAuth()?.token;
-
-                const socket = io(url, {
-                    extraHeaders: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
-
-                try {
-                    await cacheDataLoaded
-
-                    socket.on('notification', (notification: INotification) => {
-                        if (!notification) return undefined
-
-                        updateCachedData((draft) => {
-                            draft.notifications.unshift(notification)
-                        })
-                    })
-                } catch (err) {
-                    console.log(err)
-                }
-
-                await cacheEntryRemoved
-
-                socket.close()
-            }
-        }),
     }),
 });
 
-export const {
-    useGetMeQuery,
-    useLazyGetMeQuery,
-    useGetNotificationsQuery
-} = userApi;
+export const { useGetMeQuery, useLazyGetMeQuery } = userApi;

@@ -1,8 +1,7 @@
 import { useGetMerchantsQuery } from '@poluspay-frontend/merchant-query';
 import { useEffect, useState } from 'react';
 import { SelectOption } from '@poluspay-frontend/ui';
-import {trimEndOfString} from "../../../../../tools";
-
+import { trimEndOfString } from '../../../../../tools';
 
 export const useMerchantOptions = () => {
     const { data: merchants } = useGetMerchantsQuery({});

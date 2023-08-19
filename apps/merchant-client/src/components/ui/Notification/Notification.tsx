@@ -1,15 +1,25 @@
-import { INotification } from '../../../store/api/endpoints/user/User.interface';
+import type { INotification } from '../../../store/api/hooks/useNotifications';
+
+import { formatDate } from 'tools';
+
 import classNames from 'classnames';
 
 import './Notification.scoped.scss';
 
 interface NotificationItemProps {
     item: INotification;
+    onClick: (id: string) => void;
 }
 
-export const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
+export const NotificationItem: React.FC<NotificationItemProps> = ({
+    item,
+    onClick,
+}) => {
+    const createdAt = new Date(item.created_at);
+    const date = formatDate(createdAt);
+
     return (
-        <div className="notification">
+        <div className="notification" onClick={() => onClick(item.id)}>
             <div
                 className={classNames({
                     notification__inner: true,
@@ -19,6 +29,7 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
                 <div
                     className={classNames({
                         'notification__inner-status': true,
+                        [`notification__inner-status--${item.status}`]: true,
                     })}
                 />
                 <div className="notification__inner-data">
@@ -37,7 +48,7 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
                     </div>
                     <div className="notification__inner-data__date">
                         <p className="notification__inner-data__date-text">
-                            {item.created_at}
+                            {date}
                         </p>
                     </div>
                 </div>
