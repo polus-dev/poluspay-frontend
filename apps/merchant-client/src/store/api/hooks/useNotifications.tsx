@@ -33,7 +33,7 @@ interface IGetNotificationsResponse {
 
 interface IReadNotificationRequest {
     action: NotificationAction;
-    id: string;
+    notification_id: string;
 }
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -86,7 +86,7 @@ export const useNotifications = () => {
     ): Promise<void> => {
         const data: IReadNotificationRequest = {
             action: 'read',
-            id: notificationId,
+            notification_id: notificationId,
         };
 
         socket.send(JSON.stringify(data));
@@ -113,9 +113,12 @@ export const useNotifications = () => {
             );
 
             if (index !== -1) {
-                notifications[index] = parsed;
+                const updated = [...notifications]
+                updated[index] = parsed;
 
-                notifications.sort(sortNotifications);
+                updated.sort(sortNotifications)
+
+                setNotifications(updated)
             }
         }
     };

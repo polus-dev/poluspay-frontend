@@ -1,33 +1,34 @@
-import { useEffect, useRef, useState } from 'react';
+import {useEffect, useRef, useState} from 'react';
 
-import { usePaymentInfo } from '../../../hooks/usePaymentInfo';
-import { formatUnits } from 'viem';
-import { roundCryptoAmount } from '../../../../../../tools';
+import {usePaymentInfo} from '../../../hooks/usePaymentInfo';
+import {formatUnits} from 'viem';
 
-import { ProgressBar } from '../../ui/ProgressBar/ProgressBar';
-import { FormButton } from './Button/Button';
-import { FormHeader } from './Header/Header';
-import { FormFooter } from './Footer/Footer';
-import { FormNativePayment as QRCodePayment } from './Native/Native';
-import { FormProcessBlock } from './ProcessBlock/Process';
-import { FormPayment } from './Payment/Payment';
+import {ProgressBar} from '../../ui/ProgressBar/ProgressBar';
+import {FormButton} from './Button/Button';
+import {FormHeader} from './Header/Header';
+import {FormFooter} from './Footer/Footer';
+import {FormNativePayment as QRCodePayment} from './Native/Native';
+import {FormProcessBlock} from './ProcessBlock/Process';
+import {FormPayment} from './Payment/Payment';
 
 import './Form.scoped.scss';
-import { AssetRepresentation, Helper } from '@poluspay-frontend/api';
-import { useTokenPairPrice } from '../../../hooks/useTokenPairPrice';
-import { useAccount } from 'wagmi';
-import { useWeb3Modal } from '@web3modal/react';
-import { startPay } from '../../../store/features/transaction/transactionThunk';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { setCurrentBlockchain } from '../../../store/features/connection/connectionSlice';
+import {AssetRepresentation, Helper} from '@poluspay-frontend/api';
+import {useTokenPairPrice} from '../../../hooks/useTokenPairPrice';
+import {useAccount, useNetwork, useSwitchNetwork} from 'wagmi';
+import {useWeb3Modal} from '@web3modal/react';
+import {startPay} from '../../../store/features/transaction/transactionThunk';
+import {useAppDispatch, useAppSelector} from '../../../store/hooks';
+import {setCurrentBlockchain} from '../../../store/features/connection/connectionSlice';
 import {
-    ProgressBarAction,
-    setProgressBar,
-    setSmartLineStatus,
-    SmartLineStatus,
+  ProgressBarAction,
+  setProgressBar,
+  setSmartLineStatus,
+  SmartLineStatus,
 } from '../../../store/features/smartLine/smartLineSlice';
 import {StageStatus} from "../../../store/features/transaction/transactionSlice";
 import {redirectToMerchantSite} from "../../../utils/redirectToMerchantSite";
+import {ChainId} from "../../../store/api/endpoints/types";
+import {notify} from "@poluspay-frontend/ui";
 
 type FormStage = 'EVM' | 'QRCode' | 'ProcessBlock';
 
@@ -52,6 +53,8 @@ export const Form = (props: IFormProps) => {
         props.merchantToken,
         props.amountInMerchantToken
     );
+    const {chain} = useNetwork();
+    const {switchNetworkAsync} = useSwitchNetwork();
     const progressBarValue = useAppSelector(
         (state) => state.smartLine.progressBar
     );
@@ -100,56 +103,56 @@ export const Form = (props: IFormProps) => {
             setStage('EVM');
         }
     }, [currentBlockchain]);
-    const onButtonClick = () => {
-      if (isSuccessTransaction || isFailedTransaction) {
-        const {success_redirect_url,fail_redirect_url, domain} = props.info!.merchant;
-        redirectToMerchantSite(isSuccessTransaction && success_redirect_url ? success_redirect_url : isFailedTransaction && fail_redirect_url ?  fail_redirect_url : domain)
-      } else if (
+    const onButtonClick = async () => {
+        try {
+
+          if (isSuccessTransaction || isFailedTransaction) {
+            const {success_redirect_url, fail_redirect_url, domain} = props.info!.merchant;
+            redirectToMerchantSite(isSuccessTransaction && success_redirect_url ? success_redirect_url : isFailedTransaction && fail_redirect_url ? fail_redirect_url : domain)
+          } else if (
             stage === 'QRCode' &&
             props.info &&
             props.info.payment.blockchains.length > 1
-        ) {
+          ) {
             setStage('EVM');
             dispatch(setCurrentBlockchain(props.info.payment.blockchains[0]));
-        } else if (!isConnected) {
+          } else if (!isConnected) {
             open();
-        } else if (stage === 'ProcessBlock') {
+          } else if (stage === 'ProcessBlock') {
             abortPayment.current?.();
             setStage('EVM');
             dispatch(setSmartLineStatus(SmartLineStatus.DEFAULT));
-        } else if (stage === 'EVM') {
+          } else if (stage === 'EVM') {
+            if (chain && switchNetworkAsync && chain.id !== ChainId[currentBlockchain!]) {
+              setSmartLineStatus(SmartLineStatus.LOADING);
+              await switchNetworkAsync(ChainId[currentBlockchain!])
+              setSmartLineStatus(SmartLineStatus.DEFAULT);
+            }
             paymentCb.current = (startStageIndex) =>
-                dispatch(
-                    startPay({
-                        ...props,
-                        uuid: props.id,
-                        userToken,
-                        blockchain: currentBlockchain!,
-                        userAddress: address!,
-                        amount: (
-                            BigInt(props.fee) + BigInt(props.merchantAmount)
-                        ).toString(),
-                        feeAddress: props.info!.payment.evm_fee_address,
-                        merchantToken: props.merchantToken!,
-                        startStage: startStageIndex!,
-                    })
-                ).abort;
-            abortPayment.current = dispatch(
+              dispatch(
                 startPay({
-                    ...props,
-                    uuid: props.id,
-                    userToken,
-                    blockchain: currentBlockchain!,
-                    userAddress: address!,
-                    amount: (
-                        BigInt(props.fee) + BigInt(props.merchantAmount)
-                    ).toString(),
-                    feeAddress: props.info!.payment.evm_fee_address,
-                    merchantToken: props.merchantToken!,
+                  ...props,
+                  uuid: props.id,
+                  userToken,
+                  blockchain: currentBlockchain!,
+                  userAddress: address!,
+                  amount: (
+                    BigInt(props.fee) + BigInt(props.merchantAmount)
+                  ).toString(),
+                  feeAddress: props.info!.payment.evm_fee_address,
+                  merchantToken: props.merchantToken!,
+                  startStage: startStageIndex,
                 })
-            ).abort;
+              ).abort;
+            abortPayment.current = paymentCb.current();
             setStage('ProcessBlock');
+          }
         }
+      catch (e) {
+          setSmartLineStatus(SmartLineStatus.ERROR);
+          console.error(e);
+          notify({title: "Error", description: "Something went wrong. Please try again later", status: "error"})
+      }
     };
     if (
         !props.info ||
@@ -168,11 +171,11 @@ export const Form = (props: IFormProps) => {
                     merchant={props.info.merchant}
                     payment={{
                         description: props.info.payment.description,
-                        amount: roundCryptoAmount(
+                        amount:
                             formatUnits(
                                 BigInt(props.amountInMerchantToken),
                                 props.merchantToken.decimals
-                            )
+
                         ),
                         currency: props.merchantToken.name.toUpperCase(),
                     }}
