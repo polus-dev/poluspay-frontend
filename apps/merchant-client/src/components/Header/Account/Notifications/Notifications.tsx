@@ -56,6 +56,7 @@ export const AccountNotifications: React.FC = () => {
                                 store.notifications.map((el) => (
                                     <NotificationItem
                                         item={el}
+                                        key={el.id}
                                         onClick={(id) =>
                                             store.handleNotificationRead(id)
                                         }

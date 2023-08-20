@@ -18,12 +18,18 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
     const createdAt = new Date(item.created_at);
     const date = formatDate(createdAt);
 
+    const handleClick = () => {
+        if (item.viewed_at) return undefined
+
+        onClick(item.id)
+    }
+
     return (
-        <div className="notification" onClick={() => onClick(item.id)}>
+        <div className="notification" onClick={handleClick}>
             <div
                 className={classNames({
                     notification__inner: true,
-                    'notification__inner--readed': false,
+                    'notification__inner--readed': item.viewed_at !== null,
                 })}
             >
                 <div
