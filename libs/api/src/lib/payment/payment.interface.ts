@@ -12,7 +12,7 @@ export interface IPayment {
     created_at: string;
 }
 
-type PaymentStatus = 'pending' | 'in_progress' | 'success' | 'failed';
+export type PaymentStatus = 'pending' | 'in_progress' | 'success' | 'failed';
 
 interface ITransaction {
     hash: string;
