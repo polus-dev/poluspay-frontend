@@ -12,7 +12,7 @@ import {FormProcessBlock} from './ProcessBlock/Process';
 import {FormPayment} from './Payment/Payment';
 
 import './Form.scoped.scss';
-import {AssetRepresentation, Helper} from '@poluspay-frontend/api';
+import {AssetRepresentation} from '@poluspay-frontend/api';
 import {useTokenPairPrice} from '../../../hooks/useTokenPairPrice';
 import {useAccount, useNetwork, useSwitchNetwork} from 'wagmi';
 import {useWeb3Modal} from '@web3modal/react';
@@ -35,10 +35,9 @@ type FormStage = 'EVM' | 'QRCode' | 'ProcessBlock';
 // make recursive required
 interface IFormProps
     extends Required<
-        Omit<ReturnType<typeof usePaymentInfo>, 'isLoading' | 'error'>
+        Omit<ReturnType<typeof usePaymentInfo>, 'isLoading' | 'error' | 'isAssetsInfoLoading' | 'status'>
     > {
     id: string;
-    assets?: Helper;
     availableTokens?: AssetRepresentation[];
     availableCategories?: string[];
 }

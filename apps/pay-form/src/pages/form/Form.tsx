@@ -28,19 +28,19 @@ export const FormPage: React.FC<IFormPageProps> = ({ error, errorMessage }) => {
     const {
         error: paymentError,
         isLoading: isPaymentInfoLoading,
+      status: paymentStatus,
+      isAssetsInfoLoading,
         ...payment
     } = usePaymentInfo(id!);
-    // TODO: rewrite prefetching
-    const { data: assets, isLoading: isAssetsInfoLoading } =
-        useGetAssetsQuery();
 
     const { availableTokens, isAvailableTokensLoading, availableCategories } =
         useAvailableTokens();
 
+
     const status = useAppSelector((state) => state.smartLine.smartLineStatus);
     const expiredMessage =
         payment.expireAt < new Date().toISOString() &&
-        payment.info?.payment.status !== 'success'
+        paymentStatus !== 'success'
             ? 'Payment is expired'
             : undefined;
 
@@ -67,15 +67,14 @@ export const FormPage: React.FC<IFormPageProps> = ({ error, errorMessage }) => {
                             expiredMessage
                         }
                     />
-                ) : payment.info?.payment.status === 'pending' ? (
+                ) : paymentStatus === 'pending' ? (
                     <Form
                         availableCategories={availableCategories}
                         availableTokens={availableTokens}
-                        assets={assets}
                         id={id!}
                         {...payment}
                     />
-                ) : payment.info?.payment.status === 'success' ? (
+                ) : payment.info && paymentStatus === 'success' ? (
                     <FormSuccess
                         merchant={payment.info.merchant}
                         payment={{
@@ -90,7 +89,7 @@ export const FormPage: React.FC<IFormPageProps> = ({ error, errorMessage }) => {
                         }}
                     />
                 ) : (
-                    payment.info?.payment.status === 'in_progress' && (
+                    paymentStatus === 'in_progress' && (
                         <FormProcessing />
                     )
                 )}
