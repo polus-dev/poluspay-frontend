@@ -1,7 +1,6 @@
 import type { IUserEntity } from './User.interface';
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { io } from 'socket.io-client';
 import { AuthHelper } from '../../../../logic/api';
 
 export const userApi = createApi({
