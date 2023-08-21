@@ -17,6 +17,7 @@ import { GoogleAuth } from './pages/auth/google/Auth';
 import { DashboardPage } from './pages/dashboard/Dashboard';
 import { ProtectedRoute } from './components/Auth/ProtectedRoute';
 import { InternalServerErrorPage } from './pages/500/InternalServer';
+import { MerchantOfflineSalesPage } from './pages/merchants/id/offline-sales/OfflineSales';
 
 export const App: React.FC = () => {
     return (
@@ -76,6 +77,10 @@ export const App: React.FC = () => {
                     <Route
                         path="/merchants/:id/plugins"
                         element={<UnderDevelopmentPage />}
+                    />
+                    <Route
+                        path="/merchants/:id/offline-sales"
+                        element={<MerchantOfflineSalesPage />}
                     />
                 </Route>
                 <Route

@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
+import { useGetMerchantIdFromParams } from '../../hooks/useGetMerchantId';
+import { useGetMerchantByIdQuery } from '@poluspay-frontend/merchant-query';
+import { trimEndOfString } from '../../../../../tools';
+
 import { PButton } from '@poluspay-frontend/ui';
 
 import classNames from 'classnames';
 
 import './MerchantMenu.scoped.scss';
-import { useGetMerchantIdFromParams } from '../../hooks/useGetMerchantId';
-import { useGetMerchantByIdQuery } from '@poluspay-frontend/merchant-query';
-import { trimEndOfString } from '../../../../../tools';
 
 interface MenuItem {
     id: number;
@@ -22,7 +23,8 @@ export const MerchantMenu: React.FC = () => {
         { id: 2, title: 'Invoices', to: 'invoices' },
         { id: 3, title: 'Tokens & Addresses', to: 'wallet' },
         { id: 4, title: 'API & Webhooks', to: 'api' },
-        { id: 5, title: 'Plugins', to: 'plugins' },
+        { id: 5, title: 'Offline sales', to: 'offline-sales' },
+        { id: 6, title: 'Plugins', to: 'plugins' },
     ];
 
     const merchantId = useGetMerchantIdFromParams();
