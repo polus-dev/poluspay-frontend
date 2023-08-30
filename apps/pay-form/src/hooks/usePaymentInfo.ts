@@ -78,7 +78,7 @@ export const usePaymentInfo = (id: string) => {
   useEffect(() => {
     if (!info || !availableTokens.length) return;
     const assetKey = info.payment.assets[0].name as Asset_t;
-    const token = availableTokens.find((token) => token.name === assetKey);
+    const token = availableTokens.find((token) => info.payment.assets.some(merchantToken => merchantToken.name === token.name));
 
     const payment = currentBlockchain
       ? info.payment.assets.find((i) => i.network === currentBlockchain)
