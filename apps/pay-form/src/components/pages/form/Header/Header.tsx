@@ -4,6 +4,7 @@ import { displayMerchantInfo } from '../../../../utils/displayMerchantInfo';
 import { ReactComponent as IconVerified } from '../../../../assets/icons/verified.svg';
 
 import './Header.scoped.scss';
+import {trimEndOfString} from "../../../../../../../tools";
 
 export interface FormHeaderProps {
     merchant: IPaymentMerchant;
@@ -41,7 +42,7 @@ export const FormHeader: React.FC<FormHeaderProps> = ({ ...props }) => {
                     <p className="header__data-topline-value">
                         Total:&nbsp;
                         <span className="header__data-topline-value header__data-topline-value--highlight">
-                            {props.payment.amount} {props.payment.currency}
+                            {trimEndOfString(props.payment.amount, 10)} {props.payment.currency}
                         </span>
                     </p>
                 </div>
