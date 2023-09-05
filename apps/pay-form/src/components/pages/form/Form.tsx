@@ -228,7 +228,7 @@ export const Form = (props: IFormProps) => {
                                     ? `Pay ≈ ${amount} ${userToken.name.toUpperCase()}`
                                     : stage === 'ProcessBlock' ||
                                       stage === 'QRCode'
-                                    ? 'Change blockchain/network'
+                                    ? 'Change blockchain'
                                     : isLoading && isConnected
                                     ? 'Loading...'
                                     : 'Connect Wallet'
