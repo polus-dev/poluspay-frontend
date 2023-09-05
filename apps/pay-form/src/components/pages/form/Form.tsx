@@ -29,6 +29,7 @@ import {StageStatus} from "../../../store/features/transaction/transactionSlice"
 import {redirectToMerchantSite} from "../../../utils/redirectToMerchantSite";
 import {ChainId} from "../../../store/api/endpoints/types";
 import {notify} from "@poluspay-frontend/ui";
+import {useGetAssetsQuery} from "@poluspay-frontend/merchant-query";
 
 type FormStage = 'EVM' | 'QRCode' | 'ProcessBlock';
 
@@ -47,6 +48,7 @@ export const Form = (props: IFormProps) => {
     const [stage, setStage] = useState<FormStage>('EVM');
     const { isConnected, address } = useAccount();
     const [userToken, setUserToken] = useState(props.availableTokens![0]);
+    const {data: assetHelper} = useGetAssetsQuery();
     const { amount, isLoading, assetName } = useTokenPairPrice(
         userToken,
         props.merchantToken,
@@ -114,7 +116,18 @@ export const Form = (props: IFormProps) => {
             props.info.payment.blockchains.length > 1
           ) {
             setStage('EVM');
-            dispatch(setCurrentBlockchain(props.info.payment.blockchains[0]));
+            const firstEvmNetwork = props.info.payment.blockchains.find(
+              (blockchain) =>
+                !assetHelper
+                  ?.getQRCodePaymentNetworks()
+                  .includes(blockchain)
+            );
+
+            if (assetHelper && firstEvmNetwork) {
+              dispatch(setCurrentBlockchain(firstEvmNetwork));
+            } else {
+              throw new Error('No EVM network available');
+            }
           } else if (!isConnected) {
             open();
           } else if (stage === 'ProcessBlock') {
@@ -215,7 +228,7 @@ export const Form = (props: IFormProps) => {
                                     ? `Pay ≈ ${amount} ${userToken.name.toUpperCase()}`
                                     : stage === 'ProcessBlock' ||
                                       stage === 'QRCode'
-                                    ? 'Cancel'
+                                    ? 'Change blockchain'
                                     : isLoading && isConnected
                                     ? 'Loading...'
                                     : 'Connect Wallet'

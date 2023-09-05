@@ -7,7 +7,7 @@ import './Button.scoped.scss';
 type ButtonText =
     | 'Connect Wallet'
     | `Pay ≈ ${string} ${string}`
-    | 'Cancel'
+    | 'Change blockchain'
     | 'Back to store'
     | 'Loading...';
 
