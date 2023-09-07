@@ -7,6 +7,7 @@ import { FormQRCode } from './QRCode/QRCode';
 import { FormWarning } from './Warning/Warning';
 
 import './Native.scoped.scss';
+import {FormTimer} from "../Payment/Timer/Timer";
 
 interface IFormNativePaymentProps {
     payment: Payment;
@@ -49,6 +50,7 @@ export const FormNativePayment = (props: IFormNativePaymentProps) => {
                     amount={paymentInfo.amount_decimals}
                 />
             </div>
+            <FormTimer expiresAt={props.payment.expires_at} />
         </div>
     );
 };
