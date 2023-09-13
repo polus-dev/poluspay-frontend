@@ -19,10 +19,11 @@ export const FormQRCode = (props: QRCodeProps) => {
     const copyAmount = useCopyText();
     const copyAddress = useCopyText();
     const [withMetaData, setWithMetaData] = useState(true)
+
     return (
         <div className="native">
             <div className="native__title">
-                <h6 className="native__title-text">Send ${props.assetName}</h6>
+                <h6 className="native__title-text">Send {props.assetName}</h6>
                 <img
                     className="native__title-image"
                     src={props.assetImage}
@@ -77,12 +78,17 @@ export const FormQRCode = (props: QRCodeProps) => {
                                 />
                             }
                         />
-                      <h6>
-                        Amount parameter in QR code
-                      </h6>
-                      <PSwitch value={withMetaData} onChange={setWithMetaData} />
                     </div>
                 </div>
+            </div>
+            <div className="native__toggler">
+                <p className="native__toggler-text">
+                    Amount parameter in QR code
+                </p>
+                <PSwitch
+                    value={withMetaData}
+                    onChange={setWithMetaData}
+                />
             </div>
         </div>
     );

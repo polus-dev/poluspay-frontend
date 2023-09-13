@@ -99,7 +99,6 @@ export const Form = (props: IFormProps) => {
                 .includes(currentBlockchain!)
         ) {
             setStage('QRCode');
-            console.log(2);
         } else {
             setStage('EVM');
         }
