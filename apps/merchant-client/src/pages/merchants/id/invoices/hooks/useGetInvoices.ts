@@ -7,23 +7,13 @@ import { useEffect, useState } from 'react';
 import { formatDate, getExplorerLink } from 'tools';
 import { formatUnits } from 'viem';
 
-export const useGetPaginatedInvoices = ({
-    current,
-    limit,
-}: {
-    current: number;
-    limit: number;
-}) => {
+export const useGetInvoices = () => {
     const [invoices, setInvoices] = useState<Invoice[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const merchantId = useGetMerchantIdFromParams();
     const { data: invoicesResponse, isFetching: isInvoiceLoading } =
         useGetPaymentByMerchantIdQuery(
-            {
-                merchant_id: merchantId,
-                limit,
-                offset: current * limit - limit,
-            },
+            { merchant_id: merchantId },
             { refetchOnFocus: true }
         );
 

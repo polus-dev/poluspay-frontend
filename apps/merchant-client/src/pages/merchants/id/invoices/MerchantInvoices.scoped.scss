@@ -54,6 +54,16 @@
         line-height: 150%;
     }
 
+    &__table-search {
+        margin-bottom: px-to-rem(24);
+        max-width: px-to-rem(340);
+    }
+
+    &__table-search-icon {
+        width: px-to-rem(20);
+        height: auto;
+    }
+
     &__table-pagination {
         margin-top: px-to-rem(30);
     }
