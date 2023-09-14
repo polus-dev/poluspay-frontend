@@ -1,6 +1,8 @@
+import { makeShortHash } from 'tools';
+
 import classNames from 'classnames';
+
 import './Table.scoped.scss';
-import { getExplorerLink, makeShortHash } from 'tools';
 
 type InvoiceStatus =
     | 'success'
@@ -43,16 +45,13 @@ export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
                     {invoices.map((el) => (
                         <div className="table__row" key={el.id}>
                             <div className="table__row-id">
-                                {/* TODO: refactor styles */}
-                                <p
-                                    style={{ cursor: 'pointer' }}
-                                    onClick={() =>
-                                        window.open(el.payLink, '_blank')
-                                    }
+                                <a
                                     className="table__row-id-text"
+                                    href={el.payLink}
+                                    target="_blank"
                                 >
                                     {makeShortHash(el.id, 5)}
-                                </p>
+                                </a>
                             </div>
                             <div className="table__row-amount">
                                 <p className="table__row-amount-text">
@@ -65,27 +64,17 @@ export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
                                 </p>
                             </div>
                             <div className="table__row-hash">
-                                {/* TODO: rewrite to normal link */}
-                                <p
-                                    style={{
-                                        cursor: el.hash.link
-                                            ? 'pointer'
-                                            : 'none',
-                                    }}
-                                    onClick={() =>
-                                        el.hash.link
-                                            ? window.open(
-                                                  el.hash.link,
-                                                  '_blank'
-                                              )
-                                            : undefined
-                                    }
+                                <a
                                     className="table__row-hash-text"
+                                    href={el.hash.link}
+                                    target="_blank"
                                 >
-                                    {el.hash.isSettled
-                                        ? makeShortHash(el.hash.value, 3)
-                                        : el.hash.value}
-                                </p>
+                                    {
+                                        el.hash.isSettled
+                                            ? makeShortHash(el.hash.value, 3)
+                                            : el.hash.value
+                                    }
+                                </a>
                             </div>
                             <div className="table__row-date">
                                 <p className="table__row-date-text">
