@@ -3,14 +3,15 @@
 
 .warning {
     width: 100%;
-    padding: px-to-rem(10);
-    background-color: $color-grey;
+    padding: px-to-rem(16);
+    border: 1px solid $color-yellow;
+    background-color: $color-grey-dark;
     border-radius: px-to-rem(8);
 
     &__inner {
         display: flex;
         align-items: center;
-        gap: px-to-rem(6);
+        gap: px-to-rem(12);
     }
 
     &__inner-icon {
