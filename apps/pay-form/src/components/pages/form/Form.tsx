@@ -2,16 +2,6 @@ import {useEffect, useRef, useState} from 'react';
 
 import {usePaymentInfo} from '../../../hooks/usePaymentInfo';
 import {formatUnits} from 'viem';
-
-import {ProgressBar} from '../../ui/ProgressBar/ProgressBar';
-import {FormButton} from './Button/Button';
-import {FormHeader} from './Header/Header';
-import {FormFooter} from './Footer/Footer';
-import {FormNativePayment as QRCodePayment} from './Native/Native';
-import {FormProcessBlock} from './ProcessBlock/Process';
-import {FormPayment} from './Payment/Payment';
-
-import './Form.scoped.scss';
 import {AssetRepresentation} from '@poluspay-frontend/api';
 import {useTokenPairPrice} from '../../../hooks/useTokenPairPrice';
 import {useAccount, useNetwork, useSwitchNetwork} from 'wagmi';
@@ -30,6 +20,17 @@ import {redirectToMerchantSite} from "../../../utils/redirectToMerchantSite";
 import {ChainId} from "../../../store/api/endpoints/types";
 import {notify} from "@poluspay-frontend/ui";
 import {useGetAssetsQuery} from "@poluspay-frontend/merchant-query";
+
+import {ProgressBar} from '../../ui/ProgressBar/ProgressBar';
+import {FormButton} from './Button/Button';
+import {FormHeader} from './Header/Header';
+import {FormFooter} from './Footer/Footer';
+import {FormNativePayment as QRCodePayment} from './Native/Native';
+import {FormProcessBlock} from './ProcessBlock/Process';
+import {FormPayment} from './Payment/Payment';
+import { FormSupport } from './Support/Support';
+
+import './Form.scoped.scss';
 
 type FormStage = 'EVM' | 'QRCode' | 'ProcessBlock';
 
@@ -196,20 +197,29 @@ export const Form = (props: IFormProps) => {
                 <ProgressBar value={progressBarValue} />
             </div>
             {stage === 'EVM' ? (
-                <FormPayment
-                    paymentAvailableBlockchains={props.info.payment.blockchains}
-                    availableTokens={props.availableTokens}
-                    availableCategories={props.availableCategories}
-                    expireAt={props.expireAt}
-                    setUserToken={setUserToken}
-                    userToken={userToken}
-                />
+                <>
+                    <FormPayment
+                        paymentAvailableBlockchains={props.info.payment.blockchains}
+                        availableTokens={props.availableTokens}
+                        availableCategories={props.availableCategories}
+                        setUserToken={setUserToken}
+                        userToken={userToken}
+                    />
+                    <FormSupport
+                        expiresAt={props.expireAt}
+                    />
+                </>
             ) : stage === 'QRCode' ? (
-                <QRCodePayment
-                    currentBlockchain={currentBlockchain!}
-                    availableTokens={props.availableTokens}
-                    payment={props.info.payment}
-                />
+                <>
+                    <QRCodePayment
+                        currentBlockchain={currentBlockchain!}
+                        availableTokens={props.availableTokens}
+                        payment={props.info.payment}
+                    />
+                    <FormSupport
+                        expiresAt={props.expireAt}
+                    />
+                </>
             ) : (
                 <FormProcessBlock onRetry={paymentCb.current!} />
             )}

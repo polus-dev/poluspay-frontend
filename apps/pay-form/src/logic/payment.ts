@@ -171,7 +171,6 @@ export class PaymentHelper extends CustomProvider {
             this.PermitAddress,
             ChainId[this.blockchain]
         );
-        debugger;
         return {
             domain,
             types,

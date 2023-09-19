@@ -1,0 +1,28 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/utils';
+
+.support {
+    display: flex;
+    align-items: center;
+    gap: px-to-rem(8);
+
+    &__button {
+        width: 100%;
+
+        &--timer {
+            width: px-to-rem(96);
+            min-width: px-to-rem(96);
+        }
+    }
+
+    &__button-inner {
+        display: flex;
+        align-items: center;
+        gap: px-to-rem(8);
+    }
+
+    &__button-icon {
+        width: px-to-rem(24);
+        height: auto;
+    }
+}

@@ -144,7 +144,6 @@ export const useMerchantWallets = ({ merchantId }: IProps) => {
     };
 
     const onCloseBlockchainModal = () => {
-        debugger;
         if (selectedBlockchain) setSelectedBlockchain(undefined);
         setModalBlockchainVisible(false);
     };
