@@ -11,12 +11,10 @@ import {
 } from '@poluspay-frontend/ui';
 import { FormCurrencies } from './Currencies/Currencies';
 import { FormSelect } from './Select/Select';
-import { FormTimer } from './Timer/Timer';
 
 import './Payment.scoped.scss';
 
 interface FormPaymentProps {
-    expireAt: string;
     availableTokens: AssetRepresentation[];
     availableCategories: string[];
     paymentAvailableBlockchains: string[];
@@ -51,9 +49,6 @@ export const FormPayment = (props: FormPaymentProps) => {
                         userToken={props.userToken}
                         setUserToken={props.setUserToken}
                     />
-                </div>
-                <div className="payment__timer">
-                    <FormTimer expiresAt={props.expireAt} />
                 </div>
             </div>
             <ModalBlockChainSelector

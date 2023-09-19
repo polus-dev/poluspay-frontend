@@ -26,7 +26,6 @@ export const userTokenPairPriceSlice = createSlice({
                 state.assetName = action.payload.assetName;
             }),
             builder.addCase(tokenPairPriceThunk.rejected, (state, action) => {
-                debugger;
                 if (action.error.name === 'AbortError') {
                     return;
                 }
