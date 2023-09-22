@@ -4,6 +4,7 @@ export const roundCryptoAmount = (amount: string) => {
         v = '.',
         isStartWithZero = amount.startsWith(z),
         floatPointIndex = amount.indexOf(v);
+    if (floatPointIndex < 0) return amount;
     while (
         isStartWithZero
             ? amount[++floatPointIndex] === z
