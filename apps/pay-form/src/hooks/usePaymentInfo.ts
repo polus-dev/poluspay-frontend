@@ -70,8 +70,6 @@ export const usePaymentInfo = (id: string) => {
         message: 'Error load payment data',
         code: 1001,
       })
-    } finally {
-      setIsLoading(false)
     }
 
   }, [currentBlockchain, getPaymentInfo, getMerchantInfo, setExpireAt, setInfo, setIsLoading])
