@@ -28,11 +28,11 @@ import {FormFooter} from './Footer/Footer';
 import {FormNativePayment as QRCodePayment} from './Native/Native';
 import {FormProcessBlock} from './ProcessBlock/Process';
 import {FormPayment} from './Payment/Payment';
-import { FormSupport } from './Support/Support';
+import {FormSupport} from './Support/Support';
 
 import './Form.scoped.scss';
+import {setView, ViewVariant} from "../../../store/features/view/viewSlice";
 
-type FormStage = 'EVM' | 'QRCode' | 'ProcessBlock';
 
 // make recursive required
 interface IFormProps
@@ -46,7 +46,7 @@ interface IFormProps
 
 export const Form = (props: IFormProps) => {
     const dispatch = useAppDispatch();
-    const [stage, setStage] = useState<FormStage>('EVM');
+    const stage = useAppSelector(state => state.view.currentView)
     const { isConnected, address } = useAccount();
     const [userToken, setUserToken] = useState(props.availableTokens![0]);
     const {data: assetHelper} = useGetAssetsQuery();
@@ -89,7 +89,7 @@ export const Form = (props: IFormProps) => {
                 ?.getQRCodePaymentNetworks()
                 .includes(props.info.payment.blockchains[0])
         ) {
-            setStage('QRCode');
+          dispatch(setView(ViewVariant.QRCODE))
         }
     }, [props.info]);
 
@@ -99,9 +99,9 @@ export const Form = (props: IFormProps) => {
                 ?.getQRCodePaymentNetworks()
                 .includes(currentBlockchain!)
         ) {
-            setStage('QRCode');
+          dispatch(setView(ViewVariant.QRCODE))
         } else {
-            setStage('EVM');
+          dispatch(setView(ViewVariant.EVM))
         }
     }, [currentBlockchain]);
     const onButtonClick = async () => {
@@ -111,11 +111,11 @@ export const Form = (props: IFormProps) => {
             const {success_redirect_url, fail_redirect_url, domain} = props.info!.merchant;
             redirectToMerchantSite(isSuccessTransaction && success_redirect_url ? success_redirect_url : isFailedTransaction && fail_redirect_url ? fail_redirect_url : domain)
           } else if (
-            stage === 'QRCode' &&
+            stage === ViewVariant.QRCODE &&
             props.info &&
             props.info.payment.blockchains.length > 1
           ) {
-            setStage('EVM');
+            dispatch(setView(ViewVariant.EVM))
             const firstEvmNetwork = props.info.payment.blockchains.find(
               (blockchain) =>
                 !assetHelper
@@ -130,11 +130,11 @@ export const Form = (props: IFormProps) => {
             }
           } else if (!isConnected) {
             open();
-          } else if (stage === 'ProcessBlock') {
+          } else if (stage === ViewVariant.PROCESS_BLOCK) {
             abortPayment.current?.();
-            setStage('EVM');
+            dispatch(setView(ViewVariant.EVM))
             dispatch(setSmartLineStatus(SmartLineStatus.DEFAULT));
-          } else if (stage === 'EVM') {
+          } else if (stage ===  ViewVariant.EVM){
             if (chain && switchNetworkAsync && chain.id !== ChainId[currentBlockchain!]) {
               setSmartLineStatus(SmartLineStatus.LOADING);
               await switchNetworkAsync(ChainId[currentBlockchain!])
@@ -157,7 +157,7 @@ export const Form = (props: IFormProps) => {
                 })
               ).abort;
             abortPayment.current = paymentCb.current();
-            setStage('ProcessBlock');
+            dispatch(setView(ViewVariant.PROCESS_BLOCK))
           }
         }
       catch (e) {
@@ -196,7 +196,7 @@ export const Form = (props: IFormProps) => {
             <div className="form__progress">
                 <ProgressBar value={progressBarValue} />
             </div>
-            {stage === 'EVM' ? (
+            {stage === ViewVariant.EVM ? (
                 <>
                     <FormPayment
                         paymentAvailableBlockchains={props.info.payment.blockchains}
@@ -209,7 +209,7 @@ export const Form = (props: IFormProps) => {
                         expiresAt={props.expireAt}
                     />
                 </>
-            ) : stage === 'QRCode' ? (
+            ) : stage === ViewVariant.QRCODE ? (
                 <>
                     <QRCodePayment
                         currentBlockchain={currentBlockchain!}
@@ -233,10 +233,10 @@ export const Form = (props: IFormProps) => {
                     <div className="form__footer-button">
                         <FormButton
                             text={ isSuccessTransaction || isFailedTransaction ? "Back to store" :
-                                stage === 'EVM' && isConnected && !isLoading
+                                ViewVariant.EVM && isConnected && !isLoading
                                     ? `Pay ≈ ${amount} ${userToken.name.toUpperCase()}`
-                                    : stage === 'ProcessBlock' ||
-                                      stage === 'QRCode'
+                                    : stage === ViewVariant.PROCESS_BLOCK ||
+                                      stage === ViewVariant.QRCODE
                                     ? 'Change blockchain'
                                     : isLoading && isConnected
                                     ? 'Loading...'
