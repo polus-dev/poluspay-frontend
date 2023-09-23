@@ -117,9 +117,9 @@ export const transactionSlice = createSlice({
         setPermitSignature: (state, action: PayloadAction<Permit2Permit>) => {
             state.stages[StageId.SEND].signature = action.payload;
         },
-      setAmount: (state, action: PayloadAction<string>) => {
-          state.amount = action.payload
-      }
+        setAmount: (state, action: PayloadAction<string>) => {
+            state.amount = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -147,6 +147,6 @@ export const {
     nextStage,
     setPermitSignature,
     initTransactionState,
-    setAmount
+    setAmount,
 } = transactionSlice.actions;
 export default transactionSlice.reducer;

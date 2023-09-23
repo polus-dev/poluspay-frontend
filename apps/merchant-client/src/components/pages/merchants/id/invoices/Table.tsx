@@ -69,11 +69,9 @@ export const MerchantInvoicesTable: React.FC<TableProps> = ({ invoices }) => {
                                     href={el.hash.link}
                                     target="_blank"
                                 >
-                                    {
-                                        el.hash.isSettled
-                                            ? makeShortHash(el.hash.value, 3)
-                                            : el.hash.value
-                                    }
+                                    {el.hash.isSettled
+                                        ? makeShortHash(el.hash.value, 3)
+                                        : el.hash.value}
                                 </a>
                             </div>
                             <div className="table__row-date">
