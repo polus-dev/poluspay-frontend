@@ -15,7 +15,7 @@ export const FormFooter: React.FC<FormFooterProps> = ({ hasLegal = true }) => {
                         By making a payment, you agree to the&nbsp;
                         <a
                             className="footer__legal-text--highlight"
-                            href=""
+                            href="https://poluspay.com/terms-of-use"
                             target="_blank"
                         >
                             Terms&nbsp;of&nbsp;Use
@@ -24,7 +24,7 @@ export const FormFooter: React.FC<FormFooterProps> = ({ hasLegal = true }) => {
                         &nbsp;and&nbsp;
                         <a
                             className="footer__legal-text--highlight"
-                            href=""
+                            href="https://poluspay.com/privacy-policy"
                             target="_blank"
                         >
                             Privacy&nbsp;Policy
@@ -32,10 +32,14 @@ export const FormFooter: React.FC<FormFooterProps> = ({ hasLegal = true }) => {
                     </p>
                 </div>
             )}
-            <div className="footer__ownership">
+            <a
+                className="footer__ownership"
+                href="https://poluspay.com/"
+                target="_blank"
+            >
                 <p className="footer__ownership-text">Powered by</p>
                 <LogoPolus className="footer__ownership-icon" />
-            </div>
+            </a>
         </div>
     );
 };
