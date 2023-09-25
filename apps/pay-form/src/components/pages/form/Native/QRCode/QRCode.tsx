@@ -1,11 +1,11 @@
 import { useCopyText } from '../../../../../hooks/useCopyText';
 
-import {FormInput, PSwitch} from '@poluspay-frontend/ui';
+import { FormInput, PSwitch } from '@poluspay-frontend/ui';
 import { QRCodeSVG } from 'qrcode.react';
 import { ReactComponent as IconCopy } from '../../../../../assets/icons/copy.svg';
 
 import './QRCode.scoped.scss';
-import {useState} from "react";
+import { useState } from 'react';
 
 interface QRCodeProps {
     assetName: string;
@@ -18,7 +18,7 @@ interface QRCodeProps {
 export const FormQRCode = (props: QRCodeProps) => {
     const copyAmount = useCopyText();
     const copyAddress = useCopyText();
-    const [withMetaData, setWithMetaData] = useState(true)
+    const [withMetaData, setWithMetaData] = useState(true);
 
     return (
         <div className="native">
@@ -34,7 +34,11 @@ export const FormQRCode = (props: QRCodeProps) => {
                 <div className="native__qrcode">
                     <QRCodeSVG
                         className="native__qrcode-image"
-                        value={withMetaData ? `${props.blockchain}:${props.address}?value=${props.amount}` : props.address}
+                        value={
+                            withMetaData
+                                ? `${props.blockchain}:${props.address}?value=${props.amount}`
+                                : props.address
+                        }
                     />
                 </div>
                 <div className="native__data">
@@ -85,10 +89,7 @@ export const FormQRCode = (props: QRCodeProps) => {
                 <p className="native__toggler-text">
                     Amount parameter in QR code
                 </p>
-                <PSwitch
-                    value={withMetaData}
-                    onChange={setWithMetaData}
-                />
+                <PSwitch value={withMetaData} onChange={setWithMetaData} />
             </div>
         </div>
     );

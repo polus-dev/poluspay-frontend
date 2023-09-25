@@ -7,11 +7,14 @@ import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 import { PInput, PPagination } from '@poluspay-frontend/ui';
 import { MerchantInvoicesForm } from '../../../../components/pages/merchants/id/invoices/Form';
-import { Invoice, MerchantInvoicesTable } from '../../../../components/pages/merchants/id/invoices/Table';
+import {
+    Invoice,
+    MerchantInvoicesTable,
+} from '../../../../components/pages/merchants/id/invoices/Table';
 import { MerchantInvoicesPreview } from '../../../../components/pages/merchants/id/invoices/Preview';
 import { Loader } from '../../../../components/ui/Loader/Loader';
 import { ErrorBlock } from '../../../../../../../libs/ui/src/lib/Error/Error';
-import { ReactComponent as IconSearch } from '../../../../assets/icons/search.svg'
+import { ReactComponent as IconSearch } from '../../../../assets/icons/search.svg';
 
 import './MerchantInvoices.scoped.scss';
 
@@ -35,34 +38,34 @@ export const MerchantInvoicesPage: React.FC = () => {
         merchantIsNotAvailableToCreateInvoice,
     } = useInvoiceForm(merchantId);
 
-    const {
-        invoices,
-        totalItems,
-        isLoading,
-    } = useGetInvoices();
+    const { invoices, totalItems, isLoading } = useGetInvoices();
 
     const limit = 10;
     const [currentPage, setCurrentPage] = useState(1);
-    const [search, setSearch] = useState('')
+    const [search, setSearch] = useState('');
     const invoicesPaginated = invoices.slice(
         (currentPage - 1) * limit,
         (currentPage - 1) * limit + limit
     );
-    const [filteredInvoices, setFilteredInvoices] = useState<Invoice[] | null>(null)
+    const [filteredInvoices, setFilteredInvoices] = useState<Invoice[] | null>(
+        null
+    );
 
     const onPageChange = (value: number) => {
         setCurrentPage(value);
     };
 
     useEffect(() => {
-        if (!search) return undefined
+        if (!search) return undefined;
 
-        const searchLowerCase = search.toLowerCase()
+        const searchLowerCase = search.toLowerCase();
 
-        const filtered = invoices.filter(el => el.id.includes(searchLowerCase))
+        const filtered = invoices.filter((el) =>
+            el.id.includes(searchLowerCase)
+        );
 
-        setFilteredInvoices(filtered)
-    }, [search])
+        setFilteredInvoices(filtered);
+    }, [search]);
 
     return (
         <div className="invoices">
@@ -106,9 +109,7 @@ export const MerchantInvoicesPage: React.FC = () => {
                             value={search}
                             placeholder="Search by ID"
                             prepend={
-                                <IconSearch
-                                    className="invoices__table-search-icon"
-                                />
+                                <IconSearch className="invoices__table-search-icon" />
                             }
                             onInput={(value) => setSearch(value.toString())}
                         />
@@ -116,7 +117,8 @@ export const MerchantInvoicesPage: React.FC = () => {
                 )}
                 {isLoading ? (
                     <Loader />
-                ) : !invoicesPaginated.length || (search && !filteredInvoices?.length) ? (
+                ) : !invoicesPaginated.length ||
+                  (search && !filteredInvoices?.length) ? (
                     <ErrorBlock title="No invoices found" />
                 ) : (
                     <div className="invoices__table-container">

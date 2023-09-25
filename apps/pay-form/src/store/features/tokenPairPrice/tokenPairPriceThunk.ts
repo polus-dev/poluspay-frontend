@@ -10,7 +10,7 @@ import { getPathFromCallData } from '../../../logic/utils';
 import { ThunkConfig } from '../../store';
 import { ITokenPairPriceState } from './tokenPairPriceSlice';
 import { roundCryptoAmount } from 'tools';
-import {setAmount} from "../transaction/transactionSlice";
+import { setAmount } from '../transaction/transactionSlice';
 
 interface IPayload {
     userToken: Token;
@@ -29,7 +29,7 @@ export const tokenPairPriceThunk = createAsyncThunk<
     'tokenPairPriceThunk/fetch',
     async (payload, { rejectWithValue, getState, dispatch }) => {
         if (payload.userToken.contract === payload.merchantToken.contract) {
-          dispatch(setAmount(payload.amountOut))
+            dispatch(setAmount(payload.amountOut));
             return {
                 assetName: payload.userToken.name.toUpperCase(),
                 amount: roundCryptoAmount(
@@ -88,7 +88,7 @@ export const tokenPairPriceThunk = createAsyncThunk<
             getPathFromCallData(calldata),
             BigInt(payload.amountOut)
         );
-        dispatch(setAmount(response2.toString()))
+        dispatch(setAmount(response2.toString()));
         return {
             assetName: payload.userToken.name.toUpperCase(),
             amount: roundCryptoAmount(

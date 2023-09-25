@@ -113,12 +113,12 @@ export const useNotifications = () => {
             );
 
             if (index !== -1) {
-                const updated = [...notifications]
+                const updated = [...notifications];
                 updated[index] = parsed;
 
-                updated.sort(sortNotifications)
+                updated.sort(sortNotifications);
 
-                setNotifications(updated)
+                setNotifications(updated);
             }
         }
     };

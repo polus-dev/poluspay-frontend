@@ -1,43 +1,45 @@
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import {usePaymentInfo} from '../../../hooks/usePaymentInfo';
-import {formatUnits} from 'viem';
-import {AssetRepresentation} from '@poluspay-frontend/api';
-import {useTokenPairPrice} from '../../../hooks/useTokenPairPrice';
-import {useAccount, useNetwork, useSwitchNetwork} from 'wagmi';
-import {useWeb3Modal} from '@web3modal/react';
-import {startPay} from '../../../store/features/transaction/transactionThunk';
-import {useAppDispatch, useAppSelector} from '../../../store/hooks';
-import {setCurrentBlockchain} from '../../../store/features/connection/connectionSlice';
+import { usePaymentInfo } from '../../../hooks/usePaymentInfo';
+import { formatUnits } from 'viem';
+import { AssetRepresentation } from '@poluspay-frontend/api';
+import { useTokenPairPrice } from '../../../hooks/useTokenPairPrice';
+import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
+import { useWeb3Modal } from '@web3modal/react';
+import { startPay } from '../../../store/features/transaction/transactionThunk';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { setCurrentBlockchain } from '../../../store/features/connection/connectionSlice';
 import {
-  ProgressBarAction,
-  setProgressBar,
-  setSmartLineStatus,
-  SmartLineStatus,
+    ProgressBarAction,
+    setProgressBar,
+    setSmartLineStatus,
+    SmartLineStatus,
 } from '../../../store/features/smartLine/smartLineSlice';
-import {StageStatus} from "../../../store/features/transaction/transactionSlice";
-import {redirectToMerchantSite} from "../../../utils/redirectToMerchantSite";
-import {ChainId} from "../../../store/api/endpoints/types";
-import {notify} from "@poluspay-frontend/ui";
-import {useGetAssetsQuery} from "@poluspay-frontend/merchant-query";
+import { StageStatus } from '../../../store/features/transaction/transactionSlice';
+import { redirectToMerchantSite } from '../../../utils/redirectToMerchantSite';
+import { ChainId } from '../../../store/api/endpoints/types';
+import { notify } from '@poluspay-frontend/ui';
+import { useGetAssetsQuery } from '@poluspay-frontend/merchant-query';
+import { setView, ViewVariant } from '../../../store/features/view/viewSlice';
 
-import {ProgressBar} from '../../ui/ProgressBar/ProgressBar';
-import {FormButton} from './Button/Button';
-import {FormHeader} from './Header/Header';
-import {FormFooter} from './Footer/Footer';
-import {FormNativePayment as QRCodePayment} from './Native/Native';
-import {FormProcessBlock} from './ProcessBlock/Process';
-import {FormPayment} from './Payment/Payment';
-import {FormSupport} from './Support/Support';
+import { ProgressBar } from '../../ui/ProgressBar/ProgressBar';
+import { FormButton } from './Button/Button';
+import { FormHeader } from './Header/Header';
+import { FormFooter } from './Footer/Footer';
+import { FormNativePayment as QRCodePayment } from './Native/Native';
+import { FormProcessBlock } from './ProcessBlock/Process';
+import { FormPayment } from './Payment/Payment';
+import { FormSupport } from './Support/Support';
 
 import './Form.scoped.scss';
-import {setView, ViewVariant} from "../../../store/features/view/viewSlice";
-
 
 // make recursive required
 interface IFormProps
     extends Required<
-        Omit<ReturnType<typeof usePaymentInfo>, 'isLoading' | 'error' | 'isAssetsInfoLoading' | 'status'>
+        Omit<
+            ReturnType<typeof usePaymentInfo>,
+            'isLoading' | 'error' | 'isAssetsInfoLoading' | 'status'
+        >
     > {
     id: string;
     availableTokens?: AssetRepresentation[];
@@ -46,17 +48,17 @@ interface IFormProps
 
 export const Form = (props: IFormProps) => {
     const dispatch = useAppDispatch();
-    const stage = useAppSelector(state => state.view.currentView)
+    const stage = useAppSelector((state) => state.view.currentView);
     const { isConnected, address } = useAccount();
     const [userToken, setUserToken] = useState(props.availableTokens![0]);
-    const {data: assetHelper} = useGetAssetsQuery();
+    const { data: assetHelper } = useGetAssetsQuery();
     const { amount, isLoading, assetName } = useTokenPairPrice(
         userToken,
         props.merchantToken,
         props.amountInMerchantToken
     );
-    const {chain} = useNetwork();
-    const {switchNetworkAsync} = useSwitchNetwork();
+    const { chain } = useNetwork();
+    const { switchNetworkAsync } = useSwitchNetwork();
     const progressBarValue = useAppSelector(
         (state) => state.smartLine.progressBar
     );
@@ -66,13 +68,13 @@ export const Form = (props: IFormProps) => {
     const currentBlockchain = useAppSelector(
         (state) => state.connection.currentBlockchain
     );
-    const isSuccessTransaction = useAppSelector(state =>
-      state.transaction.stages[2].status === StageStatus.SUCCESS
-    )
+    const isSuccessTransaction = useAppSelector(
+        (state) => state.transaction.stages[2].status === StageStatus.SUCCESS
+    );
 
-  const isFailedTransaction = useAppSelector(state =>
-    state.transaction.stages[2].status === StageStatus.FAILURE
-  )
+    const isFailedTransaction = useAppSelector(
+        (state) => state.transaction.stages[2].status === StageStatus.FAILURE
+    );
 
     useEffect(() => {
         if (isConnected && !progressBarValue) {
@@ -81,6 +83,7 @@ export const Form = (props: IFormProps) => {
         } else if (!isConnected && progressBarValue)
             dispatch(setProgressBar(ProgressBarAction.DEC));
     }, [isConnected, progressBarValue]);
+
     useEffect(() => {
         if (
             props.info &&
@@ -89,7 +92,7 @@ export const Form = (props: IFormProps) => {
                 ?.getQRCodePaymentNetworks()
                 .includes(props.info.payment.blockchains[0])
         ) {
-          dispatch(setView(ViewVariant.QRCODE))
+            dispatch(setView(ViewVariant.QRCODE));
         }
     }, [props.info]);
 
@@ -99,72 +102,86 @@ export const Form = (props: IFormProps) => {
                 ?.getQRCodePaymentNetworks()
                 .includes(currentBlockchain!)
         ) {
-          dispatch(setView(ViewVariant.QRCODE))
+            dispatch(setView(ViewVariant.QRCODE));
         } else {
-          dispatch(setView(ViewVariant.EVM))
+            dispatch(setView(ViewVariant.EVM));
         }
     }, [currentBlockchain]);
+
     const onButtonClick = async () => {
         try {
+            if (isSuccessTransaction || isFailedTransaction) {
+                const { success_redirect_url, fail_redirect_url, domain } =
+                    props.info!.merchant;
+                redirectToMerchantSite(
+                    isSuccessTransaction && success_redirect_url
+                        ? success_redirect_url
+                        : isFailedTransaction && fail_redirect_url
+                        ? fail_redirect_url
+                        : domain
+                );
+            } else if (
+                stage === ViewVariant.QRCODE &&
+                props.info &&
+                props.info.payment.blockchains.length > 1
+            ) {
+                dispatch(setView(ViewVariant.EVM));
+                const firstEvmNetwork = props.info.payment.blockchains.find(
+                    (blockchain) =>
+                        !assetHelper
+                            ?.getQRCodePaymentNetworks()
+                            .includes(blockchain)
+                );
 
-          if (isSuccessTransaction || isFailedTransaction) {
-            const {success_redirect_url, fail_redirect_url, domain} = props.info!.merchant;
-            redirectToMerchantSite(isSuccessTransaction && success_redirect_url ? success_redirect_url : isFailedTransaction && fail_redirect_url ? fail_redirect_url : domain)
-          } else if (
-            stage === ViewVariant.QRCODE &&
-            props.info &&
-            props.info.payment.blockchains.length > 1
-          ) {
-            dispatch(setView(ViewVariant.EVM))
-            const firstEvmNetwork = props.info.payment.blockchains.find(
-              (blockchain) =>
-                !assetHelper
-                  ?.getQRCodePaymentNetworks()
-                  .includes(blockchain)
-            );
-
-            if (assetHelper && firstEvmNetwork) {
-              dispatch(setCurrentBlockchain(firstEvmNetwork));
-            } else {
-              throw new Error('No EVM network available');
+                if (assetHelper && firstEvmNetwork) {
+                    dispatch(setCurrentBlockchain(firstEvmNetwork));
+                } else {
+                    throw new Error('No EVM network available');
+                }
+            } else if (!isConnected) {
+                open();
+            } else if (stage === ViewVariant.PROCESS_BLOCK) {
+                abortPayment.current?.();
+                dispatch(setView(ViewVariant.EVM));
+                dispatch(setSmartLineStatus(SmartLineStatus.DEFAULT));
+            } else if (stage === ViewVariant.EVM) {
+                if (
+                    chain &&
+                    switchNetworkAsync &&
+                    chain.id !== ChainId[currentBlockchain!]
+                ) {
+                    setSmartLineStatus(SmartLineStatus.LOADING);
+                    await switchNetworkAsync(ChainId[currentBlockchain!]);
+                    setSmartLineStatus(SmartLineStatus.DEFAULT);
+                }
+                paymentCb.current = (startStageIndex) =>
+                    dispatch(
+                        startPay({
+                            ...props,
+                            uuid: props.id,
+                            userToken,
+                            blockchain: currentBlockchain!,
+                            userAddress: address!,
+                            amount: (
+                                BigInt(props.fee) + BigInt(props.merchantAmount)
+                            ).toString(),
+                            feeAddress: props.info!.payment.evm_fee_address,
+                            merchantToken: props.merchantToken!,
+                            startStage: startStageIndex,
+                        })
+                    ).abort;
+                abortPayment.current = paymentCb.current();
+                dispatch(setView(ViewVariant.PROCESS_BLOCK));
             }
-          } else if (!isConnected) {
-            open();
-          } else if (stage === ViewVariant.PROCESS_BLOCK) {
-            abortPayment.current?.();
-            dispatch(setView(ViewVariant.EVM))
-            dispatch(setSmartLineStatus(SmartLineStatus.DEFAULT));
-          } else if (stage ===  ViewVariant.EVM){
-            if (chain && switchNetworkAsync && chain.id !== ChainId[currentBlockchain!]) {
-              setSmartLineStatus(SmartLineStatus.LOADING);
-              await switchNetworkAsync(ChainId[currentBlockchain!])
-              setSmartLineStatus(SmartLineStatus.DEFAULT);
-            }
-            paymentCb.current = (startStageIndex) =>
-              dispatch(
-                startPay({
-                  ...props,
-                  uuid: props.id,
-                  userToken,
-                  blockchain: currentBlockchain!,
-                  userAddress: address!,
-                  amount: (
-                    BigInt(props.fee) + BigInt(props.merchantAmount)
-                  ).toString(),
-                  feeAddress: props.info!.payment.evm_fee_address,
-                  merchantToken: props.merchantToken!,
-                  startStage: startStageIndex,
-                })
-              ).abort;
-            abortPayment.current = paymentCb.current();
-            dispatch(setView(ViewVariant.PROCESS_BLOCK))
-          }
+        } catch (e) {
+            setSmartLineStatus(SmartLineStatus.ERROR);
+            console.error(e);
+            notify({
+                title: 'Error',
+                description: 'Something went wrong. Please try again later',
+                status: 'error',
+            });
         }
-      catch (e) {
-          setSmartLineStatus(SmartLineStatus.ERROR);
-          console.error(e);
-          notify({title: "Error", description: "Something went wrong. Please try again later", status: "error"})
-      }
     };
     if (
         !props.info ||
@@ -183,11 +200,9 @@ export const Form = (props: IFormProps) => {
                     merchant={props.info.merchant}
                     payment={{
                         description: props.info.payment.description,
-                        amount:
-                            formatUnits(
-                                BigInt(props.amountInMerchantToken),
-                                props.merchantToken.decimals
-
+                        amount: formatUnits(
+                            BigInt(props.amountInMerchantToken),
+                            props.merchantToken.decimals
                         ),
                         currency: props.merchantToken.name.toUpperCase(),
                     }}
@@ -199,15 +214,15 @@ export const Form = (props: IFormProps) => {
             {stage === ViewVariant.EVM ? (
                 <>
                     <FormPayment
-                        paymentAvailableBlockchains={props.info.payment.blockchains}
+                        paymentAvailableBlockchains={
+                            props.info.payment.blockchains
+                        }
                         availableTokens={props.availableTokens}
                         availableCategories={props.availableCategories}
                         setUserToken={setUserToken}
                         userToken={userToken}
                     />
-                    <FormSupport
-                        expiresAt={props.expireAt}
-                    />
+                    <FormSupport expiresAt={props.expireAt} />
                 </>
             ) : stage === ViewVariant.QRCODE ? (
                 <>
@@ -216,9 +231,7 @@ export const Form = (props: IFormProps) => {
                         availableTokens={props.availableTokens}
                         payment={props.info.payment}
                     />
-                    <FormSupport
-                        expiresAt={props.expireAt}
-                    />
+                    <FormSupport expiresAt={props.expireAt} />
                 </>
             ) : (
                 <FormProcessBlock onRetry={paymentCb.current!} />

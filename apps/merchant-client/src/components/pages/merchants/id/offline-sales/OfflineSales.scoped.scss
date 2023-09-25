@@ -99,7 +99,7 @@
         width: px-to-rem(24);
         height: auto;
         stroke: $color-white;
-        transition: stroke .15s ease-in-out;
+        transition: stroke 0.15s ease-in-out;
         cursor: pointer;
 
         &:hover {

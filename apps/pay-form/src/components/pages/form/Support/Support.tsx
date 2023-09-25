@@ -1,16 +1,16 @@
-import { useTimer } from '../../../../hooks/useTimer'
+import { useTimer } from '../../../../hooks/useTimer';
 
-import { PButton } from '@poluspay-frontend/ui'
-import { ReactComponent as IconUser } from '../../../../assets/icons/user.svg'
+import { PButton } from '@poluspay-frontend/ui';
+import { ReactComponent as IconUser } from '../../../../assets/icons/user.svg';
 
-import './Support.scoped.scss'
+import './Support.scoped.scss';
 
 interface IFormSupportProps {
-    expiresAt: string
+    expiresAt: string;
 }
 
 export const FormSupport: React.FC<IFormSupportProps> = ({ expiresAt }) => {
-    const { timer } = useTimer(expiresAt)
+    const { timer } = useTimer(expiresAt);
 
     return (
         <div className="support">
@@ -29,17 +29,8 @@ export const FormSupport: React.FC<IFormSupportProps> = ({ expiresAt }) => {
                 />
             </div>
             <div className="support__button support__button--timer">
-                <PButton
-                    wide
-                    outline
-                    size="lg"
-                    children={
-                        <p>
-                            {timer}
-                        </p>
-                    }
-                />
+                <PButton wide outline size="lg" children={<p>{timer}</p>} />
             </div>
         </div>
-    )
-}
+    );
+};

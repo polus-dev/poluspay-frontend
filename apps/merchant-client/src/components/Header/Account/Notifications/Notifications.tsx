@@ -17,9 +17,10 @@ export const AccountNotifications: React.FC = () => {
 
     useEffect(() => {
         setLoading(true);
-        store.getNotifications()
-          .catch(() => setError(true))
-          .finally(() => setLoading(false));
+        store
+            .getNotifications()
+            .catch(() => setError(true))
+            .finally(() => setLoading(false));
     }, []);
 
     return (
