@@ -233,7 +233,7 @@ export const Form = (props: IFormProps) => {
                     <div className="form__footer-button">
                         <FormButton
                             text={ isSuccessTransaction || isFailedTransaction ? "Back to store" :
-                                ViewVariant.EVM && isConnected && !isLoading
+                                stage === ViewVariant.EVM && isConnected && !isLoading
                                     ? `Pay ≈ ${amount} ${userToken.name.toUpperCase()}`
                                     : stage === ViewVariant.PROCESS_BLOCK ||
                                       stage === ViewVariant.QRCODE
