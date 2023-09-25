@@ -30,8 +30,7 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
     'transaction/sendThunk',
     async (_, { getState, dispatch, rejectWithValue }) => {
         const currentStage = () => getState().transaction.currentStage;
-        const sendAmount =
-            getState().transaction.amount;
+        const sendAmount = getState().transaction.amount;
 
         const {
             signature,

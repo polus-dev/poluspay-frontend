@@ -19,10 +19,10 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
     const date = formatDate(createdAt);
 
     const handleClick = () => {
-        if (item.viewed_at) return undefined
+        if (item.viewed_at) return undefined;
 
-        onClick(item.id)
-    }
+        onClick(item.id);
+    };
 
     return (
         <div className="notification" onClick={handleClick}>

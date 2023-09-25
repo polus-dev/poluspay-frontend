@@ -14,14 +14,14 @@ export const useOfflinePayment = (merchantId: string) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const socket = new WebSocket(url)
+        const socket = new WebSocket(url);
 
         socket.onmessage = (event) => {
-            if (!event.data) return undefined
+            if (!event.data) return undefined;
 
-            const parsed: IGetOfflinePaymentIdResponse = JSON.parse(event.data)
+            const parsed: IGetOfflinePaymentIdResponse = JSON.parse(event.data);
 
-            socket.close()
+            socket.close();
 
             notify({
                 title: 'Redirecting...',
@@ -33,6 +33,6 @@ export const useOfflinePayment = (merchantId: string) => {
             setTimeout(() => {
                 navigate(`/id/${parsed.payment_id}`);
             }, 2500);
-        }
+        };
     }, []);
 };
