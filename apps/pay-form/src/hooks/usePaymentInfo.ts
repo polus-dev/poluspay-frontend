@@ -67,12 +67,12 @@ export const usePaymentInfo = (id: string) => {
                     setCurrentBlockchain(payment.blockchains[0] as Blockchain_t)
                 );
         } catch (e) {
+            setIsLoading(false);
+
             setError({
                 message: 'Error load payment data',
                 code: 1001,
             });
-        } finally {
-            setIsLoading(false);
         }
     }, [
         currentBlockchain,
