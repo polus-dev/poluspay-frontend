@@ -70,7 +70,7 @@ export const usePaymentInfo = (id: string) => {
             setIsLoading(false);
 
             setError({
-                message: 'Error load payment data',
+                message: 'Error loading payment data',
                 code: 1001,
             });
         }
