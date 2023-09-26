@@ -8,6 +8,7 @@ type ButtonText =
     | 'Connect Wallet'
     | `Pay ≈ ${string} ${string}`
     | 'Change blockchain'
+    | 'Decline payment'
     | 'Back to store'
     | 'Loading...';
 
