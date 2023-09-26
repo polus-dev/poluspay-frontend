@@ -183,6 +183,7 @@ export const Form = (props: IFormProps) => {
             });
         }
     };
+
     if (
         !props.info ||
         !props.merchantToken ||
@@ -248,8 +249,9 @@ export const Form = (props: IFormProps) => {
                             text={ isSuccessTransaction || isFailedTransaction ? "Back to store" :
                                 stage === ViewVariant.EVM && isConnected && !isLoading
                                     ? `Pay ≈ ${amount} ${userToken.name.toUpperCase()}`
-                                    : stage === ViewVariant.PROCESS_BLOCK ||
-                                      stage === ViewVariant.QRCODE
+                                    : stage === ViewVariant.PROCESS_BLOCK
+                                    ? 'Decline payment'
+                                    :  stage === ViewVariant.QRCODE
                                     ? 'Change blockchain'
                                     : isLoading && isConnected
                                     ? 'Loading...'
