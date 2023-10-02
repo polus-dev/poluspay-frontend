@@ -93,10 +93,17 @@ export interface IGetMerchantStatisticsRequest extends Partial<IMerchantId> {
     to_date: string;
 }
 
+export interface PerDayTurnover {
+    count: number;
+    posting_date: string;
+}
+
 export interface IGetMerchantStatisticsResponse {
     total_payments: number;
     success_payments: number;
     turnover_detalization: TurnoverDetalization[] | null;
+    total_payments_per_day: PerDayTurnover[];
+    success_payments_per_day: PerDayTurnover[];
 }
 
 export interface TurnoverDetalization extends IMerchantId {

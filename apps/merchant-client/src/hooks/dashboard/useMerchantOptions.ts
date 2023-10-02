@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 import { SelectOption } from '@poluspay-frontend/ui';
 import { trimEndOfString } from '../../../../../tools';
 
-export const useMerchantOptions = () => {
+interface IUseMerchantOptions {
+    setMerchantsOptions: (arg: SelectOption[]) => void;
+}
+export const useMerchantOptions = ({setMerchantsOptions}: IUseMerchantOptions) => {
     const { data: merchants } = useGetMerchantsQuery({});
-    const [merchantsOptions, setMerchantsOptions] = useState<SelectOption[]>(
-        []
-    );
     const [selectedMerchant, setSelectedMerchant] = useState<SelectOption>();
     const [merchantsAmount, setMerchantsAmount] = useState(-1);
 
@@ -29,7 +29,6 @@ export const useMerchantOptions = () => {
     }, [merchants]);
 
     return {
-        merchantsOptions,
         selectedMerchant,
         setSelectedMerchant,
         merchantsAmount,

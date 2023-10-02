@@ -1,6 +1,6 @@
-type DateType = 'day' | 'week' | 'month';
+export type DateUnion = 'day' | 'week' | 'month';
 
-export function getBeginningOfDate(type: DateType): Date {
+export function getBeginningOfDate(type: DateUnion): Date {
     const currentDate = new Date();
     if (type === 'day')
         return new Date(
