@@ -17,17 +17,9 @@ export const useAvailableTokens = () => {
     );
     const { data: assets, isLoading } = useGetAssetsQuery();
 
-    const tokensToExclude = [
-        'shilld'
-    ]
-
     useEffect(() => {
         if (assets && currentBlockchain) {
-            const filtered = assets
-                .getAssetsByNetwork(currentBlockchain)
-                .filter(asset => !tokensToExclude.includes(asset.name))
-
-            setAvailableTokens(filtered);
+            setAvailableTokens(assets.getAssetsByNetwork(currentBlockchain));
 
             // TODO: make normal categories
             setAvailableCategories(
