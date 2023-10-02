@@ -1,5 +1,6 @@
 import { useParams } from 'react-router';
 
+import { TOKENS_TO_EXCLUDE } from '../../constants';
 import { usePaymentInfo } from '../../hooks/usePaymentInfo';
 import { useGetAssetsQuery } from '../../store/api/endpoints/asset/Asset';
 import { useAvailableTokens } from '../../hooks/useAvailableTokens';
@@ -36,6 +37,10 @@ export const FormPage: React.FC<IFormPageProps> = ({ error, errorMessage }) => {
     const { availableTokens, isAvailableTokensLoading, availableCategories } =
         useAvailableTokens();
 
+    const filteredTokens = availableTokens.filter(
+        (token) => !TOKENS_TO_EXCLUDE.includes(token.name)
+    );
+
     const status = useAppSelector((state) => state.smartLine.smartLineStatus);
     const expiredMessage =
         payment.expireAt < new Date().toISOString() &&
@@ -69,7 +74,7 @@ export const FormPage: React.FC<IFormPageProps> = ({ error, errorMessage }) => {
                 ) : paymentStatus === 'pending' ? (
                     <Form
                         availableCategories={availableCategories}
-                        availableTokens={availableTokens}
+                        availableTokens={filteredTokens}
                         id={id!}
                         {...payment}
                     />
