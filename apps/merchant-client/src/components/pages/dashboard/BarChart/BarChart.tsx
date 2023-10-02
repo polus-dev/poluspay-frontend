@@ -15,9 +15,8 @@ import { PTabs } from '@poluspay-frontend/ui';
 
 import './BarChart.scoped.scss';
 import {DateUnion} from "../../../../../../../tools";
-import {StatsElement} from "../Stats/StatsElement/StatsElement";
 import {ChartData} from "../../../../hooks/dashboard/useMerchantStatistics";
-import {PerDayTurnover} from "../../../../store/api/endpoints/merchant/Merchant.interface";
+
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
@@ -55,11 +54,12 @@ export const DashboardBarChart = (props: DashBoardBarChartProps) => {
 
     const data = useCallback(() => {
         const successPayments: number[] = props.statistics.total_payments_per_day.map(totalEL =>  {
-            const successEL = props.statistics.success_payments_per_day.find(successEL => successEL.date === totalEL.date)
+            const successEL = props.statistics.success_payments_per_day.find(successEL => successEL.posting_date === totalEL.posting_date)
             return successEL ? successEL.count : 0
         });
         return {
-            labels: props.statistics.total_payments_per_day.map((el) => el.date),
+            labels: props.statistics.total_payments_per_day.map((el) => el.posting_date),
+
             datasets: [
                 {
                     label: 'total payments',
