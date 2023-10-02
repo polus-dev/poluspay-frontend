@@ -34,13 +34,17 @@ const StatsBlock = (props: StatsBlockProps) => {
     );
 };
 
-export const DashboardStats: React.FC = () => {
+interface DashboardStatsProps {
+ merchantOptions: any;
+ setMerchantOptions: any;
+}
+
+export const DashboardStats= (props: DashboardStatsProps) => {
     const {
-        merchantsOptions,
         selectedMerchant,
         setSelectedMerchant,
         merchantsAmount,
-    } = useMerchantOptions();
+    } = useMerchantOptions({setMerchantsOptions: props.setMerchantOptions});
 
     const toDate = useRef(new Date().toISOString());
 
@@ -57,7 +61,7 @@ export const DashboardStats: React.FC = () => {
                                 ? ``
                                 : 'No Merchants'
                         }
-                        options={merchantsOptions}
+                        options={props.merchantOptions}
                         active={selectedMerchant ? [selectedMerchant] : []}
                         disabled={!merchantsAmount}
                         onChange={(value) => setSelectedMerchant(value[0])}

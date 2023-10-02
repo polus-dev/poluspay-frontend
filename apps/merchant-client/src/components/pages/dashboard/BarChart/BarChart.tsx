@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useCallback, useState} from 'react';
 
 import {
     Chart as ChartJS,
@@ -14,6 +14,10 @@ import { Bar } from 'react-chartjs-2';
 import { PTabs } from '@poluspay-frontend/ui';
 
 import './BarChart.scoped.scss';
+import {DateUnion} from "../../../../../../../tools";
+import {StatsElement} from "../Stats/StatsElement/StatsElement";
+import {ChartData} from "../../../../hooks/dashboard/useMerchantStatistics";
+import {PerDayTurnover} from "../../../../store/api/endpoints/merchant/Merchant.interface";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
@@ -33,71 +37,66 @@ const options = {
     },
 };
 
-const data = () => {
-    return {
-        labels: [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec',
-        ],
-        datasets: [
-            {
-                label: 'turnover',
-                data: [
-                    123, 321, 435, 456, 234, 678, 453, 634, 254, 263, 568, 122,
-                ],
-                barPercentage: 0.8,
-                categoryPercentage: 0.3,
-                backgroundColor: (context: ScriptableContext<'bar'>) => {
-                    const ctx = context.chart.ctx;
-                    const gradient = ctx.createLinearGradient(0, 0, 0, 600);
-                    gradient.addColorStop(0, '#FBE945');
-                    gradient.addColorStop(1, '#B4801B');
 
-                    return gradient;
-                },
-                borderRadius: 40,
-                borderSkipped: false,
-            },
-            {
-                label: 'invoices',
-                data: [
-                    468, 301, 475, 780, 806, 467, 678, 345, 978, 568, 235, 465,
-                ],
-                barPercentage: 0.8,
-                categoryPercentage: 0.3,
-                backgroundColor: (context: ScriptableContext<'bar'>) => {
-                    const ctx = context.chart.ctx;
-                    const gradient = ctx.createLinearGradient(0, 0, 0, 600);
-                    gradient.addColorStop(0, '#24C190');
-                    gradient.addColorStop(1, '#0E7C3A');
+interface DashBoardBarChartProps {
+    fromData: DateUnion;
+    setFromData: (d: DateUnion) => void;
+    statistics: ChartData;
+}
 
-                    return gradient;
-                },
-                borderRadius: 40,
-                borderSkipped: false,
-            },
-        ],
-    };
-};
-
-export const DashboardBarChart: React.FC = () => {
-    const tabs = [
-        { id: 'day', text: 'Day' },
-        { id: 'week', text: 'Week' },
-        { id: 'month', text: 'Month' },
+export const DashboardBarChart = (props: DashBoardBarChartProps) => {
+    const tabs: {id:DateUnion, text: DateUnion}[] = [
+        { id: 'day', text: 'day' },
+        { id: 'week', text: 'week' },
+        { id: 'month', text: 'month' },
     ];
 
-    const [tab, setTab] = useState(tabs[2]);
+
+
+    const data = useCallback(() => {
+        const successPayments: number[] = props.statistics.total_payments_per_day.map(totalEL =>  {
+            const successEL = props.statistics.success_payments_per_day.find(successEL => successEL.date === totalEL.date)
+            return successEL ? successEL.count : 0
+        });
+        return {
+            labels: props.statistics.total_payments_per_day.map((el) => el.date),
+            datasets: [
+                {
+                    label: 'total payments',
+                    data: props.statistics.total_payments_per_day.map(el => el.count),
+                    barPercentage: 0.8,
+                    categoryPercentage: 0.3,
+                    backgroundColor: (context: ScriptableContext<'bar'>) => {
+                        const ctx = context.chart.ctx;
+                        const gradient = ctx.createLinearGradient(0, 0, 0, 600);
+                        gradient.addColorStop(0, '#FBE945');
+                        gradient.addColorStop(1, '#B4801B');
+
+                        return gradient;
+                    },
+                    borderRadius: 40,
+                    borderSkipped: false,
+                },
+                {
+                    label: 'success payments',
+                    data: successPayments,
+                    barPercentage: 0.8,
+                    categoryPercentage: 0.3,
+                    backgroundColor: (context: ScriptableContext<'bar'>) => {
+                        const ctx = context.chart.ctx;
+                        const gradient = ctx.createLinearGradient(0, 0, 0, 600);
+                        gradient.addColorStop(0, '#24C190');
+                        gradient.addColorStop(1, '#0E7C3A');
+
+                        return gradient;
+                    },
+                    borderRadius: 40,
+                    borderSkipped: false,
+                },
+            ],
+        };
+    }, [props.statistics]);
+
 
     return (
         <div className="bar">
@@ -106,9 +105,9 @@ export const DashboardBarChart: React.FC = () => {
                 <div className="bar__header-tabs">
                     <PTabs
                         size="sm"
-                        active={tab}
+                        active={{id: props.fromData, text: props.fromData}}
                         items={tabs}
-                        onChange={(item) => setTab(item)}
+                        onChange={(item) => props.setFromData(item.id as DateUnion)}
                     />
                 </div>
             </div>
