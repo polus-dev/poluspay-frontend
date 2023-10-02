@@ -17,6 +17,7 @@ import './BarChart.scoped.scss';
 import {DateUnion} from "../../../../../../../tools";
 import {ChartData} from "../../../../hooks/dashboard/useMerchantStatistics";
 
+
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 const options = {
@@ -58,6 +59,7 @@ export const DashboardBarChart = (props: DashBoardBarChartProps) => {
         });
         return {
             labels: props.statistics.total_payments_per_day.map((el) => el.posting_date),
+
             datasets: [
                 {
                     label: 'total payments',
