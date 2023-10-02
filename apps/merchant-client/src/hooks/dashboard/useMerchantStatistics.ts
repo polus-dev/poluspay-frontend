@@ -3,6 +3,7 @@ import type { StatsElement } from '../../components/pages/dashboard/Stats/StatsE
 import { useEffect, useState } from 'react';
 
 import { useGetMerchantStatisticsQuery } from '@poluspay-frontend/merchant-query';
+import {IGetMerchantStatisticsResponse} from "../../store/api/endpoints/merchant/Merchant.interface";
 
 interface IUseMerchantStatistics {
     merchantId?: string;
@@ -10,17 +11,20 @@ interface IUseMerchantStatistics {
     toData: string;
 }
 
+export interface ChartData extends Pick<IGetMerchantStatisticsResponse, "success_payments_per_day" | "total_payments_per_day"> {}
+
 export const useMerchantStatistics = ({
     merchantId,
     toData,
     fromData,
 }: IUseMerchantStatistics) => {
-    const { data: statistics } = useGetMerchantStatisticsQuery({
+    const { data: statistics, isLoading, isError} = useGetMerchantStatisticsQuery({
         merchant_id: merchantId,
         from_date: fromData,
         to_date: toData,
     });
     const [staticsBlock, setStaticsBlock] = useState<StatsElement[]>();
+    const [chartData, setChartData] = useState<ChartData>();
     useEffect(() => {
         if (statistics) {
             const amountOfProceeds =
@@ -70,7 +74,8 @@ export const useMerchantStatistics = ({
                 //   description: 'Last payment',
                 // },
             ]);
+            setChartData({total_payments_per_day: statistics.total_payments_per_day, success_payments_per_day: statistics.success_payments_per_day})
         }
     }, [statistics]);
-    return { staticsBlock };
+    return { staticsBlock, isError, isLoading, chartData };
 };
