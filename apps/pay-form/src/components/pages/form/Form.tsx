@@ -5,7 +5,7 @@ import { formatUnits } from 'viem';
 import { AssetRepresentation } from '@poluspay-frontend/api';
 import { useTokenPairPrice } from '../../../hooks/useTokenPairPrice';
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
-import { useWeb3Modal } from '@web3modal/react';
+import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { startPay } from '../../../store/features/transaction/transactionThunk';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { setCurrentBlockchain } from '../../../store/features/connection/connectionSlice';

@@ -5,7 +5,7 @@ import { ReactComponent as IconChevron } from '../../../assets/icons/chevron.svg
 
 import './Account.scoped.scss';
 import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi';
-import { useWeb3Modal } from '@web3modal/react';
+import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { makeShortHash } from '../../../../../../tools';
 
 export const HeaderAccount: React.FC = () => {
@@ -13,7 +13,7 @@ export const HeaderAccount: React.FC = () => {
     const { disconnect } = useDisconnect();
     const { data: ensName } = useEnsName({ address });
     const { data: ensAvatar } = useEnsAvatar({ name: ensName });
-    const { open, isOpen } = useWeb3Modal();
+    const { open } = useWeb3Modal();
 
     return (
         <div className="account">
@@ -21,14 +21,13 @@ export const HeaderAccount: React.FC = () => {
                 <div className="account__button">
                     <PButton
                         wide
-                        loading={isOpen}
                         children={
                             <>
                                 <LogoWalletConnect className="account__button-icon" />
                                 <p>Connect Wallet</p>
                             </>
                         }
-                        onClick={open}
+                        onClick={() => open()}
                     />
                 </div>
             ) : (

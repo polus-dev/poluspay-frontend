@@ -1,4 +1,4 @@
-import { useWeb3Modal } from '@web3modal/react';
+import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { walletAuthThunk } from 'apps/merchant-client/src/store/api/endpoints/auth/walletAuthThunk';
 import {
     useAppDispatch,
@@ -18,7 +18,9 @@ export const useWalletAuth = () => {
 
     const { address, isConnected, isConnecting } = useAccount();
 
-    const { open, isOpen } = useWeb3Modal();
+    const { open, } = useWeb3Modal();
+    // NOTE: currently useWeb3Momal in 3v doesn't have the isOpen
+    const isOpen = false;
 
     useEffect(() => {
         if (success) navigate('/');
