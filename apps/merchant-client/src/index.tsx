@@ -1,14 +1,17 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { createRoot } from 'react-dom/client';
-
-import './assets/scss/main.scss';
-import { App } from './App';
 import { Provider } from 'react-redux';
-import { store } from './store/store';
 import * as Sentry from '@sentry/react';
 import { ErrorBoundary } from '@sentry/react';
+import { store } from './store/store';
+
+
+import { App } from './App';
 import { AuthGuard } from './components/Auth/AuthGuard';
+
+import './assets/scss/main.scss';
+
 const domNode = document.getElementById('root');
 
 if (domNode) {

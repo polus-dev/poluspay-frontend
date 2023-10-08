@@ -1,5 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {
+import type {
     ICreatePaymentRequest,
     ICreatePaymentResponse,
     IGetPaymentByMerchantId,
@@ -7,8 +6,10 @@ import {
     IGetPaymentsResponse,
     IGetPaymentsResponseWithTotalCount,
 } from './Payment.interface';
-import { AuthHelper } from 'apps/merchant-client/src/logic/api';
-import { IResponseError } from '@poluspay-frontend/api';
+import type { IResponseError } from '@poluspay-frontend/api';
+
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { AuthHelper } from '../../../../../src/logic/api';
 
 export const paymentApi = createApi({
     reducerPath: 'paymentApi' as const,
@@ -16,9 +17,11 @@ export const paymentApi = createApi({
         baseUrl: import.meta.env.VITE_API_URL + 'private',
         prepareHeaders: (headers) => {
             const token = new AuthHelper().checkAuth()?.token;
+
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             }
+
             return headers;
         },
     }),

@@ -2,10 +2,9 @@ import type { GoogleAuthAction } from '../../../../pages/settings/Settings';
 
 import { useState } from 'react';
 
-import { useCopyText } from '../../../../hooks/useCopyText';
+import { useCopyText } from '@poluspay-frontend/hooks';
 
 import { QRCodeSVG } from 'qrcode.react';
-
 import { PButton, FormInput } from '@poluspay-frontend/ui';
 import { ReactComponent as Icon2FA } from '../../../../assets/icons/2fa.svg';
 import { ReactComponent as IconCopy } from '../../../../assets/icons/copy.svg';

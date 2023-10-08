@@ -1,5 +1,5 @@
 import { AssetRepresentation } from '@poluspay-frontend/api';
-import { getAssetUrl } from '../../../../../../../../tools';
+import { getAssetUrl } from '@poluspay-frontend/utils';
 
 import { FormCurrencyItem } from './CurrencyItem/CurrencyItem';
 

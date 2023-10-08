@@ -5,15 +5,13 @@ import { useInvoiceForm } from './hooks/useInvoiceForm';
 import { useGetMerchantIdFromParams } from '../../../../hooks/useGetMerchantId';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 
-import { PInput, PPagination } from '@poluspay-frontend/ui';
+import { PInput, PPagination, ErrorBlock, Loader } from '@poluspay-frontend/ui';
 import { MerchantInvoicesForm } from '../../../../components/pages/merchants/id/invoices/Form';
+import { MerchantInvoicesPreview } from '../../../../components/pages/merchants/id/invoices/Preview';
 import {
     Invoice,
     MerchantInvoicesTable,
 } from '../../../../components/pages/merchants/id/invoices/Table';
-import { MerchantInvoicesPreview } from '../../../../components/pages/merchants/id/invoices/Preview';
-import { Loader } from '../../../../components/ui/Loader/Loader';
-import { ErrorBlock } from '../../../../../../../libs/ui/src/lib/Error/Error';
 import { ReactComponent as IconSearch } from '../../../../assets/icons/search.svg';
 
 import './MerchantInvoices.scoped.scss';
@@ -43,10 +41,12 @@ export const MerchantInvoicesPage: React.FC = () => {
     const limit = 10;
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState('');
+
     const invoicesPaginated = invoices.slice(
         (currentPage - 1) * limit,
         (currentPage - 1) * limit + limit
     );
+
     const [filteredInvoices, setFilteredInvoices] = useState<Invoice[] | null>(
         null
     );
@@ -103,7 +103,7 @@ export const MerchantInvoicesPage: React.FC = () => {
             )}
             <div className="invoices__table">
                 <h6 className="invoices__table-title">Invoices</h6>
-                {!isLoading && invoicesPaginated.length && (
+                {!isLoading && invoicesPaginated.length > 0 && (
                     <div className="invoices__table-search">
                         <PInput
                             value={search}

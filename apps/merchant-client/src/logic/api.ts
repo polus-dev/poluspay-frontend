@@ -107,15 +107,19 @@ export class AuthHelper {
     public checkAuth() {
         const token = this._storage.get('token');
         const refresh = this._storage.get('refresh');
+
         if (!refresh || !token) {
             return;
         }
+
         this._token = token;
+
         return { token, refresh };
     }
 
     public get token() {
         this.checkAuth();
+
         return this._token;
     }
 

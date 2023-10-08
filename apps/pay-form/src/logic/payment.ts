@@ -1,17 +1,12 @@
 import { AllowanceTransfer } from '@uniswap/permit2-sdk';
+import { Token as ERC20, WETH9 } from '@uniswap/sdk-core';
 import { erc20ABI } from '@wagmi/core';
-import permit2 from '../abi/permit_abi';
+import { ethers } from 'ethers';
 import { CustomRouter } from './router';
 import { Blockchain_t, ChainId } from '../store/api/endpoints/types';
-import { Token as ERC20, WETH9 } from '@uniswap/sdk-core';
 import { Token } from '../store/api/types';
-import {
-    ADDRESS_POLUS,
-    PERMIT2_ADDRESS,
-    RPCprovider,
-    UNIVERSAL_ROUTER,
-    QUOTER_ADDRESS,
-} from './config';
+import permit2 from '../abi/permit_abi';
+
 import {
     Address,
     Hex,
@@ -22,7 +17,14 @@ import {
     http,
     parseAbiParameters,
 } from 'viem';
-import { ethers } from 'ethers';
+
+import {
+    ADDRESS_POLUS,
+    PERMIT2_ADDRESS,
+    RPCprovider,
+    UNIVERSAL_ROUTER,
+    QUOTER_ADDRESS,
+} from './config';
 
 export type Permit2AllowanceType = {
     amount: bigint;
@@ -37,6 +39,8 @@ interface DataSign {
     message: any;
 }
 
+type Context = 'universal router' | 'polus contract';
+
 export class CustomProvider {
     protected publicClient: PublicClient;
 
@@ -44,7 +48,9 @@ export class CustomProvider {
         let networkRpcUrl = RPCprovider.find(
             (el) => el.name === blockchain
         )?.url;
+
         if (!networkRpcUrl) throw new Error('networkRpcUrl is undefined');
+
         this.publicClient = createPublicClient({
             transport: http(networkRpcUrl),
         });
@@ -56,40 +62,47 @@ export class CustomProvider {
 
     public async getValueForSwap(
         path: Hex,
-        amountOut: bigint
-    ): Promise<bigint> {
+        amountOut: BigInt
+    ): Promise<BigInt> {
         const coder = new ethers.utils.AbiCoder();
-        const data = ('0x2f80bb1d' +
-            coder
-                .encode(['bytes', 'uint256'], [path, amountOut])
-                .replace('0x', '')) as Hex;
+        const encoded = coder
+            .encode(['bytes', 'uint256'], [path, amountOut])
+            .replace('0x', '');
+        const data = ('0x2f80bb1d' + encoded) as Hex;
 
         const result = await this.publicClient.call({
             // @ts-ignore
             to: QUOTER_ADDRESS[this.blockchain],
             data,
         });
+
         if (!result.data) {
             throw new Error('getValueForSwap: result.data is undefined');
         }
+
         const r = decodeAbiParameters(
             parseAbiParameters('uint256'),
             result.data
         )[0];
+
         return r;
     }
 
     get RouterAddress(): Address {
         // @ts-ignore
         const address = UNIVERSAL_ROUTER[this.blockchain];
+
         if (!address) throw new Error('RouterAddress:address is undefined');
+
         return address;
     }
 
     get PolusAddress(): Address {
         // @ts-ignore
         const address = ADDRESS_POLUS[this.blockchain];
+
         if (!address) throw new Error('PolusAddress:address is undefined');
+
         return address;
     }
 
@@ -99,9 +112,12 @@ export class CustomProvider {
 }
 
 export class PaymentHelper extends CustomProvider {
-    // ???
-    time1 = BigInt(~~(Date.now() / 1000) + 60 * 30).toString();
-    time2 = BigInt(~~(Date.now() / 1000) + 60 * 60 * 24 * 30).toString();
+    readonly sigDeadlineTime = BigInt(
+        ~~(Date.now() / 1000) + 60 * 30
+    ).toString();
+    readonly expirationTime = BigInt(
+        ~~(Date.now() / 1000) + 60 * 60 * 24 * 30
+    ).toString();
 
     constructor(
         blockchain: Blockchain_t,
@@ -154,16 +170,20 @@ export class PaymentHelper extends CustomProvider {
     }
 
     public dataForSign(nonce: number): DataSign {
-        if (!this.userToken.contract)
+        if (!this.userToken.contract) {
             throw new Error('dataForSign:contract is undefined');
+        }
+
+        const amount = (2n ** 160n - 1n).toString();
+        const nonceStringified = nonce.toString();
 
         const dataForSign = CustomRouter.packToWagmi(
             this.userToken.contract,
-            (2n ** 160n - 1n).toString(),
-            this.time2,
-            nonce.toString(),
+            amount,
+            this.expirationTime,
+            nonceStringified,
             this.RouterAddress,
-            this.time1
+            this.sigDeadlineTime
         );
 
         const { domain, types, values } = AllowanceTransfer.getPermitData(
@@ -171,6 +191,7 @@ export class PaymentHelper extends CustomProvider {
             this.PermitAddress,
             ChainId[this.blockchain]
         );
+
         return {
             domain,
             types,
@@ -188,6 +209,7 @@ export class PaymentHelper extends CustomProvider {
                 this.userToken.contract as Address,
                 type === 'router' ? this.RouterAddress : this.PolusAddress,
             ]);
+
             return {
                 amount: response[0],
                 expiration: response[1],
@@ -200,6 +222,7 @@ export class PaymentHelper extends CustomProvider {
 
     public async getSwapPath(amount: string) {
         const router = new CustomRouter(this.networkId);
+
         return await router.getRouter(
             amount,
             new ERC20(
@@ -217,10 +240,11 @@ export class PaymentHelper extends CustomProvider {
 
     public async getBalance(): Promise<bigint> {
         try {
-            if (this.userToken.is_native)
+            if (this.userToken.is_native) {
                 return await this.publicClient.getBalance({
                     address: this.userAddress,
                 });
+            }
 
             return await this.userTokenContract.read.balanceOf([
                 this.userAddress,
@@ -230,22 +254,31 @@ export class PaymentHelper extends CustomProvider {
         }
     }
 
-    get Context(): 'universal router' | 'polus contract' {
-        return (this.userToken.is_native && this.merchantToken.is_native) ||
-            this.userToken.contract === this.merchantToken.contract
-            ? 'polus contract'
-            : 'universal router';
+    get Context(): Context {
+        const isNativeTokens =
+            this.userToken.is_native && this.merchantToken.is_native;
+        const isSameContract =
+            this.userToken.contract === this.merchantToken.contract;
+
+        const context: Context =
+            isNativeTokens || isSameContract
+                ? 'polus contract'
+                : 'universal router';
+
+        return context;
     }
 }
 
 export class WrapAltToken {
-    static wrap = (chainId: number) => {
-        if (chainId === 137)
+    static wrap = (chainId: number): ERC20 => {
+        if (chainId === 137) {
             return new ERC20(
                 chainId,
                 '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
                 18
             );
-        else return WETH9[chainId];
+        } else {
+            return WETH9[chainId];
+        }
     };
 }

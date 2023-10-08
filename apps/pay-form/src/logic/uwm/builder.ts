@@ -160,6 +160,7 @@ export class Builder {
         }
 
         const commandHex = `0x${Buffer.from(commands).toString('hex')}`;
+
         return { commands: commandHex, inputs };
     }
 

@@ -1,4 +1,4 @@
-import { makeShortHash } from 'tools';
+import { makeShortHash } from '@poluspay-frontend/utils';
 
 import classNames from 'classnames';
 

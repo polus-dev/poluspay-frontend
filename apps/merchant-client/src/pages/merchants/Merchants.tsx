@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { useGetMerchantsQuery } from '@poluspay-frontend/merchant-query';
 
-import { PButton, PPagination } from '@poluspay-frontend/ui';
+import { PButton, PPagination, Loader } from '@poluspay-frontend/ui';
 import { MerchantItem } from '../../components/pages/merchants/MerchantItem';
 
 import './Merchants.scoped.scss';
-import { Loader } from '../../components/ui/Loader/Loader';
 
 export const MerchantsPage: React.FC = () => {
     const [current, setCurrent] = useState(1);

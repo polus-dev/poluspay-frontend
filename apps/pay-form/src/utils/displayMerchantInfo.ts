@@ -1,13 +1,25 @@
 import { IMerchant } from '@poluspay-frontend/api';
-import { makeShortHash } from '../../../../tools';
+import { makeShortHash } from '@poluspay-frontend/utils';
 
-interface IGetMerchantInfoParams
-    extends Pick<
-        IMerchant,
-        'display_name' | 'is_domain_confirmed' | 'id' | 'domain' | 'verified_at'
-    > {}
+type MerchantInfoParams =
+    | 'display_name'
+    | 'is_domain_confirmed'
+    | 'id'
+    | 'domain'
+    | 'verified_at';
 
-export const displayMerchantInfo = (merchant: IGetMerchantInfoParams) =>
-    (merchant.verified_at && merchant.display_name) ||
-    (merchant.is_domain_confirmed && merchant.domain.replace('https://', '')) ||
-    makeShortHash(merchant.id, 6);
+interface IGetMerchantInfoParams extends Pick<IMerchant, MerchantInfoParams> {}
+
+export const displayMerchantInfo = ({
+    display_name,
+    is_domain_confirmed,
+    id,
+    domain,
+    verified_at,
+}: IGetMerchantInfoParams): string => {
+    return (
+        (verified_at && display_name) ||
+        (is_domain_confirmed && domain.replace('https://', '')) ||
+        makeShortHash(id, 6)
+    );
+};

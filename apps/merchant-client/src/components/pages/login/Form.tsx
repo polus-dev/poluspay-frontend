@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
-import { emailRegex, EMAIL_CODE_LENGTH } from 'tools/index';
+
+import { emailRegex, EMAIL_CODE_LENGTH } from '@poluspay-frontend/utils';
+import { useWalletAuth } from './hooks/useWalletAuth';
+import { useEmailAuth } from './hooks/useEmailAuth';
+import { doGoogleRedirect } from '../../../store/api/endpoints/auth/googleAuth';
 
 import { notify, PButton, PInput } from '@poluspay-frontend/ui';
 import { ConnectButton } from '../../ui/ConnectButton/ConnectButton';
@@ -9,9 +13,6 @@ import { ReactComponent as LogoGoogle } from '../../../assets/logos/google.svg';
 import classNames from 'classnames';
 
 import './Form.scoped.scss';
-import { useWalletAuth } from './hooks/useWalletAuth';
-import { useEmailAuth } from './hooks/useEmailAuth';
-import { doGoogleRedirect } from '../../../store/api/endpoints/auth/googleAuth';
 
 export const LoginForm: React.FC = () => {
     const {
@@ -32,11 +33,6 @@ export const LoginForm: React.FC = () => {
 
     useEffect(() => {
         if (email) setEmailErrors([]);
-        // if (!emailRegex.test(email) && email.length > 0) {
-        //     setEmailErrors(['Invalid email']);
-        // } else {
-        //     setEmailErrors([]);
-        // }
     }, [email]);
 
     const [code, setCode] = useState('');
@@ -51,17 +47,18 @@ export const LoginForm: React.FC = () => {
     }, [code]);
 
     const disabled: boolean =
-        // (stage === 2 && (!email.length || emailErrors.length > 0)) ||
         stage === 3 && (!code.length || codeErrors.length > 0);
 
     const handleSubmit = () => {
         if (stage === 2) {
             if (!emailRegex.test(email) && email.length > 0) {
                 setEmailErrors(['Invalid email']);
-                return;
+
+                return undefined;
             } else {
                 setEmailErrors([]);
             }
+
             notify({
                 title: 'Email sent',
                 description: 'Please check your inbox',

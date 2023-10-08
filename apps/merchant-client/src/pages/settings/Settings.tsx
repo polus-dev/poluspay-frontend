@@ -5,9 +5,9 @@ import { SettingsForm } from '../../components/pages/settings/Form';
 import { SettingsGoogleAuth } from '../../components/pages/settings/GoogleAuth';
 import { SettingsRemoval } from '../../components/pages/settings/Removal';
 import { SettingsRemovalForm } from '../../components/pages/settings/removal/RemovalForm';
+import { SettingsGoogleConnect } from '../../components/pages/settings/2fa/ConnectForm';
 
 import './Settings.scoped.scss';
-import { SettingsGoogleConnect } from '../../components/pages/settings/2fa/ConnectForm';
 
 export type GoogleAuthAction = 'add' | 'remove';
 

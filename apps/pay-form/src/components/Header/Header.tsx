@@ -1,15 +1,17 @@
 import { NavLink } from 'react-router-dom';
 
+import { useAppSelector } from '../../store/hooks';
+import { ViewVariant } from '../../store/features/view/viewSlice';
+
 import { HeaderAccount } from './Account/Account';
 import { ReactComponent as LogoPolus } from '../../assets/logos/poluspay.svg';
 import { ReactComponent as LogoPolusPlanet } from '../../assets/logos/polus-planet.svg';
 
 import './Header.scoped.scss';
-import { useAppSelector } from '../../store/hooks';
-import { ViewVariant } from '../../store/features/view/viewSlice';
 
 export const Header: React.FC = () => {
     const currentView = useAppSelector((state) => state.view.currentView);
+
     return (
         <header className="header">
             <div className="header__container">

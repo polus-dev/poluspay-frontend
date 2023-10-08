@@ -1,5 +1,6 @@
+import type { Token } from '../store/api/types';
+
 import { useEffect, useRef } from 'react';
-import { Token } from '../store/api/types';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { tokenPairPriceThunk } from '../store/features/tokenPairPrice/tokenPairPriceThunk';
 import {
@@ -12,6 +13,8 @@ export const useTokenPairPrice = (
     merchantToken: Token | undefined,
     amountOut: string
 ) => {
+    const dispatch = useAppDispatch();
+    const abort = useRef(() => {});
     const { assetName, amount, isLoading } = useAppSelector(
         (state) => state.tokenPairPrice
     );
@@ -23,15 +26,15 @@ export const useTokenPairPrice = (
             dispatch(setSmartLineStatus(SmartLineStatus.LOADING));
         } else {
             document.body.style.cursor = 'default';
+
             dispatch(setSmartLineStatus(SmartLineStatus.DEFAULT));
         }
     }, [isLoading]);
-    const dispatch = useAppDispatch();
-    const abort = useRef(() => {});
 
     useEffect(() => {
-        if (!userToken || !merchantToken || !amountOut) return;
+        if (!userToken || !merchantToken || !amountOut) return undefined;
         if (isLoading) abort.current();
+
         abort.current = dispatch(
             tokenPairPriceThunk({ amountOut, userToken, merchantToken })
         ).abort;

@@ -1,6 +1,6 @@
+import type { Blockchain_t } from '../../api/endpoints/types';
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Blockchain_t } from '../../api/endpoints/types';
-import { getAccount } from 'wagmi/actions';
 
 export interface ConnectionState {
     isActive: boolean;

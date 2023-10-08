@@ -1,8 +1,8 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios, { AxiosError } from 'axios';
-import { signMessage } from '@wagmi/core';
+import type { IAuthResponseLogin, IAuthResponseNonce } from './Auth.interface';
 
-import { IAuthResponseLogin, IAuthResponseNonce } from './Auth.interface';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { signMessage } from '@wagmi/core';
+import axios, { AxiosError } from 'axios';
 
 export const walletAuthThunk = createAsyncThunk(
     'users/walletAuthThunk',
@@ -16,6 +16,7 @@ export const walletAuthThunk = createAsyncThunk(
                     address,
                 }
             );
+
             const { message } = response.data;
             const signature = await signMessage({ message });
             const response2 = await axios.post<IAuthResponseLogin>(
@@ -28,6 +29,7 @@ export const walletAuthThunk = createAsyncThunk(
             if (error instanceof AxiosError) {
                 return rejectWithValue(error);
             }
+
             return rejectWithValue(error as Error);
         }
     }

@@ -3,9 +3,9 @@ import type { WalletItemConnected } from '../../../../../../libs/ui/src/list';
 import { PSwitch } from '@poluspay-frontend/ui';
 import { ReactComponent as IconDelete } from '../../../assets/icons/delete.svg';
 
-import './WalletItemConnected.scoped.scss';
-
 import classNames from 'classnames';
+
+import './WalletItemConnected.scoped.scss';
 
 interface WalletItemProps {
     item: WalletItemConnected;

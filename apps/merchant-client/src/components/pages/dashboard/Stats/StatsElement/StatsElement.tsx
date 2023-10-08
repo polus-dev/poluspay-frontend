@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+
 import './StatsElement.scoped.scss';
 
 export interface StatsElement {

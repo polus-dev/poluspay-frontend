@@ -1,11 +1,11 @@
-import React from 'react';
+import type { IMerchantForm } from '../Form.interface';
 
-import { FormInput, notify, PButton } from '@poluspay-frontend/ui';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useCreateMerchantMutation } from '@poluspay-frontend/merchant-query';
+
+import { FormInput, PButton } from '@poluspay-frontend/ui';
 
 import './Form.scoped.scss';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { IMerchantForm } from '../Form.interface';
-import { useCreateMerchantMutation } from '@poluspay-frontend/merchant-query';
 
 interface FormProps {
     changeStage: () => void;
@@ -22,6 +22,7 @@ export const MerchantForm: React.FC<FormProps> = ({
         formState: { isValid, errors },
         setValue,
     } = useForm<Omit<IMerchantForm, 'brand'>>();
+
     const [createMerchant, { isLoading: isCreatingMerchantLoading }] =
         useCreateMerchantMutation();
 
@@ -33,13 +34,16 @@ export const MerchantForm: React.FC<FormProps> = ({
         const domain = data.website
             ? data.website.replace(/(^\w+:|^)\/\//, '')
             : undefined;
+
         if (domain) setValue('website', domain);
+
         try {
             const merchant = await createMerchant({
                 name: data.merchantName,
                 domain,
                 description: data.description || undefined,
             }).unwrap();
+
             setMerchantId(merchant.id);
             changeStage();
         } catch (error) {

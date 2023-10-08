@@ -1,4 +1,7 @@
-import {useCallback, useState} from 'react';
+import { useCallback } from 'react';
+
+import { DateUnion } from '@poluspay-frontend/utils';
+import { ChartData } from '../../../../hooks/dashboard/useMerchantStatistics';
 
 import {
     Chart as ChartJS,
@@ -14,9 +17,6 @@ import { Bar } from 'react-chartjs-2';
 import { PTabs } from '@poluspay-frontend/ui';
 
 import './BarChart.scoped.scss';
-import {DateUnion} from "../../../../../../../tools";
-import {ChartData} from "../../../../hooks/dashboard/useMerchantStatistics";
-
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
@@ -36,34 +36,41 @@ const options = {
     },
 };
 
-
 interface DashBoardBarChartProps {
     fromData: DateUnion;
-    setFromData: (d: DateUnion) => void;
     statistics: ChartData;
+    setFromData: (d: DateUnion) => void;
 }
 
 export const DashboardBarChart = (props: DashBoardBarChartProps) => {
-    const tabs: {id:DateUnion, text: DateUnion}[] = [
+    const tabs: { id: DateUnion; text: DateUnion }[] = [
         { id: 'day', text: 'day' },
         { id: 'week', text: 'week' },
         { id: 'month', text: 'month' },
     ];
 
-
-
     const data = useCallback(() => {
-        const successPayments: number[] = props.statistics.total_payments_per_day.map(totalEL =>  {
-            const successEL = props.statistics.success_payments_per_day.find(successEL => successEL.posting_date === totalEL.posting_date)
-            return successEL ? successEL.count : 0
-        });
+        const successPayments: number[] =
+            props.statistics.total_payments_per_day.map((totalEL) => {
+                const successEL =
+                    props.statistics.success_payments_per_day.find(
+                        (successEL) =>
+                            successEL.posting_date === totalEL.posting_date
+                    );
+
+                return successEL ? successEL.count : 0;
+            });
         return {
-            labels: props.statistics.total_payments_per_day.map((el) => el.posting_date),
+            labels: props.statistics.total_payments_per_day.map(
+                (el) => el.posting_date
+            ),
 
             datasets: [
                 {
                     label: 'total payments',
-                    data: props.statistics.total_payments_per_day.map(el => el.count),
+                    data: props.statistics.total_payments_per_day.map(
+                        (el) => el.count
+                    ),
                     barPercentage: 0.8,
                     categoryPercentage: 0.3,
                     backgroundColor: (context: ScriptableContext<'bar'>) => {
@@ -97,7 +104,6 @@ export const DashboardBarChart = (props: DashBoardBarChartProps) => {
         };
     }, [props.statistics]);
 
-
     return (
         <div className="bar">
             <div className="bar__header">
@@ -105,9 +111,11 @@ export const DashboardBarChart = (props: DashBoardBarChartProps) => {
                 <div className="bar__header-tabs">
                     <PTabs
                         size="sm"
-                        active={{id: props.fromData, text: props.fromData}}
+                        active={{ id: props.fromData, text: props.fromData }}
                         items={tabs}
-                        onChange={(item) => props.setFromData(item.id as DateUnion)}
+                        onChange={(item) =>
+                            props.setFromData(item.id as DateUnion)
+                        }
                     />
                 </div>
             </div>

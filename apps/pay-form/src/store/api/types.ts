@@ -18,8 +18,8 @@ type TokenType = 'Stable' | 'Native' | 'Wrapped' | 'Other';
 
 export interface Token extends AssetRepresentation {
     name: string;
-    //   address: string;
-    //   decimals: number;
+    // address: string;
+    // decimals: number;
     // type: TokenType;
     wrapped?: Token;
 }

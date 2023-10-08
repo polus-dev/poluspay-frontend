@@ -1,33 +1,29 @@
-import {useState} from "react";
+import { useState } from 'react';
 
 export const useCopyText = () => {
-  const [copied, setCopied] = useState(false);
+    const [copied, setCopied] = useState(false);
 
-  const copy = async (
-    value: string,
-    event?: React.MouseEvent,
-    timeout?: number
-  ) => {
-    event?.preventDefault();
-    event?.stopPropagation();
+    const copy = async (
+        value: string,
+        event?: React.MouseEvent,
+        timeout?: number
+    ) => {
+        event?.preventDefault();
+        event?.stopPropagation();
 
-    if (copied) return;
+        if (copied) return;
 
-  await navigator.clipboard?.writeText(value);
+        await navigator.clipboard?.writeText(value);
 
+        setCopied(true);
 
-    setCopied(true);
+        setTimeout(() => {
+            setCopied(false);
+        }, timeout ?? 2000);
+    };
 
-    setTimeout(
-      () => {
-        setCopied(false);
-      },
-       timeout ?? 2000
-    );
-  };
-
-  return {
-    copied,
-    copy,
-  };
+    return {
+        copied,
+        copy,
+    };
 };

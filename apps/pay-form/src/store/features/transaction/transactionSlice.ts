@@ -1,11 +1,13 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
+import type { Address } from 'viem';
+
 import { createSlice } from '@reduxjs/toolkit';
+
 import { startPay } from './transactionThunk';
 import { PaymentHelper } from '../../../logic/payment';
 import { Token } from '../../api/types';
 import { Blockchain_t } from '../../api/endpoints/types';
 import { Permit2Permit } from '../../../logic/uwm/builder';
-import { Address } from 'viem';
 
 export interface TransactionState {
     stages: [IApproveStage, ISignStage, ISendStage];
@@ -124,17 +126,20 @@ export const transactionSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(startPay.pending, (state, action) => {
-                if (action.meta.arg.startStage) return;
+                if (action.meta.arg.startStage) return undefined;
+
                 state.currentStage = initialState.currentStage;
                 state.stages = initialState.stages;
             })
             .addCase(startPay.rejected, (state, action) => {
                 if (action.error.name === 'AbortError') {
-                    return;
+                    return undefined;
                 }
+
                 state.stages[state.currentStage].status = StageStatus.FAILURE;
                 state.stages[state.currentStage].statusText =
                     initialState.stages[state.currentStage].statusText;
+
                 console.error(action.payload);
             });
     },
@@ -149,4 +154,5 @@ export const {
     initTransactionState,
     setAmount,
 } = transactionSlice.actions;
+
 export default transactionSlice.reducer;

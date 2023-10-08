@@ -1,11 +1,12 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {
+import type {
     IAuthRequestLogin,
     IAuthRequestRefresh,
     IAuthRequestSendCode,
     IAuthResponseLogin,
 } from './Auth.interface';
-import { IResponseError } from '@poluspay-frontend/api';
+import type { IResponseError } from '@poluspay-frontend/api';
+
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 type IResponseOkOrError = IResponseError;
 

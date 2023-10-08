@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useModal } from '@poluspay-frontend/hooks';
+import { useMerchantWallets } from './hooks/useMerchantWallets';
+import { isEVMBlockchain } from '@poluspay-frontend/utils';
+import { blockchainList } from '@poluspay-frontend/ui';
 
 import { ModalBlockChainSelector } from '@poluspay-frontend/ui';
 import { MerchantForm } from '../../../components/pages/merchants/create/Form';
@@ -11,10 +13,6 @@ import { ProgressBar } from '../../../components/ui/ProgressBar/ProgressBar';
 import { ModalWalletAddition } from '../../../components/modals/WalletAddition/WalletAddition';
 
 import './MerchantsCreate.scoped.scss';
-
-import { blockchainList } from '@poluspay-frontend/ui';
-import { useMerchantWallets } from './hooks/useMerchantWallets';
-import { isEVMBlockchain } from 'tools';
 
 export const MerchantsCreatePage: React.FC = () => {
     const navigator = useNavigate();
@@ -35,8 +33,6 @@ export const MerchantsCreatePage: React.FC = () => {
         next,
         merchantWalletConnected,
     } = useMerchantWallets({ merchantId });
-
-    const modalBlockchain = useModal();
 
     const progressOptions = [
         { id: 0, title: 'Make a selection' },

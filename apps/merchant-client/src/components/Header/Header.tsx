@@ -3,8 +3,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 
 import { throttle } from 'lodash-es';
 
+import { makeShortHash } from '@poluspay-frontend/utils';
 import { useGetMeQuery } from '../../store/api/endpoints/user/User';
-import { makeShortHash } from 'tools';
 import { useLogout } from './hooks/useLogout';
 
 import { Menu } from './Menu/Menu';

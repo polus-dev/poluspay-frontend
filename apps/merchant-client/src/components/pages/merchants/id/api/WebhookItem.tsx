@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
+import { makeShortHash } from '@poluspay-frontend/utils';
+
 import { ReactComponent as IconChevron } from '../../../../../assets/icons/chevron.svg';
 
 import classNames from 'classnames';
 
 import './WebhookItem.scoped.scss';
-import { makeShortHash } from '../../../../../../../../tools';
 
 export interface WebhookHistoryItem {
     paymentId: string;

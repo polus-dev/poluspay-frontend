@@ -51,6 +51,7 @@ $tabs-sizes: (
         color: $color-white;
         cursor: pointer;
         padding: map.get($tabs-sizes, 'md', 'padding');
+        text-transform: capitalize;
         font-size: map.get($tabs-sizes, 'md', 'font-size');
         line-height: 1;
         font-weight: 400;

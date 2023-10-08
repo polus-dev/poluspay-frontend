@@ -1,11 +1,13 @@
-import { getPaymentAssetInfo } from '@poluspay-frontend/api';
-import { useGetPaymentByMerchantIdQuery } from '@poluspay-frontend/merchant-query';
-import { Invoice } from 'apps/merchant-client/src/components/pages/merchants/id/invoices/Table';
-import { useGetMerchantIdFromParams } from 'apps/merchant-client/src/hooks/useGetMerchantId';
-import { useGetAssetsQuery } from 'apps/merchant-client/src/store/api/endpoints/asset/Asset';
+import type { Invoice } from '../../../../../../src/components/pages/merchants/id/invoices/Table';
+
 import { useEffect, useState } from 'react';
-import { formatDate, getExplorerLink } from 'tools';
 import { formatUnits } from 'viem';
+
+import { getPaymentAssetInfo } from '@poluspay-frontend/api';
+import { formatDate, getExplorerLink } from '@poluspay-frontend/utils';
+import { useGetPaymentByMerchantIdQuery } from '@poluspay-frontend/merchant-query';
+import { useGetMerchantIdFromParams } from '../../../../../../src/hooks/useGetMerchantId';
+import { useGetAssetsQuery } from '../../../../../../src/store/api/endpoints/asset/Asset';
 
 export const useGetInvoices = () => {
     const [invoices, setInvoices] = useState<Invoice[]>([]);
@@ -36,6 +38,7 @@ export const useGetInvoices = () => {
                     const createdAt = new Date(invoice.created_at);
                     let amount: string;
                     let currency: string;
+
                     if (paymentInfo.asset) {
                         amount = formatUnits(
                             BigInt(paymentInfo.asset.amount),
@@ -44,6 +47,7 @@ export const useGetInvoices = () => {
                                 paymentInfo.asset.asset
                             )?.decimals ?? 18
                         );
+
                         currency = paymentInfo.asset.asset;
                     } else {
                         amount = currency = "asset didn't set";
@@ -76,6 +80,7 @@ export const useGetInvoices = () => {
             );
         }
     }, [invoicesResponse, availableAssets]);
+
     return {
         invoices,
         isLoading,

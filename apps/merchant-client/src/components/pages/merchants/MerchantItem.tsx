@@ -3,8 +3,8 @@ import type { LogoStatus } from '@poluspay-frontend/api';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useRandomId } from '@poluspay-frontend/hooks';
-import { useCopyText } from '../../../hooks/useCopyText';
-import { makeShortHash } from '../../../../../../tools';
+import { useCopyText } from '@poluspay-frontend/hooks';
+import { makeShortHash } from '@poluspay-frontend/utils';
 
 import { ReactComponent as IconCopy } from '../../../assets/icons/copy.svg';
 
@@ -27,6 +27,7 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
 }) => {
     const navigate = useNavigate();
     const copy = useCopyText();
+    const randomId = useRandomId();
 
     const getShortName = () => {
         if (window.innerWidth > 768) {
@@ -44,6 +45,7 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
 
     const getShortDomain = () => {
         if (!website) return 'no website';
+
         return website.includes('https://')
             ? website.replace('https://', '')
             : website;
@@ -51,6 +53,7 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
 
     const navigateToWebsite = (event: React.MouseEvent): void => {
         event.preventDefault();
+
         if (website) {
             if (website.includes('https://')) {
                 window.open(website, '_blank');
@@ -65,7 +68,6 @@ export const MerchantItem: React.FC<IMerchantProps> = ({
 
         navigate(`/merchants/${id}/invoices`);
     };
-    const randomId = useRandomId();
 
     return (
         <Link className="merchant-item" to={`/merchants/${id}/merchant`}>

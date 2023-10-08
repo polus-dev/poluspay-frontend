@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-const PROGRESS_BAR_STEP = 25;
+import { createSlice } from '@reduxjs/toolkit';
+
 export const enum SmartLineStatus {
     DEFAULT = 'default',
     SUCCESS = 'success',
@@ -18,6 +18,8 @@ export interface SmartLineState {
     smartLineStatus: SmartLineStatus;
     progressBar: number;
 }
+
+const PROGRESS_BAR_STEP = 25;
 
 const initialState: SmartLineState = {
     smartLineStatus: SmartLineStatus.DEFAULT,

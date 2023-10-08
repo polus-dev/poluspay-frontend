@@ -1,20 +1,23 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { erc20ABI, waitForTransaction } from '@wagmi/core';
+import { prepareWriteContract, writeContract } from 'wagmi/actions';
+import { MAX_UINT256 } from '@poluspay-frontend/utils';
+import { TransactionError } from '../TransactionError';
+import { ThunkConfig } from '../../../store';
+
 import {
     nextStage,
     setStage,
     setStageText,
     StageStatus,
 } from '../transactionSlice';
-import { erc20ABI, waitForTransaction } from '@wagmi/core';
 
-import { prepareWriteContract, writeContract } from 'wagmi/actions';
-import { TransactionError } from '../TransactionError';
-import { ThunkConfig } from '../../../store';
-import { MAX_UINT256 } from '../../../../../../../tools';
 import {
     ProgressBarAction,
     setProgressBar,
 } from '../../smartLine/smartLineSlice';
+
+import { notify } from '@poluspay-frontend/ui';
 
 export const approveThunk = createAsyncThunk<any, void, ThunkConfig>(
     'transaction/approveThunk',
@@ -26,7 +29,7 @@ export const approveThunk = createAsyncThunk<any, void, ThunkConfig>(
         const helper = getState().transaction.helper;
 
         if (!helper || !sendAmount || !currentStage) {
-            return;
+            return undefined;
         }
 
         try {
@@ -38,6 +41,7 @@ export const approveThunk = createAsyncThunk<any, void, ThunkConfig>(
             ) => {
                 if (allowance < BigInt(sendAmount)) {
                     dispatch(setStageText('Need approve to smart contract'));
+
                     const preparedTransaction = await prepareWriteContract({
                         address: helper.userToken.contract as `0x${string}`,
                         abi: erc20ABI,
@@ -53,7 +57,9 @@ export const approveThunk = createAsyncThunk<any, void, ThunkConfig>(
                     });
 
                     const { hash } = await writeContract(preparedTransaction);
-                    dispatch(setStageText('Transaction pending ...'));
+
+                    dispatch(setStageText('Transaction pending...'));
+
                     await waitForTransaction({ hash });
                 }
             };
@@ -64,7 +70,9 @@ export const approveThunk = createAsyncThunk<any, void, ThunkConfig>(
                     status: StageStatus.LOADING,
                 })
             );
+
             const balance = await helper.getBalance();
+
             if (balance < BigInt(sendAmount)) {
                 throw new TransactionError(
                     'Not enough balance',
@@ -73,7 +81,13 @@ export const approveThunk = createAsyncThunk<any, void, ThunkConfig>(
             }
 
             dispatch(setStageText('Sufficient balance'));
-            dispatch(setStageText('Check allowance to smart contract'));
+            dispatch(setStageText('Checking allowance to smart contract'));
+
+            notify({
+                title: 'Need your action',
+                description: 'Check your wallet',
+                loading: true,
+            });
 
             if (
                 helper.Context === 'polus contract' &&
@@ -82,6 +96,7 @@ export const approveThunk = createAsyncThunk<any, void, ThunkConfig>(
                 const allowance = await helper.checkAllowanceToUserToken(
                     'polus'
                 );
+
                 await checkAndApprove('polus', allowance);
             } else if (
                 helper.Context === 'universal router' &&
@@ -91,17 +106,20 @@ export const approveThunk = createAsyncThunk<any, void, ThunkConfig>(
                     const allowance = await helper.checkAllowanceToUserToken(
                         'permit'
                     );
+
                     await checkAndApprove('permit', allowance);
                 } else {
                     const allowance = await helper.checkAllowanceToUserToken(
                         'router'
                     );
+
                     await checkAndApprove('router', allowance);
                 }
             }
+
             dispatch(
                 setStage({
-                    text: 'Approve success',
+                    text: 'Successful approve',
                     status: StageStatus.SUCCESS,
                 })
             );

@@ -1,11 +1,10 @@
 import { useParams } from 'react-router';
 
+import { formatUnits } from 'viem';
+import { roundCryptoAmount } from '@poluspay-frontend/utils';
 import { TOKENS_TO_EXCLUDE } from '../../constants';
 import { usePaymentInfo } from '../../hooks/usePaymentInfo';
-import { useGetAssetsQuery } from '../../store/api/endpoints/asset/Asset';
 import { useAvailableTokens } from '../../hooks/useAvailableTokens';
-import { roundCryptoAmount } from '../../../../../tools';
-import { formatUnits } from 'viem';
 import { useAppSelector } from '../../store/hooks';
 import { SmartLineStatus } from '../../store/features/smartLine/smartLineSlice';
 

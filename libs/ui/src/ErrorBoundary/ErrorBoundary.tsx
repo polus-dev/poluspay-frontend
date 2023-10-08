@@ -1,7 +1,7 @@
+import React, { ReactNode } from 'react';
+
 import { notify } from '@poluspay-frontend/ui';
 import { ErrorBlock } from '../lib/Error/Error';
-
-import React, { ReactNode } from 'react';
 
 type ErrorBoundaryProps = {
     children: ReactNode;
@@ -43,6 +43,7 @@ export class ErrorBoundary extends React.Component<
 function logErrorToMyService(error: Error, errorInfo: React.ErrorInfo) {
     // Add your custom error logging implementation here
     console.error('Error occurred:', error);
+
     notify({
         title: 'Error',
         description: 'check console error',

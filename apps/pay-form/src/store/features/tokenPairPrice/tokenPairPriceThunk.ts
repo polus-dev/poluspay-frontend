@@ -1,15 +1,17 @@
+import type { Token } from '../../api/types';
+
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ethers } from 'ethers';
+import { SwapOptions, SwapRouter } from '@uniswap/universal-router-sdk';
+
 import { CustomRouter } from '../../../logic/router';
 import { ChainId } from '../../api/endpoints/types';
-import { Token } from '../../api/types';
 import { Percent, Token as ERC20 } from '@uniswap/sdk-core';
 import { CustomProvider, WrapAltToken } from '../../../logic/payment';
-import { SwapOptions, SwapRouter } from '@uniswap/universal-router-sdk';
 import { getPathFromCallData } from '../../../logic/utils';
 import { ThunkConfig } from '../../store';
 import { ITokenPairPriceState } from './tokenPairPriceSlice';
-import { roundCryptoAmount } from 'tools';
+import { roundCryptoAmount } from '@poluspay-frontend/utils';
 import { setAmount } from '../transaction/transactionSlice';
 
 interface IPayload {
@@ -30,6 +32,7 @@ export const tokenPairPriceThunk = createAsyncThunk<
     async (payload, { rejectWithValue, getState, dispatch }) => {
         if (payload.userToken.contract === payload.merchantToken.contract) {
             dispatch(setAmount(payload.amountOut));
+
             return {
                 assetName: payload.userToken.name.toUpperCase(),
                 amount: roundCryptoAmount(
@@ -43,10 +46,12 @@ export const tokenPairPriceThunk = createAsyncThunk<
             };
         }
         const currentBlockchain = getState().connection.currentBlockchain;
+
         if (!currentBlockchain)
             return rejectWithValue('useTokenPrice: No blockchain') as any;
 
         const router = new CustomRouter(ChainId[currentBlockchain]);
+
         const tokenA = payload.userToken.is_native
             ? WrapAltToken.wrap(ChainId[currentBlockchain])
             : new ERC20(
@@ -54,6 +59,7 @@ export const tokenPairPriceThunk = createAsyncThunk<
                   payload.userToken.contract,
                   payload.userToken.decimals
               );
+
         const tokenB = payload.merchantToken.is_native
             ? WrapAltToken.wrap(ChainId[currentBlockchain])
             : new ERC20(
@@ -61,6 +67,7 @@ export const tokenPairPriceThunk = createAsyncThunk<
                   payload.merchantToken.contract,
                   payload.merchantToken.decimals
               );
+
         const response1 = await router.getRouter(
             payload.amountOut,
             tokenA,
@@ -88,7 +95,9 @@ export const tokenPairPriceThunk = createAsyncThunk<
             getPathFromCallData(calldata),
             BigInt(payload.amountOut)
         );
+
         dispatch(setAmount(response2.toString()));
+
         return {
             assetName: payload.userToken.name.toUpperCase(),
             amount: roundCryptoAmount(

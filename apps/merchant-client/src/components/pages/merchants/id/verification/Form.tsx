@@ -3,17 +3,17 @@ import type { DomainVerification } from '../../../../../pages/merchants/id/verif
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
 
-import { useCopyText } from '../../../../../hooks/useCopyText';
+import { useCopyText } from '@poluspay-frontend/hooks';
+import {
+    useGetMerchantByIdQuery,
+    useVerifyDomainMutation,
+} from '@poluspay-frontend/merchant-query';
 
 import { FormInput, notify, PButton } from '@poluspay-frontend/ui';
 import { ReactComponent as IconCopy } from '../../../../../assets/icons/copy.svg';
 import { ReactComponent as IconYoutube } from '../../../../../assets/icons/youtube.svg';
 
 import './Form.scoped.scss';
-import {
-    useGetMerchantByIdQuery,
-    useVerifyDomainMutation,
-} from '@poluspay-frontend/merchant-query';
 
 interface MerchantDomainFormProps {
     type: DomainVerification | null;
@@ -23,6 +23,7 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
     type,
 }) => {
     const { id: merchantId } = useParams<{ id: string }>();
+
     if (!merchantId) {
         return null;
     }
@@ -45,6 +46,7 @@ export const MerchantDomainForm: React.FC<MerchantDomainFormProps> = ({
                 method: type === 'dns' ? 'dns' : 'response',
                 path: type === 'file' ? fileName : undefined,
             }).unwrap();
+
             notify({ title: 'Success response', status: 'success' });
             navigate(`/merchants/${merchantId}/merchant`);
         } catch (error) {

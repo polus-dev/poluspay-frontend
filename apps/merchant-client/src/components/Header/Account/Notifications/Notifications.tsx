@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNotifications } from '../../../../store/api/hooks/useNotifications';
 
-import { PDropdown } from '@poluspay-frontend/ui';
-import { ErrorBlock } from 'libs/ui/src/lib/Error/Error';
-import { Loader } from '../../../ui/Loader/Loader';
+import { PDropdown, ErrorBlock, Loader } from '@poluspay-frontend/ui';
 import { NotificationItem } from '../../../ui/Notification/Notification';
 import { ReactComponent as IconNotification } from '../../../../assets/icons/notification.svg';
 
