@@ -1,14 +1,15 @@
+import type { InvoiceForm } from './form.interface';
+import type { AssetRepresentation } from '@poluspay-frontend/api';
+
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { InvoiceForm } from './form.interface';
+
 import {
     useCreatePaymentMutation,
     useGetAssetsQuery,
     useGetMerchantWalletQuery,
 } from '@poluspay-frontend/merchant-query';
-import { useEffect, useState } from 'react';
-import { AssetRepresentation } from '@poluspay-frontend/api';
-import { BlockchainItem, blockchainList } from '@poluspay-frontend/ui';
-import { notify } from '@poluspay-frontend/ui';
+import { BlockchainItem, blockchainList, notify } from '@poluspay-frontend/ui';
 
 export const useInvoiceForm = (merchantId: string) => {
     const { handleSubmit, watch, register, formState, setValue } =
@@ -51,13 +52,16 @@ export const useInvoiceForm = (merchantId: string) => {
                 availableMerchantWallets.length === 0
             ) {
                 setMerchantIsNotAvailableToCreateInvoice(true);
-                return;
+
+                return undefined;
             }
             const availableNetworks = [
                 ...new Set(availableMerchantWallets.map((e) => e.network)),
             ];
+
             const [availableAssets, availableCategories] =
                 assets.getAssetsByNetworks(availableNetworks);
+
             setAvailableMerchantAssets(availableAssets);
             setAvailableCategories(availableCategories);
             setAvailableAssetNetworks(
@@ -102,7 +106,8 @@ export const useInvoiceForm = (merchantId: string) => {
                     status: 'error',
                     description: formState.errors.description.message,
                 });
-                return;
+
+                return undefined;
             }
             if (!selectedAsset) {
                 notify({
@@ -110,9 +115,12 @@ export const useInvoiceForm = (merchantId: string) => {
                     description: 'Please select an asset',
                     status: 'error',
                 });
-                return;
+
+                return undefined;
             }
+
             const invoiceAssets: any = {};
+
             selectedNetworks.forEach((el) => {
                 invoiceAssets[el.label] = {
                     [selectedAsset.name]: {
@@ -123,11 +131,13 @@ export const useInvoiceForm = (merchantId: string) => {
                     },
                 };
             });
+
             await createInvoice({
                 merchant_id: merchantId,
                 description: data.description,
                 assets: invoiceAssets,
             }).unwrap();
+
             notify({
                 title: 'Success',
                 description: 'Invoice created successfully',

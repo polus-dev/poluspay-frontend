@@ -34,6 +34,7 @@ export const useAvailableTokens = () => {
             );
         }
     }, [currentBlockchain, assets]);
+
     return {
         availableTokens,
         isAvailableTokensLoading: isLoading,

@@ -1,13 +1,11 @@
-import { useWeb3Modal } from '@web3modal/react';
-import { walletAuthThunk } from 'apps/merchant-client/src/store/api/endpoints/auth/walletAuthThunk';
-import {
-    useAppDispatch,
-    useAppSelector,
-} from 'apps/merchant-client/src/store/hooks';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
+
+import { useWeb3Modal } from '@web3modal/react';
 import { notify } from '@poluspay-frontend/ui';
+import { walletAuthThunk } from '../../../../../src/store/api/endpoints/auth/walletAuthThunk';
+import { useAppDispatch, useAppSelector } from '../../../../../src/store/hooks';
 
 export const useWalletAuth = () => {
     const dispatch = useAppDispatch();
@@ -17,7 +15,6 @@ export const useWalletAuth = () => {
     const navigate = useNavigate();
 
     const { address, isConnected, isConnecting } = useAccount();
-
     const { open, isOpen } = useWeb3Modal();
 
     useEffect(() => {
@@ -38,10 +35,13 @@ export const useWalletAuth = () => {
         try {
             if (!address) {
                 open();
-                return;
+
+                return undefined;
             }
             setButtonText('Signing...');
+
             await dispatch(walletAuthThunk(address)).unwrap();
+
             navigate('/');
         } catch (error) {
             if (address) {
@@ -49,6 +49,7 @@ export const useWalletAuth = () => {
             } else {
                 setButtonText('Connect Wallet');
             }
+
             notify({
                 title: 'Email auth error',
                 status: 'error',

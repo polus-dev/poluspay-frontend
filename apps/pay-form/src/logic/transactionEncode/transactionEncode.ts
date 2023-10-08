@@ -1,9 +1,9 @@
-import { NULL_ADDRESS } from '../../constants';
 import { ethers } from 'ethers';
+import { Hex } from 'viem';
+import { NULL_ADDRESS } from '../../constants';
 import { Command } from './types/Command';
 import { IEncodeTransfer } from './types/IEncodeTransfer';
 import { WrapStatus } from './types/WrapStatus';
-import { Hex } from 'viem';
 
 const coder = new ethers.utils.AbiCoder();
 
@@ -16,18 +16,20 @@ function encodeTransfer(
 ): string {
     const types = ['address', 'address', 'uint256'];
     const encoded = coder.encode(types, [token, recipient, amount]);
+
     return encoded;
 }
 
-function assertAmount(amount: any): asserts amount is number {
-    if (isNaN(+amount) || +amount <= 0) {
-        throw new Error('Invalid amount');
-    }
-}
+// function assertAmount(amount: any): asserts amount is number {
+//     if (isNaN(+amount) || +amount <= 0) {
+//         throw new Error('Invalid amount');
+//     }
+// }
 
 function wrapper(address: string, amount: any): string {
     const types = ['address', 'uint256'];
     const encoded = coder.encode(types, [address, amount]);
+
     return encoded;
 }
 
@@ -49,10 +51,11 @@ export function encodePay({
     universalRouterAddress,
 }: IEncodeTransfer): IReturnType {
     if (!tokenAddress) tokenAddress = NULL_ADDRESS;
+
     const data = txData.slice(10);
-    let path: string | undefined;
     const types = ['bytes', 'bytes[]', 'uint256'];
     const decoded = coder.decode(types, Buffer.from(data, 'hex'));
+
     let commands: string;
     let wrapStatus: WrapStatus = 0;
 
@@ -79,22 +82,27 @@ export function encodePay({
     }
 
     let inputs = structuredClone<string[]>(decoded[1]);
+    let path: string | undefined;
 
     if (wrapStatus === WrapStatus.WRAP) {
         const types = ['address', 'uint256', 'uint256', 'bytes', 'bool'];
         const data = structuredClone(coder.decode(types, inputs[0]));
+
         path = data[3];
         // @ts-ignore
         data[4] = false;
+
         const wrap = wrapper(
             '0x0000000000000000000000000000000000000002',
             '0x8000000000000000000000000000000000000000000000000000000000000000'
         );
         const encodedData = coder.encode(types, data);
+
         inputs = [];
         inputs.unshift(wrap, encodedData);
     } else if (wrapStatus === WrapStatus.UNWRAP) {
         const wrap = wrapper(universalRouterAddress, asset_amount_decimals!);
+
         inputs.push(wrap);
     }
 
@@ -112,9 +120,12 @@ export function encodePay({
         ['uint256', 'bytes'],
         ['0x' + uuid, '0x00']
     );
+
     inputs.push(...[merchantTransfer, commissionTransfer, uuid_encoded]);
+
     const out = coder
         .encode(types, [commands, inputs, deadline])
         .replace('0x', '');
+
     return { data: (EXECUTE_SELECTOR + out) as Hex, path };
 }

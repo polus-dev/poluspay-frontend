@@ -1,18 +1,17 @@
+import { useAccount, useDisconnect } from 'wagmi';
+import { useWeb3Modal } from '@web3modal/react';
+import { makeShortHash } from '@poluspay-frontend/utils';
+
 import { PButton, PDropdown } from '@poluspay-frontend/ui';
 import { HeaderAccountContent } from './Content/Content';
 import { ReactComponent as LogoWalletConnect } from '../../../assets/logos/wallet-connect.svg';
 import { ReactComponent as IconChevron } from '../../../assets/icons/chevron.svg';
 
 import './Account.scoped.scss';
-import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi';
-import { useWeb3Modal } from '@web3modal/react';
-import { makeShortHash } from '../../../../../../tools';
 
 export const HeaderAccount: React.FC = () => {
     const { isConnected, address, connector } = useAccount();
     const { disconnect } = useDisconnect();
-    const { data: ensName } = useEnsName({ address });
-    const { data: ensAvatar } = useEnsAvatar({ name: ensName });
     const { open, isOpen } = useWeb3Modal();
 
     return (
@@ -56,9 +55,7 @@ export const HeaderAccount: React.FC = () => {
                                     <HeaderAccountContent
                                         {...{
                                             address,
-                                            disconnect,
-                                            ensName,
-                                            ensAvatar,
+                                            disconnect
                                         }}
                                     />
                                 )}

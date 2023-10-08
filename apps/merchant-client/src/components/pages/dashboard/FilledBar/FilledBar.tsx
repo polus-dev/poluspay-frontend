@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+
 import { ReactComponent as IconChevron } from '../../../../assets/icons/chevron.svg';
 
 import './FilledBar.scoped.scss';

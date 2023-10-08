@@ -1,43 +1,45 @@
-import { ConnectButton } from '../../../../ui/ConnectButton/ConnectButton';
-import { ReactComponent as LogoPolusPay } from '../../../../../assets/logos/poluspay.svg';
+import type { InvoiceForm } from '../../../../../pages/merchants/id/invoices/hooks/form.interface';
 
-import classNames from 'classnames';
-
-import './Preview.scoped.scss';
 import { UseFormWatch } from 'react-hook-form';
-import { InvoiceForm } from '../../../../../pages/merchants/id/invoices/hooks/form.interface';
 import { useGetMerchantIdFromParams } from '../../../../../hooks/useGetMerchantId';
 import {
     useGetAssetsQuery,
     useGetMerchantByIdQuery,
 } from '@poluspay-frontend/merchant-query';
 import { useRandomId } from '@poluspay-frontend/hooks';
-import { getAssetUrl } from '../../../../../../../../tools';
+import { getAssetUrl } from '@poluspay-frontend/utils';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { blockchainList } from '@poluspay-frontend/ui';
 
+import { ConnectButton } from '../../../../ui/ConnectButton/ConnectButton';
+import { ReactComponent as LogoPolusPay } from '../../../../../assets/logos/poluspay.svg';
+
+import classNames from 'classnames';
+
+import './Preview.scoped.scss';
+
 interface PreviewProps {
     isModal?: boolean;
-    watch?: UseFormWatch<InvoiceForm>;
     assetUrl: string;
+    watch?: UseFormWatch<InvoiceForm>;
 }
 
 export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
     isModal,
-    watch,
     assetUrl,
+    watch,
 }) => {
     const randomId = useRandomId();
     const merchantId = useGetMerchantIdFromParams();
-    const { data: merchant } = useGetMerchantByIdQuery({
-        merchant_id: merchantId,
-    });
     const { data: assets } = useGetAssetsQuery();
     const network = watch?.('blockchain') || 'polygon';
     const currency = watch?.('currency')?.toUpperCase() || 'matic';
     const description = watch?.('description');
     const amount = watch?.('amount') || 0;
     const [ref] = useAutoAnimate();
+    const { data: merchant } = useGetMerchantByIdQuery({
+        merchant_id: merchantId,
+    });
 
     return (
         <div

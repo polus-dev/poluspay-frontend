@@ -1,4 +1,4 @@
-import { useTimer } from '../../../../hooks/useTimer';
+import { useTimer } from '@poluspay-frontend/hooks';
 
 import { PButton } from '@poluspay-frontend/ui';
 import { ReactComponent as IconUser } from '../../../../assets/icons/user.svg';

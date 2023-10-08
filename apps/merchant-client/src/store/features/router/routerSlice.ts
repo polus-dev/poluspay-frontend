@@ -15,4 +15,5 @@ export const routerSlice = createSlice({
         },
     },
 });
+
 export const { setRouterPath } = routerSlice.actions;

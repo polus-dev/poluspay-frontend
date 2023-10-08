@@ -1,3 +1,7 @@
+import type { LogoStatus } from '@poluspay-frontend/api';
+
+import { useRandomId } from '@poluspay-frontend/hooks';
+
 import { ReactComponent as IconUpload } from '../../../../../../assets/icons/upload.svg';
 import { ReactComponent as IconWarning } from '../../../../../../assets/icons/warning.svg';
 import { ReactComponent as IconEdit } from '../../../../../../assets/icons/edit.svg';
@@ -5,19 +9,17 @@ import { ReactComponent as IconTimer } from '../../../../../../assets/icons/time
 import { ReactComponent as IconCross } from '../../../../../../assets/icons/cross.svg';
 
 import './Avatar.scoped.scss';
-import { useRandomId } from '@poluspay-frontend/hooks';
-import { LogoStatus } from '@poluspay-frontend/api';
 
 interface AvatarProps {
-    openModal: () => void;
     image: string | null;
     avatarStatus: LogoStatus;
+    openModal: () => void;
 }
 
 export const MerchantProfileAvatar: React.FC<AvatarProps> = ({
-    openModal,
     image,
     avatarStatus,
+    openModal,
 }) => {
     const randomId = useRandomId();
 

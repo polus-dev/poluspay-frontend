@@ -10,7 +10,7 @@ export const placeHolderForAddress = (blockchain: Blockchain) => {
             return 'T...';
         case 'dogecoin':
             return 'D...';
-            case 'ripple':
+        case 'ripple':
             return 'r... OR X...';
         default:
             return '0x...';

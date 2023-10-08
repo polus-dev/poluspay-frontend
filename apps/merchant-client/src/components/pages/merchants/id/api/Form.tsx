@@ -1,20 +1,21 @@
+import type { IApiForm } from './ApiForm.interface';
+
 import { useEffect, useState } from 'react';
-
-import { useCopyText } from '../../../../../hooks/useCopyText';
-
-import { PInput, PButton, notify } from '@poluspay-frontend/ui';
-import { ReactComponent as IconCopy } from '../../../../../assets/icons/copy.svg';
-
-import './Form.scoped.scss';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { IApiForm } from './ApiForm.interface';
+
+import { useCopyText } from '@poluspay-frontend/hooks';
+import { httpsUrlRegex, webhookUrlRegex } from '@poluspay-frontend/utils';
 import {
     useSetWebhookMutation,
     useUpdateMerchantFieldsMutation,
     useGetMerchantByIdQuery,
     useGenerateSigningKeyMutation,
 } from '@poluspay-frontend/merchant-query';
-import { httpUrlRegex, httpsUrlRegex, webhookUrlRegex } from 'tools';
+
+import { PInput, PButton, notify } from '@poluspay-frontend/ui';
+import { ReactComponent as IconCopy } from '../../../../../assets/icons/copy.svg';
+
+import './Form.scoped.scss';
 
 interface IMerchantApiFormProps {
     merchantId: string;
@@ -29,10 +30,13 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
         setValue,
         formState: { errors },
     } = useForm<IApiForm>();
+
     const [updateMerchantFields, { isLoading: isUpdateting }] =
         useUpdateMerchantFieldsMutation();
+
     const [setWebhook, { isLoading: isSettingWebhook }] =
         useSetWebhookMutation();
+
     const { data: merchant } = useGetMerchantByIdQuery({
         merchant_id: props.merchantId,
     });
@@ -40,6 +44,7 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
     const [signingKey, setSigningKey] = useState<string>(
         '**********************************'
     );
+
     const [generateApiKey, { isLoading: isGeneratingApiKey }] =
         useGenerateSigningKeyMutation();
 
@@ -48,26 +53,19 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
             const { signing_key } = await generateApiKey({
                 merchant_id: props.merchantId,
             }).unwrap();
+
             setSigningKey(signing_key);
+
             notify({ title: 'Success', status: 'success' });
         } catch (error) {
             console.error(error);
-            // notify({ title: 'Error', status: 'error' });
         }
     };
 
-    useEffect(() => {
-        if (merchant) {
-            const { fail_redirect_url, success_redirect_url, webhook_url } =
-                merchant;
-            setValue('failRedirectUrl', fail_redirect_url);
-            setValue('successRedirectUrl', success_redirect_url);
-            setValue('webhookUrl', webhook_url);
-        }
-    }, [merchant]);
     const submit: SubmitHandler<IApiForm> = async (data) => {
         try {
             const promises = [];
+
             if (data.failRedirectUrl || data.successRedirectUrl) {
                 promises.push(
                     updateMerchantFields({
@@ -77,6 +75,7 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
                     }).unwrap()
                 );
             }
+
             if (data.webhookUrl) {
                 promises.push(
                     setWebhook({
@@ -85,12 +84,25 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
                     }).unwrap()
                 );
             }
+
             await Promise.all(promises);
+
             notify({ title: 'Success', status: 'success' });
         } catch (error) {
             console.error(error);
         }
     };
+
+    useEffect(() => {
+        if (merchant) {
+            const { fail_redirect_url, success_redirect_url, webhook_url } =
+                merchant;
+
+            setValue('failRedirectUrl', fail_redirect_url);
+            setValue('successRedirectUrl', success_redirect_url);
+            setValue('webhookUrl', webhook_url);
+        }
+    }, [merchant]);
 
     return (
         <form onSubmit={handleSubmit(submit)} className="form">

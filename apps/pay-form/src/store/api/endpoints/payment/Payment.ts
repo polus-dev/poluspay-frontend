@@ -1,10 +1,11 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {
+import type { IPayment } from '@poluspay-frontend/api';
+import { Blockchain_t } from '../types';
+import type {
     IGetPaymentByPaymentId,
     IGetPaymentsResponse,
 } from './Payment.interface';
-import { Blockchain_t } from '../types';
-import { IPayment } from '@poluspay-frontend/api';
+
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const paymentApi = createApi({
     reducerPath: 'paymentApi' as const,
@@ -25,13 +26,16 @@ export const paymentApi = createApi({
                 const blockchains = response.assets.map(
                     (item) => item.network
                 ) as Blockchain_t[];
+
                 // move tron to the end of the array to be the last blockchain
                 // TODO: remove this in future
                 const index = blockchains.findIndex((item) => item === 'tron');
+
                 if (index > -1) {
                     blockchains.splice(index, 1);
                     blockchains.push('tron');
                 }
+
                 return {
                     ...response,
                     blockchains,

@@ -15,6 +15,7 @@ export const emailAuthThunk = createAsyncThunk(
             const apiUrl = import.meta.env.VITE_API_URL + 'public' + '/auth';
             if (!payload.code) {
                 const { email } = payload;
+
                 await axios.post(apiUrl + '.send_code', {
                     email,
                 });
@@ -31,6 +32,7 @@ export const emailAuthThunk = createAsyncThunk(
             if (error instanceof AxiosError) {
                 return rejectWithValue(error);
             }
+
             return rejectWithValue(error as Error);
         }
     }

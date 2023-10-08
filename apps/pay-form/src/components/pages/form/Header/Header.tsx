@@ -1,10 +1,10 @@
 import { IPaymentMerchant } from '@poluspay-frontend/api';
 import { displayMerchantInfo } from '../../../../utils/displayMerchantInfo';
+import { trimEndOfString } from '@poluspay-frontend/utils';
 
 import { ReactComponent as IconVerified } from '../../../../assets/icons/verified.svg';
 
 import './Header.scoped.scss';
-import { trimEndOfString } from '../../../../../../../tools';
 
 export interface FormHeaderProps {
     merchant: IPaymentMerchant;

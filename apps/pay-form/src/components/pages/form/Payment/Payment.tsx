@@ -26,9 +26,11 @@ export const FormPayment = (props: FormPaymentProps) => {
     const dispatch = useAppDispatch();
     const modalCurrency = useModal();
     const modalBlockchains = useModal();
+
     const currentBlockchain =
         useAppSelector((state) => state.connection.currentBlockchain) ||
         'Polygon';
+
     const item =
         blockchainList.find((e) => e.label === currentBlockchain) ||
         blockchainList[0];

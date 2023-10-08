@@ -1,5 +1,7 @@
+import { useRef } from 'react';
+
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { getBeginningOfDate } from 'tools/index';
+import { getBeginningOfDate } from '@poluspay-frontend/utils';
 import { useMerchantStatistics } from '../../../../hooks/dashboard/useMerchantStatistics';
 import { useMerchantOptions } from '../../../../hooks/dashboard/useMerchantOptions';
 
@@ -7,7 +9,6 @@ import { PSelect } from '@poluspay-frontend/ui';
 import { DashboardStatsElement } from './StatsElement/StatsElement';
 
 import './Stats.scoped.scss';
-import { useMemo, useRef } from 'react';
 
 interface StatsBlockProps {
     merchantId?: string;
@@ -35,16 +36,13 @@ const StatsBlock = (props: StatsBlockProps) => {
 };
 
 interface DashboardStatsProps {
- merchantOptions: any;
- setMerchantOptions: any;
+    merchantOptions: any;
+    setMerchantOptions: any;
 }
 
-export const DashboardStats= (props: DashboardStatsProps) => {
-    const {
-        selectedMerchant,
-        setSelectedMerchant,
-        merchantsAmount,
-    } = useMerchantOptions({setMerchantsOptions: props.setMerchantOptions});
+export const DashboardStats = (props: DashboardStatsProps) => {
+    const { selectedMerchant, setSelectedMerchant, merchantsAmount } =
+        useMerchantOptions({ setMerchantsOptions: props.setMerchantOptions });
 
     const toDate = useRef(new Date().toISOString());
 
@@ -68,7 +66,6 @@ export const DashboardStats= (props: DashboardStatsProps) => {
                     />
                 </div>
             </div>
-
             <StatsBlock
                 merchantId={selectedMerchant?.id}
                 toData={toDate.current}

@@ -1,5 +1,5 @@
-import { IPayment } from '@poluspay-frontend/api';
-import { Blockchain_t } from '../types';
+import type { IPayment } from '@poluspay-frontend/api';
+import type { Blockchain_t } from '../types';
 
 export interface IGetPaymentByPaymentId {
     payment_id: string;

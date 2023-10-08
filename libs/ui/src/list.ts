@@ -1,4 +1,4 @@
-import { Blockchain } from '../../../tools';
+import type { Blockchain } from '@poluspay-frontend/utils';
 
 export interface Item {
     id: number;

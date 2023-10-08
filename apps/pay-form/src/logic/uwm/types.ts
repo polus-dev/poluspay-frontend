@@ -35,8 +35,6 @@ export class Uint implements Serializable {
     private _uint: bigint;
 
     constructor(uint: bigint) {
-        // ¯\_(ツ)_/¯ this is js lol ...
-        // .toString(2) more faster than custom bn log2
         if (uint.toString(2).length > 256) {
             throw new Error('UInt: usigned integer overflow');
         }

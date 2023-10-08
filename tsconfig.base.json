@@ -10,7 +10,7 @@
         "importHelpers": true,
         "target": "ES2021",
         "module": "esnext",
-        "lib": ["es2020", "dom"],
+        "lib": ["es2021", "dom"],
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
         "baseUrl": ".",
@@ -20,7 +20,8 @@
             "@poluspay-frontend/merchant-query": [
                 "apps/merchant-client/src/store/api/endpoints/index.ts"
             ],
-            "@poluspay-frontend/ui": ["libs/ui/src/index.ts"]
+            "@poluspay-frontend/ui": ["libs/ui/src/index.ts"],
+            "@poluspay-frontend/utils": ["tools/index.ts"],
         }
     },
     "exclude": ["node_modules", "tmp"]

@@ -1,13 +1,8 @@
-import {
-    Item,
-    blockchainList,
-    connectedWalletList,
-    exchangeList,
-    BlockchainItem,
-} from '@poluspay-frontend/ui';
 import { useEffect, useState } from 'react';
 
 import { list } from '@poluspay-frontend/ui';
+import { shuffleArray } from '@poluspay-frontend/utils';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 import {
     useDeleteMerchantWalletMutation,
     useDisableMerchantWalletMutation,
@@ -15,8 +10,12 @@ import {
     useGetMerchantWalletQuery,
 } from '@poluspay-frontend/merchant-query';
 
-import { MerchantWalletItem } from './WalletItem';
 import {
+    Item,
+    blockchainList,
+    connectedWalletList,
+    exchangeList,
+    BlockchainItem,
     notify,
     PButton,
     PInput,
@@ -24,24 +23,23 @@ import {
     PTabs,
 } from '@poluspay-frontend/ui';
 
+import { MerchantWalletItemConnected } from './WalletItemConnected';
+import { MerchantWalletItem } from './WalletItem';
 import { ReactComponent as IconSearch } from '../../../assets/icons/search.svg';
 
 import classNames from 'classnames';
 
 import './Wallets.scoped.scss';
-import { MerchantWalletItemConnected } from './WalletItemConnected';
-import { shuffleArray } from 'tools';
-import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 interface MerchantWalletsProps {
     isRegistration?: boolean;
     buttonDisabled?: boolean;
     selectedWallet?: Item;
     selectedBlockchain?: BlockchainItem;
-    handleSelect: (wallets: Item) => void;
     merchantId: string;
-    next: (a?: string) => void;
     walletConnected?: number[];
+    handleSelect: (wallets: Item) => void;
+    next: (a?: string) => void;
 }
 
 const allArray = [...list, ...exchangeList, ...blockchainList];
@@ -58,11 +56,11 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
     isRegistration,
     buttonDisabled,
     selectedWallet,
-    handleSelect,
     selectedBlockchain,
     merchantId,
-    next,
     walletConnected,
+    handleSelect,
+    next,
 }) => {
     const tabs = [
         { id: 'all', text: 'All' },
@@ -101,6 +99,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
             (currentPage - 1) * limit,
             (currentPage - 1) * limit + limit
         );
+
         setWalletsPaginated(paginated);
     }, [tab, currentPage]);
 
@@ -109,10 +108,12 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
             const filtered = tabContent[tab.id].filter((el) =>
                 el.name.toLowerCase().includes(search.toLowerCase())
             );
+
             setSearched(filtered);
         } else {
             setSearched(undefined);
         }
+
         setCurrentPage(1);
     }, [search, tab]);
 
@@ -122,6 +123,7 @@ export const MerchantWallets: React.FC<MerchantWalletsProps> = ({
                 merchant_id: merchantId,
                 network,
             }).unwrap();
+
             notify({
                 title: 'Wallet deleted',
                 status: 'success',

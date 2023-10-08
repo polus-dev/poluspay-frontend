@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import Currency from '../../../../../libs/api/src/lib/priceService/symbols';
 import { PriceService } from '../../../../../libs/api/src/lib/priceService/price.service';
-import { getAssetUrl } from 'tools';
+import { getAssetUrl } from '@poluspay-frontend/utils';
 
 const currencyNameMap = {
     [Currency.BTCUSDT]: 'btc',
@@ -18,6 +18,7 @@ export const useTicker = () => {
 
     useEffect(() => {
         const priceService = new PriceService(import.meta.env.VITE_PRICE_URL);
+
         priceService.startMainLoop((prices) =>
             setTickers(
                 prices.map((price) => ({
@@ -33,6 +34,7 @@ export const useTicker = () => {
                 }))
             )
         );
+
         return () => priceService.stopMainLoop();
     }, []);
 

@@ -10,6 +10,7 @@ interface ProcessBlockProps {
 
 export const FormProcessBlock = (props: ProcessBlockProps) => {
     const stages = useAppSelector((state) => state.transaction.stages);
+
     return (
         <div className="process">
             {stages.map((stage, i) => (

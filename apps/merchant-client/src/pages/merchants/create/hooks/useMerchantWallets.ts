@@ -1,3 +1,8 @@
+import type { Item } from '@poluspay-frontend/ui';
+import type { Blockchain } from '@poluspay-frontend/utils';
+
+import { useEffect, useState } from 'react';
+
 import { useCreateMerchantWalletMutation } from '@poluspay-frontend/merchant-query';
 import { notify } from '@poluspay-frontend/ui';
 import {
@@ -6,25 +11,21 @@ import {
     exchangeList,
     list,
 } from '@poluspay-frontend/ui';
-import { Item } from '@poluspay-frontend/ui';
-import { useEffect, useState } from 'react';
-import { Blockchain } from 'tools';
 
 interface IProps {
     merchantId: string | null;
 }
 
-// type Stage = 'blockchainSelect' | 'walletSelect' | 'walletImport';
-
 export const useMerchantWallets = ({ merchantId }: IProps) => {
     const [selectedWallet, setSelectedWallet] = useState<Item>();
-    const [selectedBlockchain, setSelectedBlockchain] =
-        useState<BlockchainItem>();
+    const [createMerchantWallet] = useCreateMerchantWalletMutation();
     const [modalWalletVisible, setModalWalletVisible] = useState(false);
     const [modalBlockchainVisible, setModalBlockchainVisible] = useState(false);
+
+    const [selectedBlockchain, setSelectedBlockchain] =
+        useState<BlockchainItem>();
     const [isCreateMerchantWalletLoading, setIsCreateMerchantWalletLoading] =
         useState(false);
-    const [createMerchantWallet] = useCreateMerchantWalletMutation();
     const [merchantWalletConnected, setMerchantWalletConnected] = useState<
         number[]
     >([]);
@@ -58,23 +59,30 @@ export const useMerchantWallets = ({ merchantId }: IProps) => {
     const onImportWallet = async (address: string, evm?: boolean) => {
         try {
             if (!merchantId) throw new Error('Merchant id is not defined');
-            if (!selectedBlockchain)
+
+            if (!selectedBlockchain) {
                 throw new Error('Blockchain is not defined');
+            }
+
             setIsCreateMerchantWalletLoading(true);
+
             const networks: Blockchain[] = evm
                 ? ['bsc', 'polygon', 'ethereum', 'arbitrum', 'optimism']
                 : [selectedBlockchain.label];
+
             await createMerchantWallet({
                 merchant_id: merchantId,
                 address,
                 networks,
             }).unwrap();
+
             setMerchantWalletConnected([
                 ...merchantWalletConnected,
                 selectedBlockchain.id,
             ]);
         } catch (error) {
             console.error(error);
+
             setSelectedBlockchain(undefined);
         } finally {
             setIsCreateMerchantWalletLoading(false);
@@ -103,6 +111,7 @@ export const useMerchantWallets = ({ merchantId }: IProps) => {
     const handleSelect = (item: Item) => {
         if (item.type === 'blockchain') {
             const chain = blockchainList.find((el) => el.id === item.id);
+
             if (chain) {
                 handleBlockchainSelect(chain);
             } else {
@@ -114,6 +123,7 @@ export const useMerchantWallets = ({ merchantId }: IProps) => {
             }
         } else if (item.type === 'exchange') {
             const exchanger = exchangeList.find((el) => el.id === item.id);
+
             if (exchanger) {
                 handleWalletSelect(exchanger);
             } else {
@@ -125,6 +135,7 @@ export const useMerchantWallets = ({ merchantId }: IProps) => {
             }
         } else if (item.type === 'wallet') {
             const wallet = list.find((el) => el.id === item.id);
+
             if (wallet) {
                 handleWalletSelect(wallet);
             } else {
@@ -145,6 +156,7 @@ export const useMerchantWallets = ({ merchantId }: IProps) => {
 
     const onCloseBlockchainModal = () => {
         if (selectedBlockchain) setSelectedBlockchain(undefined);
+
         setModalBlockchainVisible(false);
     };
 
@@ -154,9 +166,6 @@ export const useMerchantWallets = ({ merchantId }: IProps) => {
         } else if (selectedWallet && !selectedBlockchain) {
             next('blockchainSelect');
         }
-    }, [selectedWallet, selectedBlockchain]);
-    useEffect(() => {
-        console.log(selectedWallet, selectedBlockchain);
     }, [selectedWallet, selectedBlockchain]);
 
     return {

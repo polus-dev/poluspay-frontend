@@ -1,14 +1,13 @@
-import { AuthHelper } from '../../logic/api';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import {
-    useGetMeQuery,
-    useLazyGetMeQuery,
-} from '@poluspay-frontend/merchant-query';
 import { ReactNode, useEffect } from 'react';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+
+import { AuthHelper } from '../../logic/api';
+import { useLazyGetMeQuery } from '@poluspay-frontend/merchant-query';
 
 interface Props {
     children: ReactNode;
 }
+
 export const AuthGuard = ({ children }: Props) => {
     const helper = new AuthHelper();
     const navigate = useNavigate();

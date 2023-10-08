@@ -8,4 +8,5 @@ export interface IResponseApiDefault {
     message: string;
     field?: string;
 }
+
 export type IResponseError = IResponseApiDefault;
