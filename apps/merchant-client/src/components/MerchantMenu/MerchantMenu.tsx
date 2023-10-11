@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 import { useGetMerchantIdFromParams } from '../../hooks/useGetMerchantId';
 import { useGetMerchantByIdQuery } from '@poluspay-frontend/merchant-query';
-import { trimEndOfString } from '../../../../../tools';
+import { trimEndOfString } from '@poluspay-frontend/utils';
 
 import { PButton } from '@poluspay-frontend/ui';
 

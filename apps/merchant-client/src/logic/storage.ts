@@ -10,8 +10,10 @@ export class StoragePolus {
             this._data.setItem(`polus-${key}`, data);
         } catch (error) {
             console.error(error);
+
             return false;
         }
+
         return true;
     }
 
@@ -20,6 +22,7 @@ export class StoragePolus {
             return this._data.getItem(`polus-${key}`);
         } catch (error) {
             console.error(error);
+
             return false;
         }
     }
@@ -29,8 +32,10 @@ export class StoragePolus {
             this._data.removeItem(`polus-${key}`);
         } catch (error) {
             console.error(error);
+
             return false;
         }
+
         return true;
     }
 }

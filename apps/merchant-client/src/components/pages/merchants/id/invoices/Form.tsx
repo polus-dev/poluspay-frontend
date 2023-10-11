@@ -1,10 +1,16 @@
+import type { InvoiceForm } from '../../../../../pages/merchants/id/invoices/hooks/form.interface';
+import type { BlockchainItem } from '@poluspay-frontend/ui';
+import type { AssetRepresentation } from '@poluspay-frontend/api';
+
+import { FormState, UseFormRegister } from 'react-hook-form';
+
 import { useModal } from '@poluspay-frontend/hooks';
+import { getAssetUrl } from '@poluspay-frontend/utils';
 
 import {
     FormInput,
     ModalBlockChainSelector,
     ModalCurrencySelector,
-    notify,
     PButton,
 } from '@poluspay-frontend/ui';
 import { ModalPreviewForm } from '../../../../modals/PreviewForm/PreviewForm';
@@ -12,51 +18,33 @@ import { ReactComponent as IconChevron } from '../../../../../assets/icons/chevr
 import { ReactComponent as IconCross } from '../../../../../assets/icons/cross.svg';
 
 import './Form.scoped.scss';
-import { FormState, UseFormRegister } from 'react-hook-form';
-import { InvoiceForm } from '../../../../../pages/merchants/id/invoices/hooks/form.interface';
-
-import { getAssetUrl } from '../../../../../../../../tools';
-import { BlockchainItem } from '../../../../../../../../libs/ui/src/list';
-import { AssetRepresentation } from '@poluspay-frontend/api';
-
-interface Asset {
-    id: string;
-    name: string;
-    image: string;
-}
-
-interface Blockchain {
-    id: number;
-    name: string;
-    image: string;
-}
 
 interface MerchantInvoicesFormProps {
-    register: UseFormRegister<InvoiceForm>;
-    onSubmit: () => void;
     formState: FormState<InvoiceForm>;
     availableAssets: AssetRepresentation[];
     selectedAsset: AssetRepresentation;
+    selectedNetworks: BlockchainItem[];
+    availableNetworks: BlockchainItem[];
+    categories: string[];
+    register: UseFormRegister<InvoiceForm>;
+    onSubmit: () => void;
     setSelectedAsset: React.Dispatch<
         React.SetStateAction<AssetRepresentation | null>
     >;
-    selectedNetworks: BlockchainItem[];
     setSelectedNetworks: React.Dispatch<React.SetStateAction<BlockchainItem[]>>;
-    availableNetworks: BlockchainItem[];
-    categories: string[];
 }
 
 export const MerchantInvoicesForm = ({
-    register,
-    onSubmit,
     formState,
     selectedAsset,
     availableAssets,
     availableNetworks,
-    setSelectedNetworks,
-    setSelectedAsset,
     selectedNetworks,
     categories,
+    register,
+    onSubmit,
+    setSelectedNetworks,
+    setSelectedAsset,
 }: MerchantInvoicesFormProps) => {
     const modalCurrency = useModal();
     const modalBlockchains = useModal();
@@ -70,12 +58,14 @@ export const MerchantInvoicesForm = ({
 
         if (selectedNetworks.some((el) => el.id === item.id)) {
             const filtered = selectedNetworks.filter((el) => el.id !== item.id);
+
             setSelectedNetworks(filtered);
         }
     };
 
     const handleModalCurrency = (asset?: AssetRepresentation) => {
         if (asset) setSelectedAsset(asset);
+
         modalCurrency.close();
     };
 

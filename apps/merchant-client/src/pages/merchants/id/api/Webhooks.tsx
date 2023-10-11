@@ -1,14 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
+import { useGetMerchantIdFromParams } from '../../../../../src/hooks/useGetMerchantId';
+import { useGetWebhookHistoryQuery } from '../../../../store/api/endpoints';
+
+import { Loader, ErrorBlock, PPagination } from '@poluspay-frontend/ui';
 import { MerchantWebhookItem } from '../../../../components/pages/merchants/id/api/WebhookItem';
 import { MerchantApiForm } from '../../../../components/pages/merchants/id/api/Form';
-import { PPagination } from '@poluspay-frontend/ui';
 
 import './Webhooks.scoped.scss';
-import { useGetWebhookHistoryQuery } from '../../../../store/api/endpoints';
-import { Loader } from 'apps/merchant-client/src/components/ui/Loader/Loader';
-import { ErrorBlock } from '../../../../../../../libs/ui/src/lib/Error/Error';
-import { useGetMerchantIdFromParams } from 'apps/merchant-client/src/hooks/useGetMerchantId';
 
 export const MerchantApiPage: React.FC = () => {
     const merchantId = useGetMerchantIdFromParams();

@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { AuthHelper } from '../../../logic/api';
 import { emailAuthThunk } from '../../api/endpoints/auth/emailAuthThunk';
 import { walletAuthThunk } from '../../api/endpoints/auth/walletAuthThunk';
@@ -47,6 +47,7 @@ export const authSlice = createSlice({
                 state.userToken = access_token;
                 state.success = true;
             }
+
             state.loading = false;
         });
 
@@ -57,7 +58,9 @@ export const authSlice = createSlice({
 
         builder.addCase(walletAuthThunk.fulfilled, (state, action) => {
             const { refresh_token, access_token } = action.payload;
+
             helper.setTokens(access_token, refresh_token);
+
             state.userToken = access_token;
             state.loading = false;
             state.success = true;
@@ -72,4 +75,5 @@ export const authSlice = createSlice({
         });
     },
 });
+
 export const { logout } = authSlice.actions;

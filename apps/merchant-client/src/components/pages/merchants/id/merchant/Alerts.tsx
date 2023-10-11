@@ -1,11 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 
+import { useGetMerchantByIdQuery } from '@poluspay-frontend/merchant-query';
+import { useGetMerchantIdFromParams } from '../../../../../hooks/useGetMerchantId';
+
 import { ReactComponent as IconWarning } from '../../../../../assets/icons/warning.svg';
 import { ReactComponent as IconArrow } from '../../../../../assets/icons/arrow.svg';
 
 import './Alerts.scoped.scss';
-import { useGetMerchantByIdQuery } from '@poluspay-frontend/merchant-query';
-import { useGetMerchantIdFromParams } from '../../../../../hooks/useGetMerchantId';
 
 export const MerchantProfileAlerts: React.FC = () => {
     const navigate = useNavigate();

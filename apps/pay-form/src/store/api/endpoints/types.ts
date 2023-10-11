@@ -9,6 +9,7 @@ export type Blockchain_t =
     | 'dogecoin'
     | 'litecoin'
     | 'bitcoin-cash';
+
 export type Asset_t =
     | 'usdt'
     | 'usdc'

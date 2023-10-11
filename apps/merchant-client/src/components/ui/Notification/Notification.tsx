@@ -1,6 +1,6 @@
 import type { INotification } from '../../../store/api/hooks/useNotifications';
 
-import { formatDate } from 'tools';
+import { formatDate } from '@poluspay-frontend/utils';
 
 import classNames from 'classnames';
 

@@ -1,11 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {
-    IResponseError,
-    IPagination,
-    IResponseApiDefault,
-    IMerchant,
-} from '@poluspay-frontend/api';
-import {
+import type {
     IChangeMerchantWalletStatusRequest,
     ICreateMerchantRequest,
     ICreateMerchantResponse,
@@ -28,7 +21,14 @@ import {
     IUploadLogoRequest,
     IVerifyDomainRequest,
 } from './Merchant.interface';
-import { RootState } from '../../../store';
+import type {
+    IResponseError,
+    IPagination,
+    IResponseApiDefault,
+    IMerchant,
+} from '@poluspay-frontend/api';
+
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { AuthHelper } from '../../../../logic/api';
 
 export const merchantApi = createApi({
@@ -37,9 +37,11 @@ export const merchantApi = createApi({
         baseUrl: import.meta.env.VITE_API_URL + 'private',
         prepareHeaders: (headers, { getState }) => {
             const token = new AuthHelper().checkAuth()?.token;
+
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             }
+
             return headers;
         },
     }),
@@ -233,6 +235,7 @@ export const merchantApi = createApi({
                 const formData = new FormData();
                 formData.append('image', body.image);
                 formData.append('merchant_id', body.merchant_id);
+
                 return {
                     url: 'merchant.logo.update',
                     method: 'POST',

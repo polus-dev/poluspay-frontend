@@ -1,11 +1,9 @@
-import {
-    useAppDispatch,
-    useAppSelector,
-} from 'apps/merchant-client/src/store/hooks';
-import { emailAuthThunk } from 'apps/merchant-client/src/store/api/endpoints/auth/emailAuthThunk';
-import { useTimer } from 'libs/hooks/src/index';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { useAppDispatch, useAppSelector } from '../../../../../src/store/hooks';
+import { emailAuthThunk } from '../../../../../src/store/api/endpoints/auth/emailAuthThunk';
+import { useTimer } from '@poluspay-frontend/hooks';
 import { notify } from '@poluspay-frontend/ui';
 
 interface IEmailAuth {
@@ -28,11 +26,13 @@ export const useEmailAuth = () => {
         async (args: IEmailAuth) => {
             try {
                 const { email, code } = args;
+
                 if (!code) {
                     const sendCodeLimitExpire = new Date(
                         Date.now() + 60000
                     ).toISOString();
                     setExpiresAt(sendCodeLimitExpire);
+
                     await dispatch(emailAuthThunk({ email })).unwrap();
                 } else {
                     await dispatch(emailAuthThunk({ code, email })).unwrap();
@@ -43,6 +43,7 @@ export const useEmailAuth = () => {
                     status: 'error',
                     description: (error as any).message,
                 });
+
                 return Promise.reject({ error });
             }
         },

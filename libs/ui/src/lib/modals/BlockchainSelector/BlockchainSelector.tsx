@@ -1,5 +1,9 @@
+import type { BlockchainItem } from '../../../list';
+
 import ReactDOM from 'react-dom';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import { useOutsideClose } from '@poluspay-frontend/hooks';
 
 import { PModal, PInput, PButton } from '@poluspay-frontend/ui';
 import { ReactComponent as IconSearch } from '../../assets/icons/search.svg';
@@ -8,19 +12,19 @@ import { ReactComponent as IconCheckbox } from '../../assets/icons/checkbox-fill
 import classNames from 'classnames';
 
 import './BlockchainSelector.scoped.scss';
-import { BlockchainItem } from '../../../list';
-import {useOutsideClose} from "@poluspay-frontend/hooks";
 
 interface ModalProps<Multi> {
     visible: boolean;
     multi?: Multi;
     hasSearch?: boolean;
     options: BlockchainItem[];
+    selected?: Multi extends true ? BlockchainItem[] : BlockchainItem;
+    isPayForm?: boolean;
     next?: (a?: string) => void;
     onClose: () => void;
-    selected?: Multi extends true ?  BlockchainItem[] : BlockchainItem;
-    setSelected: (items: Multi extends true ?  BlockchainItem[] : BlockchainItem) => void;
-    isPayForm?: boolean
+    setSelected: (
+        items: Multi extends true ? BlockchainItem[] : BlockchainItem
+    ) => void;
 }
 
 export const ModalBlockChainSelector = <T extends boolean = false>({
@@ -32,22 +36,26 @@ export const ModalBlockChainSelector = <T extends boolean = false>({
     setSelected,
     next,
     selected,
-  isPayForm
+    isPayForm,
 }: ModalProps<T>) => {
+    const ref = useOutsideClose(onClose);
     const [search, setSearch] = useState('');
-  const ref = useOutsideClose(onClose)
     const [blockchains, setBlockchains] = useState<BlockchainItem[]>(options);
 
     const handleSelect = (item: BlockchainItem) => {
         if (multi && Array.isArray(selected)) {
-            selected.includes(item)
-              // @ts-ignore
-                ? setSelected(selected.filter((el) => el !== item))
-              // @ts-ignore
-                : setSelected([...selected, item]);
-            return;
+            if (selected.includes(item)) {
+                // @ts-ignore
+                setSelected(selected.filter((el) => el !== item));
+            } else {
+                // @ts-ignore
+                setSelected([...selected, item]);
+            }
+
+            return undefined;
         }
-      // @ts-ignore
+
+        // @ts-ignore
         setSelected(item);
     };
 
@@ -66,8 +74,6 @@ export const ModalBlockChainSelector = <T extends boolean = false>({
             setBlockchains(filtered);
         }
     }, [search]);
-
-
 
     return ReactDOM.createPortal(
         <>
@@ -110,7 +116,11 @@ export const ModalBlockChainSelector = <T extends boolean = false>({
                                         <div className="modal__body-container-item__inner">
                                             <img
                                                 className="modal__body-container-item__inner-image"
-                                                src={`/${isPayForm ? "images" : "images/wallets"}/${el.image}.png`}
+                                                src={`/${
+                                                    isPayForm
+                                                        ? 'images'
+                                                        : 'images/wallets'
+                                                }/${el.image}.png`}
                                                 alt={el.name}
                                             />
                                             <p className="modal__body-container-item__inner-name">
@@ -122,7 +132,8 @@ export const ModalBlockChainSelector = <T extends boolean = false>({
                                                 'modal__body-container-item__icon':
                                                     true,
                                                 'modal__body-container-item__icon--active':
-                                                    multi && Array.isArray(selected)
+                                                    multi &&
+                                                    Array.isArray(selected)
                                                         ? selected.includes(el)
                                                         : selected === el,
                                             })}
@@ -141,7 +152,7 @@ export const ModalBlockChainSelector = <T extends boolean = false>({
                             <PButton
                                 wide
                                 children={<>Next</>}
-                                onClick={() => next ? next() : onClose()}
+                                onClick={() => (next ? next() : onClose())}
                             />
                         </div>
                     </div>
@@ -149,6 +160,6 @@ export const ModalBlockChainSelector = <T extends boolean = false>({
                 onClose={onClose}
             />
         </>,
-        document.querySelector("#modal-root")!
+        document.querySelector('#modal-root')!
     );
 };

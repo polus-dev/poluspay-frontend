@@ -1,31 +1,33 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import {
-    setStage,
-    setStageText,
-    StageId,
-    StageStatus,
-} from '../transactionSlice';
 import { waitForTransaction } from '@wagmi/core';
-import {
-    fetchFeeData,
-    prepareSendTransaction,
-    sendTransaction,
-} from 'wagmi/actions';
 import { SwapOptions, SwapRouter } from '@uniswap/universal-router-sdk';
+import { Token as ERC20, Percent } from '@uniswap/sdk-core';
 
-import { Percent } from '@uniswap/sdk-core';
 import { encodePay } from '../../../../logic/transactionEncode/transactionEncode';
 import { doPayThroughPolusContract } from '../../../../logic/transactionEncode/doPayThroughPolusContract';
 import { ThunkConfig } from '../../../store';
 import { CustomRouter } from '../../../../logic/router';
 import { ChainId } from '../../../api/endpoints/types';
 import { CustomProvider, WrapAltToken } from '../../../../logic/payment';
-import { Token as ERC20 } from '@uniswap/sdk-core';
 import { getPathFromCallData } from '../../../../logic/utils';
+
+import {
+    fetchFeeData,
+    prepareSendTransaction,
+    sendTransaction,
+} from 'wagmi/actions';
+import {
+    setStage,
+    setStageText,
+    StageId,
+    StageStatus,
+} from '../transactionSlice';
 import {
     ProgressBarAction,
     setProgressBar,
 } from '../../smartLine/smartLineSlice';
+import { notify } from '@poluspay-frontend/ui';
+
 export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
     'transaction/sendThunk',
     async (_, { getState, dispatch, rejectWithValue }) => {
@@ -81,12 +83,14 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
             if (helper.Context === 'universal router') {
                 const currentBlockchain =
                     getState().connection.currentBlockchain;
+
                 if (!currentBlockchain)
                     return rejectWithValue(
                         'useTokenPrice: No blockchain'
                     ) as any;
 
                 const router = new CustomRouter(ChainId[currentBlockchain]);
+
                 const tokenA = helper.userToken.is_native
                     ? WrapAltToken.wrap(ChainId[currentBlockchain])
                     : new ERC20(
@@ -94,6 +98,7 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                           helper.userToken.contract,
                           helper.userToken.decimals
                       );
+
                 const tokenB = helper.merchantToken.is_native
                     ? WrapAltToken.wrap(ChainId[currentBlockchain])
                     : new ERC20(
@@ -101,7 +106,9 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                           helper.merchantToken.contract,
                           helper.merchantToken.decimals
                       );
+
                 const amountOut = BigInt(fee) + BigInt(merchantAmount);
+
                 const response1 = await router.getRouter(
                     amountOut,
                     tokenA,
@@ -117,6 +124,7 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                 const deadline = Math.round(
                     new Date(expireAt).getTime() / 1000
                 );
+
                 const swapOptions: SwapOptions = {
                     slippageTolerance: new Percent('90', '100'),
                     deadlineOrPreviousBlockhash: deadline.toString(),
@@ -137,6 +145,7 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                     getPathFromCallData(calldata),
                     amountOut
                 );
+
                 const sendAmount = response2.toString();
 
                 // const deadline = Math.round(
@@ -158,8 +167,8 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                 const isContextFromNative = helper.userToken.is_native;
 
                 dispatch(setStageText('Encode transaction'));
+
                 const encodePayParams: Parameters<typeof encodePay>[0] = {
-                    // @ts-ignore
                     uuid: uuid.replaceAll('-', ''),
                     fee,
                     merchantAmount,
@@ -174,12 +183,16 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                     },
                     universalRouterAddress: helper.RouterAddress,
                 };
+
                 const { data, path: universalRouterPath } =
                     encodePay(encodePayParams);
+
                 let value;
+
                 if (universalRouterPath && isContextFromNative) {
                     value = BigInt(sendAmount);
                 }
+
                 preparedTransaction = await prepareSendTransaction({
                     to: helper.RouterAddress,
                     data,
@@ -190,6 +203,7 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                 const isNative =
                     helper.userToken.is_native &&
                     helper.merchantToken.is_native;
+
                 preparedTransaction = await prepareSendTransaction({
                     to: helper.PolusAddress,
                     value: BigInt(
@@ -205,17 +219,25 @@ export const sendThunk = createAsyncThunk<any, void, ThunkConfig>(
                         merchantAmount: merchantAmount,
                         tokenAddress: isNative ? '' : helper.userToken.contract,
                     }),
-                    // maxFeePerGas,
                 });
             } else {
                 throw new Error('Unknown context');
             }
 
-            dispatch(setStageText('Send transaction ...'));
+            dispatch(setStageText('Send transaction...'));
+
+            notify({
+                title: 'Need your action',
+                description: 'Check your wallet',
+                loading: true
+            })
 
             const { hash } = await sendTransaction(preparedTransaction);
-            dispatch(setStageText('Transaction pending ...'));
+
+            dispatch(setStageText('Transaction pending...'));
+
             await waitForTransaction({ hash });
+
             dispatch(
                 setStage({
                     text: 'Transaction success',

@@ -1,4 +1,5 @@
 import { PButton } from '@poluspay-frontend/ui';
+
 import './InternalServer.scoped.scss';
 
 export const InternalServerErrorPage: React.FC = () => {

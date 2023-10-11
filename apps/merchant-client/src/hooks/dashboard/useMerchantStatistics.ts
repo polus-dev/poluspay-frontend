@@ -3,7 +3,7 @@ import type { StatsElement } from '../../components/pages/dashboard/Stats/StatsE
 import { useEffect, useState } from 'react';
 
 import { useGetMerchantStatisticsQuery } from '@poluspay-frontend/merchant-query';
-import {IGetMerchantStatisticsResponse} from "../../store/api/endpoints/merchant/Merchant.interface";
+import { IGetMerchantStatisticsResponse } from '../../store/api/endpoints/merchant/Merchant.interface';
 
 interface IUseMerchantStatistics {
     merchantId?: string;
@@ -11,20 +11,30 @@ interface IUseMerchantStatistics {
     toData: string;
 }
 
-export interface ChartData extends Pick<IGetMerchantStatisticsResponse, "success_payments_per_day" | "total_payments_per_day"> {}
+export interface ChartData
+    extends Pick<
+        IGetMerchantStatisticsResponse,
+        'success_payments_per_day' | 'total_payments_per_day'
+    > {}
 
 export const useMerchantStatistics = ({
     merchantId,
     toData,
     fromData,
 }: IUseMerchantStatistics) => {
-    const { data: statistics, isLoading, isError} = useGetMerchantStatisticsQuery({
+    const {
+        data: statistics,
+        isLoading,
+        isError,
+    } = useGetMerchantStatisticsQuery({
         merchant_id: merchantId,
         from_date: fromData,
         to_date: toData,
     });
+
     const [staticsBlock, setStaticsBlock] = useState<StatsElement[]>();
     const [chartData, setChartData] = useState<ChartData>();
+
     useEffect(() => {
         if (statistics) {
             const amountOfProceeds =
@@ -32,6 +42,7 @@ export const useMerchantStatistics = ({
                     (acc, item) => acc + +item.amount_decimals,
                     0
                 ) || 0;
+
             const successFullPayments = statistics.success_payments;
             const conversationRate =
                 (successFullPayments / statistics.total_payments) * 100 || 0;
@@ -39,6 +50,7 @@ export const useMerchantStatistics = ({
             const isRed = conversationRate < 1;
             const isYellow = conversationRate >= 1 && conversationRate <= 10;
             const isGreen = conversationRate > 10;
+
             setStaticsBlock([
                 {
                     id: 1,
@@ -74,8 +86,12 @@ export const useMerchantStatistics = ({
                 //   description: 'Last payment',
                 // },
             ]);
-            setChartData({total_payments_per_day: statistics.total_payments_per_day, success_payments_per_day: statistics.success_payments_per_day})
+            setChartData({
+                total_payments_per_day: statistics.total_payments_per_day,
+                success_payments_per_day: statistics.success_payments_per_day,
+            });
         }
     }, [statistics]);
+
     return { staticsBlock, isError, isLoading, chartData };
 };

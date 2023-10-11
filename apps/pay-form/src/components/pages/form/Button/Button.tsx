@@ -4,27 +4,19 @@ import classNames from 'classnames';
 
 import './Button.scoped.scss';
 
-type ButtonText =
-    | 'Connect Wallet'
-    | `Pay ≈ ${string} ${string}`
-    | 'Change blockchain'
-    | 'Decline payment'
-    | 'Back to store'
-    | 'Loading...';
-
-interface FormButtonProps<T extends string> {
-    text: T;
-    hasIcon?: T extends 'Connect Wallet' ? true : false;
+interface FormButtonProps {
+    text: string;
+    hasIcon?: boolean
     disabled?: boolean;
     onClick: () => void;
 }
 
-export const FormButton = <T extends ButtonText>({
+export const FormButton = ({
     text,
     hasIcon,
     disabled,
     onClick,
-}: FormButtonProps<T>) => {
+}: FormButtonProps) => {
     const handleClick = () => {
         if (disabled) return undefined;
 
@@ -39,10 +31,7 @@ export const FormButton = <T extends ButtonText>({
             })}
             onClick={handleClick}
         >
-            {hasIcon ||
-                (text === 'Connect Wallet' && (
-                    <LogoWalletConnect className="form-button__icon" />
-                ))}
+            {hasIcon && <LogoWalletConnect className="form-button__icon" />}
             {text}
         </div>
     );

@@ -1,4 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { signTypedData } from 'wagmi/actions';
+import { ThunkConfig } from '../../../store';
+import { Permit2Permit } from '../../../../logic/uwm/builder';
+
 import {
     nextStage,
     setPermitSignature,
@@ -7,13 +11,12 @@ import {
     StageStatus,
 } from '../transactionSlice';
 
-import { signTypedData } from 'wagmi/actions';
-import { ThunkConfig } from '../../../store';
-import { Permit2Permit } from '../../../../logic/uwm/builder';
 import {
     ProgressBarAction,
     setProgressBar,
 } from '../../smartLine/smartLineSlice';
+
+import { notify } from '@poluspay-frontend/ui';
 
 export const signThunk = createAsyncThunk<any, void, ThunkConfig>(
     'transaction/signThunk',
@@ -36,17 +39,26 @@ export const signThunk = createAsyncThunk<any, void, ThunkConfig>(
             ) {
                 dispatch(
                     setStage({
-                        text: 'Check permit',
+                        text: 'Checking permit',
                         status: StageStatus.LOADING,
                     })
                 );
+
                 const allowancePermit = await helper.checkPermit('router');
+
                 if (
                     !allowancePermit ||
                     allowancePermit.amount < BigInt(sendAmount) ||
                     allowancePermit.expiration < Date.now() / 1000
                 ) {
-                    dispatch(setStageText('Need your permit sign'));
+                    dispatch(setStageText('Your permit sign needed'));
+
+                    notify({
+                        title: 'Need your action',
+                        description: 'Check your wallet',
+                        loading: true,
+                    });
+
                     const dataForSign = helper.dataForSign(
                         allowancePermit?.nonce ?? 0
                     );
@@ -59,7 +71,7 @@ export const signThunk = createAsyncThunk<any, void, ThunkConfig>(
                     dispatch(setPermitSignature(permitSign));
                     dispatch(
                         setStage({
-                            text: 'Sign transaction success',
+                            text: 'Transaction successfully signed',
                             status: StageStatus.SUCCESS,
                         })
                     );
@@ -74,11 +86,12 @@ export const signThunk = createAsyncThunk<any, void, ThunkConfig>(
             } else {
                 dispatch(
                     setStage({
-                        text: 'Native token',
+                        text: 'Direct token transfer',
                         status: StageStatus.SUCCESS,
                     })
                 );
             }
+
             dispatch(nextStage());
             dispatch(setProgressBar(ProgressBarAction.INC));
         } catch (error) {

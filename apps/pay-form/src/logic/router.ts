@@ -37,13 +37,13 @@ export class CustomRouter {
 
     constructor(chainId: number = 137) {
         const rpc = RPCprovider.find((el) => el.chainId === chainId)?.url;
+
         if (!rpc) throw new Error('rpc is undefined');
+
         this._provider = new Provider(rpc, chainId);
         this._router = new AlphaRouter({ chainId, provider: this._provider });
         this._chainId = chainId;
-
         this._abi_coder = new ethers.utils.AbiCoder();
-
         this._builder = new Builder();
     }
 
@@ -52,10 +52,10 @@ export class CustomRouter {
         spender: string,
         signature: string
     ): Builder {
-        const signature2 = new Byts(
+        const newSignature = new Byts(
             Buffer.from(signature.replace('0x', ''), 'hex')
         );
-        console.log('signature2', signature2);
+
         this._builder.put({
             cmd: Command.PERMIT2_PERMIT,
             input: {
@@ -71,7 +71,7 @@ export class CustomRouter {
                         BigInt(~~(Date.now() / 1000) + 60 * 30)
                     ),
                 },
-                signature: signature2,
+                signature: newSignature,
             },
         });
 
@@ -79,10 +79,9 @@ export class CustomRouter {
     }
 
     public packSignToWagmi2(value: valuesSign, signature: string): Builder {
-        const signature2 = new Byts(
+        const newSignature = new Byts(
             Buffer.from(signature.replace('0x', ''), 'hex')
         );
-        console.log('signature2', signature2);
 
         const data = {
             PermitSingle: {
@@ -95,10 +94,8 @@ export class CustomRouter {
                 spender: new Address(value.spender), // universalRouter
                 sigDeadline: new Uint(BigInt(value.sigDeadline)),
             },
-            signature: signature2,
+            signature: newSignature,
         };
-
-        console.log('PermitSingle', data);
 
         this._builder.put({
             cmd: Command.PERMIT2_PERMIT,
@@ -124,7 +121,6 @@ export class CustomRouter {
             permit: new Bool(true),
         };
 
-        console.log('inputs', inputs);
         this._builder.put({
             cmd: Command.V3_SWAP_EXACT_OUT,
             input: inputs,
@@ -223,14 +219,17 @@ export class CustomRouter {
 
     public static encodeFee(n: number): string {
         const bytes: Array<number> = new Array(3).fill(0);
+
         bytes[0] = (n >> 16) & 0xff;
         bytes[1] = (n >> 8) & 0xff;
         bytes[2] = n & 0xff;
+
         return Buffer.from(bytes).toString('hex');
     }
 
     public static encodePath(patharr: PathArray): string {
         let encoded = '';
+
         for (const e of patharr) {
             switch (typeof e) {
                 case 'string':
@@ -243,6 +242,7 @@ export class CustomRouter {
                     break;
             }
         }
+
         return encoded.toLocaleLowerCase();
     }
 
@@ -258,6 +258,7 @@ export class CustomRouter {
         );
 
         console.log('start get route');
+
         const resp = await this._router.route(
             currencyAmount,
             tokenFrom,
@@ -280,7 +281,9 @@ export class CustomRouter {
             console.error('resp.route.length === 0');
             return undefined;
         }
+
         const path = resp?.trade.swaps[0].route.path;
+
         if (!path) {
             return undefined;
         }

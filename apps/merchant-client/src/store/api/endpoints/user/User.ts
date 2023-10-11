@@ -9,9 +9,11 @@ export const userApi = createApi({
         baseUrl: import.meta.env.VITE_API_URL + 'private',
         prepareHeaders: (headers) => {
             const token = new AuthHelper().checkAuth()?.token;
+
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             }
+
             return headers;
         },
     }),

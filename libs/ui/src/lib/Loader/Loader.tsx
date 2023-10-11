@@ -1,8 +1,9 @@
-import {ReactComponent as IconLoading} from '../assets/icons/loading.svg';
+import { ReactComponent as IconLoading } from '../assets/icons/loading.svg';
 
 import classNames from 'classnames';
 
 import './Loader.scoped.scss';
+
 interface LoaderProps {
     height?: number;
     borderRadius?: number;

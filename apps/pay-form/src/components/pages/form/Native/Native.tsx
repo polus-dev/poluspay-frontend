@@ -1,7 +1,7 @@
 import type { Payment } from '../../../../store/api/endpoints/payment/Payment.interface';
 
 import { AssetRepresentation } from '@poluspay-frontend/api';
-import { getAssetUrl } from '../../../../../../../tools';
+import { getAssetUrl } from '@poluspay-frontend/utils';
 
 import { FormQRCode } from './QRCode/QRCode';
 import { FormWarning } from './Warning/Warning';
@@ -17,9 +17,11 @@ interface IFormNativePaymentProps {
 const getPaymentAssetInfo = (payment: Payment, blockchain: string) => {
     const assetName = payment.assets[0].name;
     const paymentInfo = payment.assets.find((e) => e.network === blockchain);
+
     if (!paymentInfo) {
         throw new Error('Payment info is not defined');
     }
+
     return { assetName, paymentInfo };
 };
 

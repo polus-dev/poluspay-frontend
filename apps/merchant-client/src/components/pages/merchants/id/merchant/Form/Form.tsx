@@ -4,8 +4,7 @@ import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useModal } from '@poluspay-frontend/hooks';
-import { useCopyText } from '../../../../../../hooks/useCopyText';
-import { httpsUrlRegex } from '../../../../../../../../../tools';
+import { useCopyText } from '@poluspay-frontend/hooks';
 import { useGetMerchantIdFromParams } from '../../../../../../hooks/useGetMerchantId';
 import {
     useDeleteMerchantMutation,
@@ -15,8 +14,7 @@ import {
 } from '@poluspay-frontend/merchant-query';
 
 import { PButton, FormInput, notify } from '@poluspay-frontend/ui';
-import { Loader } from '../../../../../ui/Loader/Loader';
-import { ErrorBlock } from '../../../../../../../../../libs/ui/src/lib/Error/Error';
+import { Loader, ErrorBlock } from '@poluspay-frontend/ui';
 import { MerchantProfileAvatar } from './Avatar';
 import { ModalMerchantDelete } from '../../../../../modals/MerchantDelete/MerchantDelete';
 import { ModalMerchantAvatar } from '../../../../../modals/MerchantAvatar/MerchantAvatar';
@@ -44,6 +42,7 @@ export const MerchantProfileForm: React.FC = () => {
 
     const { register, handleSubmit, reset, formState } =
         useForm<IMerchantForm>();
+
     useEffect(() => {
         if (merchant) {
             reset({
@@ -93,13 +92,15 @@ export const MerchantProfileForm: React.FC = () => {
                     ? undefined
                     : data.brand,
             };
+
             if (
                 Object.keys(body).every(
                     (key) => !body[key as keyof typeof body]
                 )
             ) {
                 notify({ title: 'Nothing to update', status: 'warning' });
-                return;
+
+                return undefined;
             }
             // TODO: add null to types
             // @ts-ignore
@@ -107,6 +108,7 @@ export const MerchantProfileForm: React.FC = () => {
                 ...body,
                 merchant_id: merchantId,
             }).unwrap();
+
             notify({ title: 'Merchant updated', status: 'success' });
         } catch (error) {
             console.error(error);

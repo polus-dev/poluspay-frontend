@@ -1,30 +1,36 @@
+import type { BlockchainItem } from '@poluspay-frontend/ui';
+
 import ReactDOM from 'react-dom';
 import { useEffect, useRef, useState } from 'react';
+
+import {
+    placeHolderForAddress,
+    validateAddress,
+} from '@poluspay-frontend/utils';
 
 import { PButton, PInput, PModal, PSwitch } from '@poluspay-frontend/ui';
 import { ReactComponent as IconChevron } from '../../../assets/icons/chevron.svg';
 
 import './WalletAddition.scoped.scss';
-import { Blockchain, placeHolderForAddress, validateAddress } from 'tools';
-import { BlockchainItem } from '@poluspay-frontend/ui';
 
 interface ModalProps {
     visible: boolean;
-    onClose: () => void;
-    onImport: (address: string, evm: boolean) => void;
     isEvmChain: boolean;
     selectedBlockchain?: BlockchainItem;
     isLoading: boolean;
+    onClose: () => void;
+    onImport: (address: string, evm: boolean) => void;
 }
 
 export const ModalWalletAddition: React.FC<ModalProps> = ({
     visible,
-    onClose,
-    onImport,
     isEvmChain,
     selectedBlockchain,
     isLoading,
+    onClose,
+    onImport,
 }) => {
+    const ref = useRef<HTMLDivElement | null>(null);
     const [address, setAddress] = useState('');
     const [evm, setEvm] = useState(false);
     const [isValidAddress, setValidAddress] = useState(false);
@@ -39,14 +45,15 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
         }
     }, [address]);
 
-    const ref = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
         const checkIfClickedOutside = (e: MouseEvent) => {
             if (ref.current && !ref.current.contains(e.target as Node)) {
                 onClose();
             }
         };
+
         document.addEventListener('click', checkIfClickedOutside);
+
         return () => {
             setAddress('');
             document.removeEventListener('click', checkIfClickedOutside);
@@ -87,7 +94,6 @@ export const ModalWalletAddition: React.FC<ModalProps> = ({
                                     </p>
                                 )}
                             </div>
-                            {/* replace placeholder with dynamic one */}
                             <PInput
                                 placeholder={placeHolderForAddress(
                                     selectedBlockchain?.label!

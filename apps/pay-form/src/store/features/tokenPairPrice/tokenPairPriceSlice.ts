@@ -1,5 +1,6 @@
+import type { Asset_t } from '../../api/endpoints/types';
+
 import { createSlice } from '@reduxjs/toolkit';
-import { Asset_t } from '../../api/endpoints/types';
 import { tokenPairPriceThunk } from './tokenPairPriceThunk';
 
 export interface ITokenPairPriceState {
@@ -27,10 +28,12 @@ export const userTokenPairPriceSlice = createSlice({
             }),
             builder.addCase(tokenPairPriceThunk.rejected, (state, action) => {
                 if (action.error.name === 'AbortError') {
-                    return;
+                    return undefined;
                 }
+
                 state.isLoading = false;
                 state.amount = 'Unknown';
+
                 console.error(action.error);
             });
     },

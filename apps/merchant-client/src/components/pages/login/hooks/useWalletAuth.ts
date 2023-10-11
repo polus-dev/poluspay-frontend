@@ -1,3 +1,4 @@
+
 import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { walletAuthThunk } from 'apps/merchant-client/src/store/api/endpoints/auth/walletAuthThunk';
 import {
@@ -40,10 +41,13 @@ export const useWalletAuth = () => {
         try {
             if (!address) {
                 open();
-                return;
+
+                return undefined;
             }
             setButtonText('Signing...');
+
             await dispatch(walletAuthThunk(address)).unwrap();
+
             navigate('/');
         } catch (error) {
             if (address) {
@@ -51,6 +55,7 @@ export const useWalletAuth = () => {
             } else {
                 setButtonText('Connect Wallet');
             }
+
             notify({
                 title: 'Email auth error',
                 status: 'error',

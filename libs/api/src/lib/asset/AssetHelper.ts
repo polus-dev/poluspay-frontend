@@ -4,7 +4,7 @@ let instance: Helper;
 
 export const AssetHelper = (
     rawAssets: ConstructorParameters<typeof Helper>[0],
-    isMerchant = false,
+    isMerchant = false
 ) => instance || new Helper(rawAssets, isMerchant);
 
 export type AssetRepresentation = {
@@ -24,7 +24,7 @@ interface IAssetHelper {
 
     getAsset(
         network: string,
-        assetName: string,
+        assetName: string
     ): AssetRepresentation | undefined;
 
     getAllNetworks(): string[];
@@ -40,23 +40,28 @@ export class Helper implements IAssetHelper {
 
     constructor(
         private rawAssets: IAssetsResponseFromApi,
-        private isMerchant = false,
+        private isMerchant = false
     ) {}
 
     getAllNetworks(): string[] {
         if (this.allNetworks) {
             return this.allNetworks;
         }
+
         const assetKeys = Object.keys(this.rawAssets);
         const networks = new Set<string>();
+
         for (const assetKey of assetKeys) {
             const asset = this.rawAssets[assetKey];
+
             for (const network in asset.networks) {
                 networks.add(network);
             }
         }
+
         const result = Array.from(networks);
         this.allNetworks = result;
+
         return result;
     }
 
@@ -64,10 +69,13 @@ export class Helper implements IAssetHelper {
         if (this.allCategories) {
             return this.allCategories;
         }
+
         const assetKeys = Object.keys(this.rawAssets);
         const categories = new Set<string>();
+
         for (const assetKey of assetKeys) {
             const asset = this.rawAssets[assetKey];
+
             if (asset.categories) {
                 for (const category of asset.categories) {
                     categories.add(category);
@@ -77,6 +85,7 @@ export class Helper implements IAssetHelper {
 
         const result = Array.from(categories);
         this.allCategories = result;
+
         return result;
     }
 
@@ -86,10 +95,11 @@ export class Helper implements IAssetHelper {
         } else {
             const allAssetsKey = Object.keys(this.rawAssets);
             const filteredAssets: AssetRepresentation[] = [];
+
             for (const assetKey of allAssetsKey) {
                 if (
                     Object.keys(this.rawAssets[assetKey].networks).includes(
-                        network,
+                        network
                     )
                 ) {
                     const currentAsset = this.rawAssets[assetKey];
@@ -105,9 +115,10 @@ export class Helper implements IAssetHelper {
                 ...this.sortedByCategory,
                 [network]: filteredAssets,
             };
+
             if (this.isMerchant) {
                 return filteredAssets.filter(
-                    (asset) => asset.available_for_accept,
+                    (asset) => asset.available_for_accept
                 );
             } else {
                 return filteredAssets;
@@ -117,41 +128,43 @@ export class Helper implements IAssetHelper {
 
     getAssetsByNetworks(networks: string[]): [AssetRepresentation[], string[]] {
         let result = [];
+
         for (const network of networks)
             result.push(...this.getAssetsByNetwork(network));
         // TODO: refactor
-        return [result = result
-            .flat()
-            .filter(
-                (asset, index, self) =>
-                    self.findIndex((t) => t.name === asset.name) === index,
-            ),
-          [...new Set(result.map((e) => e.categories).flat())]
+        return [
+            (result = result
+                .flat()
+                .filter(
+                    (asset, index, self) =>
+                        self.findIndex((t) => t.name === asset.name) === index
+                )),
+            [...new Set(result.map((e) => e.categories).flat())],
         ];
     }
 
     getAsset(
         network: string,
-        assetName: string,
+        assetName: string
     ): AssetRepresentation | undefined {
         const assets = this.getAssetsByNetwork(network);
+
         return assets.find((asset) => asset.name === assetName);
     }
 
     getAssetsByCategory(network: string, category?: string): ISortedBy[string] {
         const assets = this.getAssetsByNetwork(network);
+
         if (!category) {
             return assets;
         } else {
-            // if (this.sortedByCategory?.[category]) {
-            //
-            // }
             const filteredAssets = assets.filter((asset) =>
-                asset.categories.includes(category),
+                asset.categories.includes(category)
             );
+
             if (this.isMerchant) {
                 return filteredAssets.filter(
-                    (asset) => asset.available_for_accept,
+                    (asset) => asset.available_for_accept
                 );
             } else {
                 return filteredAssets;
@@ -159,10 +172,16 @@ export class Helper implements IAssetHelper {
         }
     }
     getQRCodePaymentNetworks(): string[] {
-      const networks = Object.keys(this.rawAssets).map(assetKey => {
-        const asset = this.rawAssets[assetKey];
-        return Object.keys(asset.networks).filter(network => asset.networks[network].is_seeded_amount)
-      })
-      return networks.filter(network => network.length > 0).reduce((acc, val) => [...acc, val[0]]);
+        const networks = Object.keys(this.rawAssets).map((assetKey) => {
+            const asset = this.rawAssets[assetKey];
+
+            return Object.keys(asset.networks).filter(
+                (network) => asset.networks[network].is_seeded_amount
+            );
+        });
+
+        return networks
+            .filter((network) => network.length > 0)
+            .reduce((acc, val) => [...acc, val[0]]);
     }
 }

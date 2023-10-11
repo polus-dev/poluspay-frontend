@@ -1,10 +1,10 @@
-import { useCopyText } from '../../../../hooks/useCopyText';
+import { useCopyText } from '@poluspay-frontend/hooks';
+import { useGetMerchantIdFromParams } from '../../../../../src/hooks/useGetMerchantId';
 
 import { FormInput, PButton } from '@poluspay-frontend/ui';
 import { ReactComponent as IconCopy } from '../../../../assets/icons/copy.svg';
 
 import './Brand.scoped.scss';
-import { useGetMerchantIdFromParams } from 'apps/merchant-client/src/hooks/useGetMerchantId';
 
 export const MerchantBrandPage: React.FC = () => {
     const id = useGetMerchantIdFromParams();

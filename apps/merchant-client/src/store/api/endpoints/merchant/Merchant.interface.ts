@@ -1,4 +1,4 @@
-import type { Blockchain } from 'tools';
+import type { Blockchain } from '@poluspay-frontend/utils';
 import { IMerchant } from '@poluspay-frontend/api';
 
 type UnparsedJSON = string;
@@ -42,16 +42,17 @@ export interface ISetWebhookRequest extends IMerchantId {
 }
 
 export type IGetWebhookHistoryResponse = IWebhookItem[];
+export type IGetMerchantResponse = IMerchant[];
+export type IGetMerchantByIdResponse = IMerchant;
+
 export type IGetWebhookHistoryResponseWithTotalCount = {
     data: IWebhookItem[];
     totalCount: number;
 };
-export type IGetMerchantResponse = IMerchant[];
 export type IGetMerchantResponseWithTotalCount = {
     data: IMerchant[];
     totalCount: number;
 };
-export type IGetMerchantByIdResponse = IMerchant;
 export interface IUpdateMerchantRequest
     extends IMerchantId,
         Partial<ICreateMerchantRequest & Pick<IMerchant, 'display_name'>> {}

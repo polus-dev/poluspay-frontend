@@ -4,21 +4,22 @@ import React, { useEffect, useState } from 'react';
 import { PButton, PModal } from '@poluspay-frontend/ui';
 import { ReactComponent as IconUpload } from '../../../assets/icons/upload.svg';
 
-import './MerchantAvatar.scoped.scss';
 import classNames from 'classnames';
+
+import './MerchantAvatar.scoped.scss';
 
 interface ModalProps {
     visible: boolean;
+    isUploading: boolean;
     onClose: () => void;
     onSave: (image: File) => void;
-    isUploading: boolean;
 }
 
 export const ModalMerchantAvatar: React.FC<ModalProps> = ({
     visible,
+    isUploading,
     onClose,
     onSave,
-    isUploading,
 }) => {
     const [image, setImage] = useState<File | null>(null);
     const [previewImage, setPreviewImage] = useState('');
@@ -32,11 +33,13 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
 
     const validateImage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setError(false);
+
         const file = event.target.files?.[0];
 
         if (!file || !file.type.match('image/png')) {
             setError(true);
-            return;
+
+            return undefined;
         }
 
         const reader = new FileReader();
@@ -52,8 +55,10 @@ export const ModalMerchantAvatar: React.FC<ModalProps> = ({
 
                 if (width !== 500 || height !== 500) {
                     setError(true);
-                    return;
+
+                    return undefined;
                 }
+
                 setPreviewImage(reader.result?.toString() || '');
                 setImage(file);
             };

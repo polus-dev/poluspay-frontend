@@ -1,6 +1,9 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import _ from "lodash"
+
+import { AssetRepresentation } from '@poluspay-frontend/api';
+import { useOutsideClose } from '@poluspay-frontend/hooks';
+import { getAssetUrl } from '@poluspay-frontend/utils';
 
 import { PButton, PInput, PModal, PTabs } from '@poluspay-frontend/ui';
 import { ReactComponent as IconSearch } from '../../assets/icons/search.svg';
@@ -9,47 +12,35 @@ import { ReactComponent as IconCheckbox } from '../../assets/icons/checkbox-fill
 import classNames from 'classnames';
 
 import './CurrencySelector.scoped.scss';
-import {AssetRepresentation} from "@poluspay-frontend/api";
-import {getAssetUrl} from "tools";
-import {useOutsideClose} from "@poluspay-frontend/hooks";
-
-interface Asset {
-    id: string;
-    name: string;
-    subname: string;
-    image: string;
-    category: string[];
-}
 
 interface ModalProps {
     visible: boolean;
     assetsRepresentation: AssetRepresentation[];
     categories: string[];
-    onClose: (asset?: AssetRepresentation) => void;
     assetUrl: string;
+    onClose: (asset?: AssetRepresentation) => void;
 }
 
 export const ModalCurrencySelector: React.FC<ModalProps> = ({
     visible,
-    onClose,
     categories,
     assetsRepresentation,
-    assetUrl
+    assetUrl,
+    onClose,
 }) => {
-    const [search, setSearch] = useState('');
+    const ref = useOutsideClose(onClose);
 
-    const tabs = [
-        { id: 'All', text: 'All' },
-        ...categories.map((category) => ({
+    const categoriesTabs = categories
+        .map((category) => ({
             id: category,
-          // TODO: make with capitalize css
-            text: _.capitalize(category),
-        })).filter(e => e.text !== "All"),
-    ];
+            text: category,
+        }))
+        .filter((el) => el.id !== 'all');
+
+    const tabs = [{ id: 'all', text: 'All' }, ...categoriesTabs];
 
     const [tab, setTab] = useState(tabs[0]);
-    const ref = useOutsideClose(onClose)
-
+    const [search, setSearch] = useState('');
     const [selected, setSelected] = useState<AssetRepresentation>();
     const [assets, setAssets] = useState(assetsRepresentation);
 
@@ -66,7 +57,7 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
     }, [search]);
 
     useEffect(() => {
-        if (tab.id === 'All') {
+        if (tab.id === 'all') {
             setAssets(assetsRepresentation);
         } else {
             setAssets(
@@ -77,14 +68,13 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
         }
     }, [tab, assetsRepresentation]);
 
-
     return ReactDOM.createPortal(
         <>
             <PModal
                 modalRef={ref}
                 visible={visible}
                 header={
-                    <div  className="modal__header">
+                    <div className="modal__header">
                         <p className="modal__header-text">
                             Choose payment currency
                         </p>
@@ -129,7 +119,10 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
                                                     <div className="item__inner">
                                                         <img
                                                             className="item__inner-image"
-                                                            src={getAssetUrl(assetUrl, asset.name)}
+                                                            src={getAssetUrl(
+                                                                assetUrl,
+                                                                asset.name
+                                                            )}
                                                             alt="MATIC"
                                                         />
                                                         <div className="item__inner-text">
@@ -141,7 +134,6 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    {/* second class is added only when item selected */}
                                                     <IconCheckbox
                                                         className={classNames({
                                                             item__icon: true,
@@ -165,9 +157,7 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
                             <PButton
                                 wide
                                 disabled={!selected}
-                                children={
-                                    <p>Continue</p>
-                                }
+                                children={<p>Continue</p>}
                                 onClick={() => onClose(selected)}
                             />
                         </div>
@@ -176,6 +166,6 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
                 onClose={() => onClose(selected)}
             />
         </>,
-        document.querySelector("#modal-root")!
+        document.querySelector('#modal-root')!
     );
 };

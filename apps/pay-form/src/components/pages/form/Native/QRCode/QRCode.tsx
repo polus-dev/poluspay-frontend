@@ -1,11 +1,12 @@
-import { useCopyText } from '../../../../../hooks/useCopyText';
+import { useState } from 'react';
+
+import { useCopyText } from '@poluspay-frontend/hooks';
 
 import { FormInput, PSwitch } from '@poluspay-frontend/ui';
 import { QRCodeSVG } from 'qrcode.react';
 import { ReactComponent as IconCopy } from '../../../../../assets/icons/copy.svg';
 
 import './QRCode.scoped.scss';
-import { useState } from 'react';
 
 interface QRCodeProps {
     assetName: string;

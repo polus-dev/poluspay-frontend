@@ -10,6 +10,6 @@ export * from './roundCryptoAmount';
 export * from './date/formatDate';
 export * from './getExplorer';
 export * from './getAssetUrl';
-export * from './date/getBeginningOfDate'
-export * from './isMobileBrowser'
-export * from "./trimEndOfString"
+export * from './date/getBeginningOfDate';
+export * from './isMobileBrowser';
+export * from './trimEndOfString';

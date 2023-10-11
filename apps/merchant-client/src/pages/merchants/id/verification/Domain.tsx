@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { ProgressBar } from '../../../../components/ui/ProgressBar/ProgressBar';
 import { MerchantDomainSelection } from '../../../../components/pages/merchants/id/verification/Selection';

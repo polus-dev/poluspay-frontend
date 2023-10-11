@@ -23,16 +23,15 @@ export interface IMerchant {
 
 export type LogoStatus = 'on_moderation' | 'declined' | 'confirmed' | null;
 
-export interface IPaymentMerchant
-    extends Pick<
-        IMerchant,
-        | 'description'
-        | 'display_name'
-        | 'domain'
-        | 'fail_redirect_url'
-        | 'id'
-        | 'is_domain_confirmed'
-        | 'logo'
-        | 'success_redirect_url'
-        | 'verified_at'
-    > {}
+type PaymentMerchant =
+    | 'description'
+    | 'display_name'
+    | 'domain'
+    | 'fail_redirect_url'
+    | 'id'
+    | 'is_domain_confirmed'
+    | 'logo'
+    | 'success_redirect_url'
+    | 'verified_at';
+
+export interface IPaymentMerchant extends Pick<IMerchant, PaymentMerchant> {}
