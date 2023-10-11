@@ -1,6 +1,5 @@
 import { WagmiConfig } from 'wagmi';
-import { Web3Modal } from '@web3modal/react';
-import { ethereumClient, projectId, wagmiConfig } from '../../utils/Web3Modal';
+import { wagmiConfig } from '../../utils/Web3Modal';
 
 import { PNotifyContainer } from '@poluspay-frontend/ui';
 import { LoginAbout } from '../../components/pages/login/About';
@@ -23,7 +22,6 @@ export const LoginPage: React.FC = () => {
                     </div>
                 </div>
             </WagmiConfig>
-            <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
             <PNotifyContainer />
         </>
     );
