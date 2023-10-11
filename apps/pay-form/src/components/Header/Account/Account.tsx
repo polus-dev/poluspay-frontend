@@ -1,5 +1,5 @@
-import { useAccount, useDisconnect } from 'wagmi';
-import { useWeb3Modal } from '@web3modal/react';
+import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi'
+import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { makeShortHash } from '@poluspay-frontend/utils';
 
 import { PButton, PDropdown } from '@poluspay-frontend/ui';
@@ -8,11 +8,14 @@ import { ReactComponent as LogoWalletConnect } from '../../../assets/logos/walle
 import { ReactComponent as IconChevron } from '../../../assets/icons/chevron.svg';
 
 import './Account.scoped.scss';
+import { useAccount, useDisconnect, useEnsAvatar, useEnsName } from 'wagmi';
 
 export const HeaderAccount: React.FC = () => {
     const { isConnected, address, connector } = useAccount();
     const { disconnect } = useDisconnect();
-    const { open, isOpen } = useWeb3Modal();
+    const { data: ensName } = useEnsName({ address });
+    const { data: ensAvatar } = useEnsAvatar({ name: ensName });
+    const { open } = useWeb3Modal();
 
     return (
         <div className="account">
@@ -20,14 +23,13 @@ export const HeaderAccount: React.FC = () => {
                 <div className="account__button">
                     <PButton
                         wide
-                        loading={isOpen}
                         children={
                             <>
                                 <LogoWalletConnect className="account__button-icon" />
                                 <p>Connect Wallet</p>
                             </>
                         }
-                        onClick={open}
+                        onClick={() => open()}
                     />
                 </div>
             ) : (

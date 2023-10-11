@@ -2,8 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import { formatUnits } from 'viem';
 import { useAccount, useNetwork, useSwitchNetwork } from 'wagmi';
-import { useWeb3Modal } from '@web3modal/react';
-
+import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { usePaymentInfo } from '../../../hooks/usePaymentInfo';
 import { useTokenPairPrice } from '../../../hooks/useTokenPairPrice';
 import { startPay } from '../../../store/features/transaction/transactionThunk';
