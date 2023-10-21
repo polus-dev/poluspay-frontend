@@ -2,7 +2,6 @@ import { useParams } from 'react-router';
 
 import { formatUnits } from 'viem';
 import { roundCryptoAmount } from '@poluspay-frontend/utils';
-import { TOKENS_TO_EXCLUDE } from '../../constants';
 import { usePaymentInfo } from '../../hooks/usePaymentInfo';
 import { useAvailableTokens } from '../../hooks/useAvailableTokens';
 import { useAppSelector } from '../../store/hooks';
@@ -35,10 +34,6 @@ export const FormPage: React.FC<IFormPageProps> = ({ error, errorMessage }) => {
 
     const { availableTokens, isAvailableTokensLoading, availableCategories } =
         useAvailableTokens();
-
-    const filteredTokens = availableTokens.filter(
-        (token) => !TOKENS_TO_EXCLUDE.includes(token.name)
-    );
 
     const status = useAppSelector((state) => state.smartLine.smartLineStatus);
     const expiredMessage =
@@ -73,7 +68,7 @@ export const FormPage: React.FC<IFormPageProps> = ({ error, errorMessage }) => {
                 ) : paymentStatus === 'pending' ? (
                     <Form
                         availableCategories={availableCategories}
-                        availableTokens={filteredTokens}
+                        availableTokens={availableTokens}
                         id={id!}
                         {...payment}
                     />
