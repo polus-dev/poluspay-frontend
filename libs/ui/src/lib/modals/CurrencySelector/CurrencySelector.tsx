@@ -21,6 +21,8 @@ interface ModalProps {
     onClose: (asset?: AssetRepresentation) => void;
 }
 
+const TOKENS_TO_EXCLUDE = ['shilld']
+
 export const ModalCurrencySelector: React.FC<ModalProps> = ({
     visible,
     categories,
@@ -30,38 +32,42 @@ export const ModalCurrencySelector: React.FC<ModalProps> = ({
 }) => {
     const ref = useOutsideClose(onClose);
 
+    const filteredTokens = assetsRepresentation.filter(
+        (token) => !TOKENS_TO_EXCLUDE.includes(token.name)
+    );
+
     const categoriesTabs = categories
         .map((category) => ({
             id: category,
             text: category,
         }))
-        .filter((el) => el.id !== 'all');
+        .filter((el) => el.id !== 'all' && el.text !== 'All');
 
     const tabs = [{ id: 'all', text: 'All' }, ...categoriesTabs];
 
     const [tab, setTab] = useState(tabs[0]);
     const [search, setSearch] = useState('');
     const [selected, setSelected] = useState<AssetRepresentation>();
-    const [assets, setAssets] = useState(assetsRepresentation);
+    const [assets, setAssets] = useState(filteredTokens);
 
     useEffect(() => {
         if (search.length > 0) {
             setAssets(
-                assetsRepresentation.filter((asset) =>
+                filteredTokens.filter((asset) =>
                     asset.name.toLowerCase().includes(search.toLowerCase())
                 )
             );
         } else {
-            setAssets(assetsRepresentation);
+            setAssets(filteredTokens);
         }
     }, [search]);
 
     useEffect(() => {
         if (tab.id === 'all') {
-            setAssets(assetsRepresentation);
+            setAssets(filteredTokens);
         } else {
             setAssets(
-                assetsRepresentation.filter((asset) =>
+                filteredTokens.filter((asset) =>
                     asset.categories.includes(tab.id)
                 )
             );
