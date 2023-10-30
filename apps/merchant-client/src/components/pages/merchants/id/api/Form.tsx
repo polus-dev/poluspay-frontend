@@ -63,25 +63,27 @@ export const MerchantApiForm = (props: IMerchantApiFormProps) => {
     };
 
     const submit: SubmitHandler<IApiForm> = async (data) => {
-        console.log(data);
-
         try {
             const promises = [];
 
-            promises.push(
-                updateMerchantFields({
-                    merchant_id: props.merchantId,
-                    fail_redirect_url: data.failRedirectUrl || '',
-                    success_redirect_url: data.successRedirectUrl || '',
-                }).unwrap()
-            );
+            if (data.failRedirectUrl || data.successRedirectUrl) {
+                promises.push(
+                    updateMerchantFields({
+                        merchant_id: props.merchantId,
+                        fail_redirect_url: data.failRedirectUrl,
+                        success_redirect_url: data.successRedirectUrl,
+                    }).unwrap()
+                );
+            }
 
-            promises.push(
-                setWebhook({
-                    merchant_id: props.merchantId,
-                    webhook_url: data.webhookUrl || '',
-                }).unwrap()
-            );
+            if (data.webhookUrl) {
+                promises.push(
+                    setWebhook({
+                        merchant_id: props.merchantId,
+                        webhook_url: data.webhookUrl,
+                    }).unwrap()
+                );
+            }
 
             await Promise.all(promises);
 
