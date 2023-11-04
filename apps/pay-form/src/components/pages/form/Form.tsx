@@ -83,7 +83,7 @@ export const Form = (props: IFormProps) => {
     const getButtonText = () => {
         if (isSuccessTransaction || isFailedTransaction) {
             return 'Back to store';
-        } else if (!isConnected) {
+        } else if (!isConnected && stage !== ViewVariant.QRCODE) {
             return 'Connect Wallet';
         } else if (isLoading && isConnected) {
             return 'Loading...';
@@ -118,7 +118,7 @@ export const Form = (props: IFormProps) => {
                 return undefined;
             }
 
-            if (!isConnected) {
+            if (!isConnected && stage !== ViewVariant.QRCODE) {
                 await open();
             } else if (
                 stage === ViewVariant.QRCODE &&
