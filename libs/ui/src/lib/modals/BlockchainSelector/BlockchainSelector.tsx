@@ -57,6 +57,7 @@ export const ModalBlockChainSelector = <T extends boolean = false>({
 
         // @ts-ignore
         setSelected(item);
+        onClose();
     };
 
     useEffect(() => {
