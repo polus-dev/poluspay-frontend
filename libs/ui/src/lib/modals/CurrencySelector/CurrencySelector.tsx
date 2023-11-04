@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { AssetRepresentation } from '@poluspay-frontend/api';
 import { useOutsideClose } from '@poluspay-frontend/hooks';
 import { getAssetUrl } from '@poluspay-frontend/utils';
+import { TOKENS_TO_EXCLUDE } from '@poluspay-frontend/api';
 
 import { PButton, PInput, PModal, PTabs } from '@poluspay-frontend/ui';
 import { ReactComponent as IconSearch } from '../../assets/icons/search.svg';
@@ -20,8 +21,6 @@ interface ModalProps {
     assetUrl: string;
     onClose: (asset?: AssetRepresentation) => void;
 }
-
-const TOKENS_TO_EXCLUDE = ['shilld']
 
 export const ModalCurrencySelector: React.FC<ModalProps> = ({
     visible,

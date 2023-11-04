@@ -1,4 +1,6 @@
-import { AssetRepresentation } from '@poluspay-frontend/api';
+import { useEffect, useState } from 'react';
+
+import { AssetRepresentation, TOKENS_TO_EXCLUDE } from '@poluspay-frontend/api';
 import { getAssetUrl } from '@poluspay-frontend/utils';
 
 import { FormCurrencyItem } from './CurrencyItem/CurrencyItem';
@@ -32,21 +34,25 @@ const Currency = (props: FormCurrencyItemProps) => {
 };
 
 export const FormCurrencies = (props: FormCurrenciesProps) => {
+    const filteredTokens = props.availableTokens.filter(
+        (token) => !TOKENS_TO_EXCLUDE.includes(token.name)
+    );
+
     return (
         <div className="currencies">
             <Currency
-                name={props.availableTokens[0].name}
+                name={filteredTokens[0].name}
                 image={getAssetUrl(
                     import.meta.env.VITE_ASSET_URL,
-                    props.availableTokens[0].name
+                    filteredTokens[0].name
                 )}
                 active={
                     props.userToken.contract ===
-                    props.availableTokens[0].contract
+                    filteredTokens[0].contract
                 }
-                onClick={() => props.setUserToken(props.availableTokens[0])}
+                onClick={() => props.setUserToken(filteredTokens[0])}
             />
-            {props.availableTokens.slice(1, 5).map((token) => (
+            {filteredTokens.slice(1, 5).map((token) => (
                 <Currency
                     name={token.name}
                     image={getAssetUrl(
@@ -58,7 +64,7 @@ export const FormCurrencies = (props: FormCurrenciesProps) => {
                     onClick={() => props.setUserToken(token)}
                 />
             ))}
-            {props.availableTokens.length > 5 && (
+            {filteredTokens.length > 5 && (
                 <Currency
                     name={'More'}
                     image="/images/OTHER.png"

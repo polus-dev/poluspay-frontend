@@ -10,6 +10,7 @@ import { useRandomId } from '@poluspay-frontend/hooks';
 import { getAssetUrl } from '@poluspay-frontend/utils';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { blockchainList } from '@poluspay-frontend/ui';
+import { TOKENS_TO_EXCLUDE } from '@poluspay-frontend/api';
 
 import { ConnectButton } from '../../../../ui/ConnectButton/ConnectButton';
 import { ReactComponent as LogoPolusPay } from '../../../../../assets/logos/poluspay.svg';
@@ -91,6 +92,7 @@ export const MerchantInvoicesPreview: React.FC<PreviewProps> = ({
             <div ref={ref} className="preview__assets">
                 {assets
                     ?.getAssetsByNetwork(network)
+                    .filter((token) => !TOKENS_TO_EXCLUDE.includes(token.name))
                     .slice(0, 6)
                     .map((el, index) => (
                         <div
