@@ -96,6 +96,7 @@ export interface IGetMerchantStatisticsRequest extends Partial<IMerchantId> {
 
 export interface PerDayTurnover {
     count: number;
+    amount: string;
     posting_date: string;
 }
 
